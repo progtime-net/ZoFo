@@ -1,5 +1,6 @@
 ﻿using System;
 using ZoFo.GameCore.GameObjects;
+using Microsoft.Xna.Framework.Content;
 
 namespace ZoFo.GameCore.GameObjects;
 public class Entity : GameObject
