@@ -1,6 +1,6 @@
 ﻿namespace ZoFo.GameCore.GUI;
 
-public class AbstractGUI
+public abstract class AbstractGUI
 {
     
 }
