@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameObjects
 {
-    internal class LootData
+    internal class GunAttack:IPlayerWeaponAttack
     {
-        public Dictionary<string, int> loots;
-        public void AddLoot(object lootObject, int quantity)
-        {
 
-        }
     }
 }

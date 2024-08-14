@@ -8,5 +8,6 @@ namespace ZoFo.GameCore.GameObjects
 {
     internal interface IPlayerWeaponAttack
     {
+
     }
 }
