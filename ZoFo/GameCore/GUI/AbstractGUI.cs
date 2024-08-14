@@ -23,7 +23,6 @@ public abstract class AbstractGUI
 
     public AbstractGUI()
     {
-        
     }
 
     protected abstract void CreateUI();
