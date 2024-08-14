@@ -21,25 +21,15 @@ public abstract class AbstractGUI
     private bool isStartedPrint = false;
     private bool isPressed = false;
 
-    public AbstractGui()
+    public AbstractGUI()
     {
+        
     }
 
     protected abstract void CreateUI();
     private GraphicsDevice graphicsDevice;
     public virtual void Initialize()
     {
-        Manager.Initialize(AppManager.Instance.GraphicsDevice);
-        CreateUI();
-        ActiveElements = new List<DrawableUIElement>();
-        foreach (var element in Elements)
-        {
-            if (CheckOnBadElements(element))
-            {
-                ActiveElements.Add(element);
-            }
-        }
-        if (ActiveElements.Count > 0) { SelectedElement = ActiveElements.First(); }
         
     }
 
