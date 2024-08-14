@@ -39,11 +39,16 @@ namespace ZoFo.GameCore.GameManagers
 
             Instance = this;
             InputManager = new InputManager();
+
+
+
+
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+
+
 
             base.Initialize();
         }
@@ -52,7 +57,9 @@ namespace ZoFo.GameCore.GameManagers
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+
+
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -105,7 +112,7 @@ namespace ZoFo.GameCore.GameManagers
         }
         public void SetGUI(/*AbstractGUI gui*/)
         {
-            //currentGUI = gui
+            //currentGUI = gui;
 
             //TODO
         }
