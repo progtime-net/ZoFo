@@ -1,29 +1,33 @@
 ﻿using System;
-using ZoFo.GameCore.GameObjects;
-using Microsoft.Xna.Framework.Content;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace ZoFo.GameCore.GameObjects;
-public class Entity : GameObject
+namespace ZoFo.GameCore.GameObjects
 {
-    public int Id{ get; set; }
-    //public CollisionComponent collisionComponents{ get; set; }
-    //public AnimationComponent animationComponent{ get; set; }
-
-    // в апдейте может заявляет изменения позиции
-    public void UpdateLogic()
+    public abstract class Entity : GameObject
     {
+        public int Id { get; set; }
+      public void CollisionComponent()
+        {
 
-    }
+        }
 
-    
+        public void AnimationComponent()
+         {
 
-    // Методы для клиента
-    public void UpdateAnimation()
-    {
+         }
 
-    }
-    public void Draw(ContentManager manager)
-    {
+        public void UpdateLogic()
+        {
+
+        }
 
     }
 }
+
+//вектор
+//вилосити
+//поситион
+//текстура
