@@ -22,6 +22,7 @@ namespace ZoFo.GameCore.GameManagers
         public static AppManager Instance { get; private set; }
         public GameState gamestate;
         public AbstractGUI currentGUI;
+        public DebugHUD debugHud;
         public Point CurentScreenResolution = new Point(1920, 1080);
         //public Client client;
         //public Server server;
@@ -43,12 +44,14 @@ namespace ZoFo.GameCore.GameManagers
             InputManager = new InputManager();
 
             currentGUI = new MainMenuGUI();
+            debugHud = new DebugHUD();
 
         }
 
         protected override void Initialize()
         {
             currentGUI.Initialize();
+            debugHud.Initialize();
             
 
 
@@ -58,7 +61,8 @@ namespace ZoFo.GameCore.GameManagers
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            debugHud.LoadContent();
+            currentGUI.LoadContent();
 
 
 
@@ -96,6 +100,7 @@ namespace ZoFo.GameCore.GameManagers
 
 
             currentGUI.Draw(_spriteBatch);
+            debugHud.Draw(_spriteBatch);
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
