@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using ZoFo.GameCore.GameManagers.NetworkManager;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
 using ZoFo.GameCore.GameObjects;
 
 namespace ZoFo.GameCore
@@ -10,9 +13,19 @@ namespace ZoFo.GameCore
     public class Server
     {
         private List<GameObject> gameObjects;
-      //  private List<> entity;  //entity
+        private ServerNetworkManager networkManager;
+        //  private List<> entity;  //entity
+        public Server()
+        {
+            networkManager = new ServerNetworkManager();
+            networkManager.GetDataSend += OnDataSend;
+        }
 
-        public void OnDataSend(string data) { }
+        public void OnDataSend(string data)
+        {
+            List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
+            //ТУТ Switch case будет честное слово
+        }
         public void CreateRoom() { }
         public void StartGame() { }
         public void EndGame() { }

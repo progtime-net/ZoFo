@@ -21,44 +21,54 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private Socket socket;
         private List<Socket> clients;
         private List<IUpdateData> updates;
-        delegate void OnDataSend(string data);  //
+        public delegate void OnDataSend(string data);
+        public event OnDataSend GetDataSend;   // event
+        Dictionary<Socket, Thread> managerThread;
+       
 
         public void Init()   //create Socket
         {
             endPoint = new IPEndPoint(ip, port);
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
-
-        public void SendData()
+        public void SendData() //отправляет клиенту Data
         {
-
+            string data = JsonSerializer.Serialize(updates);
+            var databytes = Encoding.UTF8.GetBytes(data);
+            foreach (var item in clients)
+            {
+                item.SendAsync(databytes);
+            }
         }
-        public void AddData(IUpdateData data) { }
+        public void AddData(IUpdateData data)//добавляет в лист updates новую data
+        {
+            updates.Add(data);
+        }
 
 
         //Поток 2
-        public void StartWaitingForPlayers()//Слушает игроков, которые хотят подключиться
+   
+        public void StartWaitingForPlayers(object players)//Слушает игроков, которые хотят подключиться
         {
+            int playNumber = (int)players;
             socket.Bind(endPoint);
-            socket.Listen(10);
-            for (int i = 0; i < 10; i++)
+            socket.Listen(playNumber);
+            for (int i = 0; i < playNumber; i++)
             {
                 Socket client = socket.Accept();
                 clients.Add(client);  //добавляем клиентов в лист
             }
-
-            StartListening();
+           
         }
 
-        public void StartListening()//начать слушать клиентов в самой игре активируют Ивент
+        private void StartListening(object socket)//начать слушать клиентов в самой игре активируют Ивент
         {
+            // obj to Socket
+            Socket client = (Socket)socket;
             var buff = new byte[1024];
-            foreach (var client in clients)
-            {
-                var answ = client.Receive(buff);
-                string response = Encoding.UTF8.GetString(buff, 0, answ);
-           //     List<IUpdateData> updateDatas = 
-            }
+            var answ = client.Receive(buff);
+            string response = Encoding.UTF8.GetString(buff, 0, answ);
+            GetDataSend(response);
         }
     }
 }
