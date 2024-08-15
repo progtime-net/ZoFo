@@ -12,5 +12,6 @@ namespace ZoFo.GameCore.GameManagers.MapManager.MapElements
         public int TileHeight { get; set; }
         public int TileWidth { get; set; }
         public List<TileSetInfo> TileSets { get; set; }
+        public List<Layer> Layers { get; set; }
     }
 }

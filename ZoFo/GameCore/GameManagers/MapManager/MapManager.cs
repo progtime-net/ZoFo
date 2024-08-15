@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -26,8 +27,26 @@ namespace ZoFo.GameCore.GameManagers.MapManager
             List<TileSet> tileSets = new List<TileSet>();
             foreach (TileSetInfo tileSetInfo in tileMap.TileSets) 
             {
-                tileSets.Add(LoadTileSet(tileSetInfo.Source));
+                TileSet tileSet = LoadTileSet(tileSetInfo.Source);
+                tileSet.FirstGid = tileSetInfo.FirstGid;
+                tileSets.Add(tileSet);
             }
+
+            foreach (var chunk in tileMap.Layers[0].Chunks)
+            {
+                foreach (var id in chunk.Data)
+                {
+                    for (int i = 0; i < tileSets.Count; i++)
+                    {
+                        if (tileSets[i].FirstGid - id < 0) 
+                        {
+                            int number = id - tileSets[i].FirstGid;
+                            
+                        }
+                    }
+                }
+            }
+
         }
 
         private TileSet LoadTileSet(string path)
