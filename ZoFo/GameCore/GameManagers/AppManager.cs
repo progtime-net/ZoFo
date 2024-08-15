@@ -23,6 +23,7 @@ namespace ZoFo.GameCore.GameManagers
         public static AppManager Instance { get; private set; }
         public GameState gamestate;
         public AbstractGUI currentGUI;
+        public Point CurentScreenResolution = new Point(1920, 1080);
         //public Client client;
         //public Server server;
 
@@ -44,14 +45,14 @@ namespace ZoFo.GameCore.GameManagers
             Instance = this;
             InputManager = new InputManager();
 
-
-
+            currentGUI = new MainMenuGUI();
 
         }
 
         protected override void Initialize()
         {
-
+            currentGUI.Initialize();
+            
 
 
             base.Initialize();
@@ -97,7 +98,7 @@ namespace ZoFo.GameCore.GameManagers
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
 
-            //currentGUI.Draw(_spriteBatch);
+            currentGUI.Draw(_spriteBatch);
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
