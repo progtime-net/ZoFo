@@ -28,6 +28,21 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         public event EventHandler<CollisionComponent> OnTriggerExit;
 
         // methods-event
+        public void TriggerEnter(object component, ///<Player player>,
+            EventArgs e)
+        {
+
+        }
+        public void TriggerZone(object component,///<Player player>,
+             EventArgs e)
+        {
+
+        }
+        public void TriggerExit(object component,///<Player player>,
+             EventArgs e)
+        {
+
+        }
 
 
     }   
