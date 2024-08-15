@@ -14,23 +14,26 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         bool doesStop;
         Rectangle stopRectangle;
 
-        // --
+        // triggers for rectangle
         bool isTrigger;
         Rectangle triggerRectangle;
 
-        //events 
-        public delegate void EventHandler(object sender, EventArgs e);  
+        //delegate
+        public delegate void EventHandler(object sender, EventArgs e);
 
+
+        //events 
         public event EventHandler<CollisionComponent> OnTriggerEnter;
         public event EventHandler<CollisionComponent> OnTriggerZone;
         public event EventHandler<CollisionComponent> OnTriggerExit;
 
         // methods-event
-
+        //for test
         public void TriggerEnter(object component, EventArgs e)
         {
 
         }
 
-    }
+
+    }   
 }
