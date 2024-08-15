@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ZoFo.GameCore.GUI;
 using static System.Collections.Specialized.BitVector32;
 
 namespace ZoFo.GameCore.GameManagers
@@ -20,7 +21,7 @@ namespace ZoFo.GameCore.GameManagers
         
         public static AppManager Instance { get; private set; }
         public GameState gamestate;
-        //public AbstractGUI currentGUI;
+        public AbstractGUI currentGUI;
         //public Client client;
         //public Server server;
 
@@ -75,6 +76,7 @@ namespace ZoFo.GameCore.GameManagers
                 case GameState.NotPlaying:
                     break;
                 case GameState.HostPlaying:
+                    //server.Update(GameTime gameTime);
                     //client.Update(GameTime gameTime);
                     break;
                 case GameState.ClientPlaying:
@@ -110,9 +112,9 @@ namespace ZoFo.GameCore.GameManagers
         {
             this.gamestate = gameState;
         }
-        public void SetGUI(/*AbstractGUI gui*/)
+        public void SetGUI(AbstractGUI gui)
         {
-            //currentGUI = gui;
+            currentGUI = gui;
 
             //TODO
         }
