@@ -28,6 +28,12 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         }
 
+        public void StopConnection()
+        { 
+            socket.Shutdown(SocketShutdown.Both);
+            socket.Close();
+        }
+
         public void JoinRoom() // multyplayer
         {
             SendData();
@@ -45,11 +51,13 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         {
             socket.Connect(endPoint);
 
-            byte[] bytes = new byte[2048];
-
-            var countAnsw = socket.Receive(bytes);
-
-            string updates = Encoding.UTF8.GetString(bytes, 0, countAnsw);   // обновления отосланные сервером
+            while(socket.Connected)
+            {
+                byte[] bytes = new byte[2048];
+                var countAnsw = socket.Receive(bytes);
+                string update = Encoding.UTF8.GetString(bytes, 0, countAnsw);   // обновление отосланные сервером
+                GetDataSent(update);
+            }
         }
     }
 }
