@@ -1,8 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZoFo", "ZoFo\ZoFo.csproj", "{D63272E5-A54D-4C24-AA48-2945CB1D0BBB}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZoFo", "ZoFo\ZoFo.csproj", "{D63272E5-A54D-4C24-AA48-2945CB1D0BBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonogameLibrary", "MonogameLibrary\MonogameLibrary.csproj", "{D6272E15-AD49-468A-BE0F-D812E8697FAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonogameLibrary", "MonogameLibrary\MonogameLibrary.csproj", "{40880E68-4B3A-417B-A39B-95DE46AA2E7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +17,12 @@ Global
 		{D63272E5-A54D-4C24-AA48-2945CB1D0BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D63272E5-A54D-4C24-AA48-2945CB1D0BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D63272E5-A54D-4C24-AA48-2945CB1D0BBB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6272E15-AD49-468A-BE0F-D812E8697FAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6272E15-AD49-468A-BE0F-D812E8697FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6272E15-AD49-468A-BE0F-D812E8697FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6272E15-AD49-468A-BE0F-D812E8697FAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40880E68-4B3A-417B-A39B-95DE46AA2E7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40880E68-4B3A-417B-A39B-95DE46AA2E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40880E68-4B3A-417B-A39B-95DE46AA2E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40880E68-4B3A-417B-A39B-95DE46AA2E7E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
