@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using DangerousD.GameCore.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -29,6 +30,8 @@ namespace ZoFo.GameCore.GameManagers
         #region Managers
         
         public InputManager InputManager;
+
+        public AnimationBuilder animationBuilder{get;set; }
 
         #endregion
 
