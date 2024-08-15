@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ZoFo.GameCore.GUI;
 using static System.Collections.Specialized.BitVector32;
+using MonogameLibrary.UI.Base;
 
 namespace ZoFo.GameCore.GameManagers
 {
@@ -17,7 +18,8 @@ namespace ZoFo.GameCore.GameManagers
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        
+        
         
         public static AppManager Instance { get; private set; }
         public GameState gamestate;
@@ -37,11 +39,17 @@ namespace ZoFo.GameCore.GameManagers
         public AppManager()
         {
             _graphics = new GraphicsDeviceManager(this);
+            SetResolution(CurentScreenResolution.X, CurentScreenResolution.Y);
+            FulscrreenSwitch();
+            
+            
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
             Instance = this;
             InputManager = new InputManager();
+            
+            
 
             currentGUI = new MainMenuGUI();
             debugHud = new DebugHUD();
@@ -73,9 +81,11 @@ namespace ZoFo.GameCore.GameManagers
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            
+            debugHud.Set("key", "value");
+            
             InputManager.Update();
-            //currentGUI.Update();
+            currentGUI.Update(gameTime);
             switch (gamestate)
             {
                 case GameState.NotPlaying:
@@ -98,9 +108,10 @@ namespace ZoFo.GameCore.GameManagers
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            
 
-            currentGUI.Draw(_spriteBatch);
             debugHud.Draw(_spriteBatch);
+            currentGUI.Draw(_spriteBatch);
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
@@ -128,6 +139,17 @@ namespace ZoFo.GameCore.GameManagers
         public void GameEnded(Dictionary<string, int> lootIGot)
         {
             //TODO
+        }
+
+        public void SetResolution(int x, int y)
+        {
+            _graphics.PreferredBackBufferWidth = x;
+            _graphics.PreferredBackBufferHeight = y;
+        }
+
+        public void FulscrreenSwitch()
+        {
+            _graphics.IsFullScreen = !_graphics.IsFullScreen;
         }
     }
 }
