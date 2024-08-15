@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics.PackedVector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
@@ -53,6 +56,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             foreach (var client in clients)
             {
                 var answ = client.Receive(buff);
+                string response = Encoding.UTF8.GetString(buff, 0, answ);
+           //     List<IUpdateData> updateDatas = 
             }
         }
     }
