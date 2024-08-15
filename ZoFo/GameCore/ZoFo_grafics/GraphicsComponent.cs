@@ -1,4 +1,4 @@
-﻿using ZoFo.GameCore.GameObjects;
+﻿/*using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.NetworkManager;
 using Microsoft.Xna.Framework;
@@ -275,3 +275,4 @@ namespace ZoFo.GameCore.ZoFo_graphics
         public static Point CameraPosition = new Point(-700, 300);
     }
 }
+*/
