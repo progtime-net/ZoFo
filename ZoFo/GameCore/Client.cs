@@ -7,7 +7,7 @@ namespace ZoFo.GameCore
 
         public void GameEndedUnexpectedly(){ }
 
-        public void JoinRoom() { }
+        public void JoinRoom(){ }
 
         public void JoinYourself(){ }
     }
