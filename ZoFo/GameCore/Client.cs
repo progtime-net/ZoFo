@@ -22,7 +22,7 @@ namespace ZoFo.GameCore
         public void OnDataSend(string data)
         { 
             List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
-            // ��� ����� switch
+            // тут будет switch
         }
 
         public void GameEndedUnexpectedly(){ }
