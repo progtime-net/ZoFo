@@ -13,12 +13,12 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
     {
         Dictionary<string, int> items; 
         /// <summary>
-        /// Принимает
+        /// Принимает тэг и крафтит этот объект
         /// </summary>
         /// <param name="itemTag"></param>
         public void CraftItem(string itemTag)
         {
-
+            //TODO
         }
     }
 }
