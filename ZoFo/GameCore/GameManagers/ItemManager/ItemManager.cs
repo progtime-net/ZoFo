@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.ItemManager
 {
-    class ItemManager
+    public class ItemManager
     {
         //поля
         Dictionary<string, ItemInfo> tagItemPairs;

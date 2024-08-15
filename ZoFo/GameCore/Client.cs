@@ -1,4 +1,8 @@
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+
 namespace ZoFo.GameCore
 {
     public class Client
@@ -10,5 +14,13 @@ namespace ZoFo.GameCore
         public void JoinRoom(){ }
 
         public void JoinYourself(){ }
+
+        internal void Update(GameTime gameTime)
+        { 
+        }
+
+        internal void Draw(SpriteBatch spriteBatch)
+        { 
+        }
     }
 }
