@@ -18,7 +18,7 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
+        // TODO: Add your initialization logic here 
 
         base.Initialize();
     }
@@ -27,7 +27,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        // TODO: use this.Content to load your game content here
+        // TODO: use this.Content to load your game content here 
     }
 
     protected override void Update(GameTime gameTime)
