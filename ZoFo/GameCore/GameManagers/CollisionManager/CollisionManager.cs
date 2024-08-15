@@ -5,13 +5,31 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZoFo.GameCore.GameObjects;
+using ZoFo.GameCore.GameManagers.CollisionManager;
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
     public class CollisionManager
     {
+        Player player;
+
         public List<CollisionComponent> CollisionComponent;
         public List<CollisionComponent> TriggerComponent;
+
+        public bool CheckComponentCollision(List<CollisionComponent> collisionComponents, CollisionComponent component)
+        {
+            foreach (var obstacle in collisionComponents)
+            {
+                if (component.Bounds.Intersects(obstacle.Bounds))
+                {
+                    return true; 
+                }
+            }
+
+
+            return false;
+        }
 
         public void UpdatePositions()
         {

@@ -5,11 +5,15 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using ZoFo.GameCore.GameObjects;
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
     public class CollisionComponent
-    { 
+    {
+        //поля
+        public Rectangle Bounds { get; set; }
+
         //остановлен ли перс
         bool doesStop;
         Rectangle stopRectangle;
@@ -28,17 +32,17 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         public event EventHandler<CollisionComponent> OnTriggerExit;
 
         // methods-event
-        public void TriggerEnter(object component, ///<Player player>,
+        public void TriggerEnter(object component, Player player,
             EventArgs e)
         {
 
         }
-        public void TriggerZone(object component,///<Player player>,
+        public void TriggerZone(object component,Player player,
              EventArgs e)
         {
 
         }
-        public void TriggerExit(object component,///<Player player>,
+        public void TriggerExit(object component,Player player,
              EventArgs e)
         {
 
