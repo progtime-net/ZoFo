@@ -7,15 +7,17 @@ using System.Text;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameManagers.CollisionManager;
+using Microsoft.Xna.Framework;
+using ZoFo.GameCore.GameManagers.MapManager.MapElements;
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
     public class CollisionManager
     {
-        Player player;
-
         public List<CollisionComponent> CollisionComponent;
         public List<CollisionComponent> TriggerComponent;
+
+        
 
         public static bool CheckComponentCollision(List<CollisionComponent> collisionComponents, CollisionComponent component)
         {
@@ -30,20 +32,25 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             return false;
         }
 
+        public void UpdateComponentCollision(List<CollisionComponent> collisionComponents)
+        {
+
+        }
+
         public void UpdatePositions()
         {
 
         }
 
-        public void GetObjectInArea(Rectangle area)
-        {
+        //public void GetObjectInArea(Rectangle area)
+        //{
 
-        }
+        //}
 
-        public void Register(Rectangle rectangle)
-        {
+        //public void Register(Rectangle rectangle)
+        //{
 
-        }
+        //}
 
 
     }
