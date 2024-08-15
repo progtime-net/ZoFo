@@ -15,9 +15,18 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
         {
             return tagItemPairs.GetValueOrDefault(tag);
         }
-        void LoadItemTexture()
+        void LoadItemTextures()
         {
-
+            foreach (var item in tagItemPairs)
+            {
+                item.Value.LoadTexture();
+            }
+        }
+        void Initialize()
+        {
+            tagItemPairs.Add("wood", new ItemInfo("wood","wood",false,null));
+            tagItemPairs.Add("rock", new ItemInfo("rock", "rock", false, null));
+            tagItemPairs.Add("steel", new ItemInfo("steel", "steel", false, null));
         }
         
     }
