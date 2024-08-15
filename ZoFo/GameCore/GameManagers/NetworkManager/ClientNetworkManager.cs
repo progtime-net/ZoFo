@@ -15,8 +15,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private int port = 7632;
         private EndPoint endPoint;
         private Socket socket;
-        delegate void OnDataSent(string Data);
-        event OnDataSent GetDataSent; // event
+        public delegate void OnDataSent(string Data);
+        public event OnDataSent GetDataSent; // event
         public void Init() //create endPoint, socket
         {
             endPoint = new IPEndPoint(iPAddress, port);
@@ -26,6 +26,12 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public void SendData()
         {
 
+        }
+
+        public void StopConnection()
+        { 
+            socket.Shutdown(SocketShutdown.Both);
+            socket.Close();
         }
 
         public void JoinRoom() // multyplayer
@@ -45,11 +51,13 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         {
             socket.Connect(endPoint);
 
-            byte[] bytes = new byte[2048];
-
-            var countAnsw = socket.Receive(bytes);
-
-            string updates = Encoding.UTF8.GetString(bytes, 0, countAnsw);   // обновления отосланные сервером
+            while(socket.Connected)
+            {
+                byte[] bytes = new byte[2048];
+                var countAnsw = socket.Receive(bytes);
+                string update = Encoding.UTF8.GetString(bytes, 0, countAnsw);   // обновление отосланные сервером
+                GetDataSent(update);
+            }
         }
     }
 }
