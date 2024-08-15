@@ -26,7 +26,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public event OnDataSend GetDataSend;   // event
         Dictionary<Socket, Thread> managerThread;
 
-
         public void Init()   //create Socket
         {
             endPoint = new IPEndPoint(ip, port);
@@ -46,11 +45,11 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         {
             updates.Add(data);
         }
-
-        public void CloseConnection()
+        public void CloseConnection() //По сути коне игры и отключение игроков
         {
             foreach (var item in clients)
             {
+                //Закрывает сокеты клиентов
                 item.Shutdown(SocketShutdown.Both);
                 item.Close();
             }
@@ -58,14 +57,16 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             {
                 foreach (var socket in clients)
                 {
+                    //Закрывает потоки клиентов
                     managerThread[socket].Interrupt();
                 }
             }
+            //очищает листы
             managerThread.Clear();
             clients.Clear();
         }
-        //Поток 2
 
+        //Потоки Клиентов
         public void StartWaitingForPlayers(object players)//Слушает игроков, которые хотят подключиться
         {
             int playNumber = (int)players;
@@ -81,7 +82,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             }
 
         }
-
         private void StartListening(object socket)//начать слушать клиентов в самой игре активируют Ивент
         {
             // obj to Socket
@@ -94,7 +94,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 GetDataSend(response);
             }
             Thread.Sleep(-1);
-            
+
         }
     }
 }
