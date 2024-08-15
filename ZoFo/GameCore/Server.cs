@@ -9,6 +9,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
+using ZoFo.GameCore.GameObjects.Entities;
 
 namespace ZoFo.GameCore
 {

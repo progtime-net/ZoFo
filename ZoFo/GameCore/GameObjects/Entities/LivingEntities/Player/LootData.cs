@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZoFo.GameCore.GameObjects
+namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player
 {
     internal class LootData
     {
