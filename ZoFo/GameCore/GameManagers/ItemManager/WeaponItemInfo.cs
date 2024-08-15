@@ -10,5 +10,9 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
     {
         //поля
         float damage;
+
+        public WeaponItemInfo(string tag) : base(tag)
+        {
+        }
     }
 }
