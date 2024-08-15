@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,16 +35,25 @@ namespace ZoFo.GameCore.GameManagers.MapManager
 
             foreach (var chunk in tileMap.Layers[0].Chunks)
             {
+                int i = 0;
                 foreach (var id in chunk.Data)
                 {
-                    for (int i = 0; i < tileSets.Count; i++)
+                    foreach (var tileSet in tileSets)
                     {
-                        if (tileSets[i].FirstGid - id < 0) 
+                        if (tileSet.FirstGid - id < 0)
                         {
-                            int number = id - tileSets[i].FirstGid;
-                            
+                            int number = id - tileSet.FirstGid;
+
+                            int relativeColumn = number % tileSet.Columns * tileSet.TileWidth;
+                            int relativeRow = number / tileSet.Columns * tileSet.TileHeight;
+
+                            Rectangle sourceRectangle = new Rectangle(relativeColumn * tileSet.TileWidth, relativeRow * tileSet.TileHeight, 
+                                relativeColumn * tileSet.TileWidth + tileSet.TileWidth, relativeRow * tileSet.TileHeight + tileSet.TileHeight);
+
+                            Vector2 position = new Vector2(i % chunk.Width, i / chunk.Height);
                         }
                     }
+                    i++;
                 }
             }
 
