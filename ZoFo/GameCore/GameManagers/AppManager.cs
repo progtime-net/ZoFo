@@ -8,6 +8,7 @@ using DangerousD.GameCore.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ZoFo.GameCore.GameManagers.ItemManager;
 using ZoFo.GameCore.GUI;
 using static System.Collections.Specialized.BitVector32;
 
@@ -23,13 +24,15 @@ namespace ZoFo.GameCore.GameManagers
         public static AppManager Instance { get; private set; }
         public GameState gamestate;
         public AbstractGUI currentGUI;
-        //public Client client;
-        //public Server server;
+        public Point CurentScreenResolution = new Point(1920, 1080);
+        public Client client;
+        public Server server;
 
             
         #region Managers
         
         public InputManager InputManager;
+        public ItemManager.ItemManager ItemManager;
 
         public AnimationBuilder animationBuilder{get;set; }
 
@@ -44,14 +47,14 @@ namespace ZoFo.GameCore.GameManagers
             Instance = this;
             InputManager = new InputManager();
 
-
-
+            currentGUI = new MainMenuGUI();
 
         }
 
         protected override void Initialize()
         {
-
+            currentGUI.Initialize();
+            
 
 
             base.Initialize();
@@ -73,17 +76,17 @@ namespace ZoFo.GameCore.GameManagers
                 Exit();
 
             InputManager.Update();
-            //currentGUI.Update();
+            currentGUI.Update(gameTime);
             switch (gamestate)
             {
                 case GameState.NotPlaying:
                     break;
                 case GameState.HostPlaying:
-                    //server.Update(GameTime gameTime);
-                    //client.Update(GameTime gameTime);
+                    server.Update(gameTime);
+                    client.Update(gameTime);
                     break;
                 case GameState.ClientPlaying:
-                    //server.Update(GameTime gameTime);
+                    server.Update(gameTime);
                     break;
                 default:
                     break;
@@ -97,12 +100,12 @@ namespace ZoFo.GameCore.GameManagers
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
 
-            //currentGUI.Draw(_spriteBatch);
+            currentGUI.Draw(_spriteBatch);
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
                 case GameState.HostPlaying:
-                    //client.Draw(_spriteBatch); 
+                    client.Draw(_spriteBatch); 
                     break;
                 case GameState.NotPlaying:
                 default:
@@ -118,8 +121,6 @@ namespace ZoFo.GameCore.GameManagers
         public void SetGUI(AbstractGUI gui)
         {
             currentGUI = gui;
-
-            //TODO
         }
 
         public void GameEnded(Dictionary<string, int> lootIGot)

@@ -4,6 +4,10 @@ using System.Text.Json;
 using ZoFo.GameCore.GameManagers.NetworkManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+
 namespace ZoFo.GameCore
 {
     public class Client
@@ -18,7 +22,7 @@ namespace ZoFo.GameCore
         public void OnDataSend(string data)
         { 
             List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
-            // Тут будет switch
+            // ��� ����� switch
         }
 
         public void GameEndedUnexpectedly(){ }
@@ -26,5 +30,13 @@ namespace ZoFo.GameCore
         public void JoinRoom(){ }
 
         public void JoinYourself(){ }
+
+        internal void Update(GameTime gameTime)
+        { 
+        }
+
+        internal void Draw(SpriteBatch spriteBatch)
+        { 
+        }
     }
 }
