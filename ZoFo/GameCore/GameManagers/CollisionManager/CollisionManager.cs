@@ -10,8 +10,8 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
     public class CollisionManager
     {
-        public List<Collection> CollisionComponent;
-        public List<Collection> TriggerComponent;
+        public List<CollisionComponent> CollisionComponent;
+        public List<CollisionComponent> TriggerComponent;
 
         public void UpdatePositions()
         {
