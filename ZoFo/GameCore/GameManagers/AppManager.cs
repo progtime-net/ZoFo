@@ -8,8 +8,10 @@ using DangerousD.GameCore.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ZoFo.GameCore.GameManagers.ItemManager;
 using ZoFo.GameCore.GUI;
 using static System.Collections.Specialized.BitVector32;
+using MonogameLibrary.UI.Base;
 
 namespace ZoFo.GameCore.GameManagers
 {
@@ -18,18 +20,22 @@ namespace ZoFo.GameCore.GameManagers
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        
+        
         
         public static AppManager Instance { get; private set; }
         public GameState gamestate;
         public AbstractGUI currentGUI;
-        //public Client client;
-        //public Server server;
+        public DebugHUD debugHud;
+        public Point CurentScreenResolution = new Point(1920, 1080);
+        public Client client;
+        public Server server;
 
             
         #region Managers
         
         public InputManager InputManager;
+        public ItemManager.ItemManager ItemManager;
 
         public AnimationBuilder animationBuilder{get;set; }
 
@@ -38,20 +44,28 @@ namespace ZoFo.GameCore.GameManagers
         public AppManager()
         {
             _graphics = new GraphicsDeviceManager(this);
+            SetResolution(CurentScreenResolution.X, CurentScreenResolution.Y);
+            FulscrreenSwitch();
+            
+            
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
             Instance = this;
             InputManager = new InputManager();
+            
+            
 
-
-
+            currentGUI = new MainMenuGUI();
+            debugHud = new DebugHUD();
 
         }
 
         protected override void Initialize()
         {
-
+            currentGUI.Initialize();
+            debugHud.Initialize();
+            
 
 
             base.Initialize();
@@ -60,7 +74,8 @@ namespace ZoFo.GameCore.GameManagers
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            debugHud.LoadContent();
+            currentGUI.LoadContent();
 
 
 
@@ -71,19 +86,21 @@ namespace ZoFo.GameCore.GameManagers
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            
+            debugHud.Set("key", "value");
+            
             InputManager.Update();
-            //currentGUI.Update();
+            currentGUI.Update(gameTime);
             switch (gamestate)
             {
                 case GameState.NotPlaying:
                     break;
                 case GameState.HostPlaying:
-                    //server.Update(GameTime gameTime);
-                    //client.Update(GameTime gameTime);
+                    server.Update(gameTime);
+                    client.Update(gameTime);
                     break;
                 case GameState.ClientPlaying:
-                    //server.Update(GameTime gameTime);
+                    server.Update(gameTime);
                     break;
                 default:
                     break;
@@ -96,13 +113,15 @@ namespace ZoFo.GameCore.GameManagers
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            
 
-            //currentGUI.Draw(_spriteBatch);
+            debugHud.Draw(_spriteBatch);
+            currentGUI.Draw(_spriteBatch);
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
                 case GameState.HostPlaying:
-                    //client.Draw(_spriteBatch); 
+                    client.Draw(_spriteBatch); 
                     break;
                 case GameState.NotPlaying:
                 default:
@@ -118,13 +137,22 @@ namespace ZoFo.GameCore.GameManagers
         public void SetGUI(AbstractGUI gui)
         {
             currentGUI = gui;
-
-            //TODO
         }
 
         public void GameEnded(Dictionary<string, int> lootIGot)
         {
             //TODO
+        }
+
+        public void SetResolution(int x, int y)
+        {
+            _graphics.PreferredBackBufferWidth = x;
+            _graphics.PreferredBackBufferHeight = y;
+        }
+
+        public void FulscrreenSwitch()
+        {
+            _graphics.IsFullScreen = !_graphics.IsFullScreen;
         }
     }
 }

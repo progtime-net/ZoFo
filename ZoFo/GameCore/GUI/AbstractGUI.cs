@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonogameLibrary.UI.Base;
 using MonogameLibrary.UI.Elements;
+using ZoFo.GameCore.GameManagers;
 
 namespace ZoFo.GameCore.GUI;
 
@@ -29,22 +30,27 @@ public abstract class AbstractGUI
     private GraphicsDevice graphicsDevice;
     public virtual void Initialize()
     {
-        // Manager.Initialize(AppManager.Instance.GraphicsDevice);
+        Manager.Initialize(AppManager.Instance.GraphicsDevice);
         CreateUI();
     }
 
     public virtual void LoadContent()
     {
-        
+        Manager.LoadContent(AppManager.Instance.Content, "Font");
     }
 
     public virtual void Update(GameTime gameTime)
     {
-        
+        Manager.Update(gameTime);
     }
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
         Manager.Draw(spriteBatch);
+    }
+
+    public virtual void ResolutioChenges()
+    {
+        
     }
 }
