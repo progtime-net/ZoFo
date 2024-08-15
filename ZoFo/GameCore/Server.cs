@@ -40,5 +40,10 @@ namespace ZoFo.GameCore
         internal void Update(GameTime gameTime)
         { 
         }
+
+        public void RegisterEntity(GameObject gameObject)
+        {
+          gameObjects.Add(gameObject);
+        }
     }
 }
