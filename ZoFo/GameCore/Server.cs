@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers.NetworkManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
 
 namespace ZoFo.GameCore
@@ -26,9 +27,14 @@ namespace ZoFo.GameCore
             List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
             //ТУТ Switch case будет честное слово
         }
-        public void CreateRoom() { }
-        public void StartGame() { }
-        public void EndGame() { }
+        public void CreateRoom(int players) {
+            networkManager.StartWaitingForPlayers(players);
+        }
+    //  public void StartGame() { }   принудительный запуск
+        public void EndGame() {
+            UpdateGameEnded gameEnded = new UpdateGameEnded();
+            networkManager.AddData(gameEnded);
+        }
 
 
     }
