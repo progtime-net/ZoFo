@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -46,6 +47,14 @@ namespace ZoFo.GameCore
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
             networkManager.CloseConnection();
+        } 
+        internal void Update(GameTime gameTime)
+        { 
         }
+
+        public void RegisterEntity(GameObject gameObject)
+        {
+          gameObjects.Add(gameObject);
+        } 
     }
 }
