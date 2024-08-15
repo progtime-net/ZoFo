@@ -59,8 +59,8 @@ namespace MonogameLibrary.UI.Base
             {
                 keyboardState = Keyboard.GetState();
                 mouseState = Mouse.GetState();
-                mouseState = new MouseState((int)(mouseState.X*(float)resolutionInGame.X/resolution.X),
-                    (int)(mouseState.Y * (float)resolutionInGame.Y / resolution.Y), mouseState.ScrollWheelValue, mouseState.LeftButton, mouseState.MiddleButton, mouseState.RightButton, mouseState.XButton1, mouseState.XButton2);
+                //mouseState = new MouseState((int)(mouseState.X*(float)resolutionInGame.X/resolution.X),
+                //    (int)(mouseState.Y * (float)resolutionInGame.Y / resolution.Y), mouseState.ScrollWheelValue, mouseState.LeftButton, mouseState.MiddleButton, mouseState.RightButton, mouseState.XButton1, mouseState.XButton2);
             }
             catch
             {
