@@ -1,6 +1,6 @@
-﻿/*using ZoFo.GameCore.GameObjects;
-using ZoFo.GameCore.Managers;
-using ZoFo.GameCore.Network;
+﻿using ZoFo.GameCore.GameObjects;
+using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GameManagers.NetworkManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,8 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using Zofo.GameCore.ZoFo_grafics;
 
-namespace DangerousD.GameCore.Graphics
+namespace ZoFo.GameCore.ZoFo_graphics
 {
 
     public class GraphicsComponent
@@ -274,4 +275,3 @@ namespace DangerousD.GameCore.Graphics
         public static Point CameraPosition = new Point(-700, 300);
     }
 }
-*/

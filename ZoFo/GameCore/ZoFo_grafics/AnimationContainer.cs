@@ -1,10 +1,10 @@
-﻿/*using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DangerousD.GameCore.Graphics
+namespace Zofo.GameCore.ZoFo_grafics
 {
     [Serializable]
     public class AnimationContainer
@@ -30,4 +30,3 @@ namespace DangerousD.GameCore.Graphics
          
     }
 }
-*/
