@@ -24,7 +24,16 @@ namespace ZoFo.GameCore
         public void OnDataSend(string data)
         {
             List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
+
             //ТУТ Switch case будет честное слово
+        }
+        /// <summary>
+        /// Для красоты)   Отдел Серверов
+        /// </summary>
+        /// <param name="data"></param>
+        public void AddData(IUpdateData data)//добавляет в лист updates новую data
+        {
+            networkManager.AddData(data);
         }
         public void CreateRoom(int players) //Создает комнату и запускает ожидание подключений
         {
