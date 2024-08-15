@@ -1,3 +1,4 @@
+using System;
 using System.Data.SqlTypes;
 using System.Net;
 using System.Net.Sockets;
@@ -15,7 +16,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private EndPoint endPoint;
         private Socket socket;
         delegate void OnDataSent(string Data);
-
+        event OnDataSent GetDataSent; // event
         public void Init() //create endPoint, socket
         {
             endPoint = new IPEndPoint(iPAddress, port);
@@ -27,13 +28,15 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         }
 
-        public void JoinRoom()
+        public void JoinRoom() // multyplayer
         {
+            SendData();
             StartListening();
         }
 
-        public void JoinYourself()
+        public void JoinYourself()  // single player
         {
+            SendData();
             StartListening();
         }
 
@@ -46,7 +49,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
             var countAnsw = socket.Receive(bytes);
 
-            string message = Encoding.UTF8.GetString(bytes, 0, countAnsw);
+            string updates = Encoding.UTF8.GetString(bytes, 0, countAnsw);   // обновления отосланные сервером
         }
     }
 }
