@@ -41,7 +41,7 @@ public abstract class AbstractGUI
 
     public virtual void Update(GameTime gameTime)
     {
-        
+        Manager.Update(gameTime);
     }
 
     public virtual void Draw(SpriteBatch spriteBatch)
