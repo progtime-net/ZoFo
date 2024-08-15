@@ -17,16 +17,15 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         public List<CollisionComponent> CollisionComponent;
         public List<CollisionComponent> TriggerComponent;
 
-        public bool CheckComponentCollision(List<CollisionComponent> collisionComponents, CollisionComponent component)
+        public static bool CheckComponentCollision(List<CollisionComponent> collisionComponents, CollisionComponent component)
         {
-            foreach (var obstacle in collisionComponents)
+            foreach (var collisionComponent in collisionComponents)
             {
-                if (component.Bounds.Intersects(obstacle.Bounds))
+                if (component.Bounds.IntersectsWith(collisionComponent.Bounds))
                 {
                     return true; 
                 }
             }
-
 
             return false;
         }

@@ -25,6 +25,11 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         //delegate
         public delegate void EventHandler(object sender, EventArgs e);
 
+        public CollisionComponent(int x, int y, int width, int height)
+        {
+            Bounds = new Rectangle(x, y, width, height);
+        }
+
 
         //events 
         public event EventHandler<CollisionComponent> OnTriggerEnter;
