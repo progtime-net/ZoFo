@@ -23,6 +23,10 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
         }
 
+        public void Register(Rectangle rectangle)
+        {
+
+        }
 
 
     }
