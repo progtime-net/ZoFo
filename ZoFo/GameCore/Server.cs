@@ -15,27 +15,28 @@ namespace ZoFo.GameCore
     {
         private List<GameObject> gameObjects;
         private ServerNetworkManager networkManager;
-        //  private List<> entity;  //entity
+        private List<Entity> entity;  //entity
         public Server()
         {
             networkManager = new ServerNetworkManager();
             networkManager.GetDataSend += OnDataSend;
         }
-
         public void OnDataSend(string data)
         {
             List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
             //ТУТ Switch case будет честное слово
         }
-        public void CreateRoom(int players) {
+        public void CreateRoom(int players) //Создает комнату и запускает ожидание подключений
+        {
             networkManager.StartWaitingForPlayers(players);
         }
-    //  public void StartGame() { }   принудительный запуск
-        public void EndGame() {
+
+        //  public void StartGame() { }   принудительный запуск
+        public void EndGame() //Добавляет UpdateGameEnded и отключает игроков
+        {
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
+            networkManager.CloseConnection();
         }
-
-
     }
 }
