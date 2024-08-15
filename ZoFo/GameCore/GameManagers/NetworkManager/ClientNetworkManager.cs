@@ -15,8 +15,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private int port = 7632;
         private EndPoint endPoint;
         private Socket socket;
-        delegate void OnDataSent(string Data);
-        event OnDataSent GetDataSent; // event
+        public delegate void OnDataSent(string Data);
+        public event OnDataSent GetDataSent; // event
         public void Init() //create endPoint, socket
         {
             endPoint = new IPEndPoint(iPAddress, port);
