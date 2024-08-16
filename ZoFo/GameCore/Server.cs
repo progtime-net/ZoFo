@@ -5,33 +5,52 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ZoFo.GameCore.GameManagers.MapManager;
 using ZoFo.GameCore.GameManagers.NetworkManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.Entities;
+using ZoFo.GameCore.GameObjects.MapObjects;
 
 namespace ZoFo.GameCore
 {
     public class Server
     {
         private ServerNetworkManager networkManager;
+        private int ticks = 0;
         public Server()
         {
             networkManager = new ServerNetworkManager();
             networkManager.GetDataSend += OnDataSend;
+
         }
+        #region server logic as App
+        //TODO Comment pls
         public void OnDataSend(string data)
         {
-            List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
+            List<UpdateData> updateDatas = JsonSerializer.Deserialize<List<UpdateData>>(data);
+            for (int i = 0; i < updateDatas.Count; i++)
+            {
+                ProcessIUpdateData(updateDatas[i]);
+            }
+        }
+        /// <summary>
+        /// Обработка апдейтсов, которые нам прислал клиент
+        /// </summary>
+        /// <param name="updateData"></param>
+        public void ProcessIUpdateData(UpdateData updateData)
+        {
 
             //ТУТ Switch case будет честное слово
         }
+
         /// <summary>
         /// Для красоты)   Отдел Серверов 
+        /// добавляет в лист updates новую data
         /// </summary>
         /// <param name="data"></param>
-        public void AddData(IUpdateData data)//добавляет в лист updates новую data
+        public void AddData(UpdateData data)//добавляет в лист updates новую data
         {
             networkManager.AddData(data);
         }
@@ -40,12 +59,24 @@ namespace ZoFo.GameCore
         /// Создает комнату и запускает ожидание подключений
         /// </summary>
         /// <param name="players"></param>
-        public void CreateRoom(int players) 
+        public void CreateRoom(int players)
         {
             networkManager.Start(players);
         }
 
-        //  public void StartGame() { }   принудительный запуск
+        /// <summary>
+        /// Запуск игры в комнате
+        /// </summary>
+        public void StartGame()
+        {
+
+            //TODO начинает рассылку и обмен пакетами игры
+            //Грузит карту
+
+            gameObjects = new List<GameObject>();
+            entities = new List<Entity>();
+            new MapManager().LoadMap();
+        }
 
         /// <summary>
         /// Добавляет UpdateGameEnded и отключает игроков
@@ -56,24 +87,42 @@ namespace ZoFo.GameCore
             networkManager.AddData(gameEnded);
             networkManager.CloseConnection();
         }
-
-        private List<GameObject> gameObjects;
+        private List<GameObject> gameObjects = new List<GameObject>();
         private List<Entity> entities;  //entity
-        public void Update(GameTime gameTime) 
+        public void Update(GameTime gameTime)
         {
-            foreach (var go in gameObjects)
+            if (ticks == 3) //ОБРАБАТЫВАЕТСЯ 20 РАЗ В СЕКУНДУ
             {
-                go.UpdateLogic(gameTime);
+                foreach (var go in gameObjects)
+                {
+                    go.UpdateLogic(gameTime);
+                }
+                ticks = 0;
+                networkManager.SendData();
             }
+            ticks++;
         }
+
+
 
         /// <summary>
         /// Регистрирует игровой объект
         /// </summary>
         /// <param name="gameObject"></param>
-        public void RegisterEntity(GameObject gameObject)
+        public void RegisterGameObject(GameObject gameObject)
         {
-          gameObjects.Add(gameObject);
-        } 
+            gameObjects.Add(gameObject);
+            if (gameObject is MapObject)
+            {
+                AddData(new UpdateTileCreated()
+                {
+                    Position = (gameObject as MapObject).position,
+                    sourceRectangle = (gameObject as MapObject)._sourceRectangle,
+                    Size = (gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size,
+                    tileSetName = (gameObject as MapObject).graphicsComponent.mainTextureName
+                });//TODO 
+            }
+        }
     }
+    #endregion
 }
