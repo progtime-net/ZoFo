@@ -58,6 +58,7 @@ namespace ZoFo.GameCore.GameManagers
 
             currentGUI = new MainMenuGUI();
             debugHud = new DebugHUD();
+            IsMouseVisible = false;
 
         }
 
@@ -65,6 +66,7 @@ namespace ZoFo.GameCore.GameManagers
         {
             currentGUI.Initialize();
             debugHud.Initialize();
+            
             
 
 
@@ -115,8 +117,8 @@ namespace ZoFo.GameCore.GameManagers
 
             
 
-            debugHud.Draw(_spriteBatch);
             currentGUI.Draw(_spriteBatch);
+            debugHud.Draw(_spriteBatch);
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
