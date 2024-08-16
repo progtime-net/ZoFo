@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
@@ -20,6 +21,13 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         List<IUpdateData> updates = new List<IUpdateData>();
         public delegate void OnDataSent(string Data);
         public event OnDataSent GetDataSent; // event
+        public bool IsConnected { get { return socket.Connected; } }
+
+        public ClientNetworkManager()
+        {
+            Init();
+        }
+
         public void Init() //create endPoint, socket
         {
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -27,11 +35,13 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         public void SendData()
         {
-            while(socket.Connected)
-            {
-                byte[] bytes = Encoding.UTF8.GetBytes(updates.ToString());
+                byte[] bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(updates));  //нужно сериализовать
                 socket.Send(bytes);
-            }
+        }
+
+        public void AddData(IUpdateData UpdateData)
+        {
+            updates.Add(UpdateData);
         }
 
         public void StopConnection()
@@ -47,24 +57,21 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// <param name="port"></param>
         public void JoinRoom(string ip) // multyplayer
         {
+
             endPoint = new IPEndPoint(IPAddress.Parse(ip), port);
-
             socket.Connect(endPoint);
-
             SendData();
             Thread listen = new Thread(StartListening);
             listen.Start();
         }
 
-        /// <summary>
-        /// создается 
+        /// <summary> 
+        /// создается одиночная комната к которой ты подключаешься 
         /// </summary>
         public void JoinYourself()  // single player
         {
             endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
-
             socket.Connect(endPoint);
-
             SendData();
             Thread listen = new Thread(StartListening);
             listen.Start();

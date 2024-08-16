@@ -89,9 +89,9 @@ namespace MonogameLibrary.UI.Elements
             if (hoverState == HoverState.None)
             {
                 if (isSelected == IsSelected.Selected)
-                    _spriteBatch.Draw(texture, rectangle, new Color(220, 220, 220));
+                    _spriteBatch.Draw(texture, rectangle, new Color(211, 211, 211));
                 else
-                    _spriteBatch.Draw(texture, rectangle, new Color(245, 245, 245));
+                    _spriteBatch.Draw(texture, rectangle, Color.White);
             }
             else if (hoverState == HoverState.Hovering)
                 _spriteBatch.Draw(texture, rectangle, new Color(211, 211, 211));

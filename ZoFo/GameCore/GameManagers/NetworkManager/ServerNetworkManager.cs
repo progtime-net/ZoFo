@@ -16,7 +16,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
     public class ServerNetworkManager
     {
-        private IPAddress ip = IPAddress.Any;
+        private IPAddress ip =IPAddress.Parse("127.0.0.1"); //IPAddress.Any
         private int port = 7632;
         private IPEndPoint endPoint;
         private Socket socket;
@@ -25,13 +25,24 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
         Dictionary<Socket, Thread> managerThread;
+        Thread serverTheread;
 
-        public void Init()   //create Socket
+        public ServerNetworkManager() { Init(); }
+
+        /// <summary>
+        /// Initialize varibles and Sockets
+        /// </summary>
+        private void Init()
         {
             endPoint = new IPEndPoint(ip, port);
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             managerThread = new Dictionary<Socket, Thread>();
+            clients = new List<Socket>();
+            updates = new List<IUpdateData>();
+            managerThread = new Dictionary<Socket, Thread>();
+            socket.Bind(endPoint);
         }
+
         /// <summary>
         /// отправляет клиенту Data
         /// </summary>
@@ -44,6 +55,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 item.SendAsync(databytes);
             }
         }
+
         /// <summary>
         /// добавляет в лист updates новую data
         /// </summary>
@@ -53,7 +65,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             updates.Add(data);
         }
 
-        public void CloseConnection() //По сути коне игры и отключение игроков
+        /// <summary>
+        /// По сути конец игры и отключение игроков
+        /// </summary>
+        public void CloseConnection() 
         {
             foreach (var item in clients)
             {
@@ -74,11 +89,26 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             clients.Clear();
         }
 
+        /// <summary>
+        /// Начинает работу сервера (Ожидает подключений)
+        /// </summary>
+        /// <param name="players"></param>
+        public void Start(object players)
+        {
+            serverTheread = new Thread(StartWaitingForPlayers);
+            serverTheread.Start(players);
+        }
+
         //Потоки Клиентов
-        public void StartWaitingForPlayers(object players)//Слушает игроков, которые хотят подключиться
+
+        /// <summary>
+        /// Слушает игроков, которые хотят подключиться
+        /// </summary>
+        /// <param name="players"></param>
+        public void StartWaitingForPlayers(object players)
         {
             int playNumber = (int)players;
-            socket.Bind(endPoint);
+          
             socket.Listen(playNumber);
             for (int i = 0; i < playNumber; i++)
             {
@@ -90,7 +120,12 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             }
 
         }
-        private void StartListening(object socket)//начать слушать клиентов в самой игре активируют Ивент
+
+        /// <summary>
+        /// начать слушать клиентов в самой игре активируют Ивент
+        /// </summary>
+        /// <param name="socket"></param>
+        private void StartListening(object socket)
         {
             // obj to Socket
             Socket client = (Socket)socket;

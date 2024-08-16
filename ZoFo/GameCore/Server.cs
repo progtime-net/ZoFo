@@ -15,9 +15,8 @@ namespace ZoFo.GameCore
 {
     public class Server
     {
-        private List<GameObject> gameObjects;
         private ServerNetworkManager networkManager;
-        private List<Entity> entity;  //entity
+        private int ticks = 0;
         public Server()
         {
             networkManager = new ServerNetworkManager();
@@ -30,31 +29,57 @@ namespace ZoFo.GameCore
             //ТУТ Switch case будет честное слово
         }
         /// <summary>
-        /// Для красоты)   Отдел Серверов
+        /// Для красоты)   Отдел Серверов 
         /// </summary>
         /// <param name="data"></param>
         public void AddData(IUpdateData data)//добавляет в лист updates новую data
         {
             networkManager.AddData(data);
         }
-        public void CreateRoom(int players) //Создает комнату и запускает ожидание подключений
+
+        /// <summary>
+        /// Создает комнату и запускает ожидание подключений
+        /// </summary>
+        /// <param name="players"></param>
+        public void CreateRoom(int players) 
         {
-            networkManager.StartWaitingForPlayers(players);
+            networkManager.Start(players);
         }
 
         //  public void StartGame() { }   принудительный запуск
-        public void EndGame() //Добавляет UpdateGameEnded и отключает игроков
+
+        /// <summary>
+        /// Добавляет UpdateGameEnded и отключает игроков
+        /// </summary>
+        public void EndGame()
         {
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
             networkManager.CloseConnection();
-        } 
-
-
-        public void Update(GameTime gameTime)
-        { 
         }
 
+        private List<GameObject> gameObjects;
+        private List<Entity> entities;  //entity
+        public void Update(GameTime gameTime) 
+        {
+            if (ticks == 3) //ОБРАБАТЫВАЕТСЯ 20 РАЗ В СЕКУНДУ
+            {
+                foreach (var go in gameObjects)
+                {
+                    go.UpdateLogic(gameTime);
+                }
+                ticks = 0;
+                networkManager.SendData();
+            }
+            ticks++;
+        }
+
+        
+
+        /// <summary>
+        /// Регистрирует игровой объект
+        /// </summary>
+        /// <param name="gameObject"></param>
         public void RegisterEntity(GameObject gameObject)
         {
           gameObjects.Add(gameObject);
