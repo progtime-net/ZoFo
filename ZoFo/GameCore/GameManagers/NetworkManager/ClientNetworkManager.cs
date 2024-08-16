@@ -57,7 +57,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         }
 
         /// <summary>
-        /// создается 
+        /// создается одиночная комната к которой ты подключаешься
         /// </summary>
         public void JoinYourself()  // single player
         {
