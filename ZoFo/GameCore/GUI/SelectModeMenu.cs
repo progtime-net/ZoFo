@@ -39,7 +39,22 @@ public class SelectModeMenu : AbstractGUI
         singleButton.LeftButtonPressed += () => 
         {
             // single
+            Server server = new Server();
+            Client client = new Client();
+            server.CreateRoom(1);
+            client.JoinYourself();
             
+            AppManager.Instance.SetServer(server);
+            AppManager.Instance.SetClient(client);
+            AppManager.Instance.ChangeState(GameState.HostPlaying);
+            AppManager.Instance.SetGUI(new HUD());
+
+            //server.CreateRoom(1);
+            //client.JoinYourself();
+            server.StartGame();
+
+            string key = client.IsConnected.ToString();
+            AppManager.Instance.debugHud.Set(key,"SinglePlayer");
             // ваш код здесь 
         };
         Elements.Add(singleButton);
@@ -56,7 +71,14 @@ public class SelectModeMenu : AbstractGUI
         {
             AppManager.Instance.SetGUI(new SelectingServerGUI());
             // multi 
-            
+            Server server = new Server();   //Server Logic MultiPlayer
+            Client client = new Client();
+            server.CreateRoom(5);
+            client.JoinRoom("127.0.0.1");   //указать айпишник
+            AppManager.Instance.SetServer(server);
+            AppManager.Instance.SetClient(client);
+            string key = client.IsConnected.ToString();
+            AppManager.Instance.debugHud.Set(key, "MultiPlayer");
             // ваш код здесь 
         };
         Elements.Add(optionButton);

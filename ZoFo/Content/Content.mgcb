@@ -34,6 +34,63 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Font3.spritefont
 
+#begin MapData/TileMaps/main.tmj
+/copy:MapData/TileMaps/main.tmj
+
+#begin MapData/TileMaps/main.tmx
+/copy:MapData/TileMaps/main.tmx
+
+#begin MapData/TileSets/TileSet 1.tsj
+/copy:MapData/TileSets/TileSet 1.tsj
+
+#begin sounds/Loot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Loot.wav
+
+#begin sounds/Odevanie odezdi.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Odevanie odezdi.wav
+
+#begin sounds/Pieot wodichky.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Pieot wodichky.wav
+
+#begin sounds/Sshetchik geigera.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Sshetchik geigera.wav
+
+#begin sounds/Tabletki 2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Tabletki 2.wav
+
+#begin sounds/Tabletki.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sounds/Tabletki.mp3
+
+#begin sounds/Zombi napal.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Zombi napal.wav
+
+#begin sounds/Zombi stoit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Zombi stoit.wav
+
 #begin Textures/GUI/background/base.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -201,4 +258,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/switch.png
+
+#begin Textures/TileSets/TilesetFloor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSets/TilesetFloor.png;Textures/TileSets/TileSet 1.png
 
