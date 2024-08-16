@@ -17,7 +17,10 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         public List<CollisionComponent> CollisionComponent;
         public List<CollisionComponent> TriggerComponent;
 
-        
+        public void RegisterComponent()
+        {
+            
+        }
 
         public static bool CheckComponentCollision(List<CollisionComponent> collisionComponents, CollisionComponent component)
         {
