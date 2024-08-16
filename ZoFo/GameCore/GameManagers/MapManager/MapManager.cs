@@ -17,7 +17,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
     public class MapManager
     {
 
-        private static readonly string _templatePath = "TileMaps/{0}.tmj";
+        private static readonly string _templatePath = "Content/MapData/TileMaps/{0}.tmj";
         private static readonly float _scale = 1.0f;
         private List<TileSet> _tileSets = new List<TileSet>();
 
@@ -38,7 +38,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
             List<TileSet> tileSets = new List<TileSet>();
             foreach (TileSetInfo tileSetInfo in tileMap.TileSets) 
             {
-                TileSet tileSet = LoadTileSet(tileSetInfo.Source);
+                TileSet tileSet = LoadTileSet("Content/MapData/"+tileSetInfo.Source);
                 tileSet.FirstGid = tileSetInfo.FirstGid;
                 tileSets.Add(tileSet);
             }
@@ -55,18 +55,18 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                             {
                                 int number = chunk.Data[i] - tileSet.FirstGid;
 
-                                int relativeColumn = number % tileSet.Columns * tileSet.TileWidth;
-                                int relativeRow = number / tileSet.Columns * tileSet.TileHeight;
+                                int relativeColumn = (number % tileSet.Columns) * tileSet.TileWidth;
+                                int relativeRow = (number / tileSet.Columns) * tileSet.TileHeight;
 
                                 Rectangle sourceRectangle = new Rectangle(relativeColumn * tileSet.TileWidth, relativeRow * tileSet.TileHeight,
-                                    relativeColumn * tileSet.TileWidth + tileSet.TileWidth, relativeRow * tileSet.TileHeight + tileSet.TileHeight);
+                                   /* relativeColumn * tileSet.TileWidth +*/ tileSet.TileWidth, /*relativeRow * tileSet.TileHeight +*/ tileSet.TileHeight);
 
-                                Vector2 position = new Vector2(i % chunk.Width, i / chunk.Height);
+                                Vector2 position = new Vector2((i % chunk.Width) * tileSet.TileWidth + chunk.X * chunk.Width, (i / chunk.Height)*tileSet.TileHeight + chunk.Y * chunk.Height) ;
 
                                 switch (layer.Class)
                                 {
                                     case "Tile":
-                                        new MapObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, tileSet.Name);
+                                        AppManager.Instance.server.RegisterGameObject(new MapObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, "Textures\\TileSets\\"+tileSet.Name)); //fix naming
                                         break;
                                     case "StopObject":
                                         // new StopObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, tileSet.Name);
@@ -91,8 +91,12 @@ namespace ZoFo.GameCore.GameManagers.MapManager
         {
             using (StreamReader reader = new StreamReader(path))
             {
+                var options = new JsonSerializerOptions //TODO Remove
+                {
+                    PropertyNameCaseInsensitive = true
+                };
                 string data = reader.ReadToEnd();
-                return JsonSerializer.Deserialize<TileSet>(data);
+                return JsonSerializer.Deserialize<TileSet>(data, options);
             }
         }
     }

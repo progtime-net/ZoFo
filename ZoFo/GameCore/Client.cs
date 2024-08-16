@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.MapObjects;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
+using ZoFo.GameCore.GameObjects.MapObjects.Tiles;
+using System.Drawing;
 
 namespace ZoFo.GameCore
 {
@@ -45,11 +48,36 @@ namespace ZoFo.GameCore
             networkManager.JoinRoom(ip);
         }
         public void JoinYourself() { networkManager.JoinYourself(); }
+
+
+        List<MapObject> mapObjects = new List<MapObject>();
+        /// <summary>
+        /// Клиент должен обнговлять игру анимаций
+        /// </summary>
+        /// <param name="gameTime"></param>
         internal void Update(GameTime gameTime)
         {
         }
         internal void Draw(SpriteBatch spriteBatch)
         {
+            for (int i = 0; i < mapObjects.Count; i++)
+            {
+                mapObjects[i].Draw(spriteBatch);
+            }
+        }
+
+        internal void GotData(IUpdateData update)
+        {
+            if (update is UpdateTileCreated)
+            {
+                mapObjects.Add(
+                new MapObject(
+                    (update as UpdateTileCreated).Position,
+                    (update as UpdateTileCreated).Size.ToVector2(),
+                    (update as UpdateTileCreated).sourceRectangle,
+                    (update as UpdateTileCreated).tileSetName
+                    ));
+            }
         }
     }
 }
