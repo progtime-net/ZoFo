@@ -15,6 +15,10 @@ namespace ZoFo.GameCore.ZoFo_graphics
 
     public class GraphicsComponent
     {
+        public Rectangle ObjectDrawRectangle { get; set; }
+
+
+
         public event Action<string> actionOfAnimationEnd;
         private List<AnimationContainer> animations;
         private List<Texture2D> textures;
