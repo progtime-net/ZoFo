@@ -37,7 +37,7 @@ public class OptionsGUI : AbstractGUI
             { rectangle = new Rectangle(width / 2, height / 3, width / 10, height / 20), indentation = 4, textureName = "Textures\\GUI\\Switch_backgrownd", MinValue = 0, MaxValue = 1 };
             slider_OverallVolume.SliderChanged += (newVal) =>
             {
-                
+                AppManager.Instance.SettingsManager.SetMainVolume(newVal);
             };
             Elements.Add(slider_OverallVolume);
 
@@ -49,7 +49,7 @@ public class OptionsGUI : AbstractGUI
             { rectangle = new Rectangle(width / 2, height / 3 + (height / 20 + height / 40) * 1, width / 10, height / 20), indentation = 4, textureName = "Textures\\GUI\\Switch_backgrownd", MinValue = 0, MaxValue = 1 };
             slider_MusicVolume.SliderChanged += (newVal) =>
             {
-                
+                AppManager.Instance.SettingsManager.SetMusicVolume(newVal);
             }; 
             Elements.Add(slider_MusicVolume);
 
@@ -62,7 +62,7 @@ public class OptionsGUI : AbstractGUI
             { rectangle = new Rectangle(width / 2, height / 3 + (height / 20 + height / 40) * 2, width / 10, height / 20), indentation = 4, textureName = "Textures\\GUI\\Switch_backgrownd", MinValue = 0, MaxValue = 1 };
             slider_EffectsVolume.SliderChanged += (newVal) =>
             {
-                
+                AppManager.Instance.SettingsManager.SetSoundEffectsVolume(newVal);
             };
             Elements.Add(slider_EffectsVolume);
 
@@ -82,7 +82,7 @@ public class OptionsGUI : AbstractGUI
             var button_FullScreen = new CheckBox(Manager) { rectangle = new Rectangle(width / 2, height / 3 + (height / 20 + height / 40) * 4, width / 40, width / 40) };
             button_FullScreen.Checked += (newCheckState) =>
             {
-                
+                AppManager.Instance.SettingsManager.SetIsFullScreen(newCheckState);
             };
             Elements.Add(button_FullScreen);
 

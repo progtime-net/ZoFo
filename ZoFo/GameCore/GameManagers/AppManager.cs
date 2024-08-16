@@ -36,6 +36,7 @@ namespace ZoFo.GameCore.GameManagers
         
         public InputManager InputManager;
         public ItemManager.ItemManager ItemManager;
+        public SettingsManager SettingsManager;
 
         public AnimationBuilder animationBuilder{get;set; }
 
@@ -53,8 +54,9 @@ namespace ZoFo.GameCore.GameManagers
 
             Instance = this;
             InputManager = new InputManager();
-            
-            
+            SettingsManager = new SettingsManager();
+            SettingsManager.LoadSettings();
+
 
             currentGUI = new MainMenuGUI();
             debugHud = new DebugHUD();
