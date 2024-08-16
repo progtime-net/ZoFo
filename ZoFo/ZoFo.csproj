@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
@@ -10,6 +10,11 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <ApplicationIcon>Icon.ico</ApplicationIcon>
     </PropertyGroup>
+    <ItemGroup>
+      <Compile Remove="GameCore\GameObjects\BaseClasses\**" />
+      <EmbeddedResource Remove="GameCore\GameObjects\BaseClasses\**" />
+      <None Remove="GameCore\GameObjects\BaseClasses\**" />
+    </ItemGroup>
     <ItemGroup>
         <None Remove="Icon.ico" />
         <None Remove="Icon.bmp" />

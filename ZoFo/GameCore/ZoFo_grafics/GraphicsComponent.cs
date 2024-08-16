@@ -1,6 +1,5 @@
-﻿/*using ZoFo.GameCore.GameObjects;
+﻿using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameManagers;
-using ZoFo.GameCore.GameManagers.NetworkManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -85,7 +84,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
             animations = new List<AnimationContainer>();
             foreach (var id in animationsId)
             {
-                animations.Add(AppManager.Instance.AnimationBuilder.Animations.Find(x => x.Id == id));
+                animations.Add(AppManager.Instance.animationBuilder.Animations.Find(x => x.Id == id));
                 if (id == neitralAnimationId)
                 {
                     neitralAnimation = animations.Last();
@@ -110,6 +109,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
 
         public void StartAnimation(string startedanimationId)
         {
+            /*
             if (AppManager.Instance.multiPlayerStatus != MultiPlayerStatus.SinglePlayer)
             {
                 LivingEntity entity = AppManager.Instance.GameManager.livingEntities.Find(x => x.id == parentId);
@@ -118,6 +118,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
                     AppManager.Instance.NetworkTasks.Add(new NetworkTask(parentId, startedanimationId, Vector2.Zero));
                 }
             }
+            */
             currentFrame = 0;
             currentAnimation = animations.Find(x => x.Id == startedanimationId);
 
@@ -253,6 +254,8 @@ namespace ZoFo.GameCore.ZoFo_graphics
             CameraPosition.X -= 200;
             CameraPosition.Y -= 120;
             
+            // TODO
+            /*
             if (CameraPosition.X > AppManager.Instance.GameManager.CameraBorder.Y - 460)
             {
                 CameraPosition.X = (int)AppManager.Instance.GameManager.CameraBorder.Y - 460;
@@ -270,9 +273,10 @@ namespace ZoFo.GameCore.ZoFo_graphics
             {
                 CameraPosition.Y = (int)AppManager.Instance.GameManager.CameraBorder.W - 240;
             }
+            
             AppManager.Instance.DebugHUD.Set("CameraPosition", $"{CameraPosition.X}, {CameraPosition.Y}");
+        */
         }
         public static Point CameraPosition = new Point(-700, 300);
     }
 }
-*/
