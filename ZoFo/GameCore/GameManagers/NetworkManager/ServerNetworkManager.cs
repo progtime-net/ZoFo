@@ -57,7 +57,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public void AddData(IUpdateData data)
         {
             updates.Add(data);
-        }
+        } 
         public void CloseConnection() //По сути коне игры и отключение игроков
         {
             foreach (var item in clients)

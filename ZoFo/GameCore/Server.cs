@@ -56,8 +56,8 @@ namespace ZoFo.GameCore
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
             networkManager.CloseConnection();
-        } 
-       public void Update(GameTime gameTime)
+        }  
+        public void Update(GameTime gameTime) 
         { 
         }
 

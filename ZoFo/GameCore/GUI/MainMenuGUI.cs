@@ -39,14 +39,8 @@ public class MainMenuGUI : AbstractGUI
             fontName = "Fonts\\Font"
         };
         playButton.LeftButtonPressed += () =>
-        {
-            Server server = new Server();   //Server Logic SinglePlayer
-            Client client = new Client();
-            server.CreateRoom(1);
-            client.JoinYourself();
-            AppManager.Instance.SetServer(server);
-            AppManager.Instance.SetClient(client);
-            AppManager.Instance.ChangeState(GameState.HostPlaying);
+        {   
+            AppManager.Instance.SetGUI(new SelectModeMenu()); 
         };
         Elements.Add(playButton);
         Button optionButton = new Button(Manager)

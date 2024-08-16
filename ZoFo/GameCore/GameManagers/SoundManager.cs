@@ -114,7 +114,7 @@ namespace ZoFo.GameCore.GameManagers
             SoundEffect = soundEffect;
             Position = position;
         }
-       /*/ public void UpdateVolume(Vector2 playerPos)
+        /*/public void UpdateVolume(Vector2 playerPos)
         {
             if (isAmbient)
                 SoundEffect.Volume = baseVolume * AppManager.Instance.SettingsManager.MusicVolume * AppManager.Instance.SettingsManager.MainVolume;
