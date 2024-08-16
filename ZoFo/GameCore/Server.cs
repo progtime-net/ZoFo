@@ -16,6 +16,7 @@ namespace ZoFo.GameCore
     public class Server
     {
         private ServerNetworkManager networkManager;
+        private int ticks = 0;
         public Server()
         {
             networkManager = new ServerNetworkManager();
@@ -61,11 +62,19 @@ namespace ZoFo.GameCore
         private List<Entity> entities;  //entity
         public void Update(GameTime gameTime) 
         {
-            foreach (var go in gameObjects)
+            if (ticks == 3) //ОБРАБАТЫВАЕТСЯ 20 РАЗ В СЕКУНДУ
             {
-                go.UpdateLogic(gameTime);
+                foreach (var go in gameObjects)
+                {
+                    go.UpdateLogic(gameTime);
+                }
+                ticks = 0;
+                networkManager.SendData();
             }
+            ticks++;
         }
+
+        
 
         /// <summary>
         /// Регистрирует игровой объект

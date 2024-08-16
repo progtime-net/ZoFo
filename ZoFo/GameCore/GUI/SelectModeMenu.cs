@@ -65,12 +65,14 @@ public class SelectModeMenu : AbstractGUI
         {
             AppManager.Instance.SetGUI(new SelectingServerGUI());
             // multi 
-            Server server = new Server();   //Server Logic SinglePlayer
+            Server server = new Server();   //Server Logic MultiPlayer
             Client client = new Client();
-            server.CreateRoom(1);
-            client.JoinYourself();
+            server.CreateRoom(5);
+            client.JoinRoom("127.0.0.1");   //указать айпишник
             AppManager.Instance.SetServer(server);
             AppManager.Instance.SetClient(client);
+            string key = client.IsConnected.ToString();
+            AppManager.Instance.debugHud.Set(key, "MultiPlayer");
             // ваш код здесь 
         };
         Elements.Add(optionButton);
