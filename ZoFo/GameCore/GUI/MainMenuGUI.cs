@@ -39,7 +39,7 @@ public class MainMenuGUI : AbstractGUI
         };
         playButton.LeftButtonPressed += () => 
         {
-            
+            AppManager.Instance.SetGUI(new SelectModeMenu());
         };
         Elements.Add(playButton);
         Button optionButton = new Button(Manager) 
