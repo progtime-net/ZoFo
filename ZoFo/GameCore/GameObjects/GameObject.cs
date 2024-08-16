@@ -12,7 +12,6 @@ public abstract class GameObject
 {
     public Vector2 position;
 
-    private Server server;
     public Vector2 rotation; //вектор направления объекта
     public abstract GraphicsComponent graphicsComponent { get; }
 
@@ -20,8 +19,7 @@ public abstract class GameObject
     public GameObject(Vector2 position)
     {
         this.position = position;
-        server = new Server();
-        server.RegisterGameObject(this);
+        AppManager.Instance.server.RegisterGameObject(this);
 
         graphicsComponent.LoadContent();
     }
