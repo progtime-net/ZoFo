@@ -13,11 +13,16 @@ namespace ZoFo.GameCore.GameManagers.MapManager
 {
     public class MapManager
     {
-        private static readonly string _path = "/{0}.tmj";
+        private static readonly string _path = "TileMaps/{0}.tmj";
         private List<TileSet> _tileSets = new List<TileSet>();
 
+        /// <summary>
+        /// Загрузка карты. Передаётся название файла карты. По умолчанию main.
+        /// </summary>
+        /// <param name="mapName"></param>
         public void LoadMap(string mapName = "main")
         {
+            // Загрузка TileMap
             TileMap tileMap;
             using (StreamReader reader = new StreamReader(string.Format(_path, mapName)))
             {
@@ -25,6 +30,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                 tileMap = JsonSerializer.Deserialize<TileMap>(data);
             }
 
+            // Загрузка TileSet-ов по TileSetInfo
             List<TileSet> tileSets = new List<TileSet>();
             foreach (TileSetInfo tileSetInfo in tileMap.TileSets) 
             {
@@ -35,30 +41,32 @@ namespace ZoFo.GameCore.GameManagers.MapManager
 
             foreach (var chunk in tileMap.Layers[0].Chunks)
             {
-                int i = 0;
-                foreach (var id in chunk.Data)
+                for (int i = 0; i < chunk.Data.Length; i++)
                 {
                     foreach (var tileSet in tileSets)
                     {
-                        if (tileSet.FirstGid - id < 0)
+                        if (tileSet.FirstGid - chunk.Data[i] < 0)
                         {
-                            int number = id - tileSet.FirstGid;
+                            int number = chunk.Data[i] - tileSet.FirstGid;
 
                             int relativeColumn = number % tileSet.Columns * tileSet.TileWidth;
                             int relativeRow = number / tileSet.Columns * tileSet.TileHeight;
 
-                            Rectangle sourceRectangle = new Rectangle(relativeColumn * tileSet.TileWidth, relativeRow * tileSet.TileHeight, 
+                            Rectangle sourceRectangle = new Rectangle(relativeColumn * tileSet.TileWidth, relativeRow * tileSet.TileHeight,
                                 relativeColumn * tileSet.TileWidth + tileSet.TileWidth, relativeRow * tileSet.TileHeight + tileSet.TileHeight);
 
                             Vector2 position = new Vector2(i % chunk.Width, i / chunk.Height);
                         }
                     }
-                    i++;
                 }
             }
-
         }
 
+        /// <summary>
+        /// Загружает и парсит TileSet по его пути.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         private TileSet LoadTileSet(string path)
         {
             using (StreamReader reader = new StreamReader(path))
@@ -67,6 +75,5 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                 return JsonSerializer.Deserialize<TileSet>(data);
             }
         }
-
     }
 }
