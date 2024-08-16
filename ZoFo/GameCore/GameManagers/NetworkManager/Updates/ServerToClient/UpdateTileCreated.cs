@@ -11,6 +11,9 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
 
+    /// <summary>
+    /// При создании тайла
+    /// </summary>
     public class UpdateTileCreated : UpdateData
     {
         public UpdateTileCreated() { UpdateType = "UpdateTileCreated"; }

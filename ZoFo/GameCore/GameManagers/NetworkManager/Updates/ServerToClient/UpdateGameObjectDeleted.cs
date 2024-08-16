@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
-    public class UpdateGameObjectDeleted : UpdateData     //Хранит объект, который надоу удлить
+    /// <summary>
+    /// Хранит объект, который надо удлить
+    /// </summary>
+    public class UpdateGameObjectDeleted : UpdateData    
     {
         public UpdateGameObjectDeleted() { UpdateType = "UpdateGameObjectDeleted"; }
     }

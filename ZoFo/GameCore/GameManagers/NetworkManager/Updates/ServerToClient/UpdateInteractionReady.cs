@@ -1,7 +1,12 @@
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 
+/// <summary>
+///  При изменении возможности повзаимодействовать с объектом
+/// </summary>
+/// <param name="idEntity"></param>
+/// <param name="isReady"></param>
 public class UpdateInteractionReady(int idEntity, bool isReady)
-    : UpdateData // при изменении возможности повзаимодействовать с объектом
+    : UpdateData 
 {
     public int IdEntity { get; set; } = idEntity;
     public string UpdateType { get; set; }

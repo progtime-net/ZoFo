@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
-    public class UpdateLoot : UpdateData //Хранит лут
+    /// <summary>
+    /// Хранит лут
+    /// </summary>
+    public class UpdateLoot : UpdateData 
     {
       public UpdateLoot() { UpdateType = "UpdateLoot"; }
     }

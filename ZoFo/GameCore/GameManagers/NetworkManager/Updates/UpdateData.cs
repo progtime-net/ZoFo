@@ -14,6 +14,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates
     [JsonDerivedType(typeof(UpdateEntityHealth))]
     [JsonDerivedType(typeof(UpdateGameEnded))]
     [JsonDerivedType(typeof(UpdateGameObjectCreated))]
+    [JsonDerivedType(typeof(UpdateGameObjectDeleted))]
     [JsonDerivedType(typeof(UpdateLoot))]
     [JsonDerivedType(typeof(UpdatePlayerParametrs))]
     [JsonDerivedType(typeof(UpdatePosition))]
