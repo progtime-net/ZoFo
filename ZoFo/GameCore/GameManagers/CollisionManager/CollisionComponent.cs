@@ -13,7 +13,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
     {
         //поля
         public Rectangle Bounds { get; set; }
-
+        
         //остановлен ли перс
         bool doesStop;
         Rectangle stopRectangle;
@@ -28,6 +28,11 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         public CollisionComponent(int x, int y, int width, int height)
         {
             Bounds = new Rectangle(x, y, width, height);
+        }
+
+        public CollisionComponent(Rectangle bounds)
+        {
+            Bounds = bounds;
         }
 
 

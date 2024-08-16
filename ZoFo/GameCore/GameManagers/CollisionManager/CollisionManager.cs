@@ -19,12 +19,13 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
         
 
-        public static bool CheckComponentCollision(List<CollisionComponent> collisionComponents, CollisionComponent component)
+        public bool CheckComponentCollision(List<CollisionComponent> collisionComponents, CollisionComponent component)
         {
             foreach (var collisionComponent in collisionComponents)
             {
                 if (component.Bounds.IntersectsWith(collisionComponent.Bounds))
                 {
+                    Register(component);
                     return true; 
                 }
             }
@@ -47,10 +48,11 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
         //}
 
-        //public void Register(Rectangle rectangle)
-        //{
-
-        //}
+        public void Register(CollisionComponent component)
+        {
+            CollisionComponent.Add(component);
+        }
+        
 
 
     }
