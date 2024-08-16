@@ -9,7 +9,7 @@ public class StopObject : MapObject
 {
     CollisionComponent collisionComponent; 
 
-    protected StopObject(Vector2 position, Vector2 size, Rectangle sourceRectangle) : base(position, size, sourceRectangle)
+    protected StopObject(Vector2 position, Vector2 size, Rectangle sourceRectangle, string textureName) : base(position, size, sourceRectangle, textureName)
     {
     }
 }

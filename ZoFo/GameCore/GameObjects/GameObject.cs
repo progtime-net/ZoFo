@@ -18,14 +18,18 @@ public abstract class GameObject
     {
         this.position = position;
     }
-     
+    public virtual void UpdateLogic(GameTime gameTime)
+    { 
+        PlayAnimation_OnServer();
+    }
+
 
     /// <summary>
     /// Это вызывается в логике игры, которая на сервере, здесь будет вызываться уведомление об анимации
     /// </summary>
     public void PlayAnimation_OnServer()
     {
-        //TODO
+        graphicsComponent.Update();
     }
 
     #endregion
@@ -34,22 +38,35 @@ public abstract class GameObject
     #region Client Side
 
     /// <summary>
+    /// Для клиента
     /// Это вызывается в клиентской части игры
     /// </summary>
     public void PlayAnimation_OnClient()
     {
         graphicsComponent.Update();
     }
+
+    /// <summary>
+    /// Для клиента
+    /// Загрузка графического компонента
+    /// </summary>
     public void LoadContent()
     {
         graphicsComponent.LoadContent();
     }
 
-    public virtual void Update(GameTime gameTime)
+    /// <summary>
+    /// Для клиента
+    /// Обновление, которое вызывается у клиента, для просмотра анимаций
+    /// </summary>
+    public virtual void UpdateAnimations(GameTime gameTime)
     {
-        //PlayAnimation();
+        PlayAnimation_OnClient();
     }
 
+    /// <summary>
+    /// Для клиента 
+    /// </summary>
     public virtual void Draw(SpriteBatch spriteBatch)
     {
         graphicsComponent.DrawAnimation(graphicsComponent.ObjectDrawRectangle, spriteBatch);

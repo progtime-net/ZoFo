@@ -21,6 +21,10 @@ namespace ZoFo.GameCore.GameObjects.MapObjects
             _sourceRectangle = sourceRectangle;
             graphicsComponent.ObjectDrawRectangle = new Rectangle(0,0, (int)size.X, (int)size.Y);
         }
-         
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            graphicsComponent.DrawAnimation(graphicsComponent.ObjectDrawRectangle, spriteBatch, _sourceRectangle);
+        }
+
     }
 }

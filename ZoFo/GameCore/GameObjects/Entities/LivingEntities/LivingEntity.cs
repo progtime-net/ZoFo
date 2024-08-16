@@ -9,6 +9,9 @@ public class LivingEntity : Entity
 {
     public Vector2 velocity;
 
+    public LivingEntity(Vector2 position) : base(position)
+    {
+    }
 
     public void TextureLoad(SpriteBatch spriteBatch)
     {

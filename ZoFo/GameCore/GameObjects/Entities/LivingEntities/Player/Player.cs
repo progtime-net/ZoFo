@@ -9,6 +9,10 @@ public class Player : LivingEntity
     private int health;
     Server server = new Server();
 
+    public Player(Vector2 position) : base(position)
+    {
+    }
+
     public void Update(GameTime gameTime)
     { 
         // server.AddData();
