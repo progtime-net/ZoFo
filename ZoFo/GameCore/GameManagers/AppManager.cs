@@ -132,6 +132,8 @@ namespace ZoFo.GameCore.GameManagers
         public void SetGUI(AbstractGUI gui)
         {
             currentGUI = gui;
+            currentGUI.Initialize();
+            currentGUI.LoadContent();
 
             //TODO
         }

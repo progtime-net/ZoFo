@@ -16,13 +16,12 @@ namespace ZoFo.GameCore.GUI;
 public class MainMenuGUI : AbstractGUI
 {
     private DrawableUIElement menuBackground;
-    Color mainBackgroundColor = Color.White;
     protected override void CreateUI()
     {
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
         
-        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = mainBackgroundColor, textureName = "Textures\\GUI\\MenuBackground" };
+        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures\\GUI\\MenuBackground" };
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content);
         
@@ -54,7 +53,7 @@ public class MainMenuGUI : AbstractGUI
         };
         optionButton.LeftButtonPressed += () => 
         {
-            
+            AppManager.Instance.SetGUI(new OptionsGUI());
         };
         Elements.Add(optionButton);
         Button exitButton = new Button(Manager) 
