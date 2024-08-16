@@ -15,9 +15,7 @@ namespace ZoFo.GameCore
 {
     public class Server
     {
-        private List<GameObject> gameObjects;
         private ServerNetworkManager networkManager;
-        private List<Entity> entity;  //entity
         public Server()
         {
             networkManager = new ServerNetworkManager();
@@ -30,13 +28,14 @@ namespace ZoFo.GameCore
             //ТУТ Switch case будет честное слово
         }
         /// <summary>
-        /// Для красоты)   Отдел Серверов
+        /// Для красоты)   Отдел Серверов 
         /// </summary>
         /// <param name="data"></param>
         public void AddData(IUpdateData data)//добавляет в лист updates новую data
         {
             networkManager.AddData(data);
         }
+
         /// <summary>
         /// Создает комнату и запускает ожидание подключений
         /// </summary>
@@ -56,11 +55,22 @@ namespace ZoFo.GameCore
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
             networkManager.CloseConnection();
-        }  
-        public void Update(GameTime gameTime) 
-        { 
         }
 
+        private List<GameObject> gameObjects;
+        private List<Entity> entities;  //entity
+        public void Update(GameTime gameTime) 
+        {
+            foreach (var go in gameObjects)
+            {
+                go.UpdateLogic(gameTime);
+            }
+        }
+
+        /// <summary>
+        /// Регистрирует игровой объект
+        /// </summary>
+        /// <param name="gameObject"></param>
         public void RegisterEntity(GameObject gameObject)
         {
           gameObjects.Add(gameObject);

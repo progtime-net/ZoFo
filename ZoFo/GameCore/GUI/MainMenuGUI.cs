@@ -39,8 +39,8 @@ public class MainMenuGUI : AbstractGUI
             fontName = "Fonts\\Font"
         };
         playButton.LeftButtonPressed += () =>
-        {   
-            AppManager.Instance.SetGUI(new SelectModeMenu()); 
+        {
+            AppManager.Instance.SetGUI(new SelectModeMenu());
         };
         Elements.Add(playButton);
         Button optionButton = new Button(Manager)
