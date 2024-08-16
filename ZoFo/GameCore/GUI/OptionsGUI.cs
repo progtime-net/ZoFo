@@ -30,11 +30,11 @@ public class OptionsGUI : AbstractGUI
         
 
             Label label_OverallVolume = new Label(Manager)
-            { fontName = "Fonts\\Font", scale = 0.2f, text = "All Volume", fontColor = Color.White, rectangle = new Rectangle(width / 3, height / 3, 50, 50), mainColor = Color.Transparent, textAligment = MonogameLibrary.UI.Enums.TextAligment.Left };
+            { fontName = "Fonts\\Font", scale = 0.2f, text = "All Volume", fontColor = Color.White, rectangle = new Rectangle(width / 3, height / 3, width / 40, height / 20), mainColor = Color.Transparent, textAligment = MonogameLibrary.UI.Enums.TextAligment.Left };
             Elements.Add(label_OverallVolume);
 
             var slider_OverallVolume = new Slider(Manager)
-            { rectangle = new Rectangle(width / 2, height / 3, width / 10, height / 20), indentation = 4, textureName = "Textures\\GUI\\checkbox_on", MinValue = 0, MaxValue = 1 };
+            { rectangle = new Rectangle(width / 2, height / 3, width / 10, height / 20), indentation = 4, textureName = "Textures\\GUI\\Switch_backgrownd", MinValue = 0, MaxValue = 1 };
             slider_OverallVolume.SliderChanged += (newVal) =>
             {
                 
@@ -42,11 +42,11 @@ public class OptionsGUI : AbstractGUI
             Elements.Add(slider_OverallVolume);
 
             Label label_MusicVolume = new Label(Manager)
-            { fontName = "Fonts\\Font", scale = 0.2f, text = "Music Volume", fontColor = Color.White, rectangle = new Rectangle(width / 3, height / 3 + (height / 20 + height / 40) * 1, 50, 50), mainColor = Color.Transparent, textAligment = MonogameLibrary.UI.Enums.TextAligment.Left };
+            { fontName = "Fonts\\Font", scale = 0.2f, text = "Music Volume", fontColor = Color.White, rectangle = new Rectangle(width / 3, height / 3 + (height / 20 + height / 40) * 1, width / 40, height / 20), mainColor = Color.Transparent, textAligment = MonogameLibrary.UI.Enums.TextAligment.Left };
             Elements.Add(label_MusicVolume);
             
             var slider_MusicVolume = new Slider(Manager)
-            { rectangle = new Rectangle(width / 2, height / 3 + (height / 20 + height / 40) * 1, width / 10, height / 20), indentation = 4, textureName = "Textures\\GUI\\checkboxs_on", MinValue = 0, MaxValue = 1 };
+            { rectangle = new Rectangle(width / 2, height / 3 + (height / 20 + height / 40) * 1, width / 10, height / 20), indentation = 4, textureName = "Textures\\GUI\\Switch_backgrownd", MinValue = 0, MaxValue = 1 };
             slider_MusicVolume.SliderChanged += (newVal) =>
             {
                 
@@ -55,11 +55,11 @@ public class OptionsGUI : AbstractGUI
 
 
             Label label_EffectsVolume = new Label(Manager)
-            { fontName = "Fonts\\Font", scale = 0.2f, text = "Effects Volume", fontColor = Color.White, rectangle = new Rectangle(width / 3, height / 3 + (height / 20 + height / 40) * 2, 50, 50), mainColor = Color.Transparent, textAligment = MonogameLibrary.UI.Enums.TextAligment.Left };
+            { fontName = "Fonts\\Font", scale = 0.2f, text = "Effects Volume", fontColor = Color.White, rectangle = new Rectangle(width / 3, height / 3 + (height / 20 + height / 40) * 2, width / 40, height / 20), mainColor = Color.Transparent, textAligment = MonogameLibrary.UI.Enums.TextAligment.Left };
             Elements.Add(label_EffectsVolume);
 
             var slider_EffectsVolume = new Slider(Manager)
-            { rectangle = new Rectangle(width / 2, height / 3 + (height / 20 + height / 40) * 2, width / 10, height / 20), indentation = 4, textureName = "Textures\\GUI\\checkboxs_on", MinValue = 0, MaxValue = 1 };
+            { rectangle = new Rectangle(width / 2, height / 3 + (height / 20 + height / 40) * 2, width / 10, height / 20), indentation = 4, textureName = "Textures\\GUI\\Switch_backgrownd", MinValue = 0, MaxValue = 1 };
             slider_EffectsVolume.SliderChanged += (newVal) =>
             {
                 
@@ -67,7 +67,7 @@ public class OptionsGUI : AbstractGUI
             Elements.Add(slider_EffectsVolume);
 
             Label lblSwitchMode = new Label(Manager)
-            { fontName = "Fonts\\Font", scale = 0.2f, text = "Left/Right Mode", fontColor = Color.White, rectangle = new Rectangle(width / 3, height / 3 + (height / 20 + height / 40) * 3, 50, 50), mainColor = Color.Transparent};
+            { fontName = "Fonts\\Font", scale = 0.2f, text = "Resolution set", fontColor = Color.White, rectangle = new Rectangle(width / 3, height / 3 + (height / 20 + height / 40) * 3, width / 40, height / 20), mainColor = Color.Transparent, textAligment = MonogameLibrary.UI.Enums.TextAligment.Left };
             Elements.Add(lblSwitchMode);
 
             //var button_left_right_mode = new CheckBox(Manager) { rectangle = new Rectangle(rightBorder - checkboxlength, lblSwitchMode.rectangle.Y - 12, checkboxlength, checkboxlength) };
@@ -76,10 +76,10 @@ public class OptionsGUI : AbstractGUI
 
 
             Label label_IsFullScreen = new Label(Manager)
-            { fontName = "Fonts\\Font", scale = 0.2f, text = "Full Screen", fontColor = Color.White, rectangle = new Rectangle(width / 3, height / 3 + (height / 20 + height / 40) * 4, 50, 50), mainColor = Color.Transparent};
+            { fontName = "Fonts\\Font", scale = 0.2f, text = "Full Screen", fontColor = Color.White, rectangle = new Rectangle(width / 3, height / 3 + (height / 20 + height / 40) * 4, width / 40, width / 40), mainColor = Color.Transparent, textAligment = MonogameLibrary.UI.Enums.TextAligment.Left };
             Elements.Add(label_IsFullScreen);
 
-            var button_FullScreen = new CheckBox(Manager) { rectangle = new Rectangle(width / 2, height / 3 + (height / 20 + height / 40) * 4, width / 30, width / 30) };
+            var button_FullScreen = new CheckBox(Manager) { rectangle = new Rectangle(width / 2, height / 3 + (height / 20 + height / 40) * 4, width / 40, width / 40) };
             button_FullScreen.Checked += (newCheckState) =>
             {
                 
@@ -88,11 +88,11 @@ public class OptionsGUI : AbstractGUI
 
 
             Button bTExit = new Button(Manager)
-            { fontName = "Fonts\\Font", scale = 0.2f, text = "<-", rectangle = new Rectangle(width / 30, height / 30, 40, 40), textureName = "Textures\\GUI\\checkboxs_off" };
+            { fontName = "Fonts\\Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures\\GUI\\checkboxs_off"};
             Elements.Add(bTExit);
             bTExit.LeftButtonPressed += () =>
             {
-                
+                AppManager.Instance.SetGUI(new MainMenuGUI());
             };
         
     }
