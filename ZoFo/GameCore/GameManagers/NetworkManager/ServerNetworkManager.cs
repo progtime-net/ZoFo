@@ -22,7 +22,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private IPEndPoint endPoint;
         private Socket socket;
         private List<Socket> clients;
-        private List<IUpdateData> updates;
+        public List<IUpdateData> updates;
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
         Dictionary<Socket, Thread> managerThread;
@@ -39,7 +39,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             managerThread = new Dictionary<Socket, Thread>();
             clients = new List<Socket>();
-            updates = new List<IUpdateData>();
+            updates = new List<UpdateData>();
             managerThread = new Dictionary<Socket, Thread>();
             socket.Bind(endPoint);
         }
@@ -49,6 +49,14 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// </summary>
         public void SendData() 
         {
+            for (int i = 0; i < updates.Count; i++)
+            {
+
+                AppManager.Instance.client.GotData(updates[i]);
+            }
+            updates.Clear();
+            return; //TODO TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK
+
             string data = JsonSerializer.Serialize(updates);
             var databytes = Encoding.UTF8.GetBytes(data);
             foreach (var item in clients)
@@ -61,7 +69,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// добавляет в лист updates новую data
         /// </summary>
         /// <param name="data"></param>
-        public void AddData(IUpdateData data)
+        public void AddData(UpdateData data)
         {
             updates.Add(data);
         }

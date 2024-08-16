@@ -39,13 +39,22 @@ public class SelectModeMenu : AbstractGUI
         singleButton.LeftButtonPressed += () => 
         {
             // single
-            Server server = new Server();   //Server Logic SinglePlayer
+            Server server = new Server();
             Client client = new Client();
+<<<<<<< HEAD
             server.CreateRoom(1);
             client.JoinYourself();
+            
+=======
+>>>>>>> e9698a8669e52b8738987a7a6ccb79c6726f91ac
             AppManager.Instance.SetServer(server);
             AppManager.Instance.SetClient(client);
             AppManager.Instance.ChangeState(GameState.HostPlaying);
+            AppManager.Instance.SetGUI(new HUD());
+
+            //server.CreateRoom(1);
+            //client.JoinYourself();
+            server.StartGame();
 
             string key = client.IsConnected.ToString();
             AppManager.Instance.debugHud.Set(key,"SinglePlayer");
