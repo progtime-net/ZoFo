@@ -47,15 +47,9 @@ namespace ZoFo.GameCore
         {
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
-<<<<<<< Updated upstream
             networkManager.CloseConnection();
         } 
-        internal void Update(GameTime gameTime)
-=======
-        }
-
-        public void Update(GameTime gameTime)
->>>>>>> Stashed changes
+       public void Update(GameTime gameTime)
         { 
         }
 
