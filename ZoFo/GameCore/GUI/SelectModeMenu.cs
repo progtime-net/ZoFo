@@ -39,7 +39,13 @@ public class SelectModeMenu : AbstractGUI
         playButton.LeftButtonPressed += () => 
         {
             // single
-            
+            Server server = new Server();   //Server Logic SinglePlayer
+            Client client = new Client();
+            server.CreateRoom(1);
+            client.JoinYourself();
+            AppManager.Instance.SetServer(server);
+            AppManager.Instance.SetClient(client);
+            AppManager.Instance.ChangeState(GameState.HostPlaying);
             // ваш код здесь 
         };
         Elements.Add(playButton);
