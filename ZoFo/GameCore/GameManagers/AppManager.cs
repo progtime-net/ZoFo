@@ -114,9 +114,8 @@ namespace ZoFo.GameCore.GameManagers
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             
-
-            debugHud.Draw(_spriteBatch);
             currentGUI.Draw(_spriteBatch);
+            debugHud.Draw(_spriteBatch);
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
