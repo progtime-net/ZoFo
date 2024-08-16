@@ -12,7 +12,7 @@ namespace ZoFo.GameCore
 {
     public class Client
     {
-        ClientNetworkManager networkManager;
+        public ClientNetworkManager networkManager;
         public Client()
         {
             networkManager = new ClientNetworkManager();

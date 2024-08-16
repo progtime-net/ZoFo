@@ -39,7 +39,10 @@ public class SelectModeMenu : AbstractGUI
         playButton.LeftButtonPressed += () => 
         {
             // single
-            
+            Server server = new Server();
+            Client client = new Client();
+            server.CreateRoom(2);
+            TextBox textBox = new TextBox(Manager) { text = client.networkManager.SocketConnected().ToString()};
             // ваш код здесь 
         };
         Elements.Add(playButton);
