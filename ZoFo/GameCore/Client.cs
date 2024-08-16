@@ -29,7 +29,7 @@ namespace ZoFo.GameCore
 
         public void JoinRoom(){ }
 
-        public void JoinYourself(){ }
+        public void JoinYourself(){ networkManager.JoinYourself(); }
 
         internal void Update(GameTime gameTime)
         { 

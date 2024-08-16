@@ -20,9 +20,9 @@ namespace ZoFo.GameCore.GameManagers
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        
-        
-        
+
+
+
         public static AppManager Instance { get; private set; }
         public GameState gamestate;
         public AbstractGUI currentGUI;
@@ -31,13 +31,13 @@ namespace ZoFo.GameCore.GameManagers
         public Client client;
         public Server server;
 
-            
+
         #region Managers
-        
+
         public InputManager InputManager;
         public ItemManager.ItemManager ItemManager;
 
-        public AnimationBuilder animationBuilder{get;set; }
+        public AnimationBuilder animationBuilder { get; set; }
 
         #endregion
 
@@ -45,16 +45,16 @@ namespace ZoFo.GameCore.GameManagers
         {
             _graphics = new GraphicsDeviceManager(this);
             SetResolution(CurentScreenResolution.X, CurentScreenResolution.Y);
-            FulscrreenSwitch();
-            
-            
+            // FulscrreenSwitch();
+
+
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
             Instance = this;
             InputManager = new InputManager();
-            
-            
+
+
 
             currentGUI = new MainMenuGUI();
             debugHud = new DebugHUD();
@@ -65,7 +65,7 @@ namespace ZoFo.GameCore.GameManagers
         {
             currentGUI.Initialize();
             debugHud.Initialize();
-            
+
 
 
             base.Initialize();
@@ -86,9 +86,9 @@ namespace ZoFo.GameCore.GameManagers
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
+
             debugHud.Set("key", "value");
-            
+
             InputManager.Update();
             currentGUI.Update(gameTime);
             switch (gamestate)
@@ -113,7 +113,7 @@ namespace ZoFo.GameCore.GameManagers
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            
+
 
             debugHud.Draw(_spriteBatch);
             currentGUI.Draw(_spriteBatch);
@@ -121,7 +121,7 @@ namespace ZoFo.GameCore.GameManagers
             {
                 case GameState.ClientPlaying:
                 case GameState.HostPlaying:
-                    client.Draw(_spriteBatch); 
+                    client.Draw(_spriteBatch);
                     break;
                 case GameState.NotPlaying:
                 default:
@@ -136,7 +136,7 @@ namespace ZoFo.GameCore.GameManagers
         }
         public void SetGUI(AbstractGUI gui)
         {
-            currentGUI = gui; 
+            currentGUI = gui;
             currentGUI.Initialize();
             currentGUI.LoadContent();
 
@@ -158,5 +158,8 @@ namespace ZoFo.GameCore.GameManagers
         {
             _graphics.IsFullScreen = !_graphics.IsFullScreen;
         }
+
+        public void SetServer(Server server) { this.server = server; }
+        public void SetClient(Client client) { this.client = client; }
     }
 }

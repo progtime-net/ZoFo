@@ -39,7 +39,7 @@ namespace ZoFo.GameCore
         }
         public void CreateRoom(int players) //Создает комнату и запускает ожидание подключений
         {
-            networkManager.StartWaitingForPlayers(players);
+            networkManager.Start(players);
         }
 
         //  public void StartGame() { }   принудительный запуск
