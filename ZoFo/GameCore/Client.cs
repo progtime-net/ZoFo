@@ -66,7 +66,7 @@ namespace ZoFo.GameCore
             }
         }
 
-        internal void GotData(IUpdateData update)
+        internal void GotData(UpdateData update)
         {
             if (update is UpdateTileCreated)
             {

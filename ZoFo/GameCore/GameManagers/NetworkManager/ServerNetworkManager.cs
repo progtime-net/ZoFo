@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -21,7 +22,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private IPEndPoint endPoint;
         private Socket socket;
         private List<Socket> clients;
-        public List<IUpdateData> updates;
+        public List<UpdateData> updates;
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
         Dictionary<Socket, Thread> managerThread;

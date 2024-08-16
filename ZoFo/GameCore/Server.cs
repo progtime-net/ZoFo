@@ -29,7 +29,7 @@ namespace ZoFo.GameCore
         //TODO Comment pls
         public void OnDataSend(string data)
         {
-            List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
+            List<UpdateData> updateDatas = JsonSerializer.Deserialize<List<UpdateData>>(data);
             for (int i = 0; i < updateDatas.Count; i++)
             {
                 ProcessIUpdateData(updateDatas[i]);
@@ -39,7 +39,7 @@ namespace ZoFo.GameCore
         /// Обработка апдейтсов, которые нам прислал клиент
         /// </summary>
         /// <param name="updateData"></param>
-        public void ProcessIUpdateData(IUpdateData updateData)
+        public void ProcessIUpdateData(UpdateData updateData)
         {
 
             //ТУТ Switch case будет честное слово
@@ -87,8 +87,7 @@ namespace ZoFo.GameCore
             networkManager.AddData(gameEnded);
             networkManager.CloseConnection();
         }
-        #endregion
-        private List<GameObject> gameObjects;
+        private List<GameObject> gameObjects = new List<GameObject>();
         private List<Entity> entities;  //entity
         public void Update(GameTime gameTime)
         {
@@ -125,4 +124,5 @@ namespace ZoFo.GameCore
             }
         }
     }
+    #endregion
 }
