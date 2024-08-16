@@ -58,7 +58,7 @@ namespace ZoFo.GameCore
             networkManager.CloseConnection();
         }
 
-        private List<GameObject> gameObjects;
+        private List<GameObject> gameObjects = new List<GameObject>();
         private List<Entity> entities;  //entity
         public void Update(GameTime gameTime) 
         {

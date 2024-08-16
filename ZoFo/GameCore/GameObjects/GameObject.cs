@@ -4,12 +4,15 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.ZoFo_graphics;
+using ZoFo.GameCore;
 
 namespace ZoFo.GameCore.GameObjects;
 
 public abstract class GameObject
 {
     public Vector2 position;
+
+    private Server server;
     public Vector2 rotation; //вектор направления объекта
     protected abstract GraphicsComponent graphicsComponent { get; }
 
@@ -17,6 +20,8 @@ public abstract class GameObject
     public GameObject(Vector2 position)
     {
         this.position = position;
+        server = new Server();
+        server.RegisterEntity(this);
     }
     public virtual void UpdateLogic(GameTime gameTime)
     { 

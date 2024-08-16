@@ -16,8 +16,10 @@ namespace ZoFo.GameCore.GameObjects.Entities
         protected Entity(Vector2 position) : base(position)
         {
         }
-          
+        public virtual void Update()
+        {
 
+        }
     }
 }
 
