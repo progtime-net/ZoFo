@@ -32,15 +32,7 @@ namespace ZoFo.GameCore
             networkManager.JoinRoom(ip);
         }
 
-<<<<<<< HEAD
         public void JoinYourself(){ networkManager.JoinYourself(); }
-=======
-        public void JoinYourself()
-        {
-            networkManager.JoinYourself();
-        }
->>>>>>> 2e9fccd99a44f3e5ae11ac70f5e7282ec85d9f98
-
         internal void Update(GameTime gameTime)
         {
         }

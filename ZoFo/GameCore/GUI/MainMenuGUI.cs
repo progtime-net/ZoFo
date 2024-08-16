@@ -40,7 +40,7 @@ public class MainMenuGUI : AbstractGUI
         };
         playButton.LeftButtonPressed += () =>
         {
-            Server server = new Server();
+            Server server = new Server();   //Server Logic SinglePlayer
             Client client = new Client();
             server.CreateRoom(1);
             client.JoinYourself();

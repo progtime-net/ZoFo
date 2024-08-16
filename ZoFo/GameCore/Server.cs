@@ -37,13 +37,21 @@ namespace ZoFo.GameCore
         {
             networkManager.AddData(data);
         }
-        public void CreateRoom(int players) //Создает комнату и запускает ожидание подключений
+        /// <summary>
+        /// Создает комнату и запускает ожидание подключений
+        /// </summary>
+        /// <param name="players"></param>
+        public void CreateRoom(int players) 
         {
             networkManager.Start(players);
         }
 
         //  public void StartGame() { }   принудительный запуск
-        public void EndGame() //Добавляет UpdateGameEnded и отключает игроков
+
+        /// <summary>
+        /// Добавляет UpdateGameEnded и отключает игроков
+        /// </summary>
+        public void EndGame()
         {
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
