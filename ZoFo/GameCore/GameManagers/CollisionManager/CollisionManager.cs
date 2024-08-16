@@ -14,18 +14,21 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
     public class CollisionManager
     {
-        public List<CollisionComponent> CollisionComponent;
-        public List<CollisionComponent> TriggerComponent;
+        //листики
+
+        public List<CollisionComponent> ObjectsWithCollisions;
+        public List<CollisionComponent> EntitiesWithMovements;
+        public List<CollisionComponent> ObjectsWithTriggers;
 
         
-
+        //чекаем коллизии в листе
         public bool CheckComponentCollision(List<CollisionComponent> collisionComponents, CollisionComponent component)
         {
-            foreach (var collisionComponent in collisionComponents)
+            foreach (var collision in collisionComponents)
             {
-                if (component.Bounds.IntersectsWith(collisionComponent.Bounds))
+                if (component.Bounds.IntersectsWith(collision.Bounds))
                 {
-                    Register(component);
+                    //Register(component, );
                     return true; 
                 }
             }
@@ -33,24 +36,28 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             return false;
         }
 
-        public void UpdateComponentCollision(List<CollisionComponent> collisionComponents)
+        //обновление позиций
+        public void UpdateObjectPosition(List<CollisionComponent> collisionComponents, CollisionComponent component)
         {
-
+            
         }
 
-        public void UpdatePositions()
-        {
 
-        }
-
+        //получение объекта на поле(карте)
         //public void GetObjectInArea(Rectangle area)
         //{
 
         //}
 
-        public void Register(CollisionComponent component)
+
+        //регистрация компонента(его коллизии)
+        public void Register(CollisionComponent component, GameObject gameObject)
         {
-            CollisionComponent.Add(component);
+            if (component.gameObject is Entity)
+            {
+                ObjectsWithCollisions.Add(component);
+
+            }
         }
         
 

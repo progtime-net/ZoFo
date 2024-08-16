@@ -11,10 +11,11 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
     public class CollisionComponent
     {
-        //поля
+        //==ПОЛЯ==
+
+        public GameObject gameObject { get; set; }
         public Rectangle Bounds { get; set; }
         
-        //остановлен ли перс
         bool doesStop;
         Rectangle stopRectangle;
 
