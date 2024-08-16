@@ -24,7 +24,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
         private List<Texture2D> textures;
         public List<string> texturesNames; //rethink public and following that errors
         private AnimationContainer currentAnimation;
-        static public int scaling = 5;
+        static public int scaling = 2;
         public int parentId;
         public AnimationContainer CurrentAnimation
         {
