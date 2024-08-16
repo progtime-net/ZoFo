@@ -113,8 +113,6 @@ namespace ZoFo.GameCore.GameManagers
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-
-
             currentGUI.Draw(_spriteBatch);
             debugHud.Draw(_spriteBatch);
             switch (gamestate)

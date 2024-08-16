@@ -65,8 +65,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             listen.Start();
         }
 
-        /// <summary>
-        /// создается одиночная комната
+        /// <summary> 
+        /// создается одиночная комната к которой ты подключаешься 
         /// </summary>
         public void JoinYourself()  // single player
         {
