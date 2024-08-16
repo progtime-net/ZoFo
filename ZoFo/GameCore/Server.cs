@@ -30,13 +30,14 @@ namespace ZoFo.GameCore
             //ТУТ Switch case будет честное слово
         }
         /// <summary>
-        /// Для красоты)   Отдел Серверов
+        /// Для красоты)   Отдел Серверов 
         /// </summary>
         /// <param name="data"></param>
         public void AddData(IUpdateData data)//добавляет в лист updates новую data
         {
             networkManager.AddData(data);
         }
+
         /// <summary>
         /// Создает комнату и запускает ожидание подключений
         /// </summary>
@@ -61,6 +62,10 @@ namespace ZoFo.GameCore
         { 
         }
 
+        /// <summary>
+        /// Регистрирует игровой объект
+        /// </summary>
+        /// <param name="gameObject"></param>
         public void RegisterEntity(GameObject gameObject)
         {
           gameObjects.Add(gameObject);

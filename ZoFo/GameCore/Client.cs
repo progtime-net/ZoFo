@@ -13,6 +13,8 @@ namespace ZoFo.GameCore
     public class Client
     {
         ClientNetworkManager networkManager;
+
+        public bool IsConnected { get { return networkManager.IsConnected; } }
         public Client()
         {
             networkManager = new ClientNetworkManager();
@@ -24,19 +26,15 @@ namespace ZoFo.GameCore
             List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
             // тут будет switch
         }
-
         public void GameEndedUnexpectedly(){ }
-
         public void JoinRoom(string ip)
         {
             networkManager.JoinRoom(ip);
         }
-
         public void JoinYourself(){ networkManager.JoinYourself(); }
         internal void Update(GameTime gameTime)
         {
         }
-
         internal void Draw(SpriteBatch spriteBatch)
         { 
         }

@@ -21,6 +21,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         List<IUpdateData> updates = new List<IUpdateData>();
         public delegate void OnDataSent(string Data);
         public event OnDataSent GetDataSent; // event
+        public bool IsConnected { get { return socket.Connected; } }
 
         public ClientNetworkManager()
         {
@@ -65,7 +66,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         }
 
         /// <summary>
-        /// создается 
+        /// создается одиночная комната
         /// </summary>
         public void JoinYourself()  // single player
         {

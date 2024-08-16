@@ -46,6 +46,9 @@ public class SelectModeMenu : AbstractGUI
             AppManager.Instance.SetServer(server);
             AppManager.Instance.SetClient(client);
             AppManager.Instance.ChangeState(GameState.HostPlaying);
+
+            string key = client.IsConnected.ToString();
+            AppManager.Instance.debugHud.Set(key,"SinglePlayer");
             // ваш код здесь 
         };
         Elements.Add(playButton);
@@ -61,7 +64,12 @@ public class SelectModeMenu : AbstractGUI
         optionButton.LeftButtonPressed += () => 
         {
             // multi 
-            
+            Server server = new Server();   //Server Logic SinglePlayer
+            Client client = new Client();
+            server.CreateRoom(1);
+            client.JoinYourself();
+            AppManager.Instance.SetServer(server);
+            AppManager.Instance.SetClient(client);
             // ваш код здесь 
         };
         Elements.Add(optionButton);
