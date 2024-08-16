@@ -28,7 +28,11 @@ namespace ZoFo.GameCore.GameManagers.MapManager
         public void LoadMap(string mapName = "main")
         {
             // Загрузка TileMap
-            TileMap tileMap = JsonSerializer.Deserialize<TileMap>(File.ReadAllText(string.Format(_templatePath, mapName)));
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            TileMap tileMap = JsonSerializer.Deserialize<TileMap>(File.ReadAllText(string.Format(_templatePath, mapName)), options);
 
             // Загрузка TileSet-ов по TileSetInfo
             List<TileSet> tileSets = new List<TileSet>();
