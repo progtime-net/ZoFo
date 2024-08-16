@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZoFo", "ZoFo\ZoFo.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonogameLibrary", "MonogameLibrary\MonogameLibrary.csproj", "{40880E68-4B3A-417B-A39B-95DE46AA2E7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimationsFileCreator", "AnimationsFileCreator\AnimationsFileCreator.csproj", "{7B143D5C-5198-4ADE-9291-ECC924B78633}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{40880E68-4B3A-417B-A39B-95DE46AA2E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40880E68-4B3A-417B-A39B-95DE46AA2E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40880E68-4B3A-417B-A39B-95DE46AA2E7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B143D5C-5198-4ADE-9291-ECC924B78633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B143D5C-5198-4ADE-9291-ECC924B78633}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B143D5C-5198-4ADE-9291-ECC924B78633}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B143D5C-5198-4ADE-9291-ECC924B78633}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
