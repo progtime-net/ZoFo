@@ -24,6 +24,10 @@ namespace MonogameLibrary.UI.Elements
         private bool isChecked;
         HoverState hoverState = HoverState.None;
         public bool GetChecked { get { return isChecked; } }
+        public void SetIsChecked(bool isChecked)
+        {
+            this.isChecked=isChecked;
+        }
         public bool InteractUpdate(MouseState mouseState, MouseState prevmouseState)
         {
             if (rectangle.Intersects(new Rectangle(mouseState.Position, Point.Zero)))

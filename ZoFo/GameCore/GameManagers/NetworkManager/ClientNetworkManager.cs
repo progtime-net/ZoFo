@@ -28,6 +28,11 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             Init();
         }
 
+        public bool SocketConnected()
+        {
+            return socket.Connected;
+        }
+
         public void Init() //create endPoint, socket
         {
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);

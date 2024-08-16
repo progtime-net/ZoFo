@@ -12,7 +12,7 @@ using MonogameLibrary.UI.Elements;
 
 namespace ZoFo.GameCore.GUI;
 
-public class HUD
+public class HUD : AbstractGUI
 {
     protected UIManager Manager = new();
     protected List<DrawableUIElement> Elements = new();
@@ -39,6 +39,10 @@ public class HUD
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        Manager.Draw(spriteBatch);
+        //Manager.Draw(spriteBatch);
+    }
+
+    protected override void CreateUI()
+    { 
     }
 }

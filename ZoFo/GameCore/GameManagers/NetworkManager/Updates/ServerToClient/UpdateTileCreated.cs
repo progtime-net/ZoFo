@@ -16,5 +16,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
         public UpdateTileCreated() { UpdateType = "UpdateTileCreated"; }
         public Texture2D TextureTile { get; set; }
         public Vector2 Position { get; set; }
+        public Point Size { get; set; }
+        public Rectangle sourceRectangle { get; set; }
+        public string tileSetName { get; set; }
     }
 }
