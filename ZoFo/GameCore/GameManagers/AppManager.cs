@@ -120,6 +120,7 @@ namespace ZoFo.GameCore.GameManagers
 
             currentGUI.Draw(_spriteBatch);
             debugHud.Draw(_spriteBatch);
+            _spriteBatch.Begin();
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
@@ -130,6 +131,7 @@ namespace ZoFo.GameCore.GameManagers
                 default:
                     break;
             }
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }

@@ -11,6 +11,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.Entities;
+using ZoFo.GameCore.GameObjects.MapObjects;
 
 namespace ZoFo.GameCore
 {
@@ -29,7 +30,8 @@ namespace ZoFo.GameCore
         public void OnDataSend(string data)
         {
             List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
-            for (int i = 0; i < updateDatas.Count; i++) {
+            for (int i = 0; i < updateDatas.Count; i++)
+            {
                 ProcessIUpdateData(updateDatas[i]);
             }
         }
@@ -39,7 +41,7 @@ namespace ZoFo.GameCore
         /// <param name="updateData"></param>
         public void ProcessIUpdateData(IUpdateData updateData)
         {
-            
+
             //ТУТ Switch case будет честное слово
         }
 
@@ -57,7 +59,7 @@ namespace ZoFo.GameCore
         /// Создает комнату и запускает ожидание подключений
         /// </summary>
         /// <param name="players"></param>
-        public void CreateRoom(int players) 
+        public void CreateRoom(int players)
         {
             networkManager.Start(players);
         }
@@ -65,7 +67,8 @@ namespace ZoFo.GameCore
         /// <summary>
         /// Запуск игры в комнате
         /// </summary>
-        public void StartGame() {
+        public void StartGame()
+        {
 
             //TODO начинает рассылку и обмен пакетами игры
             //Грузит карту
@@ -73,7 +76,7 @@ namespace ZoFo.GameCore
             gameObjects = new List<GameObject>();
             entities = new List<Entity>();
             new MapManager().LoadMap();
-        }   
+        }
 
         /// <summary>
         /// Добавляет UpdateGameEnded и отключает игроков
@@ -87,7 +90,7 @@ namespace ZoFo.GameCore
         #endregion
         private List<GameObject> gameObjects;
         private List<Entity> entities;  //entity
-        public void Update(GameTime gameTime) 
+        public void Update(GameTime gameTime)
         {
             if (ticks == 3) //ОБРАБАТЫВАЕТСЯ 20 РАЗ В СЕКУНДУ
             {
@@ -101,7 +104,7 @@ namespace ZoFo.GameCore
             ticks++;
         }
 
-        
+
 
         /// <summary>
         /// Регистрирует игровой объект
@@ -110,7 +113,16 @@ namespace ZoFo.GameCore
         public void RegisterGameObject(GameObject gameObject)
         {
             gameObjects.Add(gameObject);
-            AddData(new UpdateTileCreated());//TODO 
-        } 
+            if (gameObject is MapObject)
+            {
+                AddData(new UpdateTileCreated()
+                {
+                    Position = (gameObject as MapObject).position,
+                    sourceRectangle = (gameObject as MapObject)._sourceRectangle,
+                    Size = (gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size,
+                    tileSetName = (gameObject as MapObject).graphicsComponent.mainTextureName
+                });//TODO 
+            }
+        }
     }
 }

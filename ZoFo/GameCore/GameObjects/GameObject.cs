@@ -17,7 +17,8 @@ public abstract class GameObject
     public GameObject(Vector2 position)
     {
         this.position = position;
-        AppManager.Instance.server.RegisterGameObject(this);
+
+        graphicsComponent.LoadContent();
     }
     public virtual void UpdateLogic(GameTime gameTime)
     { 

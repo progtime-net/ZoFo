@@ -34,6 +34,15 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Font3.spritefont
 
+#begin MapData/TileMaps/main.tmj
+/copy:MapData/TileMaps/main.tmj
+
+#begin MapData/TileMaps/main.tmx
+/copy:MapData/TileMaps/main.tmx
+
+#begin MapData/TileSets/TileSet 1.tsj
+/copy:MapData/TileSets/TileSet 1.tsj
+
 #begin sounds/Loot.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
