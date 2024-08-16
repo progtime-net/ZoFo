@@ -65,7 +65,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                         new MapObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, tileSet.Name);
                                         break;
                                     case "StopObject":
-                                        new StopObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, tileSet.Name);
+                                        // new StopObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, tileSet.Name);
                                         break;
                                     default:
                                         break;
