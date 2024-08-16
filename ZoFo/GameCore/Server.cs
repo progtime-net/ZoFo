@@ -15,9 +15,7 @@ namespace ZoFo.GameCore
 {
     public class Server
     {
-        private List<GameObject> gameObjects;
         private ServerNetworkManager networkManager;
-        private List<Entity> entity;  //entity
         public Server()
         {
             networkManager = new ServerNetworkManager();
@@ -57,10 +55,16 @@ namespace ZoFo.GameCore
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
             networkManager.CloseConnection();
-        }  
-        public void Update(GameTime gameTime) 
-        { 
+        }
 
+        private List<GameObject> gameObjects;
+        private List<Entity> entities;  //entity
+        public void Update(GameTime gameTime) 
+        {
+            foreach (var go in gameObjects)
+            {
+                go.UpdateLogic(gameTime);
+            }
         }
 
         /// <summary>
