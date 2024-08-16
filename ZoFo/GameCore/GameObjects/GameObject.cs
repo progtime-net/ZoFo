@@ -12,7 +12,6 @@ public abstract class GameObject
 {
     public Vector2 position;
 
-    private Server server;
     public Vector2 rotation; //вектор направления объекта
     public abstract GraphicsComponent graphicsComponent { get; }
 

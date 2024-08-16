@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
-    public class UpdatePlayerParametrs : UpdateData    //Хранит хп, радиацию
+    /// <summary>
+    /// Хранит хп, радиацию
+    /// </summary>
+    public class UpdatePlayerParametrs : UpdateData    
     {
         public UpdatePlayerParametrs() { UpdateType = "UpdatePlayerParametrs"; }
     }
