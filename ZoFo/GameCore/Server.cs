@@ -24,7 +24,7 @@ namespace ZoFo.GameCore
         }
         public void OnDataSend(string data)
         {
-            List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
+            List<UpdateData> updateDatas = JsonSerializer.Deserialize<List<UpdateData>>(data);
 
             //ТУТ Switch case будет честное слово
         }
@@ -32,7 +32,7 @@ namespace ZoFo.GameCore
         /// Для красоты)   Отдел Серверов 
         /// </summary>
         /// <param name="data"></param>
-        public void AddData(IUpdateData data)//добавляет в лист updates новую data
+        public void AddData(UpdateData data)//добавляет в лист updates новую data
         {
             networkManager.AddData(data);
         }

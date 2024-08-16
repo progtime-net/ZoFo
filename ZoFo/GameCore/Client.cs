@@ -25,7 +25,7 @@ namespace ZoFo.GameCore
 
         public void OnDataSend(string data)
         {
-            List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
+            List<UpdateData> updateDatas = JsonSerializer.Deserialize<List<UpdateData>>(data);
             // тут будет switch
             foreach (var item in updateDatas)
             {
