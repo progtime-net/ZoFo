@@ -5,57 +5,124 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ZoFo.GameCore.GameManagers.MapManager;
 using ZoFo.GameCore.GameManagers.NetworkManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.Entities;
+using ZoFo.GameCore.GameObjects.MapObjects;
 
 namespace ZoFo.GameCore
 {
     public class Server
     {
-        private List<GameObject> gameObjects;
         private ServerNetworkManager networkManager;
-        private List<Entity> entity;  //entity
+        private int ticks = 0;
         public Server()
         {
             networkManager = new ServerNetworkManager();
             networkManager.GetDataSend += OnDataSend;
+
         }
+        #region server logic as App
+        //TODO Comment pls
         public void OnDataSend(string data)
         {
-            List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
+            List<UpdateData> updateDatas = JsonSerializer.Deserialize<List<UpdateData>>(data);
+            for (int i = 0; i < updateDatas.Count; i++)
+            {
+                ProcessIUpdateData(updateDatas[i]);
+            }
+        }
+        /// <summary>
+        /// Обработка апдейтсов, которые нам прислал клиент
+        /// </summary>
+        /// <param name="updateData"></param>
+        public void ProcessIUpdateData(UpdateData updateData)
+        {
 
             //ТУТ Switch case будет честное слово
         }
+
         /// <summary>
-        /// Для красоты)   Отдел Серверов
+        /// Для красоты)   Отдел Серверов 
+        /// добавляет в лист updates новую data
         /// </summary>
         /// <param name="data"></param>
-        public void AddData(IUpdateData data)//добавляет в лист updates новую data
+        public void AddData(UpdateData data)//добавляет в лист updates новую data
         {
             networkManager.AddData(data);
         }
-        public void CreateRoom(int players) //Создает комнату и запускает ожидание подключений
+
+        /// <summary>
+        /// Создает комнату и запускает ожидание подключений
+        /// </summary>
+        /// <param name="players"></param>
+        public void CreateRoom(int players)
         {
-            networkManager.StartWaitingForPlayers(players);
+            networkManager.Start(players);
         }
 
-        //  public void StartGame() { }   принудительный запуск
-        public void EndGame() //Добавляет UpdateGameEnded и отключает игроков
+        /// <summary>
+        /// Запуск игры в комнате
+        /// </summary>
+        public void StartGame()
+        {
+
+            //TODO начинает рассылку и обмен пакетами игры
+            //Грузит карту
+
+            gameObjects = new List<GameObject>();
+            entities = new List<Entity>();
+            new MapManager().LoadMap();
+        }
+
+        /// <summary>
+        /// Добавляет UpdateGameEnded и отключает игроков
+        /// </summary>
+        public void EndGame()
         {
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
             networkManager.CloseConnection();
-        } 
-        internal void Update(GameTime gameTime)
-        { 
+        }
+        private List<GameObject> gameObjects = new List<GameObject>();
+        private List<Entity> entities;  //entity
+        public void Update(GameTime gameTime)
+        {
+            if (ticks == 3) //ОБРАБАТЫВАЕТСЯ 20 РАЗ В СЕКУНДУ
+            {
+                foreach (var go in gameObjects)
+                {
+                    go.UpdateLogic(gameTime);
+                }
+                ticks = 0;
+                networkManager.SendData();
+            }
+            ticks++;
         }
 
-        public void RegisterEntity(GameObject gameObject)
+
+
+        /// <summary>
+        /// Регистрирует игровой объект
+        /// </summary>
+        /// <param name="gameObject"></param>
+        public void RegisterGameObject(GameObject gameObject)
         {
-          gameObjects.Add(gameObject);
-        } 
+            gameObjects.Add(gameObject);
+            if (gameObject is MapObject)
+            {
+                AddData(new UpdateTileCreated()
+                {
+                    Position = (gameObject as MapObject).position,
+                    sourceRectangle = (gameObject as MapObject)._sourceRectangle,
+                    Size = (gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size,
+                    tileSetName = (gameObject as MapObject).graphicsComponent.mainTextureName
+                });//TODO 
+            }
+        }
     }
+    #endregion
 }

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer
 {
-    public class UpdatePlayerExit : IUpdateData
+    public class UpdatePlayerExit : UpdateData
     {
-        public int IdEntity { get; set; }
-        public string UpdateType { get; set; }
+      public UpdatePlayerExit() { UpdateType = "UpdatePlayerExit"; }
     }
 }

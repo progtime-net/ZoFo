@@ -15,12 +15,16 @@ namespace ZoFo.GameCore.ZoFo_graphics
 
     public class GraphicsComponent
     {
+        public Rectangle ObjectDrawRectangle { get; set; }
+
+
+
         public event Action<string> actionOfAnimationEnd;
         private List<AnimationContainer> animations;
         private List<Texture2D> textures;
-        private List<string> texturesNames;
+        public List<string> texturesNames; //rethink public and following that errors
         private AnimationContainer currentAnimation;
-        static public int scaling = 4;
+        static public int scaling = 5;
         public int parentId;
         public AnimationContainer CurrentAnimation
         {
@@ -60,8 +64,18 @@ namespace ZoFo.GameCore.ZoFo_graphics
             buildSourceRectangle();
         }
 
+        public string mainTextureName;//TODO костыль - пофиксить
         public GraphicsComponent(string textureName)
         {
+            BuildComponent(textureName);
+        }
+        public GraphicsComponent()
+        {
+        }
+        public void BuildComponent(string textureName)
+        {
+            mainTextureName = textureName;
+            //texturesNames.Add(textureName);//Added by SD
             animations = new List<AnimationContainer>();
             textures = new List<Texture2D>();
             var texture = AppManager.Instance.Content.Load<Texture2D>(textureName);
@@ -96,6 +110,11 @@ namespace ZoFo.GameCore.ZoFo_graphics
         {
             textures = new List<Texture2D>();
             texturesNames = new List<string>();
+
+            if (animations is null)
+            {
+                return;
+            }
 
             foreach (var animation in animations)
             {
@@ -137,6 +156,10 @@ namespace ZoFo.GameCore.ZoFo_graphics
 
         public void Update()
         {
+            if (currentAnimation is null)
+            {
+                return;
+            }
             if (interval == 0)
             {
                 currentFrame++;
@@ -277,6 +300,6 @@ namespace ZoFo.GameCore.ZoFo_graphics
             AppManager.Instance.DebugHUD.Set("CameraPosition", $"{CameraPosition.X}, {CameraPosition.Y}");
         */
         }
-        public static Point CameraPosition = new Point(-700, 300);
+        public static Point CameraPosition = new Point(0, 0);
     }
 }

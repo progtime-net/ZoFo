@@ -10,28 +10,16 @@ namespace ZoFo.GameCore.GameObjects.Entities
 {
     public abstract class Entity : GameObject
     {
-        protected override GraphicsComponent graphicsComponent => null;
+        public override GraphicsComponent graphicsComponent => null;
         public CollisionComponent collisionComponent { get; protected set; }
         public int Id { get; set; }
-        public void CollisionComponent()
+        protected Entity(Vector2 position) : base(position)
+        {
+        }
+        public virtual void Update()
         {
 
         }
-
-        public void AnimationComponent()
-        {
-
-        }
-
-        public void UpdateLogic()
-        {
-
-        }
-
     }
 }
 
-//вектор
-//вилосити
-//поситион
-//текстура

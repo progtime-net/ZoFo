@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -16,24 +17,46 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
     public class ServerNetworkManager
     {
-        private IPAddress ip = IPAddress.Any;
+        private IPAddress ip =IPAddress.Parse("127.0.0.1"); //IPAddress.Any
         private int port = 7632;
         private IPEndPoint endPoint;
         private Socket socket;
         private List<Socket> clients;
-        private List<IUpdateData> updates;
+        public List<UpdateData> updates;
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
         Dictionary<Socket, Thread> managerThread;
+        Thread serverTheread;
 
-        public void Init()   //create Socket
+        public ServerNetworkManager() { Init(); }
+
+        /// <summary>
+        /// Initialize varibles and Sockets
+        /// </summary>
+        private void Init()
         {
             endPoint = new IPEndPoint(ip, port);
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             managerThread = new Dictionary<Socket, Thread>();
+            clients = new List<Socket>();
+            updates = new List<UpdateData>();
+            managerThread = new Dictionary<Socket, Thread>();
+            socket.Bind(endPoint);
         }
-        public void SendData() //отправляет клиенту Data
+
+        /// <summary>
+        /// отправляет клиенту Data
+        /// </summary>
+        public void SendData() 
         {
+            for (int i = 0; i < updates.Count; i++)
+            {
+
+                AppManager.Instance.client.GotData(updates[i]);
+            }
+            updates.Clear();
+            return; //TODO TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK
+
             string data = JsonSerializer.Serialize(updates);
             var databytes = Encoding.UTF8.GetBytes(data);
             foreach (var item in clients)
@@ -41,11 +64,20 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 item.SendAsync(databytes);
             }
         }
-        public void AddData(IUpdateData data)//добавляет в лист updates новую data
+
+        /// <summary>
+        /// добавляет в лист updates новую data
+        /// </summary>
+        /// <param name="data"></param>
+        public void AddData(UpdateData data)
         {
             updates.Add(data);
         }
-        public void CloseConnection() //По сути коне игры и отключение игроков
+
+        /// <summary>
+        /// По сути конец игры и отключение игроков
+        /// </summary>
+        public void CloseConnection() 
         {
             foreach (var item in clients)
             {
@@ -66,11 +98,26 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             clients.Clear();
         }
 
+        /// <summary>
+        /// Начинает работу сервера (Ожидает подключений)
+        /// </summary>
+        /// <param name="players"></param>
+        public void Start(object players)
+        {
+            serverTheread = new Thread(StartWaitingForPlayers);
+            serverTheread.Start(players);
+        }
+
         //Потоки Клиентов
-        public void StartWaitingForPlayers(object players)//Слушает игроков, которые хотят подключиться
+
+        /// <summary>
+        /// Слушает игроков, которые хотят подключиться
+        /// </summary>
+        /// <param name="players"></param>
+        public void StartWaitingForPlayers(object players)
         {
             int playNumber = (int)players;
-            socket.Bind(endPoint);
+          
             socket.Listen(playNumber);
             for (int i = 0; i < playNumber; i++)
             {
@@ -82,7 +129,12 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             }
 
         }
-        private void StartListening(object socket)//начать слушать клиентов в самой игре активируют Ивент
+
+        /// <summary>
+        /// начать слушать клиентов в самой игре активируют Ивент
+        /// </summary>
+        /// <param name="socket"></param>
+        private void StartListening(object socket)
         {
             // obj to Socket
             Socket client = (Socket)socket;
