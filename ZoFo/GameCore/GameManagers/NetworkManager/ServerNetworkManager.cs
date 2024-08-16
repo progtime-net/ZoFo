@@ -16,7 +16,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
     public class ServerNetworkManager
     {
-        private IPAddress ip = IPAddress.Any;
+        private IPAddress ip =IPAddress.Parse("127.0.0.1"); //IPAddress.Any
         private int port = 7632;
         private IPEndPoint endPoint;
         private Socket socket;
@@ -25,11 +25,17 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
         Dictionary<Socket, Thread> managerThread;
+        Thread serverTheread;
+
+        public ServerNetworkManager() { Init(); }
 
         public void Init()   //create Socket
         {
             endPoint = new IPEndPoint(ip, port);
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            managerThread = new Dictionary<Socket, Thread>();
+            clients = new List<Socket>();
+            updates = new List<IUpdateData>();
             managerThread = new Dictionary<Socket, Thread>();
         }
         /// <summary>
@@ -51,8 +57,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public void AddData(IUpdateData data)
         {
             updates.Add(data);
-        }
-
+        } 
         public void CloseConnection() //По сути коне игры и отключение игроков
         {
             foreach (var item in clients)
@@ -72,6 +77,12 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             //очищает листы
             managerThread.Clear();
             clients.Clear();
+        }
+
+        public void Start(object players)
+        {
+            serverTheread = new Thread(StartWaitingForPlayers);
+            serverTheread.Start(players);
         }
 
         //Потоки Клиентов
