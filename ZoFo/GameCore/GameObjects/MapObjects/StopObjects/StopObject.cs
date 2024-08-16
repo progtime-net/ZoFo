@@ -1,13 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.ZoFo_graphics;
 
 namespace ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 
-public abstract class StopObject : GameObject
+public class StopObject : MapObject
 {
-    protected StopObject(Vector2 position) : base(position)
+    CollisionComponent collisionComponent; 
+
+    protected StopObject(Vector2 position, Vector2 size, Rectangle sourceRectangle) : base(position, size, sourceRectangle)
     {
-        //TODO
     }
 }
