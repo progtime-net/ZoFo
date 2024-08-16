@@ -20,12 +20,12 @@ namespace ZoFo.GameCore.GameManagers
 
         public void LoadSounds() // метод для загрузки звуков из папки
         {
-            var k = Directory.GetFiles("../../..//Content//sounds").Where(x => x.EndsWith("mp3"));
+            var k = Directory.GetFiles("../../..//Content//sounds").Where(x => x.EndsWith("wav"));
 
             if (k.Count() > 0)
             {
 
-                string[] soundFiles = k.Select(x => x.Split("\\").Last().Split("/").Last().Replace(".mp3", "")).ToArray();// папка со звуками там где exe 
+                string[] soundFiles = k.Select(x => x.Split("\\").Last().Split("/").Last().Replace(".wav", "")).ToArray();// папка со звуками там где exe 
                 foreach (var soundFile in soundFiles)
                 {
                     Sounds.Add(soundFile, AppManager.Instance.Content.Load<SoundEffect>("sounds//" + soundFile));

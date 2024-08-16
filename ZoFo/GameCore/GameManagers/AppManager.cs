@@ -37,6 +37,7 @@ namespace ZoFo.GameCore.GameManagers
         public InputManager InputManager;
         public ItemManager.ItemManager ItemManager;
         public SettingsManager SettingsManager;
+        public SoundManager SoundManager;
 
         public AnimationBuilder animationBuilder{get;set; }
 
@@ -56,7 +57,9 @@ namespace ZoFo.GameCore.GameManagers
             InputManager = new InputManager();
             SettingsManager = new SettingsManager();
             SettingsManager.LoadSettings();
-
+            SoundManager = new SoundManager();
+            SoundManager.LoadSounds();
+            
 
             currentGUI = new MainMenuGUI();
             debugHud = new DebugHUD();
