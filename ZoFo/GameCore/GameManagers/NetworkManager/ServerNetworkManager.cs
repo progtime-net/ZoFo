@@ -32,7 +32,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             managerThread = new Dictionary<Socket, Thread>();
         }
-        public void SendData() //отправляет клиенту Data
+        /// <summary>
+        /// отправляет клиенту Data
+        /// </summary>
+        public void SendData() 
         {
             string data = JsonSerializer.Serialize(updates);
             var databytes = Encoding.UTF8.GetBytes(data);
@@ -41,11 +44,22 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 item.SendAsync(databytes);
             }
         }
-        public void AddData(IUpdateData data)//добавляет в лист updates новую data
+        /// <summary>
+        /// добавляет в лист updates новую data
+        /// </summary>
+        /// <param name="data"></param>
+        public void AddData(IUpdateData data)
         {
             updates.Add(data);
         }
+<<<<<<< Updated upstream
         public void CloseConnection() //По сути коне игры и отключение игроков
+=======
+        /// <summary>
+        /// 
+        /// </summary>
+        public void CloseConnection()
+>>>>>>> Stashed changes
         {
             foreach (var item in clients)
             {
