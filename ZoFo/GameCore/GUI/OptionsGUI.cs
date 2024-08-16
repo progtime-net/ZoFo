@@ -39,6 +39,7 @@ public class OptionsGUI : AbstractGUI
 
             var slider_OverallVolume = new Slider(Manager)
             { rectangle = new Rectangle(width / 2, height / 3, width / 10, height / 20), indentation = 7, textureName = "Textures\\GUI\\Switch_backgrownd", MinValue = 0, MaxValue = 1 };
+            slider_OverallVolume.SetValue(AppManager.Instance.SettingsManager.MainVolume);
             slider_OverallVolume.SliderChanged += (newVal) =>
             {
                 label_OverallVolume_Percent.text = Math.Round(slider_OverallVolume.GetSliderValue * 100) + "%";
@@ -58,6 +59,7 @@ public class OptionsGUI : AbstractGUI
             
             var slider_MusicVolume = new Slider(Manager)
             { rectangle = new Rectangle(width / 2, height / 3 + (height / 20 + height / 40) * 1, width / 10, height / 20), indentation = 7, textureName = "Textures\\GUI\\Switch_backgrownd", MinValue = 0, MaxValue = 1 };
+            slider_MusicVolume.SetValue(AppManager.Instance.SettingsManager.MusicVolume);
             slider_MusicVolume.SliderChanged += (newVal) =>
             {
                 label_MusicVolume_Percent.text = Math.Round(slider_MusicVolume.GetSliderValue * 100) + "%";
@@ -77,6 +79,7 @@ public class OptionsGUI : AbstractGUI
 
             var slider_EffectsVolume = new Slider(Manager)
             { rectangle = new Rectangle(width / 2, height / 3 + (height / 20 + height / 40) * 2, width / 10, height / 20), indentation = 7, textureName = "Textures\\GUI\\Switch_backgrownd", MinValue = 0, MaxValue = 1 };
+            slider_EffectsVolume.SetValue(AppManager.Instance.SettingsManager.SoundEffectsVolume);
             slider_EffectsVolume.SliderChanged += (newVal) =>
             {
                 label_EffectsVolume_Percent.text = Math.Round(slider_EffectsVolume.GetSliderValue * 100) + "%";
