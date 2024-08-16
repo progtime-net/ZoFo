@@ -47,7 +47,7 @@ namespace ZoFo.GameCore
         {
             networkManager.JoinRoom(ip,port);
         }
-        public void JoinYourself() { networkManager.JoinYourself(); }
+        public void JoinYourself(int port) { networkManager.JoinYourself(port); }
 
 
         List<MapObject> mapObjects = new List<MapObject>();

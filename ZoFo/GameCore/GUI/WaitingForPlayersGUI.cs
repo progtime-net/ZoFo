@@ -32,7 +32,7 @@ public class WaitingForPlayersGUI : AbstractGUI
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content);
      //   string pcIp = 
-        ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp, fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font3" };
+        ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font3" };
         Elements.Add(ip); 
         if (isHost)
         {

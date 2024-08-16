@@ -26,7 +26,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public event OnDataSend GetDataSend;   // event
         Dictionary<Socket, Thread> managerThread;
         Thread serverTheread;
-        public IPEndPoint InfoConnect => endPoint;
+        public IPEndPoint InfoConnect => (IPEndPoint)socket.LocalEndPoint ?? endPoint;
 
         public ServerNetworkManager() { Init(); }
 
