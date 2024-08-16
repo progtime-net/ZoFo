@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,6 @@ namespace ZoFo.GameCore.GameObjects.MapObjects
             this.sourceRectangle = sourceRectangle;
             graphicsComponent.ObjectDrawRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
             graphicsComponent.BuildComponent(textureName);
-
             graphicsComponent.LoadContent();
 
         }

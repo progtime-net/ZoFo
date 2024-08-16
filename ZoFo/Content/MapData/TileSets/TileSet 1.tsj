@@ -1,16 +1,18 @@
 { "class":"Tile",
  "columns":22,
+ "fillmode":"preserve-aspect-fit",
  "grid":
     {
      "height":24,
      "orientation":"orthogonal",
      "width":24
     },
- "image":"..\/..\/..\/..\/Content\/Textures\/Background\/TilesetFloor.png",
- "imageheight":417,
+ "image":"..\/..\/Textures\/Background\/TilesetFloor.png",
+ "imageheight":416,
  "imagewidth":352,
  "margin":0,
  "name":"TileSet 1",
+ "objectalignment":"topleft",
  "spacing":0,
  "tilecount":572,
  "tiledversion":"1.10.2",
