@@ -50,7 +50,7 @@ namespace ZoFo.GameCore
         /// добавляет в лист updates новую data
         /// </summary>
         /// <param name="data"></param>
-        public void AddData(IUpdateData data)
+        public void AddData(UpdateData data)//добавляет в лист updates новую data
         {
             networkManager.AddData(data);
         }
