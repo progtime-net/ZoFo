@@ -16,6 +16,11 @@ public class Interactable : Entity
 
     private void ChangeInteraction(object sender, CollisionComponent e, bool isReady)
     {
-        AppManager.Instance.server.AddData(new UpdateInteractionAvailable((sender as Player).Id, isReady));
+        AppManager.Instance.server.AddData(new UpdateInteractionReady((sender as Player).Id, isReady));
+    }
+
+    public void OnInteraction()
+    {
+        
     }
 }
