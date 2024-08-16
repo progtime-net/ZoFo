@@ -32,13 +32,7 @@ namespace ZoFo.GameCore
             // тут будет switch
             foreach (var item in updateDatas)
             {
-              /*  switch (item.UpdateType)    Здесь нужно отлавливать и регистрировать
-                {
-                    case "Tile":
-                        MapObject map = new MapObject();
-
-                        break;
-                }*/
+                GotData(item);
             }
 
         }

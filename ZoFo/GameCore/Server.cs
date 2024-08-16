@@ -117,7 +117,7 @@ namespace ZoFo.GameCore
                 AddData(new UpdateTileCreated()
                 {
                     Position = (gameObject as MapObject).position,
-                    sourceRectangle = (gameObject as MapObject)._sourceRectangle,
+                    sourceRectangle = (gameObject as MapObject).sourceRectangle,
                     Size = (gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size,
                     tileSetName = (gameObject as MapObject).graphicsComponent.mainTextureName
                 });//TODO 

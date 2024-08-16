@@ -18,8 +18,7 @@ public abstract class GameObject
     #region ServerSide
     public GameObject(Vector2 position)
     {
-        this.position = position;
-        AppManager.Instance.server.RegisterGameObject(this);
+        this.position = position; 
 
         graphicsComponent.LoadContent();
     }
