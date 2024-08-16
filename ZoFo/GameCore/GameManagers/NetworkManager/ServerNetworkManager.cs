@@ -52,14 +52,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         {
             updates.Add(data);
         }
-<<<<<<< Updated upstream
+
         public void CloseConnection() //По сути коне игры и отключение игроков
-=======
-        /// <summary>
-        /// 
-        /// </summary>
-        public void CloseConnection()
->>>>>>> Stashed changes
         {
             foreach (var item in clients)
             {
