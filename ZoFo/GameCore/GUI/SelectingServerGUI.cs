@@ -79,10 +79,15 @@ public class SelectingServerGUI : AbstractGUI
         };
         hostButton.LeftButtonPressed += () => 
         {
-            AppManager.Instance.SetGUI(new WaitingForPlayersGUI(true));
-            // host
             
+            // host
+            Server server = new Server();   //Server Logic MultiPlayer
+            server.CreateRoom(5);
+            AppManager.Instance.SetServer(server);
+            string key = server.MyIp;
+            AppManager.Instance.debugHud.Set(key, "MultiPlayer");
             // ваш код здесь 
+            AppManager.Instance.SetGUI(new WaitingForPlayersGUI(true));
         };
         Elements.Add(hostButton);
         

@@ -43,9 +43,9 @@ namespace ZoFo.GameCore
 
         }
         public void GameEndedUnexpectedly() { }
-        public void JoinRoom(string ip)
+        public void JoinRoom(string ip,int port)
         {
-            networkManager.JoinRoom(ip);
+            networkManager.JoinRoom(ip,port);
         }
         public void JoinYourself() { networkManager.JoinYourself(); }
 
@@ -66,7 +66,7 @@ namespace ZoFo.GameCore
             }
         }
 
-        internal void GotData(IUpdateData update)
+        internal void GotData(UpdateData update)
         {
             if (update is UpdateTileCreated)
             {

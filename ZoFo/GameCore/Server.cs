@@ -19,6 +19,7 @@ namespace ZoFo.GameCore
     {
         private ServerNetworkManager networkManager;
         private int ticks = 0;
+        public string MyIp { get { return networkManager.InfoConnect.ToString(); } } 
         public Server()
         {
             networkManager = new ServerNetworkManager();
@@ -29,7 +30,7 @@ namespace ZoFo.GameCore
         //TODO Comment pls
         public void OnDataSend(string data)
         {
-            List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
+            List<UpdateData> updateDatas = JsonSerializer.Deserialize<List<UpdateData>>(data);
             for (int i = 0; i < updateDatas.Count; i++)
             {
                 ProcessIUpdateData(updateDatas[i]);
@@ -39,7 +40,7 @@ namespace ZoFo.GameCore
         /// Обработка апдейтсов, которые нам прислал клиент
         /// </summary>
         /// <param name="updateData"></param>
-        public void ProcessIUpdateData(IUpdateData updateData)
+        public void ProcessIUpdateData(UpdateData updateData)
         {
 
             //ТУТ Switch case будет честное слово

@@ -17,6 +17,7 @@ public class WaitingForPlayersGUI : AbstractGUI
 {
     private DrawableUIElement menuBackground;
     private bool isHost;
+    private Label ip;
 
     public WaitingForPlayersGUI(bool isHost)
     {
@@ -26,13 +27,13 @@ public class WaitingForPlayersGUI : AbstractGUI
     {
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
-        
+     
         menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures\\GUI\\background\\Waiting" };
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content);
-        
-        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = "Waiting", fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font"});
-        
+     //   string pcIp = 
+        ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp, fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font3" };
+        Elements.Add(ip); 
         if (isHost)
         {
             Button startButton = new Button(Manager) 
@@ -47,7 +48,7 @@ public class WaitingForPlayersGUI : AbstractGUI
             startButton.LeftButtonPressed += () => 
             {
                 // start
-                
+              
                 // ваш код здесь 
             };
             Elements.Add(startButton);

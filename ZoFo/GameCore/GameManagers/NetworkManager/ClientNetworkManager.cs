@@ -15,7 +15,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
     public class ClientNetworkManager
     {
-        private int port = 7632;
+        private int port = 0;
         private EndPoint endPoint;
         private Socket socket;
         List<UpdateData> updates = new List<UpdateData>();
@@ -60,13 +60,14 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="port"></param>
-        public void JoinRoom(string ip) // multyplayer
+        public void JoinRoom(string ip, int port) // multyplayer
         {
 
             endPoint = new IPEndPoint(IPAddress.Parse(ip), port);
             socket.Connect(endPoint);
             SendData();
             Thread listen = new Thread(StartListening);
+            listen.IsBackground = true;
             listen.Start();
         }
 
@@ -79,6 +80,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             socket.Connect(endPoint);
             SendData();
             Thread listen = new Thread(StartListening);
+            listen.IsBackground = true;
             listen.Start();
         }
 
