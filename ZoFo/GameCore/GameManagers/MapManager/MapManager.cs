@@ -75,6 +75,5 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                 return JsonSerializer.Deserialize<TileSet>(data);
             }
         }
-
     }
 }
