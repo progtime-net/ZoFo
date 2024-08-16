@@ -14,12 +14,13 @@ namespace ZoFo.GameCore.GameObjects.MapObjects
     {
         public virtual bool IsColliderOn { get; protected set; } = true;
         private Rectangle _sourceRectangle;
-        protected override GraphicsComponent graphicsComponent => new("tiles");
+        public override GraphicsComponent graphicsComponent => new();
 
         public MapObject(Vector2 position, Vector2 size, Rectangle sourceRectangle, string textureName) : base(position)
         {
             _sourceRectangle = sourceRectangle;
             graphicsComponent.ObjectDrawRectangle = new Rectangle(0,0, (int)size.X, (int)size.Y);
+            graphicsComponent.BuildComponent("Textures\\TileSets\\"+textureName);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

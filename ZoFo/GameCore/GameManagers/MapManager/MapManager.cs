@@ -91,8 +91,12 @@ namespace ZoFo.GameCore.GameManagers.MapManager
         {
             using (StreamReader reader = new StreamReader(path))
             {
+                var options = new JsonSerializerOptions //TODO Remove
+                {
+                    PropertyNameCaseInsensitive = true
+                };
                 string data = reader.ReadToEnd();
-                return JsonSerializer.Deserialize<TileSet>(data);
+                return JsonSerializer.Deserialize<TileSet>(data, options);
             }
         }
     }

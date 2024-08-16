@@ -66,6 +66,14 @@ namespace ZoFo.GameCore.ZoFo_graphics
 
         public GraphicsComponent(string textureName)
         {
+            BuildComponent(textureName);
+        }
+        public GraphicsComponent()
+        {
+        }
+        public void BuildComponent(string textureName)
+        {
+
             animations = new List<AnimationContainer>();
             textures = new List<Texture2D>();
             var texture = AppManager.Instance.Content.Load<Texture2D>(textureName);
@@ -141,6 +149,10 @@ namespace ZoFo.GameCore.ZoFo_graphics
 
         public void Update()
         {
+            if (currentAnimation is null)
+            {
+                return;
+            }
             if (interval == 0)
             {
                 currentFrame++;

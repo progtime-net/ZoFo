@@ -41,11 +41,14 @@ public class SelectModeMenu : AbstractGUI
             // single
             Server server = new Server();   //Server Logic SinglePlayer
             Client client = new Client();
-            server.CreateRoom(1);
-            client.JoinYourself();
             AppManager.Instance.SetServer(server);
             AppManager.Instance.SetClient(client);
             AppManager.Instance.ChangeState(GameState.HostPlaying);
+            AppManager.Instance.SetGUI(new HUD());
+
+            //server.CreateRoom(1);
+            //client.JoinYourself();
+            server.StartGame();
 
             string key = client.IsConnected.ToString();
             AppManager.Instance.debugHud.Set(key,"SinglePlayer");

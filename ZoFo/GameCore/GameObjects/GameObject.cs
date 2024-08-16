@@ -11,12 +11,13 @@ public abstract class GameObject
 {
     public Vector2 position;
     public Vector2 rotation; //вектор направления объекта
-    protected abstract GraphicsComponent graphicsComponent { get; }
+    public abstract GraphicsComponent graphicsComponent { get; }
 
     #region ServerSide
     public GameObject(Vector2 position)
     {
         this.position = position;
+        AppManager.Instance.server.RegisterGameObject(this);
     }
     public virtual void UpdateLogic(GameTime gameTime)
     { 

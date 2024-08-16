@@ -50,6 +50,7 @@ namespace ZoFo.GameCore
         }
         internal void Draw(SpriteBatch spriteBatch)
         {
+            
         }
     }
 }
