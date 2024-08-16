@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace ZoFo.GameCore.GameManagers
 { 
     public enum ScopeState { Left, Right, Straight, Back, StraightLeft, StraightRight, BackLeft, BackRight }
+
     public class InputManager
     {
         public delegate void Delegat();
