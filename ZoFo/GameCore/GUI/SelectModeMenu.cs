@@ -21,13 +21,13 @@ public class SelectModeMenu : AbstractGUI
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
         
-        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures\\GUI\\MenuBackground" };
+        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures\\GUI\\background\\selectMode" };
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content);
         
         Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 6, (int)(width / 4), (int)(height / 20)), text = "Select mode", fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font"});
         
-        Button playButton = new Button(Manager) 
+        Button singleButton = new Button(Manager) 
         {
             rectangle = new Rectangle(width / 4 - (width / 7) / 2, height / 2, (int)(width / 7), (int)(height / 20)),
             text = "singleplayer",
@@ -36,13 +36,13 @@ public class SelectModeMenu : AbstractGUI
             mainColor = Color.Gray,
             fontName = "Fonts\\Font"
         };
-        playButton.LeftButtonPressed += () => 
+        singleButton.LeftButtonPressed += () => 
         {
             // single
             
             // ваш код здесь 
         };
-        Elements.Add(playButton);
+        Elements.Add(singleButton);
         Button optionButton = new Button(Manager) 
         {
             rectangle = new Rectangle(width / 2 + width / 4 - (width / 7) / 2, height / 2, (int)(width / 7), (int)(height / 20)),
@@ -54,11 +54,20 @@ public class SelectModeMenu : AbstractGUI
         };
         optionButton.LeftButtonPressed += () => 
         {
+            AppManager.Instance.SetGUI(new SelectingServerGUI());
             // multi 
             
             // ваш код здесь 
         };
         Elements.Add(optionButton);
+        
+        Button bTExit = new Button(Manager)
+            { fontName = "Fonts\\Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures\\GUI\\checkboxs_off"};
+        Elements.Add(bTExit);
+        bTExit.LeftButtonPressed += () =>
+        {
+            AppManager.Instance.SetGUI(new MainMenuGUI());
+        };
     }
 
     public override void Update(GameTime gameTime)
