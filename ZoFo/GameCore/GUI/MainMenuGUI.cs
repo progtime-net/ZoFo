@@ -21,15 +21,15 @@ public class MainMenuGUI : AbstractGUI
     {
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
-
-        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures\\GUI\\MenuBackground" };
+        
+        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures\\GUI\\background\\mainMenu" };
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content);
-
-        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 5, (int)(width / 4), (int)(height / 20)), text = "ZoFo", fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font" });
-
-
-        Button playButton = new Button(Manager)
+        
+        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 5, (int)(width / 4), (int)(height / 20)), text = "ZoFo", fontColor = Color.Black, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font"});
+        
+        
+        Button playButton = new Button(Manager) 
         {
             rectangle = new Rectangle(width / 2 - (int)(width / 10), height / 3 + height / 20 + height / 40, (int)(width / 5), (int)(height / 20)),
             text = "Play",

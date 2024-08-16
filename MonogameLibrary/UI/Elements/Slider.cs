@@ -21,6 +21,9 @@ namespace MonogameLibrary.UI.Elements
         public int indentation = 5;
 
         Texture2D texture2; 
+        /// <summary>
+        /// ректенгл ползунка
+        /// </summary>
         public Rectangle sliderRect = new Rectangle(0, 0, 40, 40);
         private float sliderValue = 0;
         private float minValue = 0, maxValue = 1;
