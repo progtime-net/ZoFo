@@ -13,10 +13,11 @@ namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
 {
     class Ammo:Collectable
     {
-        public override GraphicsComponent graphicsComponent { get; } = new(new List<string> { "Ammo" }, "Ammo");
+        public override GraphicsComponent graphicsComponent { get; } = new("Textures/icons/8");
         public Ammo(Vector2 position) : base(position)
         {
-
+            graphicsComponent.ObjectDrawRectangle.Width = 20;
+            graphicsComponent.ObjectDrawRectangle.Height = 20;
         }
         public override void OnInteraction(object sender, CollisionComponent e)
         {

@@ -81,7 +81,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                         break;
                                     case "StopObject":
                                         var collisionRectangles = LoadRectangles(tile); // Грузит коллизии обьектов
-                                        AppManager.Instance.server.RegisterGameObject(new StopObject(position,
+                                        AppManager.Instance.server.RegisterGameObject(new StopObject(position/4,//TODO
                                             new Vector2(tileSet.TileWidth, tileSet.TileHeight),
                                             sourceRectangle,
                                             "Textures/TileSetImages/" +

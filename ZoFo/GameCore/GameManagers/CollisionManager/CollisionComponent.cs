@@ -26,7 +26,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         {
             this.gameObject = gameObject;
 
-            hasCollision = hasCollision;
+            this.hasCollision = hasCollision;
             this.isTrigger = isTrigger;
             if (hasCollision)
                 this.stopRectangle = collisionRectangle.Value;
