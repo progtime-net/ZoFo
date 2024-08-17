@@ -71,6 +71,16 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             listen.IsBackground = true;
             listen.Start();
         }
+        public void JoinRoom(IPEndPoint endPoint) // multyplayer
+        {
+
+            this.endPoint = endPoint;
+            socket.Connect(endPoint);
+            SendData();
+            Thread listen = new Thread(StartListening);
+            listen.IsBackground = true;
+            listen.Start();
+        }
 
         /// <summary> 
         /// создается одиночная комната к которой ты подключаешься 

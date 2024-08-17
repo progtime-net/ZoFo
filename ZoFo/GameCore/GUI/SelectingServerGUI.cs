@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -62,10 +63,18 @@ public class SelectingServerGUI : AbstractGUI
         };
         joinButton.LeftButtonPressed += () => 
         {
-            AppManager.Instance.SetGUI(new WaitingForPlayersGUI(false));
+
             // join
-            
-            // ваш код здесь 
+            Client client = new Client();
+        var endpoint = ipBox.text.Split(':');
+            int port;
+            if (int.TryParse(endpoint[1], out port))
+            {
+                client.JoinRoom(endpoint[0], port);
+                AppManager.Instance.SetClient(client);
+                AppManager.Instance.SetGUI(new WaitingForPlayersGUI(false));
+            }
+            // ваш код здесь
         };
         Elements.Add(joinButton);
         Button hostButton = new Button(Manager) 
