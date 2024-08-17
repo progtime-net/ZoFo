@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System.Linq;
-using DangerousD.GameCore.Graphics;
+
 using Newtonsoft.Json;
 using Microsoft.Xna.Framework.Media;
 
@@ -20,23 +20,28 @@ namespace ZoFo.GameCore.GameManagers
 
         public void LoadSounds() // метод для загрузки звуков из папки
         {
-            var k = Directory.GetFiles("../../..//Content//sounds").Where(x => x.EndsWith("wav"));
-
+            //List<string> sounds = AppManager.Instance.Content.Load<List<string>>("sounds/");
+            
+            var k = Directory.GetFiles(Directory.GetCurrentDirectory() + "//Content//sounds").Where(x => x.EndsWith("xnb"));
             if (k.Count() > 0)
             {
 
-                string[] soundFiles = k.Select(x => x.Split("\\").Last().Split("/").Last().Replace(".wav", "")).ToArray();// папка со звуками там где exe 
+                string[] soundFiles = k.Select(x => x.Split("\\").Last().Split("/").Last().Replace(".xnb", "")).ToArray();// папка со звуками там где exe 
                 foreach (var soundFile in soundFiles)
                 {
                     Sounds.Add(soundFile, AppManager.Instance.Content.Load<SoundEffect>("sounds//" + soundFile));
                 }
 
             }
-
-            if (k.Count() > 0)
+            /*/if (sounds.Count() > 0)
             {
+                foreach (var soundFile in sounds)
+                {
+                    Sounds.Add(soundFile, AppManager.Instance.Content.Load<SoundEffect>("sounds/" + soundFile));
+                }
+            }/*/
 
-            }
+
         }
 
         public void StartAmbientSound(string soundName) // запустить звук у которого нет позиции
