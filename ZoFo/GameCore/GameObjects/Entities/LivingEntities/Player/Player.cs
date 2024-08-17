@@ -20,7 +20,7 @@ public class Player : LivingEntity
     public bool IsTryingToShoot { get; set; }
     private float speed;
     private int health;
-    public override GraphicsComponent graphicsComponent { get; } = new GraphicsComponent(new List<string> { "player_running_top_rotate" }, "player_running_top_rotate");
+    public override AnimatedGraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_running_top_rotate" }, "player_running_top_rotate");
     public Player(Vector2 position) : base(position)
     {
         //InputWeaponRotation = new Vector2(0, 0);

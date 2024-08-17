@@ -80,7 +80,7 @@ public abstract class GameObject
     /// </summary>
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        graphicsComponent.DrawAnimation(graphicsComponent.ObjectDrawRectangle, spriteBatch);
+        graphicsComponent.Draw(graphicsComponent.ObjectDrawRectangle, spriteBatch);
         //debug
         if (AppManager.Instance.InputManager.CollisionsCheat)
             DrawDebugRectangle(spriteBatch, graphicsComponent.ObjectDrawRectangle);
