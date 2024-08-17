@@ -29,7 +29,7 @@ namespace ZoFo.GameCore
         //TODO Comment pls
         public void OnDataSend(string data)
         {
-            List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
+            List<UpdateData> updateDatas = JsonSerializer.Deserialize<List<UpdateData>>(data);
             for (int i = 0; i < updateDatas.Count; i++)
             {
                 ProcessIUpdateData(updateDatas[i]);
@@ -39,7 +39,7 @@ namespace ZoFo.GameCore
         /// Обработка апдейтсов, которые нам прислал клиент
         /// </summary>
         /// <param name="updateData"></param>
-        public void ProcessIUpdateData(IUpdateData updateData)
+        public void ProcessIUpdateData(UpdateData updateData)
         {
 
             //ТУТ Switch case будет честное слово
@@ -50,7 +50,7 @@ namespace ZoFo.GameCore
         /// добавляет в лист updates новую data
         /// </summary>
         /// <param name="data"></param>
-        public void AddData(IUpdateData data)
+        public void AddData(UpdateData data)//добавляет в лист updates новую data
         {
             networkManager.AddData(data);
         }
@@ -87,8 +87,7 @@ namespace ZoFo.GameCore
             networkManager.AddData(gameEnded);
             networkManager.CloseConnection();
         }
-        #endregion
-        private List<GameObject> gameObjects;
+        private List<GameObject> gameObjects = new List<GameObject>();
         private List<Entity> entities;  //entity
         public void Update(GameTime gameTime)
         {
@@ -118,11 +117,12 @@ namespace ZoFo.GameCore
                 AddData(new UpdateTileCreated()
                 {
                     Position = (gameObject as MapObject).position,
-                    sourceRectangle = (gameObject as MapObject)._sourceRectangle,
+                    sourceRectangle = (gameObject as MapObject).sourceRectangle,
                     Size = (gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size,
                     tileSetName = (gameObject as MapObject).graphicsComponent.mainTextureName
                 });//TODO 
             }
         }
     }
+    #endregion
 }

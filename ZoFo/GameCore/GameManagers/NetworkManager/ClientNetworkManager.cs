@@ -18,7 +18,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private int port = 7632;
         private EndPoint endPoint;
         private Socket socket;
-        List<IUpdateData> updates = new List<IUpdateData>();
+        List<UpdateData> updates = new List<UpdateData>();
         public delegate void OnDataSent(string Data);
         public event OnDataSent GetDataSent; // event
         public bool IsConnected { get { return socket.Connected; } }
@@ -26,6 +26,11 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public ClientNetworkManager()
         {
             Init();
+        }
+
+        public bool SocketConnected()
+        {
+            return socket.Connected;
         }
 
         public void Init() //create endPoint, socket
@@ -39,7 +44,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 socket.Send(bytes);
         }
 
-        public void AddData(IUpdateData UpdateData)
+        public void AddData(UpdateData UpdateData)
         {
             updates.Add(UpdateData);
         }

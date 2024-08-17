@@ -1,9 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -21,7 +23,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private IPEndPoint endPoint;
         private Socket socket;
         private List<Socket> clients;
-        public List<IUpdateData> updates;
+        public List<UpdateData> updates;
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
         Dictionary<Socket, Thread> managerThread;
@@ -38,7 +40,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             managerThread = new Dictionary<Socket, Thread>();
             clients = new List<Socket>();
-            updates = new List<IUpdateData>();
+            updates = new List<UpdateData>();
             managerThread = new Dictionary<Socket, Thread>();
             socket.Bind(endPoint);
         }
@@ -56,19 +58,25 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             updates.Clear();
             return; //TODO TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK
 
-            string data = JsonSerializer.Serialize(updates);
+            //по 10 паков за раз TODO FIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXIT
+            List<UpdateData> datasToSend = new List<UpdateData>();
+            for (int i = 0; i < 5 && i<updates.Count; i++)
+                datasToSend.Add(updates[i]);
+            string data = JsonSerializer.Serialize(datasToSend);
             var databytes = Encoding.UTF8.GetBytes(data);
             foreach (var item in clients)
             {
                 item.SendAsync(databytes);
             }
+            for (int i = 0; i < 5 && i< datasToSend.Count; i++)
+                updates.RemoveAt(0); 
         }
 
         /// <summary>
         /// добавляет в лист updates новую data
         /// </summary>
         /// <param name="data"></param>
-        public void AddData(IUpdateData data)
+        public void AddData(UpdateData data)
         {
             updates.Add(data);
         }

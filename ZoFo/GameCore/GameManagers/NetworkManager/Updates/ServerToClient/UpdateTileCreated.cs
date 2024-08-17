@@ -10,11 +10,13 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
-   
-    public class UpdateTileCreated : IUpdateData
+
+    /// <summary>
+    /// При создании тайла
+    /// </summary>
+    public class UpdateTileCreated : UpdateData
     {
-        public int IdEntity { get; set; }
-        public string UpdateType { get; set; }
+        public UpdateTileCreated() { UpdateType = "UpdateTileCreated"; }
         public Texture2D TextureTile { get; set; }
         public Vector2 Position { get; set; }
         public Point Size { get; set; }

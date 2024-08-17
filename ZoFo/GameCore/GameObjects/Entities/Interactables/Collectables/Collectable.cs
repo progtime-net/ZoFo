@@ -2,7 +2,7 @@
 using System;
 
 namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
-public class Collectable : Entity
+public class Collectable : Interactable
 {
     public Collectable(Vector2 position) : base(position)
     {

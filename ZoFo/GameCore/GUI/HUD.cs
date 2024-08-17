@@ -13,13 +13,7 @@ using MonogameLibrary.UI.Elements;
 namespace ZoFo.GameCore.GUI;
 
 public class HUD : AbstractGUI
-{
-    protected UIManager Manager = new();
-    protected List<DrawableUIElement> Elements = new();
-    private List<DrawableUIElement> ActiveElements;
-    protected DrawableUIElement SelectedElement;
-    private bool isStartedPrint = false;
-    private bool isPressed = false;
+{ 
 
     private GraphicsDevice graphicsDevice;
     public virtual void Initialize()

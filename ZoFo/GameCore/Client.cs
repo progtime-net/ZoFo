@@ -28,17 +28,11 @@ namespace ZoFo.GameCore
 
         public void OnDataSend(string data)
         {
-            List<IUpdateData> updateDatas = JsonSerializer.Deserialize<List<IUpdateData>>(data);
+            List<UpdateData> updateDatas = JsonSerializer.Deserialize<List<UpdateData>>(data);
             // тут будет switch
             foreach (var item in updateDatas)
             {
-              /*  switch (item.UpdateType)    Здесь нужно отлавливать и регистрировать
-                {
-                    case "Tile":
-                        MapObject map = new MapObject();
-
-                        break;
-                }*/
+                GotData(item);
             }
 
         }
@@ -66,7 +60,7 @@ namespace ZoFo.GameCore
             }
         }
 
-        internal void GotData(IUpdateData update)
+        internal void GotData(UpdateData update)
         {
             if (update is UpdateTileCreated)
             {

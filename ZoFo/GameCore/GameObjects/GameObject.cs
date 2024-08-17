@@ -4,19 +4,21 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.ZoFo_graphics;
+using ZoFo.GameCore;
 
 namespace ZoFo.GameCore.GameObjects;
 
 public abstract class GameObject
 {
     public Vector2 position;
+
     public Vector2 rotation; //вектор направления объекта
     public abstract GraphicsComponent graphicsComponent { get; }
 
     #region ServerSide
     public GameObject(Vector2 position)
     {
-        this.position = position;
+        this.position = position; 
 
         graphicsComponent.LoadContent();
     }
