@@ -22,7 +22,8 @@ namespace AnimationsFileCreator
             {
                 
                 DialogResult result = Dialog.FileOpen();
-                textureName = result.Path.Split('\\').Last();
+                var temp = result.Path.Split('\\');
+                textureName = temp[temp.Length-2] + "/"+temp[temp.Length - 1];
                 textureName = textureName.Split('.')[0];
             }
             Console.WriteLine("Введите количество кадров анимации: ");
@@ -60,11 +61,11 @@ namespace AnimationsFileCreator
             container.FrameTime = new System.Collections.Generic.List<Tuple<int, int>>();
             container.FrameTime.Add(new Tuple<int, int>(0, interval));
             container.StartSpriteRectangle = rectangle;
-            container.TextureName = textureName;
-            container.TextureFrameInterval = 1;
+            container.TextureName = "Textures/AnimationTextures/"+textureName;
+            container.TextureFrameInterval = 0;
             container.Id = id;
             string json = JsonConvert.SerializeObject(container);
-            StreamWriter writer = new StreamWriter("../../../../ZoFo/Content/animations/"+id);
+            StreamWriter writer = new StreamWriter("../../../../ZoFo/Content/Textures/Animations/"+id+ ".animation");
             writer.WriteLine(json);
             writer.Close();
         }

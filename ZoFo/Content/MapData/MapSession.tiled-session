@@ -1,4 +1,14 @@
 {
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "TileSets/TileSet 1.tsj",
+    "expandedProjectPaths": [
+        "TileMaps",
+        ".",
+        "TileSets"
+    ],
     "fileStates": {
         "TileMaps/TileSets/TileSet 1.tsj": {
             "scaleInDock": 1
