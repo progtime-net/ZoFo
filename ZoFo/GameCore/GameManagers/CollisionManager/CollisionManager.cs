@@ -9,6 +9,8 @@ using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 using Microsoft.Xna.Framework;
 using ZoFo.GameCore.GameManagers.MapManager.MapElements;
+using ZoFo.GameCore.GameObjects.Entities;
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities;
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
@@ -22,7 +24,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
         
         //чекаем коллизии в листе
-        public void CheckComponentCollision(Entity entity)
+        public void CheckComponentCollision(LivingEntity entity)
         {
             //for (int i = 0; i < ObjectsWithCollisions.Count; i++)
             //{

@@ -4,6 +4,7 @@ using System;
 using ZoFo.GameCore.GameObjects.Entities;
 using ZoFo.GameCore.ZoFo_graphics;
 using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GameManagers.CollisionManager;
 
 namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities;
 public class LivingEntity : Entity
@@ -25,6 +26,11 @@ public class LivingEntity : Entity
         
     }*/
     #endregion
+
+    public void OnCollision(CollisionComponent component)
+    {
+        
+    }
 
 }
 
