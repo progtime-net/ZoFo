@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MonogameLibrary.UI.Elements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -121,6 +122,7 @@ namespace ZoFo.GameCore
         /// <param name="gameObject"></param>
         public void RegisterGameObject(GameObject gameObject)
         {
+
             gameObjects.Add(gameObject);
             if (gameObject is MapObject)
             {

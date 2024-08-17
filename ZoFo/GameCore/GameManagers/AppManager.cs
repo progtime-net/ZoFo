@@ -117,8 +117,7 @@ namespace ZoFo.GameCore.GameManagers
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            currentGUI.Draw(_spriteBatch);
-            debugHud.Draw(_spriteBatch);
+            
             
             // Pointwrap
             _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
@@ -132,7 +131,10 @@ namespace ZoFo.GameCore.GameManagers
                 default:
                     break;
             }
+            
             _spriteBatch.End();
+            currentGUI.Draw(_spriteBatch);
+            debugHud.Draw(_spriteBatch);
 
             base.Draw(gameTime);
         }
