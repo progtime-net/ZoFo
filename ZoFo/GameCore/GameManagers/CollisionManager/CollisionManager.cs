@@ -11,7 +11,7 @@ using ZoFo.GameCore.GameManagers.MapManager.MapElements;
 using ZoFo.GameCore.GameObjects.Entities;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
-using ZoFo.GameCore.ZoFo_graphics;
+using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {

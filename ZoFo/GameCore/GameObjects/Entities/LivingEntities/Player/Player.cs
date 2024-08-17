@@ -6,7 +6,7 @@ using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
-using ZoFo.GameCore.ZoFo_graphics;
+using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 

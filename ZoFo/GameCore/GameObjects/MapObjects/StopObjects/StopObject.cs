@@ -7,10 +7,10 @@ namespace ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 
 public class StopObject : MapObject
 {
-    CollisionComponent[] collisionComponent; 
+    CollisionComponent[] collisionComponent;
 
 
-    protected StopObject(Vector2 position, Vector2 size, Rectangle sourceRectangle, string textureName, Rectangle[] collisions) : base(position, size, s
+    public StopObject(Vector2 position, Vector2 size, Rectangle sourceRectangle, string textureName, Rectangle[] collisions) : base(position, size, sourceRectangle, textureName)
     {
         collisionComponent = new CollisionComponent[collisions.Length];
         for (int i = 0; i < collisionComponent.Length; i++)

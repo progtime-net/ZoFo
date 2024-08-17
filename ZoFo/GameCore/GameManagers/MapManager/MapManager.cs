@@ -75,7 +75,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                     case "StopObject":
                                         var collisionRectangles = LoadRectangles(tile);  // Грузит коллизии обьектов
                                         AppManager.Instance.server.RegisterGameObject(new StopObject(position, new Vector2(tileSet.TileWidth, tileSet.TileHeight),
-                                            sourceRectangle, "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", "")));  
+                                            sourceRectangle, "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", ""), collisionRectangles.ToArray()));  
                                         // TODO: изменить конструктор, засунув коллизии.
                                         break;
                                     default:
