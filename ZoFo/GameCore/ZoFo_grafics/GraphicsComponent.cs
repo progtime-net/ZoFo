@@ -16,17 +16,16 @@ namespace ZoFo.GameCore.ZoFo_graphics
     public class GraphicsComponent
     {
         public Rectangle ObjectDrawRectangle;
-
-
-
-        public event Action<string> actionOfAnimationEnd;
+        public event Action<string> OnAnimationEnd;
         private List<AnimationContainer> animations;
         private List<Texture2D> textures;
         public List<string> texturesNames; //rethink public and following that errors
         private AnimationContainer currentAnimation;
         static public int scaling = 1;
-        public int parentId;
-        public bool reverse;
+        private bool reverse;
+        
+        //TODO: remove 
+        /*
         public AnimationContainer CurrentAnimation
         {
             get
@@ -39,28 +38,20 @@ namespace ZoFo.GameCore.ZoFo_graphics
         {
             get { return currentAnimation.Id; }
         }
+        */
 
-        private AnimationContainer neitralAnimation;
-        //private SpriteBatch _spriteBatch;
+        private AnimationContainer idleAnimation;
 
         private int currentFrame;
-        public int CurrentFrame
-        {
-            get
-            {
-                return currentFrame;
-            }
-        }
         private int interval;
         private int lastInterval;
         private Rectangle sourceRectangle;
         public GraphicsComponent(List<string> animationsId, string neitralAnimationId)
         {
-            //this._spriteBatch = _spriteBatch;
             currentFrame = 0;
             lastInterval = 1;
             LoadAnimations(animationsId, neitralAnimationId);
-            currentAnimation = neitralAnimation;
+            currentAnimation = idleAnimation;
             SetInterval();
             buildSourceRectangle();
         }
@@ -90,7 +81,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
             animationContainer.FrameTime = new List<Tuple<int, int>>() { new Tuple<int, int>(0, 10) };
             animationContainer.Id = texture.Name;
             currentAnimation = animationContainer;
-            neitralAnimation = animationContainer;
+            idleAnimation = animationContainer;
             animations.Add(animationContainer);
         }
 
@@ -102,7 +93,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
                 animations.Add(AppManager.Instance.animationBuilder.Animations.Find(x => x.Id == id));
                 if (id == neitralAnimationId)
                 {
-                    neitralAnimation = animations.Last();
+                    idleAnimation = animations.Last();
                 }
             }
         }
@@ -155,7 +146,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
         {
             currentFrame = 0;
             interval = 0;
-            currentAnimation = neitralAnimation;
+            currentAnimation = idleAnimation;
             buildSourceRectangle();
             SetInterval();
         }
@@ -164,11 +155,11 @@ namespace ZoFo.GameCore.ZoFo_graphics
         {
             if (!currentAnimation.IsCycle)
             {
-                if (actionOfAnimationEnd != null)
+                if (OnAnimationEnd != null)
                 {
-                    actionOfAnimationEnd(currentAnimation.Id);
+                    OnAnimationEnd(currentAnimation.Id);
                 }
-                currentAnimation = neitralAnimation;
+                currentAnimation = idleAnimation;
 
             }
 
@@ -271,7 +262,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
             sourceRectangle = new Rectangle();
             if (currentAnimation == null)
             {
-                currentAnimation = neitralAnimation;
+                currentAnimation = idleAnimation;
             }
             sourceRectangle.X = currentAnimation.StartSpriteRectangle.X + currentFrame *
                 (currentAnimation.StartSpriteRectangle.Width + currentAnimation.TextureFrameInterval);

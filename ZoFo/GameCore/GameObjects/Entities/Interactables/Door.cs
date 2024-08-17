@@ -12,7 +12,7 @@ public class Door : Interactable
 
     public Door(Vector2 position) : base(position)
     {
-        graphicsComponent.actionOfAnimationEnd += _ => { isOpened = !isOpened; };
+        graphicsComponent.OnAnimationEnd += _ => { isOpened = !isOpened; };
     }
 
     public override void OnInteraction()
