@@ -142,13 +142,16 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             for (int i = 0; i < playNumber; i++)
             {
                 Socket client = socket.Accept();
+                AppManager.Instance.debugHud.Set("Connect", client.ToString());
                 Thread thread = new Thread(StartListening);
                 thread.IsBackground = true;
                 thread.Start(client);
                 managerThread.Add(client, thread);
-                clients.Add(client);  //добавляем клиентов в лист
+                clients.Add(client);
+               //AppManager.Instance.ChangeState(GameState.HostPlaying);
+                //добавляем клиентов в лист
             }
-
+            AppManager.Instance.ChangeState(GameState.HostPlaying);
         }
 
         /// <summary>

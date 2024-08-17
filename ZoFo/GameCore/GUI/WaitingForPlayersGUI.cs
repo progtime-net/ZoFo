@@ -49,7 +49,7 @@ public class WaitingForPlayersGUI : AbstractGUI
             startButton.LeftButtonPressed += () =>
             {
                 // start
-
+                AppManager.Instance.ChangeState(GameState.HostPlaying);
                 // ваш код здесь 
             };
             Elements.Add(startButton);
@@ -69,7 +69,7 @@ public class WaitingForPlayersGUI : AbstractGUI
             waitButton.LeftButtonPressed += () =>
             {
                 // start
-
+                AppManager.Instance.ChangeState(GameState.ClientPlaying);
                 // ваш код здесь 
             };
             Elements.Add(waitButton);

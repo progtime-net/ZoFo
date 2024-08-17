@@ -101,7 +101,7 @@ namespace ZoFo.GameCore.GameManagers
                     break;
                 case GameState.HostPlaying:
                     server.Update(gameTime);
-                    client.Update(gameTime);
+            //        client.Update(gameTime);
                     break;
                 case GameState.ClientPlaying:
                     server.Update(gameTime);

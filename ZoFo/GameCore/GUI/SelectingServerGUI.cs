@@ -32,11 +32,11 @@ public class SelectingServerGUI : AbstractGUI
         {
             rectangle = new Rectangle(width / 4 - (width / 4) / 2, height / 4, (int)(width / 4), (int)(height / 20)),
             text = "ip",
-            scale = 0.2f,
+            scale = 0.5f,
             fontColor = Color.White,
             mainColor = Color.Gray,
             textAligment = MonogameLibrary.UI.Enums.TextAligment.Left,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font3"
         };
         ipBox.TextChanged += input =>
         {
@@ -76,8 +76,6 @@ public class SelectingServerGUI : AbstractGUI
                 {
                     client.JoinRoom(endpoint[0], port);
                     AppManager.Instance.SetClient(client);
-                    Server server = new Server();
-                    AppManager.Instance.SetServer(server);
                     AppManager.Instance.SetGUI(new WaitingForPlayersGUI(false));
                 }
             }
@@ -104,7 +102,7 @@ public class SelectingServerGUI : AbstractGUI
 
             // host
             Server server = new Server();   //Server Logic MultiPlayer
-            server.CreateRoom(5);
+            server.CreateRoom(1);
             AppManager.Instance.SetServer(server);
             string key = server.MyIp.ToString();
             AppManager.Instance.debugHud.Set(key, "MultiPlayer");
