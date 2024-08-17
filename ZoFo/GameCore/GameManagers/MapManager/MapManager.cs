@@ -66,7 +66,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                 switch (layer.Class)
                                 {
                                     case "Tile":
-                                        AppManager.Instance.server.RegisterGameObject(new MapObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, "Textures\\TileSets\\"+tileSet.Name)); //fix naming
+                                        AppManager.Instance.server.RegisterGameObject(new MapObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, "Textures/TileSets/"+tileSet.Name)); //fix naming
                                         break;
                                     case "StopObject":
                                         // new StopObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, tileSet.Name);
