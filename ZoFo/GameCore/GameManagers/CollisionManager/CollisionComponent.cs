@@ -12,7 +12,7 @@ using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
     public class CollisionComponent
-    {
+    { 
         //==КОНСТРУКТОР== 
         public CollisionComponent(GameObject gameObject)
         {
@@ -20,7 +20,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             this.gameObject = gameObject;
             hasCollision = false;
             this.isTrigger = false;
-        }
+        } 
 
         public CollisionComponent(GameObject gameObject, bool hasCollision = false, Rectangle? collisionRectangle = null, bool isTrigger = false, Rectangle? triggerRectangle = null)
         {
@@ -43,6 +43,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         public GameObject gameObject { get; set; }
 
 
+        bool doesStop;
         bool hasCollision;
         public Rectangle stopRectangle;
 
@@ -64,7 +65,6 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         public event EventHandler<CollisionComponent> OnCollision; 
 
          
-        
-
+         
     }   
 }
