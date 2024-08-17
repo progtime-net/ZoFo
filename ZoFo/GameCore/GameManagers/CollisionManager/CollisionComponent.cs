@@ -13,9 +13,11 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
     {
         //==ПОЛЯ==
 
-        public GameObject gameObject { get; set; }
-        public Rectangle Bounds { get; set; }
-        
+        //public GameObject gameObject { get; set; }
+        //public Rectangle Bounds { get; set; }
+
+        public Rectangle Rectangle => new Rectangle();
+
         bool doesStop;
         Rectangle stopRectangle;
 
@@ -26,15 +28,11 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         //delegate
         public delegate void EventHandler(object sender, EventArgs e);
 
-        public CollisionComponent(int x, int y, int width, int height)
-        {
-            Bounds = new Rectangle(x, y, width, height);
-        }
+        //public CollisionComponent(int x, int y, int width, int height)
+        //{
+         //   Bounds = new Rectangle(x, y, width, height);
+        //}
 
-        public CollisionComponent(Rectangle bounds)
-        {
-            Bounds = bounds;
-        }
 
 
         //events 
