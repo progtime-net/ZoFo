@@ -12,6 +12,8 @@ using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects.MapObjects.Tiles;
 using System.Drawing;
+using System.Reflection;
+using ZoFo.GameCore.GameObjects.Entities;
 
 namespace ZoFo.GameCore
 {
@@ -45,18 +47,27 @@ namespace ZoFo.GameCore
 
 
         List<MapObject> mapObjects = new List<MapObject>();
+        List<GameObject> gameObjects = new List<GameObject>();
         /// <summary>
         /// Клиент должен обнговлять игру анимаций
         /// </summary>
         /// <param name="gameTime"></param>
         internal void Update(GameTime gameTime)
         {
+            for (int i = 0; i < gameObjects.Count; i++)
+            {
+                gameObjects[i].UpdateAnimations();
+            }
         }
         internal void Draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < mapObjects.Count; i++)
             {
                 mapObjects[i].Draw(spriteBatch);
+            }
+            for (int i = 0; i < gameObjects.Count; i++)
+            {
+                gameObjects[i].Draw(spriteBatch);
             }
         }
 
@@ -71,6 +82,22 @@ namespace ZoFo.GameCore
                     (update as UpdateTileCreated).sourceRectangle,
                     (update as UpdateTileCreated).tileSetName
                     ));
+            }
+            else if (update is UpdateGameObjectCreated)
+            {
+                var a = Assembly.GetAssembly(typeof(GameObject));
+                if ((update as UpdateGameObjectCreated).GameObjectType == "EntittyForAnimationTests")
+                {
+
+                    gameObjects.Add(
+                        new EntittyForAnimationTests(new Vector2(100,100))
+                    );
+                }
+                //gameObjects.Add( TODO reflection
+                //Activator.CreateInstance(Type.GetType("ZoFo.GameCore.GameObjects.Entities.EntittyForAnimationTests")
+                ///*(update as UpdateGameObjectCreated).GameObjectType*/, new []{ new Vector2(100, 100) })
+                //as GameObject
+                //);
             }
         }
     }

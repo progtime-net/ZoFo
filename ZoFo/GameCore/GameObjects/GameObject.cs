@@ -63,8 +63,10 @@ public abstract class GameObject
     /// Для клиента
     /// Обновление, которое вызывается у клиента, для просмотра анимаций
     /// </summary>
-    public virtual void UpdateAnimations(GameTime gameTime)
+    public virtual void UpdateAnimations()
     {
+        graphicsComponent.ObjectDrawRectangle.X = (int)position.X; //Move To place where Updates Sets your position
+        graphicsComponent.ObjectDrawRectangle.Y = (int)position.Y;
         PlayAnimation_OnClient();
     }
 

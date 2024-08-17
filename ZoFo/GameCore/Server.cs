@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.MapManager;
 using ZoFo.GameCore.GameManagers.NetworkManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
@@ -76,6 +77,8 @@ namespace ZoFo.GameCore
             gameObjects = new List<GameObject>();
             entities = new List<Entity>();
             new MapManager().LoadMap();
+
+            AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(40, 40)));
         }
 
         /// <summary>
@@ -121,7 +124,13 @@ namespace ZoFo.GameCore
                     Size = (gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size,
                     tileSetName = (gameObject as MapObject).graphicsComponent.mainTextureName
                 });//TODO 
+                return;
             }
+
+            AddData(new UpdateGameObjectCreated()
+            { GameObjectType = gameObject.GetType().Name }
+            ); 
+            
         }
     }
     #endregion
