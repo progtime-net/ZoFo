@@ -7,16 +7,16 @@
      "orientation":"orthogonal",
      "width":24
     },
- "image":"..\/..\/Textures\/Background\/TilesetFloor.png",
- "imageheight":416,
- "imagewidth":352,
+ "image":"..\/..\/Textures\/TileSet\/TilesetFloor.png",
+ "imageheight":832,
+ "imagewidth":704,
  "margin":0,
  "name":"TileSet 1",
  "objectalignment":"topleft",
  "spacing":0,
  "tilecount":572,
  "tiledversion":"1.10.2",
- "tileheight":16,
+ "tileheight":32,
  "tiles":[
         {
          "id":27,
@@ -54,7 +54,7 @@
          "id":112,
          "probability":0.100000001490116
         }],
- "tilewidth":16,
+ "tilewidth":32,
  "type":"tileset",
  "version":"1.10",
  "wangsets":[
