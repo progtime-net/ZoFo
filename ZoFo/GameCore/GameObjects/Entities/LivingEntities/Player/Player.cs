@@ -26,20 +26,23 @@ public class Player : LivingEntity
         //InputWeaponRotation = new Vector2(0, 0);
         //InputPlayerRotation = new Vector2(0, 0);
 
-        collisionComponent = new CollisionComponent(this, true, new Rectangle(0, 0, 10, 10));
+        collisionComponent.stopRectangle = new Rectangle(0, 0, 10, 10);
+        graphicsComponent.ObjectDrawRectangle = new Rectangle(0,0,100,100);
     }
 
 
-    public void Update(GameTime gameTime)
+    public  override void Update()
     {
 
         MovementLogic();
     }
+    float t;
     public void MovementLogic()
     {
+        velocity.X = (float)Math.Sin(t);
+        t++;
         if (InputPlayerRotation.X > 0.9)
         {
-            velocity.X = 5;
         }
     }
     public void HandleNewInput(UpdateInput updateInput)

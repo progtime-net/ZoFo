@@ -13,11 +13,17 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using System.Drawing;
 using System.Reflection;
 using ZoFo.GameCore.GameObjects.Entities;
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
+using System.Linq;
+using System.Web;
+using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore
 {
     public class Client
     {
+        #region Network part
+
         ClientNetworkManager networkManager;
 
         public bool IsConnected { get { return networkManager.IsConnected; } }
@@ -39,12 +45,13 @@ namespace ZoFo.GameCore
         }
         public void GameEndedUnexpectedly() { }
 
-        public void JoinRoom(string ip,int port)
+        public void JoinRoom(string ip, int port)
         {
-            networkManager.JoinRoom(ip,port);
+            networkManager.JoinRoom(ip, port);
         }
         public void JoinYourself(int port) { networkManager.JoinYourself(port); }
 
+        #endregion
 
         List<MapObject> mapObjects = new List<MapObject>();
         List<GameObject> gameObjects = new List<GameObject>();
@@ -85,20 +92,43 @@ namespace ZoFo.GameCore
             }
             else if (update is UpdateGameObjectCreated)
             {
-                var a = Assembly.GetAssembly(typeof(GameObject));
                 if ((update as UpdateGameObjectCreated).GameObjectType == "EntittyForAnimationTests")
-                {
+                    gameObjects.Add(new EntittyForAnimationTests(new Vector2(100, 100)));
+                if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
+                    gameObjects.Add(new Player(new Vector2(100, 100)));
 
-                    gameObjects.Add(
-                        new EntittyForAnimationTests(new Vector2(100,100))
-                    );
-                }
+                (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
+                //var a = Assembly.GetAssembly(typeof(GameObject));
                 //gameObjects.Add( TODO reflection
                 //Activator.CreateInstance(Type.GetType("ZoFo.GameCore.GameObjects.Entities.EntittyForAnimationTests")
                 ///*(update as UpdateGameObjectCreated).GameObjectType*/, new []{ new Vector2(100, 100) })
                 //as GameObject
                 //);
             }
+            else if (update is UpdatePosition)
+            {
+                var ent = FindEntityById(update.IdEntity);
+
+                ent.position = (update as UpdatePosition).NewPosition;
+                DebugHUD.Instance.Log("newPosition " + ent.position);
+            }
         }
+
+
+        public Entity FindEntityById(int id)
+        {
+            for (int i = 0; i < gameObjects.Count; i++)
+            {
+                if (gameObjects[i] is Entity)
+                {
+                    if ((gameObjects[i] as Entity).Id == id)
+                    {
+                        return gameObjects[i] as Entity;
+                    }
+                }
+            }
+            return null;
+        }
+
     }
 }

@@ -12,6 +12,7 @@ using ZoFo.GameCore.GameManagers.ItemManager;
 using ZoFo.GameCore.GUI;
 using static System.Collections.Specialized.BitVector32;
 using MonogameLibrary.UI.Base;
+using ZoFo.GameCore.GameObjects;
 
 namespace ZoFo.GameCore.GameManagers
 {
@@ -83,6 +84,8 @@ namespace ZoFo.GameCore.GameManagers
             currentGUI.LoadContent();
             animationBuilder = new AnimationBuilder();
             animationBuilder.LoadAnimations();
+            GameObject.debugTexture = new Texture2D(GraphicsDevice, 1, 1);
+            GameObject.debugTexture.SetData(new Color[] { Color.White });
         }
 
         protected override void Update(GameTime gameTime)
