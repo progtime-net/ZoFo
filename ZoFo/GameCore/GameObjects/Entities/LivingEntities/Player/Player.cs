@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using ZoFo.GameCore.GameManagers;
@@ -39,11 +40,15 @@ public class Player : LivingEntity
     float t;
     public void MovementLogic()
     {
-        velocity.X = (float)Math.Sin(t);
+        //velocity.X = 3+(float)Math.Sin(t);
         t++;
         if (InputPlayerRotation.X > 0.9)
         {
         }
+        if (Keyboard.GetState().IsKeyDown(Keys.D)) velocity.X = 5;
+        if (Keyboard.GetState().IsKeyDown(Keys.A)) velocity.X = -5;
+        if (Keyboard.GetState().IsKeyDown(Keys.S)) velocity.Y = 5;
+        if (Keyboard.GetState().IsKeyDown(Keys.W)) velocity.Y = -5;
     }
     public void HandleNewInput(UpdateInput updateInput)
     {

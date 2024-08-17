@@ -99,6 +99,7 @@ namespace ZoFo.GameCore
 
             AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(40, 40)));
             AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(140, 140)));
+            AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(140, 140)));
         }
 
         /// <summary>

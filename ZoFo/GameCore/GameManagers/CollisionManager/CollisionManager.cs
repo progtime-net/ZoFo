@@ -93,7 +93,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             }
             else
             {
-                entity.position.X += entity.velocity.Y;
+                entity.position.Y += entity.velocity.Y;
                 newRect.Y = tryingRectY.Y;//значение по X для нового РЕК приравниваем к значению испытуемого РЕК
             }
              
