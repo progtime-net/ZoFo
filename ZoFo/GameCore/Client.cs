@@ -14,6 +14,8 @@ using ZoFo.GameCore.GameObjects.MapObjects.Tiles;
 using System.Drawing;
 using System.Reflection;
 using ZoFo.GameCore.GameObjects.Entities;
+using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 
 namespace ZoFo.GameCore
 {
@@ -26,6 +28,13 @@ namespace ZoFo.GameCore
         {
             networkManager = new ClientNetworkManager();
             networkManager.GetDataSent += OnDataSend;
+
+            // Подписка на действия инпутменеджера.
+            // Отправляются данные апдейтса с обновлением инпута
+            AppManager.Instance.InputManager.ActionEvent += () => networkManager.AddData(new UpdateInput(){
+                InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
+                InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
+            });
         }
 
         public void OnDataSend(string data)
