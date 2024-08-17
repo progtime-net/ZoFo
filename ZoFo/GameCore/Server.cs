@@ -92,7 +92,7 @@ namespace ZoFo.GameCore
             collisionManager = new CollisionManager();
             gameObjects = new List<GameObject>();
             entities = new List<Entity>();
-            new MapManager().LoadMap();
+            //new MapManager().LoadMap();
 
             AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(40, 40)));
             AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(140, 140)));
