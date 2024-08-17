@@ -22,11 +22,11 @@ public class MainMenuGUI : AbstractGUI
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
         
-        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures\\GUI\\background\\mainMenu" };
+        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures/GUI/background/mainMenu" };
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content);
         
-        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 5, (int)(width / 4), (int)(height / 20)), text = "ZoFo", fontColor = Color.Black, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font"});
+        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 5, (int)(width / 4), (int)(height / 20)), text = "ZoFo", fontColor = Color.Black, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts/Font"});
         
         
         Button playButton = new Button(Manager) 
@@ -36,7 +36,7 @@ public class MainMenuGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts\\Font"
+            fontName = "Fonts/Font"
         };
         playButton.LeftButtonPressed += () =>
         {
@@ -50,7 +50,7 @@ public class MainMenuGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts\\Font"
+            fontName = "Fonts/Font"
         };
         optionButton.LeftButtonPressed += () =>
         {
@@ -64,7 +64,7 @@ public class MainMenuGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts\\Font"
+            fontName = "Fonts/Font"
         };
         exitButton.LeftButtonPressed += () =>
         {
