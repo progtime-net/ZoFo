@@ -1,10 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 
-namespace Zofo.GameCore.ZoFo_grafics
+namespace ZoFo.GameCore.Graphics
 {
     [Serializable]
     public class AnimationContainer

@@ -2,9 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using ZoFo.GameCore.GameObjects.Entities;
-using ZoFo.GameCore.ZoFo_graphics;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.CollisionManager;
+using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities;
 public class LivingEntity : Entity
