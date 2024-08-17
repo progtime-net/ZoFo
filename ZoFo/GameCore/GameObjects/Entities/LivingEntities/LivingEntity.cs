@@ -17,6 +17,8 @@ public class LivingEntity : Entity
         inputManager = new InputManager();
     }
 
+    public override GraphicsComponent graphicsComponent { get; } = null;
+
     #region Server side
     /*public override void Update()
     {
