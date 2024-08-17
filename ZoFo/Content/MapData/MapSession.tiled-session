@@ -3,23 +3,27 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "TileSets/TileSet 1.tsj",
+    "activeFile": "TileMaps/main.tmj",
     "expandedProjectPaths": [
         ".",
-        "TileMaps",
-        "TileSets"
+        "TileSets",
+        "TileMaps"
     ],
     "fileStates": {
         "TileMaps/TileSets/TileSet 1.tsj": {
             "scaleInDock": 1
         },
         "TileMaps/main.tmj": {
-            "scale": 0.25,
+            "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 3078,
-                "y": 2164
+                "x": 578,
+                "y": 482.66666666666674
             }
+        },
+        "TileSets/CollisionTileSet.tsj": {
+            "scaleInDock": 0.75,
+            "scaleInEditor": 1
         },
         "TileSets/TileSet 1.tsj": {
             "scaleInDock": 1,
@@ -33,14 +37,15 @@
     "last.imagePath": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/Textures/TileSetImages",
     "openFiles": [
         "TileSets/TileSet 1.tsj",
-        "TileSets/WallSet.tsj",
-        "TileMaps/main.tmj"
+        "TileMaps/main.tmj",
+        "TileSets/CollisionTileSet.tsj"
     ],
     "project": "MapSession.tiled-project",
     "recentFiles": [
-        "TileSets/WallSet.tsj",
         "TileMaps/main.tmj",
-        "TileSets/TileSet 1.tsj"
+        "TileSets/TileSet 1.tsj",
+        "TileSets/CollisionTileSet.tsj",
+        "TileSets/WallSet.tsj"
     ],
     "tileset.lastUsedFormat": "json",
     "tileset.margin": 2,
