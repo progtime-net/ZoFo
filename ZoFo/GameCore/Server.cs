@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.MapManager;
 using ZoFo.GameCore.GameManagers.NetworkManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
@@ -21,11 +22,15 @@ namespace ZoFo.GameCore
     {
         private ServerNetworkManager networkManager;
         private int ticks = 0;
-        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } } 
+        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } }
+
+        public CollisionManager collisionManager;
+
         public Server()
         {
             networkManager = new ServerNetworkManager();
             networkManager.GetDataSend += OnDataSend;
+            collisionManager = new CollisionManager();
 
         }
         #region server logic as App
