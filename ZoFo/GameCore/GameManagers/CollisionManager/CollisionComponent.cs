@@ -14,11 +14,11 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
     public class CollisionComponent
     {
         //==КОНСТРУКТОР==
-        public CollisionComponent(GameObject gameObject)
-        {
-            this.gameObject = gameObject;
-            AppManager.Instance.server.collisionManager.Register(this);
-        }
+        // public CollisionComponent(GameObject gameObject)
+        // {
+        //     this.gameObject = gameObject;
+        //     AppManager.Instance.server.collisionManager.Register(this);
+        // }
 
 
         //==ПОЛЯ==
@@ -26,6 +26,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         public GameObject gameObject { get; set; }
 
 
+        bool doesStop;
         bool hasCollision;
         public Rectangle stopRectangle;
 
@@ -67,7 +68,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             if (hasCollision)
                 this.stopRectangle = collisionRectangle.Value;
             if (isTrigger)
-                this.triggerRectanglee = triggerRectangle.Value;
+                this.triggerRectangle = triggerRectangle.Value;
 
             AppManager.Instance.server.collisionManager.Register(this);
         }
