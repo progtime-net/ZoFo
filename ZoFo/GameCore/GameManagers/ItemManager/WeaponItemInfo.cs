@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.ItemManager
 {
-    class WeaponItemInfo:ItemInfo
+    class WeaponItemInfo: EquippableItemInfo
     {
         //поля
         float damage;
+
+        public WeaponItemInfo(string tag) : base(tag)
+        {
+        }
     }
 }

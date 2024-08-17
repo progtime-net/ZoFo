@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using ZoFo.GameCore.GameObjects;
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {

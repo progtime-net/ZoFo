@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
-    public class UpdatePosition : IUpdateData       //Хранит новую позицию
+    /// <summary>
+    /// Хранит новую позицию
+    /// </summary>
+    public class UpdatePosition : UpdateData       
     {
-        public int IdEntity { get; set; }
-        public string UpdateType { get; set; }
+        public UpdatePosition() { UpdateType = "UpdatePosition"; }
     }
 }

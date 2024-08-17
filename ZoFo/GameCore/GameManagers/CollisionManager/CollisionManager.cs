@@ -88,25 +88,13 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             {
                 newRect.Y = tryingRectY.Y;//значение по X для нового РЕК приравниваем к значению испытуемого РЕК
             }
-
-
-
-
-            //}
         }
 
         //обновление позиции объекта
         public void UpdateObjectsPositions()
         {
-            
+
         }
-
-
-        //получение объекта на поле(карте)
-        //public void GetObjectInArea(Rectangle area)
-        //{
-
-        //}
 
 
         //регистрация компонента(его коллизии)
