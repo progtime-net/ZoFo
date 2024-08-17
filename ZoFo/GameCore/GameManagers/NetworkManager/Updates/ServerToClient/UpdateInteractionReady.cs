@@ -9,6 +9,6 @@ public class UpdateInteractionReady(int idEntity, bool isReady)
     : UpdateData 
 {
     public int IdEntity { get; set; } = idEntity;
-    public string UpdateType { get; set; }
+    public string UpdateType { get; set; } = "UpdateInteractionReady";
     public bool IsReady { get; set; } = isReady;
 }

@@ -5,6 +5,5 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 /// </summary>
 public class UpdateInteraction : UpdateData 
 {
-    public int IdEntity { get; set; }
-    public string UpdateType { get; set; }
+ public UpdateInteraction() { UpdateType = "UpdateInteraction"; }
 }

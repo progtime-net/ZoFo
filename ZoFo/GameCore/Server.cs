@@ -21,7 +21,7 @@ namespace ZoFo.GameCore
     {
         private ServerNetworkManager networkManager;
         private int ticks = 0;
-        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } } 
+        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } }
         public Server()
         {
             networkManager = new ServerNetworkManager();
@@ -46,6 +46,32 @@ namespace ZoFo.GameCore
         {
 
             //ТУТ Switch case будет честное слово
+            switch (updateData.UpdateType)
+            {
+                case "UpdateAnimation":
+                    break;
+                case "UpdateEntityHealth":
+                    break;
+                case "UpdateGameEnded":
+                    break;
+                case "UpdateGameObjectCreated":
+                    break;
+                case "UpdateGameObjectDeleted":
+                    break;
+                case "UpdateInteraction":
+                    break;
+                case "UpdateInteractionReady":
+                    break;
+                case "UpdateLoot":
+                    break;
+                case "UpdatePlayerParametrs":
+                    break;
+                case "UpdatePosition":
+                    break;
+                case "UpdateTileCreated":
+                    break;
+
+            }
         }
 
         public void CloseConnection()
@@ -136,8 +162,8 @@ namespace ZoFo.GameCore
 
             AddData(new UpdateGameObjectCreated()
             { GameObjectType = gameObject.GetType().Name }
-            ); 
-            
+            );
+
         }
     }
     #endregion
