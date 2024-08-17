@@ -15,6 +15,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.Entities;
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using ZoFo.GameCore.GameObjects.MapObjects;
 
@@ -25,9 +26,7 @@ namespace ZoFo.GameCore
         private ServerNetworkManager networkManager;
         private int ticks = 0;
         public IPEndPoint MyIp { get { return networkManager.InfoConnect; } }
-
-        public CollisionManager collisionManager;
-
+         
         public Server()
         {
             networkManager = new ServerNetworkManager();
@@ -84,7 +83,7 @@ namespace ZoFo.GameCore
         #endregion
 
         #region Game Methods
-
+        public CollisionManager collisionManager;
         /// <summary>
         /// Запуск игры в комнате
         /// </summary>
@@ -112,7 +111,6 @@ namespace ZoFo.GameCore
             networkManager.CloseConnection();
         }
 
-        public CollisionManager collisionManager;
         private List<GameObject> gameObjects = new List<GameObject>();
         private List<Entity> entities;  //entity
         public void Update(GameTime gameTime)
@@ -151,10 +149,20 @@ namespace ZoFo.GameCore
                 });//TODO 
                 return;
             }
+            if (gameObject is Entity)
+            {
+                AddData(new UpdateGameObjectCreated() { GameObjectType = gameObject.GetType().Name, IdEntity = (gameObject as Entity).Id });
+                collisionManager.Register((gameObject as Entity).collisionComponent);
+            }
+            else
+                AddData(new UpdateGameObjectCreated() { GameObjectType = gameObject.GetType().Name });
 
-            AddData(new UpdateGameObjectCreated()
-                { GameObjectType = gameObject.GetType().Name }
-            ); 
+
+            ////var elems = gameObject.GetType().GetProperties(System.Reflection.BindingFlags.Public);
+            ////if (elems.Count()>0) TODO
+            ////{ 
+            ////    AppManager.Instance.server.collisionManager.Register((elems.First().GetValue(gameObject) as CollisionComponent));
+            ////}
             
         }
         
