@@ -24,11 +24,15 @@ namespace ZoFo.GameCore
     {
         private ServerNetworkManager networkManager;
         private int ticks = 0;
-        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } } 
+        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } }
+
+        public CollisionManager collisionManager;
+
         public Server()
         {
             networkManager = new ServerNetworkManager();
             networkManager.GetDataSend += OnDataSend;
+            collisionManager = new CollisionManager();
 
         }
         #region server logic as App
