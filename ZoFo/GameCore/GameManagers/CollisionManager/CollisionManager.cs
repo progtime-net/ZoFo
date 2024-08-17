@@ -31,8 +31,10 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             //for (int i = 0; i < ObjectsWithCollisions.Count; i++)
             //{
             var currentRect = entity.collisionComponent.stopRectangle;//задаём РЕК
-            var newRect = currentRect; // задаём значение старого РЕК новому РЕК
-            bool flagRemovedObject = false; //флаг удаления 
+            currentRect.X+=(int)entity.position.X;
+            currentRect.Y+=(int)entity.position.Y;
+
+            var newRect = currentRect; // задаём значение старого РЕК новому РЕК 
 
 
             var collidedX = false; // соприкосновение
@@ -100,11 +102,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             entity.velocity = Vector2.Zero;
         }
 
-        //обновление позиции объекта
-        public void UpdateObjectsPositions()
-        {
-
-        }
+        //обновление позиции объекта 
 
         public void UpdatePositions()
         {

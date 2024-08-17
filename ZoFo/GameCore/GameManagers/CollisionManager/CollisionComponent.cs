@@ -13,13 +13,29 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
     public class CollisionComponent
     {
-        //==КОНСТРУКТОР==
+        //==КОНСТРУКТОР== 
         public CollisionComponent(GameObject gameObject)
         {
+
             this.gameObject = gameObject;
+            hasCollision = false;
+            this.isTrigger = false;
             AppManager.Instance.server.collisionManager.Register(this);
         }
 
+        public CollisionComponent(GameObject gameObject, bool hasCollision = false, Rectangle? collisionRectangle = null, bool isTrigger = false, Rectangle? triggerRectangle = null)
+        {
+            this.gameObject = gameObject;
+
+            hasCollision = hasCollision;
+            this.isTrigger = isTrigger;
+            if (hasCollision)
+                this.stopRectangle = collisionRectangle.Value;
+            if (isTrigger)
+                this.triggerRectangle = triggerRectangle.Value;
+
+            AppManager.Instance.server.collisionManager.Register(this);
+        }
 
         //==ПОЛЯ==
 
@@ -46,30 +62,8 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
  
         public event EventHandler<CollisionComponent> OnCollision; 
 
-
-        // methods-event
+         
         
 
-        public CollisionComponent(GameObject gameObject)
-        {
-
-            this.gameObject = gameObject;
-            doesStop = false;
-            this.isTrigger = false;
-            AppManager.Instance.server.collisionManager.Register(this);
-        }
-        public CollisionComponent(GameObject gameObject, bool hasCollision = false, Rectangle? collisionRectangle = null, bool isTrigger = false, Rectangle? triggerRectangle = null)
-        {
-            this.gameObject = gameObject;
-
-            doesStop = hasCollision;
-            this.isTrigger = isTrigger;
-            if (hasCollision)
-                this.stopRectangle = collisionRectangle.Value;
-            if (isTrigger)
-                this.triggerRectanglee = triggerRectangle.Value;
-
-            AppManager.Instance.server.collisionManager.Register(this);
-        }
     }   
 }
