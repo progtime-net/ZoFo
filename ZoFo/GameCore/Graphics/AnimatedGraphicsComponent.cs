@@ -11,7 +11,6 @@ namespace ZoFo.GameCore.Graphics
 
     public class AnimatedGraphicsComponent : GraphicsComponent
     {
-        public Rectangle ObjectDrawRectangle;
 
 
 
@@ -51,8 +50,9 @@ namespace ZoFo.GameCore.Graphics
         private int interval;
         private int lastInterval;
         private Rectangle sourceRectangle;
-        public AnimatedGraphicsComponent(List<string> animationsId, string neitralAnimationId)
+        public AnimatedGraphicsComponent(List<string> animationsId, string neitralAnimationId, Rectangle objectDrawRectangle = new())
         {
+            ObjectDrawRectangle = objectDrawRectangle;
             //this._spriteBatch = _spriteBatch;
             currentFrame = 0;
             lastInterval = 1;
@@ -202,6 +202,7 @@ namespace ZoFo.GameCore.Graphics
 
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch)
         {
+            DebugHUD.Instance.Log($"{destinationRectangle.Width}   :   {destinationRectangle.Height}");
             Texture2D texture = textures[texturesNames.FindIndex(x => x == currentAnimation.TextureName)];
 
             float scale;
