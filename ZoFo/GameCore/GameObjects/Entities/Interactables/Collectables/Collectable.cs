@@ -13,6 +13,8 @@ public class Collectable : Interactable
 
     public override void OnInteraction(object sender, CollisionComponent e)
     {
-        
+        // 
+        AppManager.Instance.server.AddData(new UpdateLoot());
+        AppManager.Instance.server.DeleteObject(this);
     }
 }
