@@ -11,16 +11,16 @@ using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
 {
-     class PureBottleOfWater:Collectable
+    class RottenFlesh:Collectable
     {
-        public override GraphicsComponent graphicsComponent { get; } = new(new List<string> { "PureBottleOfWater" }, "PureBottleOfWater");
-
-        public PureBottleOfWater(Vector2 position) : base(position)
+        public override GraphicsComponent graphicsComponent { get; } = new(new List<string> { "RottenFlesh" }, "RottenFlesh");
+        public RottenFlesh(Vector2 position) : base(position)
         {
+
         }
         public override void OnInteraction(object sender, CollisionComponent e)
         {
-            AppManager.Instance.server.AddData(new UpdateLoot("PureBottleOfWater"));
+            AppManager.Instance.server.AddData(new UpdateLoot("RottenFlesh"));
             AppManager.Instance.server.DeleteObject(this);
         }
     }

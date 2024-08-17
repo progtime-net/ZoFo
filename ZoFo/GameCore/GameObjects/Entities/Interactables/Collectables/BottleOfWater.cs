@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using ZoFo.GameCore.Graphics;
 
 using Microsoft.Xna.Framework;
+using ZoFo.GameCore.GameManagers.CollisionManager;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
+using ZoFo.GameCore.GameManagers;
 
 namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
 {
@@ -16,6 +19,10 @@ namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
         {
 
         }
-
+        public override void OnInteraction(object sender, CollisionComponent e)
+        {
+            AppManager.Instance.server.AddData(new UpdateLoot("BottleOfWater"));
+            AppManager.Instance.server.DeleteObject(this);
+        }
     }
 }
