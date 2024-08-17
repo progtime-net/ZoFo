@@ -19,14 +19,16 @@ namespace ZoFo.GameCore.ZoFo_graphics
 
 
 
-        public event Action<string> actionOfAnimationEnd;
+        public event Action<string> OnAnimationEnd;
         private List<AnimationContainer> animations;
         private List<Texture2D> textures;
         public List<string> texturesNames; //rethink public and following that errors
         private AnimationContainer currentAnimation;
-        static public int scaling = 1;
-        public int parentId;
-        public bool reverse;
+        public static int scaling = 1;
+
+        public bool animating = true;
+        private int step = 1;
+        
         public AnimationContainer CurrentAnimation
         {
             get
@@ -40,7 +42,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
             get { return currentAnimation.Id; }
         }
 
-        private AnimationContainer neitralAnimation;
+        private AnimationContainer idleAnimation;
         //private SpriteBatch _spriteBatch;
 
         private int currentFrame;
@@ -60,7 +62,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
             currentFrame = 0;
             lastInterval = 1;
             LoadAnimations(animationsId, neitralAnimationId);
-            currentAnimation = neitralAnimation;
+            currentAnimation = idleAnimation;
             SetInterval();
             buildSourceRectangle();
         }
@@ -90,7 +92,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
             animationContainer.FrameTime = new List<Tuple<int, int>>() { new Tuple<int, int>(0, 10) };
             animationContainer.Id = texture.Name;
             currentAnimation = animationContainer;
-            neitralAnimation = animationContainer;
+            idleAnimation = animationContainer;
             animations.Add(animationContainer);
         }
 
@@ -102,7 +104,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
                 animations.Add(AppManager.Instance.animationBuilder.Animations.Find(x => x.Id == id));
                 if (id == neitralAnimationId)
                 {
-                    neitralAnimation = animations.Last();
+                    idleAnimation = animations.Last();
                 }
             }
         }
@@ -127,35 +129,43 @@ namespace ZoFo.GameCore.ZoFo_graphics
             }
         }
 
-        public void StartAnimation(string startedanimationId, bool reverse = false)
+        public void AnimationInit(string animationId, bool reverse = false)
         {
-            /*
-            if (AppManager.Instance.multiPlayerStatus != MultiPlayerStatus.SinglePlayer)
-            {
-                LivingEntity entity = AppManager.Instance.GameManager.livingEntities.Find(x => x.id == parentId);
-                if (((entity is Player) || AppManager.Instance.multiPlayerStatus == MultiPlayerStatus.Host) && startedanimationId != GetCurrentAnimation)
-                {
-                    AppManager.Instance.NetworkTasks.Add(new NetworkTask(parentId, startedanimationId, Vector2.Zero));
-                }
-            }
-            */
-            this.reverse = reverse;
-            
-            currentAnimation = animations.Find(x => x.Id == startedanimationId);
+            currentAnimation = animations.Find(x => x.Id == animationId);
             if (reverse)
+            {
                 currentFrame = currentAnimation.FramesCount;
+                step = -1;
+            }
             else
-                currentFrame = 0;
-
+            {
+                step = 1;
+                currentFrame = 1;
+            }
             buildSourceRectangle();
             SetInterval();
+        }
+
+        public void StartAnimation()
+        {
+            animating = true;
+        }
+        
+        public void StepAnimation()
+        {
+            currentFrame += step;
+        }
+
+        public void SetFrame(int frame)
+        {
+            currentFrame = frame;
         }
 
         public void StopAnimation()
         {
             currentFrame = 0;
             interval = 0;
-            currentAnimation = neitralAnimation;
+            currentAnimation = idleAnimation;
             buildSourceRectangle();
             SetInterval();
         }
@@ -164,47 +174,33 @@ namespace ZoFo.GameCore.ZoFo_graphics
         {
             if (!currentAnimation.IsCycle)
             {
-                if (actionOfAnimationEnd != null)
+                if (OnAnimationEnd != null)
                 {
-                    actionOfAnimationEnd(currentAnimation.Id);
+                    OnAnimationEnd(currentAnimation.Id);
                 }
-                currentAnimation = neitralAnimation;
-
+                currentAnimation = idleAnimation;
+                animating = false;
             }
-
             currentFrame = 0;
         }
 
         public void Update()
         {
-            if (currentAnimation is null)
+            if (currentAnimation.FramesCount <= currentFrame || currentFrame < 0)
             {
-                return;
+                AnimationEnd();
             }
+            
+            if (!animating)
+                return;
+
             if (interval == 0)
             {
-                if (reverse)
-                {
-                    currentFrame--;
-                    if (currentFrame <= 0)
-                    {
-                        AnimationEnd();
-                        reverse = false;
-                    }
-                }
-                else
-                {
-                    currentFrame++;
-                    if (currentAnimation.FramesCount <= currentFrame)
-                    {
-                        AnimationEnd();
-                    }
-                }
-
+                currentFrame += step;
                 buildSourceRectangle();
                 SetInterval();
             }
-
+            
             interval--;
         }
 
@@ -271,7 +267,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
             sourceRectangle = new Rectangle();
             if (currentAnimation == null)
             {
-                currentAnimation = neitralAnimation;
+                currentAnimation = idleAnimation;
             }
             sourceRectangle.X = currentAnimation.StartSpriteRectangle.X + currentFrame *
                 (currentAnimation.StartSpriteRectangle.Width + currentAnimation.TextureFrameInterval);
