@@ -97,9 +97,10 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
                 newRect.Y = tryingRectY.Y;//значение по X для нового РЕК приравниваем к значению испытуемого РЕК
             }
              
-            entity.graphicsComponent.ObjectDrawRectangle.x = (int)entity.position.X;
-            entity.graphicsComponent.ObjectDrawRectangle.y = (int)entity.position.Y;
-            AppManager.Instance.server.AddData(new UpdatePosition() { NewPosition = entity.position });
+            entity.graphicsComponent.ObjectDrawRectangle.X = (int)entity.position.X;
+            entity.graphicsComponent.ObjectDrawRectangle.Y = (int)entity.position.Y;
+            AppManager.Instance.server.AddData(new UpdatePosition() { NewPosition = entity.position, IdEntity = entity.Id });
+            AppManager.Instance.debugHud.Set("testPos", entity.position.ToString()); //TODO remove
             entity.velocity = Vector2.Zero;
         }
 

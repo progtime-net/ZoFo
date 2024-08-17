@@ -20,7 +20,6 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             this.gameObject = gameObject;
             hasCollision = false;
             this.isTrigger = false;
-            AppManager.Instance.server.collisionManager.Register(this);
         }
 
         public CollisionComponent(GameObject gameObject, bool hasCollision = false, Rectangle? collisionRectangle = null, bool isTrigger = false, Rectangle? triggerRectangle = null)
@@ -33,8 +32,10 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
                 this.stopRectangle = collisionRectangle.Value;
             if (isTrigger)
                 this.triggerRectangle = triggerRectangle.Value;
+            
+            
 
-            AppManager.Instance.server.collisionManager.Register(this);
+            
         }
 
         //==ПОЛЯ==
