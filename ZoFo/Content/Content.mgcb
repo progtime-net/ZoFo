@@ -34,6 +34,141 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Font3.spritefont
 
+#begin MapData/TileMaps/main.tmj
+/copy:MapData/TileMaps/main.tmj
+
+#begin MapData/TileMaps/main.tmx
+/copy:MapData/TileMaps/main.tmx
+
+#begin MapData/TileSets/TileSet 1.tsj
+/copy:MapData/TileSets/TileSet 1.tsj
+
+#begin sounds/Loot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Loot.wav
+
+#begin sounds/Odevanie odezdi.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Odevanie odezdi.wav
+
+#begin sounds/Pieot wodichky.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Pieot wodichky.wav
+
+#begin sounds/Sshetchik geigera.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Sshetchik geigera.wav
+
+#begin sounds/Tabletki 2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Tabletki 2.wav
+
+#begin sounds/Zombi napal.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Zombi napal.wav
+
+#begin sounds/Zombi stoit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Zombi stoit.wav
+
+#begin Textures/AnimationTextures/Character/hr-level1_idle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_idle.png
+
+#begin Textures/AnimationTextures/Character/hr-level1_idle_gun.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_idle_gun.png
+
+#begin Textures/AnimationTextures/Character/hr-level1_mining_tool-1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_mining_tool-1.png
+
+#begin Textures/AnimationTextures/Character/hr-level1_mining_tool-2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_mining_tool-2.png
+
+#begin Textures/AnimationTextures/Character/hr-level1_running.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_running.png
+
+#begin Textures/AnimationTextures/Character/hr-level1_running_gun.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_running_gun.png
+
+#begin Textures/AnimationTextures/unicorn.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/unicorn.png
+
 #begin Textures/GUI/background/base.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -46,6 +181,18 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/background/base.png
 
+#begin Textures/GUI/background/endGame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/background/endGame.png
+
 #begin Textures/GUI/background/join.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -57,6 +204,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/background/join.png
+
+#begin Textures/GUI/background/mainMenu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/background/mainMenu.png
+
+#begin Textures/GUI/background/options.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/background/options.png
 
 #begin Textures/GUI/background/selectMode.png
 /importer:TextureImporter
@@ -82,18 +253,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/background/waiting.png
 
-#begin Textures/GUI/checkboxs_off-on.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/GUI/checkboxs_off-on.png
-
 #begin Textures/GUI/checkboxs_off.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -105,6 +264,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/checkboxs_off.png
+
+#begin Textures/GUI/checkboxs_off-on.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/checkboxs_off-on.png
 
 #begin Textures/GUI/checkboxs_on.png
 /importer:TextureImporter
@@ -142,6 +313,18 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/mouse.png
 
+#begin Textures/GUI/switch.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/switch.png
+
 #begin Textures/GUI/Switch_backgrownd.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -154,7 +337,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/Switch_backgrownd.png
 
-#begin Textures/GUI/switch.png
+#begin Textures/TileSetImages/TilesetFloor.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -164,5 +347,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/GUI/switch.png
+/build:Textures/TileSetImages/TilesetFloor.png
 

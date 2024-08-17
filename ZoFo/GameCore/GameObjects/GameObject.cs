@@ -11,14 +11,15 @@ namespace ZoFo.GameCore.GameObjects;
 public abstract class GameObject
 {
     public Vector2 position;
+
     public Vector2 rotation; //вектор направления объекта
-    protected abstract GraphicsComponent graphicsComponent { get; }
+    public abstract GraphicsComponent graphicsComponent { get; }
 
     #region ServerSide
     public GameObject(Vector2 position)
     {
-        this.position = position;
-        AppManager.Instance.server.RegisterEntity(this);
+        this.position = position; 
+        graphicsComponent.LoadContent();
     }
     public virtual void UpdateLogic(GameTime gameTime)
     { 
@@ -61,8 +62,10 @@ public abstract class GameObject
     /// Для клиента
     /// Обновление, которое вызывается у клиента, для просмотра анимаций
     /// </summary>
-    public virtual void UpdateAnimations(GameTime gameTime)
+    public virtual void UpdateAnimations()
     {
+        graphicsComponent.ObjectDrawRectangle.X = (int)position.X; //Move To place where Updates Sets your position
+        graphicsComponent.ObjectDrawRectangle.Y = (int)position.Y;
         PlayAnimation_OnClient();
     }
 
@@ -82,10 +85,10 @@ public abstract class GameObject
         if (color is null) color = new Color(1, 0, 0, 0.25f);
         if (color.Value.A == 255) color = new Color(color.Value, 0.25f);
         //spriteBatch.Draw(debugTexture,
-        //                     new Rectangle((_rectangle.X - GraphicsComponent.CameraPosition.X) * GraphicsComponent.scaling,
-        //                     (_rectangle.Y - GraphicsComponent.CameraPosition.Y) * GraphicsComponent.scaling,
-        //                     _rectangle.Width * GraphicsComponent.scaling,
-        //                     _rectangle.Height * GraphicsComponent.scaling), color.Value);
+        //                     new Rectangle((_rectangle.X - graphicsComponent.CameraPosition.X) * graphicsComponent.scaling,
+        //                     (_rectangle.Y - graphicsComponent.CameraPosition.Y) * graphicsComponent.scaling,
+        //                     _rectangle.Width * graphicsComponent.scaling,
+        //                     _rectangle.Height * graphicsComponent.scaling), color.Value);
      
         //TODO: debugTexture
     }

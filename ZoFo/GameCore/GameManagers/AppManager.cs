@@ -36,6 +36,8 @@ namespace ZoFo.GameCore.GameManagers
 
         public InputManager InputManager;
         public ItemManager.ItemManager ItemManager;
+        public SettingsManager SettingsManager;
+        public SoundManager SoundManager;
 
         public AnimationBuilder animationBuilder { get; set; }
 
@@ -53,7 +55,10 @@ namespace ZoFo.GameCore.GameManagers
 
             Instance = this;
             InputManager = new InputManager();
-
+            SettingsManager = new SettingsManager();
+            SettingsManager.LoadSettings();
+            SoundManager = new SoundManager();
+            SoundManager.LoadSounds();
 
 
             currentGUI = new MainMenuGUI();
@@ -65,7 +70,7 @@ namespace ZoFo.GameCore.GameManagers
         protected override void Initialize()
         {
             currentGUI.Initialize();
-            debugHud.Initialize(); 
+            debugHud.Initialize();
 
 
             base.Initialize();
@@ -76,16 +81,15 @@ namespace ZoFo.GameCore.GameManagers
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             debugHud.LoadContent();
             currentGUI.LoadContent();
-
-
-
+            animationBuilder = new AnimationBuilder();
+            animationBuilder.LoadAnimations();
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+                Keyboard.GetState().IsKeyDown(Keys.Escape)) { server.CloseConnection(); Exit(); }
+
 
             debugHud.Set("key", "value");
 
@@ -115,6 +119,9 @@ namespace ZoFo.GameCore.GameManagers
 
             currentGUI.Draw(_spriteBatch);
             debugHud.Draw(_spriteBatch);
+            
+            // Pointwrap
+            _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
@@ -125,6 +132,7 @@ namespace ZoFo.GameCore.GameManagers
                 default:
                     break;
             }
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }

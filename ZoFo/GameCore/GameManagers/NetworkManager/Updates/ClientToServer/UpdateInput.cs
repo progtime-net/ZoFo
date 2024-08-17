@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer
 {
-    public class UpdateInput :IUpdateData
+    public class UpdateInput :UpdateData
     {
-        public int IdEntity { get; set; }
-        public string UpdateType { get; set; }
+       // public int IdEntity { get; set; }
+      public UpdateInput()
+        {
+            UpdateType = "UpdateInput";
+        }
     }
 }

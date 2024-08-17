@@ -1,0 +1,21 @@
+{ "class":"StopObject",
+ "columns":5,
+ "grid":
+    {
+     "height":16,
+     "orientation":"orthogonal",
+     "width":16
+    },
+ "image":"..\/..\/Textures\/StopObjects\/Tilelist2.png",
+ "imageheight":1302,
+ "imagewidth":652,
+ "margin":2,
+ "name":"WallSet",
+ "spacing":2,
+ "tilecount":3240,
+ "tiledversion":"1.10.2",
+ "tileheight":128,
+ "tilewidth":128,
+ "type":"tileset",
+ "version":"1.10"
+}
