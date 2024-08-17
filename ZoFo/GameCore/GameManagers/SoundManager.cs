@@ -20,7 +20,7 @@ namespace ZoFo.GameCore.GameManagers
 
         public void LoadSounds() // метод для загрузки звуков из папки
         {
-            var k = Directory.GetFiles("../../..//Content/sounds").Where(x => x.EndsWith("wav"));
+            var k = Directory.GetFiles("../../../Content/sounds").Where(x => x.EndsWith("wav"));
 
             if (k.Count() > 0)
             {
