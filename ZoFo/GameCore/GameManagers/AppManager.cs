@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using DangerousD.GameCore.Graphics;
+using ZoFo.GameCore.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -59,7 +59,7 @@ namespace ZoFo.GameCore.GameManagers
             SettingsManager.LoadSettings();
             SoundManager = new SoundManager();
             SoundManager.LoadSounds();
-            
+
 
             currentGUI = new MainMenuGUI();
             debugHud = new DebugHUD();
@@ -70,7 +70,7 @@ namespace ZoFo.GameCore.GameManagers
         protected override void Initialize()
         {
             currentGUI.Initialize();
-            debugHud.Initialize(); 
+            debugHud.Initialize();
 
 
             base.Initialize();
@@ -83,14 +83,13 @@ namespace ZoFo.GameCore.GameManagers
             currentGUI.LoadContent();
             animationBuilder = new AnimationBuilder();
             animationBuilder.LoadAnimations();
-
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+                Keyboard.GetState().IsKeyDown(Keys.Escape)) { server.CloseConnection(); Exit(); }
+
 
             debugHud.Set("key", "value");
 
@@ -118,8 +117,7 @@ namespace ZoFo.GameCore.GameManagers
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            currentGUI.Draw(_spriteBatch);
-            debugHud.Draw(_spriteBatch);
+            
             
             // Pointwrap
             _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
@@ -133,7 +131,10 @@ namespace ZoFo.GameCore.GameManagers
                 default:
                     break;
             }
+            
             _spriteBatch.End();
+            currentGUI.Draw(_spriteBatch);
+            debugHud.Draw(_spriteBatch);
 
             base.Draw(gameTime);
         }

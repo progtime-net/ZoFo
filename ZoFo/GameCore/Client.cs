@@ -10,7 +10,6 @@ using System;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
-using ZoFo.GameCore.GameObjects.MapObjects.Tiles;
 using System.Drawing;
 using System.Reflection;
 using ZoFo.GameCore.GameObjects.Entities;
@@ -39,6 +38,7 @@ namespace ZoFo.GameCore
 
         }
         public void GameEndedUnexpectedly() { }
+
         public void JoinRoom(string ip,int port)
         {
             networkManager.JoinRoom(ip,port);

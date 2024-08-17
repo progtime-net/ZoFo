@@ -39,17 +39,37 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
 
 
-        //events 
+        //events DoorInteraction
         public event EventHandler<CollisionComponent> OnTriggerEnter;
         public event EventHandler<CollisionComponent> OnTriggerZone;
         public event EventHandler<CollisionComponent> OnTriggerExit;
-
-        public event EventHandler<CollisionComponent> OnCollision;
+ 
+        public event EventHandler<CollisionComponent> OnCollision; 
 
 
         // methods-event
         
 
+        public CollisionComponent(GameObject gameObject)
+        {
 
+            this.gameObject = gameObject;
+            doesStop = false;
+            this.isTrigger = false;
+            AppManager.Instance.server.collisionManager.Register(this);
+        }
+        public CollisionComponent(GameObject gameObject, bool hasCollision = false, Rectangle? collisionRectangle = null, bool isTrigger = false, Rectangle? triggerRectangle = null)
+        {
+            this.gameObject = gameObject;
+
+            doesStop = hasCollision;
+            this.isTrigger = isTrigger;
+            if (hasCollision)
+                this.stopRectangle = collisionRectangle.Value;
+            if (isTrigger)
+                this.triggerRectanglee = triggerRectangle.Value;
+
+            AppManager.Instance.server.collisionManager.Register(this);
+        }
     }   
 }

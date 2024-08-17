@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ZoFo.GameCore.GameManagers.CollisionManager;
-using ZoFo.GameCore.ZoFo_graphics;
 
 namespace ZoFo.GameCore.GameObjects.Entities
 {
@@ -15,10 +14,15 @@ namespace ZoFo.GameCore.GameObjects.Entities
         public int Id { get; set; }
         protected Entity(Vector2 position) : base(position)
         {
+
         }
         public virtual void Update()
         {
-
+        }
+        public override void UpdateLogic()
+        {
+            Update();
+            base.UpdateLogic();
         }
     }
 }

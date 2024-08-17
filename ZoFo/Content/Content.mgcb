@@ -40,8 +40,8 @@
 #begin MapData/TileMaps/main.tmx
 /copy:MapData/TileMaps/main.tmx
 
-#begin MapData/TileSets/TileSet 1.tsj
-/copy:MapData/TileSets/TileSet 1.tsj
+#begin MapData/TileSets/CollisionTileSet.tsj
+/copy:MapData/TileSets/CollisionTileSet.tsj
 
 #begin sounds/Loot.wav
 /importer:WavImporter
@@ -73,12 +73,6 @@
 /processorParam:Quality=Best
 /build:sounds/Tabletki 2.wav
 
-#begin sounds/Tabletki.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:sounds/Tabletki.mp3
-
 #begin sounds/Zombi napal.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -90,6 +84,24 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/Zombi stoit.wav
+
+#begin Textures/Animations/player_idle_rotate_weapon.animation
+/copy:Textures/Animations/player_idle_rotate_weapon.animation
+
+#begin Textures/Animations/player_idle_top_noweapon.animation
+/copy:Textures/Animations/player_idle_top_noweapon.animation
+
+#begin Textures/Animations/player_idle_top-right_noweapon.animation
+/copy:Textures/Animations/player_idle_top-right_noweapon.animation
+
+#begin Textures/Animations/player_running_top_rotate.animation
+/copy:Textures/Animations/player_running_top_rotate.animation
+
+#begin Textures/Animations/running_top.animation
+/copy:Textures/Animations/running_top.animation
+
+#begin Textures/Animations/testAnimationExample.animation
+/copy:Textures/Animations/testAnimationExample.animation
 
 #begin Textures/AnimationTextures/Character/hr-level1_idle_gun.png
 /importer:TextureImporter
@@ -259,18 +271,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/background/waiting.png
 
-#begin Textures/GUI/checkboxs_off.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/GUI/checkboxs_off.png
-
 #begin Textures/GUI/checkboxs_off-on.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -282,6 +282,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/checkboxs_off-on.png
+
+#begin Textures/GUI/checkboxs_off.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/checkboxs_off.png
 
 #begin Textures/GUI/checkboxs_on.png
 /importer:TextureImporter
@@ -319,18 +331,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/mouse.png
 
-#begin Textures/GUI/switch.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/GUI/switch.png
-
 #begin Textures/GUI/Switch_backgrownd.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -342,6 +342,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/Switch_backgrownd.png
+
+#begin Textures/GUI/switch.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/switch.png
 
 #begin Textures/TileSetImages/TilesetFloor.png
 /importer:TextureImporter
