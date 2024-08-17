@@ -9,7 +9,7 @@ public class Door : Interactable
 {
     public bool isOpened;
 
-    public override StaticGraphicsComponent graphicsComponent { get; } = new("DoorClosed");
+    public override AnimatedGraphicsComponent graphicsComponent { get; } = new("DoorClosed");
 
     public Door(Vector2 position) : base(position)
     {

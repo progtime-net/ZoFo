@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.Graphics
 {
@@ -202,6 +203,7 @@ namespace ZoFo.GameCore.Graphics
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch)
         {
             Texture2D texture = textures[texturesNames.FindIndex(x => x == currentAnimation.TextureName)];
+
             float scale;
             if (currentAnimation.Offset.X != 0)
             {
@@ -223,10 +225,14 @@ namespace ZoFo.GameCore.Graphics
             destinationRectangle = Scaling(destinationRectangle);
             _spriteBatch.Draw(texture,
                 destinationRectangle, sourceRectangle, Color.White);
+            DebugHUD.Instance.Log(texture.Name);
+
         }
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch, Rectangle sourceRectangle)
         {
+
             Texture2D texture = textures[texturesNames.FindIndex(x => x == currentAnimation.TextureName)];
+
             float scale;
             if (currentAnimation.Offset.X != 0)
             {
