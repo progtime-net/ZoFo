@@ -3,8 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using ZoFo.GameCore.GameManagers;
-using ZoFo.GameCore.ZoFo_graphics;
 using ZoFo.GameCore;
+using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameObjects;
 
@@ -20,10 +20,16 @@ public abstract class GameObject
     {
         this.position = position; 
         graphicsComponent.LoadContent();
+
+        graphicsComponent.ObjectDrawRectangle.X = (int)position.X;
+        graphicsComponent.ObjectDrawRectangle.Y = (int)position.Y;
+
     }
-    public virtual void UpdateLogic(GameTime gameTime)
+    public virtual void UpdateLogic()
     { 
         PlayAnimation_OnServer();
+
+
     }
 
 

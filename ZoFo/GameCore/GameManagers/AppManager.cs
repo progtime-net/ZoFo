@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using DangerousD.GameCore.Graphics;
+using ZoFo.GameCore.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -117,8 +117,7 @@ namespace ZoFo.GameCore.GameManagers
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            currentGUI.Draw(_spriteBatch);
-            debugHud.Draw(_spriteBatch);
+            
             
             // Pointwrap
             _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
@@ -132,7 +131,10 @@ namespace ZoFo.GameCore.GameManagers
                 default:
                     break;
             }
+            
             _spriteBatch.End();
+            currentGUI.Draw(_spriteBatch);
+            debugHud.Draw(_spriteBatch);
 
             base.Draw(gameTime);
         }

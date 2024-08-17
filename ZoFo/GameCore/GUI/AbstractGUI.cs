@@ -52,7 +52,7 @@ public abstract class AbstractGUI
     {
         Manager.Draw(spriteBatch);
         spriteBatch.Begin();
-        spriteBatch.Draw(mouse, new Rectangle(mouseState.Position.X, mouseState.Position.Y, 20, 40), Color.Red);
+        spriteBatch.Draw(mouse, new Rectangle(mouseState.Position.X, mouseState.Position.Y, 20, 40), Color.White);
         spriteBatch.End();
     }
 }
