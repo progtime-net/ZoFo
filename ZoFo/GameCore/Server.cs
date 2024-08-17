@@ -112,7 +112,6 @@ namespace ZoFo.GameCore
             networkManager.CloseConnection();
         }
 
-        public CollisionManager collisionManager;
         private List<GameObject> gameObjects = new List<GameObject>();
         private List<Entity> entities;  //entity
         public void Update(GameTime gameTime)
