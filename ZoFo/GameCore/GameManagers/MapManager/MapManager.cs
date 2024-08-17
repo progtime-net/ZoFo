@@ -57,22 +57,27 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                 int number = chunk.Data[i] - tileSet.FirstGid;
 
                                 int relativeColumn = number % tileSet.Columns;
-                                int relativeRow = number / tileSet.Columns;
+                                int relativeRow = number / tileSet.Columns;     // относительно левого угла чанка
 
                                 Rectangle sourceRectangle = new Rectangle(relativeColumn * tileSet.TileWidth, relativeRow * tileSet.TileHeight,
                                    tileSet.TileWidth, tileSet.TileHeight);
 
                                 Vector2 position = new Vector2((i % chunk.Width) * tileSet.TileWidth + chunk.X * tileSet.TileWidth, 
-                                    (i / chunk.Height) * tileSet.TileHeight + chunk.Y * tileSet.TileHeight) ;
+                                    (i / chunk.Height) * tileSet.TileHeight + chunk.Y * tileSet.TileHeight);
+                                
+                                Tile tile = tileSet.Tiles[i]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
 
-                                switch (layer.Class)
+                                switch (tile.Type)
                                 {
                                     case "Tile":
                                         AppManager.Instance.server.RegisterGameObject(new MapObject(position, new Vector2(tileSet.TileWidth, tileSet.TileHeight), 
                                             sourceRectangle, "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", "")));
                                         break;
                                     case "StopObject":
-                                        // new StopObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, tileSet.Name);
+                                        var collisionRectangles = LoadRectangles(tile);  // Грузит коллизии обьектов
+                                        AppManager.Instance.server.RegisterGameObject(new StopObject(position, new Vector2(tileSet.TileWidth, tileSet.TileHeight),
+                                            sourceRectangle, "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", "")));  
+                                        // TODO: изменить конструктор, засунув коллизии.
                                         break;
                                     default:
                                         break;
@@ -101,6 +106,23 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                 string data = reader.ReadToEnd();
                 return JsonSerializer.Deserialize<TileSet>(data, options);
             }
+        }
+
+        /// <summary>
+        /// Загружает все квадраты коллизии тайла.
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns></returns>
+        private List<Rectangle> LoadRectangles(Tile tile) {
+            List<Rectangle> collisionRectangles = new List<Rectangle>();
+            foreach (var objectGroup in tile.Objectgroup)
+            {
+                foreach (var obj in objectGroup.Objects)
+                {
+                    collisionRectangles.Add(new Rectangle(obj.X, obj.Y, obj.Width, obj.Height));
+                }
+            }
+            return collisionRectangles;
         }
     }
 }
