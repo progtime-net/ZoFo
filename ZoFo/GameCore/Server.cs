@@ -83,7 +83,7 @@ namespace ZoFo.GameCore
         #endregion
 
         #region Game Methods
-
+        public CollisionManager collisionManager;
         /// <summary>
         /// Запуск игры в комнате
         /// </summary>

@@ -95,7 +95,7 @@ namespace ZoFo.GameCore
                 if ((update as UpdateGameObjectCreated).GameObjectType == "EntittyForAnimationTests")
                     gameObjects.Add(new EntittyForAnimationTests(new Vector2(100, 100)));
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
-                    gameObjects.Add(new Player(new Vector2(100, 100)));
+                    gameObjects.Add(new Player(new Vector2(500, 100)));
 
                 (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
                 //var a = Assembly.GetAssembly(typeof(GameObject));

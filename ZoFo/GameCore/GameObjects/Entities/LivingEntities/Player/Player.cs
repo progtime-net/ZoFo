@@ -26,7 +26,7 @@ public class Player : LivingEntity
         //InputWeaponRotation = new Vector2(0, 0);
         //InputPlayerRotation = new Vector2(0, 0);
 
-        collisionComponent.stopRectangle = new Rectangle(0, 0, 10, 10);
+        collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100);
         graphicsComponent.ObjectDrawRectangle = new Rectangle(0,0,100,100);
     }
 

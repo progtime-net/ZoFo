@@ -91,7 +91,7 @@ public abstract class GameObject
     }
     public void DrawDebugRectangle(SpriteBatch spriteBatch, Rectangle _rectangle, Nullable<Color> color = null)
     {
-        if (color is null) color = new Color(1, 0, 0, 0.25f);
+        if (color is null) color = new Color(1, 0, 0, 0.1f);
         if (color.Value.A == 255) color = new Color(color.Value, 0.25f);
         spriteBatch.Draw(debugTexture,
                              new Rectangle((_rectangle.X - GraphicsComponent.CameraPosition.X) * GraphicsComponent.scaling,
