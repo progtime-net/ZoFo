@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
-    public class UpdateGameObjectCreated : UpdateData     //Хранит объект, который только отправили
+    /// <summary>
+    /// Хранит объект, который только отправили
+    /// </summary>
+    public class UpdateGameObjectCreated : UpdateData     
     {
         public UpdateGameObjectCreated() { UpdateType = "UpdateGameObjectCreated"; }
+        public string GameObjectType;
+        public string GameObjectId;
     }
 }

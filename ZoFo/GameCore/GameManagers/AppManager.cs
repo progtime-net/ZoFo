@@ -81,8 +81,9 @@ namespace ZoFo.GameCore.GameManagers
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             debugHud.LoadContent();
             currentGUI.LoadContent();
-
-
+            animationBuilder = new AnimationBuilder();
+            animationBuilder.LoadAnimations();
+            
 
         }
 

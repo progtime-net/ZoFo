@@ -27,7 +27,7 @@ public class WaitingForPlayersGUI : AbstractGUI
     {
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
-     
+
         menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures\\GUI\\background\\Waiting" };
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content);
@@ -43,7 +43,7 @@ public class WaitingForPlayersGUI : AbstractGUI
                 scale = 0.3f,
                 fontColor = Color.White,
                 mainColor = Color.Gray,
-                fontName = "Fonts\\Font"
+                fontName = "Fonts/Font"
             };
             startButton.LeftButtonPressed += () => 
             {
@@ -55,7 +55,7 @@ public class WaitingForPlayersGUI : AbstractGUI
         }
         
         Button bTExit = new Button(Manager)
-            { fontName = "Fonts\\Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures\\GUI\\checkboxs_off"};
+            { fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off"};
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {

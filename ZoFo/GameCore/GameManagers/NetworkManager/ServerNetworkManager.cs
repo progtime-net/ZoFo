@@ -1,9 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -69,12 +71,18 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             updates.Clear();
             return; //TODO TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK
 
-            string data = JsonSerializer.Serialize(updates);
+            //по 10 паков за раз TODO FIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXIT
+            List<UpdateData> datasToSend = new List<UpdateData>();
+            for (int i = 0; i < 5 && i<updates.Count; i++)
+                datasToSend.Add(updates[i]);
+            string data = JsonSerializer.Serialize(datasToSend);
             var databytes = Encoding.UTF8.GetBytes(data);
             foreach (var item in clients)
             {
                 item.SendAsync(databytes);
             }
+            for (int i = 0; i < 5 && i< datasToSend.Count; i++)
+                updates.RemoveAt(0); 
         }
 
         /// <summary>

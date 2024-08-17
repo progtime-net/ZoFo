@@ -20,7 +20,7 @@ public class DebugHUD
 
     public void LoadContent()
     {
-        _spriteFont = AppManager.Instance.Content.Load<SpriteFont>("Fonts\\Font2");
+        _spriteFont = AppManager.Instance.Content.Load<SpriteFont>("Fonts/Font2");
     }
 
     public void Update(GameTime gameTime)

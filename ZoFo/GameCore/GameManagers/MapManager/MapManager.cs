@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -18,7 +19,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
     {
 
         private static readonly string _templatePath = "Content/MapData/TileMaps/{0}.tmj";
-        private static readonly float _scale = 1.0f;
+        //private static readonly float _scale = 1.0f;
         private List<TileSet> _tileSets = new List<TileSet>();
 
         /// <summary>
@@ -36,9 +37,9 @@ namespace ZoFo.GameCore.GameManagers.MapManager
 
             // Загрузка TileSet-ов по TileSetInfo
             List<TileSet> tileSets = new List<TileSet>();
-            foreach (TileSetInfo tileSetInfo in tileMap.TileSets) 
+            foreach (TileSetInfo tileSetInfo in tileMap.TileSets)
             {
-                TileSet tileSet = LoadTileSet("Content/MapData/"+tileSetInfo.Source);
+                TileSet tileSet = LoadTileSet(Path.Combine("Content", "MapData", "TileMaps", tileSetInfo.Source));
                 tileSet.FirstGid = tileSetInfo.FirstGid;
                 tileSets.Add(tileSet);
             }
@@ -51,22 +52,24 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                     {
                         foreach (var tileSet in tileSets)
                         {
-                            if (tileSet.FirstGid - chunk.Data[i] < 0)
+                            if (tileSet.FirstGid - chunk.Data[i] <= 0)
                             {
                                 int number = chunk.Data[i] - tileSet.FirstGid;
 
-                                int relativeColumn = (number % tileSet.Columns) * tileSet.TileWidth;
-                                int relativeRow = (number / tileSet.Columns) * tileSet.TileHeight;
+                                int relativeColumn = number % tileSet.Columns;
+                                int relativeRow = number / tileSet.Columns;
 
                                 Rectangle sourceRectangle = new Rectangle(relativeColumn * tileSet.TileWidth, relativeRow * tileSet.TileHeight,
-                                   /* relativeColumn * tileSet.TileWidth +*/ tileSet.TileWidth, /*relativeRow * tileSet.TileHeight +*/ tileSet.TileHeight);
+                                   tileSet.TileWidth, tileSet.TileHeight);
 
-                                Vector2 position = new Vector2((i % chunk.Width) * tileSet.TileWidth + chunk.X * chunk.Width, (i / chunk.Height)*tileSet.TileHeight + chunk.Y * chunk.Height) ;
+                                Vector2 position = new Vector2((i % chunk.Width) * tileSet.TileWidth + chunk.X * tileSet.TileWidth, 
+                                    (i / chunk.Height) * tileSet.TileHeight + chunk.Y * tileSet.TileHeight) ;
 
                                 switch (layer.Class)
                                 {
                                     case "Tile":
-                                        AppManager.Instance.server.RegisterGameObject(new MapObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, "Textures\\TileSets\\"+tileSet.Name)); //fix naming
+                                        AppManager.Instance.server.RegisterGameObject(new MapObject(position, new Vector2(tileSet.TileWidth, tileSet.TileHeight), 
+                                            sourceRectangle, "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", "")));
                                         break;
                                     case "StopObject":
                                         // new StopObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, tileSet.Name);

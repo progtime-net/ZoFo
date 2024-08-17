@@ -1,0 +1,20 @@
+{
+  "id": "player_idle_top-right_noweapon",
+  "textureName": "Textures/AnimationTextures/Character/hr-level1_idle",
+  "startSpriteRectangle": {
+    "X": 0,
+    "Y": 116,
+    "Width": 92,
+    "Height": 116
+  },
+  "frameSecond": [
+    {
+      "Item1": 0,
+      "Item2": 5
+    }
+  ],
+  "textureFrameInterval": 0,
+  "framesCount": 22,
+  "isCycle": true,
+  "offset": "0, 0"
+}

@@ -22,11 +22,11 @@ public class SelectingServerGUI : AbstractGUI
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
         
-        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures\\GUI\\background\\join" };
+        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures/GUI/background/join" };
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content);
         
-        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = "Select server", fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font"});
+        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = "Select server", fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts/Font"});
 
         TextBox ipBox = new TextBox(Manager) 
         {
@@ -36,7 +36,7 @@ public class SelectingServerGUI : AbstractGUI
             fontColor = Color.White,
             mainColor = Color.Gray,
             textAligment = MonogameLibrary.UI.Enums.TextAligment.Left,
-            fontName = "Fonts\\Font"
+            fontName = "Fonts/Font"
         };
         ipBox.TextChanged += input => {
             if (input == "ip")
@@ -59,7 +59,7 @@ public class SelectingServerGUI : AbstractGUI
             scale = 0.3f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts\\Font"
+            fontName = "Fonts/Font"
         };
         joinButton.LeftButtonPressed += () => 
         {
@@ -84,7 +84,7 @@ public class SelectingServerGUI : AbstractGUI
             scale = 0.3f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts\\Font"
+            fontName = "Fonts/Font"
         };
         hostButton.LeftButtonPressed += () => 
         {
@@ -101,7 +101,7 @@ public class SelectingServerGUI : AbstractGUI
         Elements.Add(hostButton);
         
         Button bTExit = new Button(Manager)
-            { fontName = "Fonts\\Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures\\GUI\\checkboxs_off"};
+            { fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off"};
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {

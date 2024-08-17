@@ -15,7 +15,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
 
     public class GraphicsComponent
     {
-        public Rectangle ObjectDrawRectangle { get; set; }
+        public Rectangle ObjectDrawRectangle;
 
 
 
@@ -24,8 +24,9 @@ namespace ZoFo.GameCore.ZoFo_graphics
         private List<Texture2D> textures;
         public List<string> texturesNames; //rethink public and following that errors
         private AnimationContainer currentAnimation;
-        static public int scaling = 5;
+        static public int scaling = 1;
         public int parentId;
+        public bool reverse;
         public AnimationContainer CurrentAnimation
         {
             get
@@ -126,7 +127,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
             }
         }
 
-        public void StartAnimation(string startedanimationId)
+        public void StartAnimation(string startedanimationId, bool reverse = false)
         {
             /*
             if (AppManager.Instance.multiPlayerStatus != MultiPlayerStatus.SinglePlayer)
@@ -138,8 +139,13 @@ namespace ZoFo.GameCore.ZoFo_graphics
                 }
             }
             */
-            currentFrame = 0;
+            this.reverse = reverse;
+            
             currentAnimation = animations.Find(x => x.Id == startedanimationId);
+            if (reverse)
+                currentFrame = currentAnimation.FramesCount;
+            else
+                currentFrame = 0;
 
             buildSourceRectangle();
             SetInterval();
@@ -154,6 +160,21 @@ namespace ZoFo.GameCore.ZoFo_graphics
             SetInterval();
         }
 
+        private void AnimationEnd()
+        {
+            if (!currentAnimation.IsCycle)
+            {
+                if (actionOfAnimationEnd != null)
+                {
+                    actionOfAnimationEnd(currentAnimation.Id);
+                }
+                currentAnimation = neitralAnimation;
+
+            }
+
+            currentFrame = 0;
+        }
+
         public void Update()
         {
             if (currentAnimation is null)
@@ -162,21 +183,22 @@ namespace ZoFo.GameCore.ZoFo_graphics
             }
             if (interval == 0)
             {
-                currentFrame++;
-                if (currentAnimation.FramesCount <= currentFrame)
+                if (reverse)
                 {
-                    if (!currentAnimation.IsCycle)
+                    currentFrame--;
+                    if (currentFrame <= 0)
                     {
-                        if (actionOfAnimationEnd != null)
-                        {
-                            actionOfAnimationEnd(currentAnimation.Id);
-                        }
-                        currentAnimation = neitralAnimation;
-
+                        AnimationEnd();
+                        reverse = false;
                     }
-
-                    currentFrame = 0;
-
+                }
+                else
+                {
+                    currentFrame++;
+                    if (currentAnimation.FramesCount <= currentFrame)
+                    {
+                        AnimationEnd();
+                    }
                 }
 
                 buildSourceRectangle();
