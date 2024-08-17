@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player
 {
-    internal class LootData
+    class LootData
     {
         public Dictionary<string, int> loots;
-        public void AddLoot(object lootObject, int quantity)
-        {
 
+        public void AddLoot(string lootName, int quantity)
+        {
+            loots.Add(lootName, quantity);
         }
     }
 }
