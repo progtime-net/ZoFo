@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
@@ -13,17 +14,19 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
     {
         //==ПОЛЯ==
 
-        //public GameObject gameObject { get; set; }
+        public GameObject gameObject { get; set; }
         //public Rectangle Bounds { get; set; }
 
-        public Rectangle Rectangle => new Rectangle();
+        //public Rectangle Rectangle => new Rectangle();
+
+
 
         bool doesStop;
-        Rectangle stopRectangle;
+        public Rectangle stopRectangle;
 
         // triggers for rectangle
         bool isTrigger;
-        Rectangle triggerRectangle;
+        public Rectangle triggerRectanglee;
 
         //delegate
         public delegate void EventHandler(object sender, EventArgs e);

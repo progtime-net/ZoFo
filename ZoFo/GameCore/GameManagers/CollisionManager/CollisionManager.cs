@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +27,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         {
             //for (int i = 0; i < ObjectsWithCollisions.Count; i++)
             //{
-                var currentRect = entity.Rectangle;//задаём РЕК
+                var currentRect = entity.collisionComponent.stopRectangle;//задаём РЕК
                 var newRect = currentRect; // задаём значение старого РЕК новому РЕК
                 bool flagRemovedObject = false; //флаг удаления 
 
@@ -40,9 +39,9 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
                 foreach (var item in ObjectsWithCollisions)//фильтрация 
                 {
-                    if (Math.Abs(item.Pos.X - entity.Pos.X) < 550 
-                        && Math.Abs(item.Pos.Y - entity.Pos.Y) < 550
-                        && tryingRectX.Intersect(item.Rectangle))
+                    if (Math.Abs(item.stopRectangle.X - entity.collisionComponent.stopRectangle.X) < 550 
+                        && Math.Abs(item.stopRectangle.Y - entity.collisionComponent.stopRectangle.Y) < 550
+                        && tryingRectX.Intersects(item.stopRectangle))
 
                     {
                         collidedX = true;// меняем значение соприкосновения на true
@@ -66,13 +65,13 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             var collidedY = false; // соприкосновение
             var tryingRectY = currentRect;//переменная для попытки перемещения по X
 
-            tryingRectY.Offset((int)(0, entity.velocity.Y));//задаём значения для tryingRectX по X и по Y 
+            tryingRectY.Offset(new Point(0, (int)entity.velocity.Y));//задаём значения для tryingRectX по X и по Y 
 
             foreach (var item in ObjectsWithCollisions)//фильтрация 
             {
-                if (Math.Abs(item.Pos.X - entity.Pos.X) < 550
-                    && Math.Abs(item.Pos.Y - entity.Pos.Y) < 550
-                    && tryingRectY.Intersect(item.Rectangle))
+                if (Math.Abs(item.stopRectangle.X - entity.collisionComponent.stopRectangle.X) < 550
+                    && Math.Abs(item.stopRectangle.Y - entity.collisionComponent.stopRectangle.Y) < 550
+                    && tryingRectY.Intersects(item.stopRectangle))
 
                 {
                     collidedY = true;// меняем значение соприкосновения на true
