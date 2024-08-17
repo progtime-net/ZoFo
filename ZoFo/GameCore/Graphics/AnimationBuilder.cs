@@ -13,7 +13,7 @@ namespace DangerousD.GameCore.Graphics
         public void LoadAnimations()
         {
             Animations = new List<AnimationContainer>();
-            string[] animationFilesNames = Directory.GetFiles("../../../Content/Textures/Animations");
+            string[] animationFilesNames = Directory.GetFiles("Content/Textures/Animations");
 
             StreamReader reader;
             foreach (var fileName in animationFilesNames)
