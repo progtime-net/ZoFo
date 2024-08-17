@@ -46,6 +46,11 @@ namespace ZoFo.GameCore
             //ТУТ Switch case будет честное слово
         }
 
+        public void CloseConnection()
+        {
+            networkManager.CloseConnection();
+        }
+
         /// <summary>
         /// Для красоты)   Отдел Серверов 
         /// добавляет в лист updates новую data

@@ -60,7 +60,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="port"></param>
-        public void JoinRoom(string ip) // multyplayer
+        public void JoinRoom(string ip, int port) // multyplayer
         {
 
             endPoint = new IPEndPoint(IPAddress.Parse(ip), port);

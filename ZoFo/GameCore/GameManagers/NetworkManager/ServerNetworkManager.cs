@@ -152,7 +152,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 string response = Encoding.UTF8.GetString(buff, 0, answ);
                 GetDataSend(response);
             }
-            Thread.Sleep(-1);
+            Task.Delay(-1);
 
         }
     }

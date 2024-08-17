@@ -39,7 +39,7 @@ namespace ZoFo.GameCore
 
         }
         public void GameEndedUnexpectedly() { }
-        public void JoinRoom(string ip)
+        public void JoinRoom(string ip, int port)
         {
             networkManager.JoinRoom(ip);
         }
