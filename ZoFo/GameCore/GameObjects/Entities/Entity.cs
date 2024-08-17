@@ -10,7 +10,7 @@ namespace ZoFo.GameCore.GameObjects.Entities
 {
     public abstract class Entity : GameObject
     {
-        public override GraphicsComponent graphicsComponent => null;
+        protected override GraphicsComponent graphicsComponent => null;
         public CollisionComponent collisionComponent { get; protected set; }
         public int Id { get; set; }
         protected Entity(Vector2 position) : base(position)

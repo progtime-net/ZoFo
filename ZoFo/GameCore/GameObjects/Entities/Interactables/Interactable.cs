@@ -19,7 +19,7 @@ public class Interactable : Entity
         AppManager.Instance.server.AddData(new UpdateInteractionReady((sender as Player).Id, isReady));
     }
 
-    public void OnInteraction()
+    public virtual void OnInteraction()
     {
         
     }

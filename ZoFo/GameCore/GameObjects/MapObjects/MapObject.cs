@@ -15,7 +15,7 @@ namespace ZoFo.GameCore.GameObjects.MapObjects
     {
         public virtual bool IsColliderOn { get; protected set; } = true;//Who added that?
         public Rectangle sourceRectangle;
-        public override GraphicsComponent graphicsComponent { get; } =  new();
+        protected override GraphicsComponent graphicsComponent { get; } =  new();
 
         /// <summary>
         /// Создается простой объект на карте - no animations, только где, насколько крупно рисовать, по какой сорс ректанглу рисовать и из какой текстуры
