@@ -20,10 +20,16 @@ public abstract class GameObject
     {
         this.position = position; 
         graphicsComponent.LoadContent();
+
+        graphicsComponent.ObjectDrawRectangle.X = (int)position.X;
+        graphicsComponent.ObjectDrawRectangle.Y = (int)position.Y;
+
     }
-    public virtual void UpdateLogic(GameTime gameTime)
+    public virtual void UpdateLogic()
     { 
         PlayAnimation_OnServer();
+
+
     }
 
 
