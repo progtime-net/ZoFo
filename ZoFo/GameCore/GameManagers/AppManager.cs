@@ -83,7 +83,6 @@ namespace ZoFo.GameCore.GameManagers
             currentGUI.LoadContent();
             animationBuilder = new AnimationBuilder();
             animationBuilder.LoadAnimations();
-            
 
         }
 
@@ -121,7 +120,9 @@ namespace ZoFo.GameCore.GameManagers
 
             currentGUI.Draw(_spriteBatch);
             debugHud.Draw(_spriteBatch);
-            _spriteBatch.Begin();
+            
+            // Pointwrap
+            _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
