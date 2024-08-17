@@ -14,6 +14,8 @@ using ZoFo.GameCore.GameObjects.MapObjects.Tiles;
 using System.Drawing;
 using System.Reflection;
 using ZoFo.GameCore.GameObjects.Entities;
+using System.Net.Sockets;
+using System.Net;
 
 namespace ZoFo.GameCore
 {
@@ -22,6 +24,8 @@ namespace ZoFo.GameCore
         ClientNetworkManager networkManager;
 
         public bool IsConnected { get { return networkManager.IsConnected; } }
+        public IPEndPoint InfoConnect => networkManager.InfoConnect;
+
         public Client()
         {
             networkManager = new ClientNetworkManager();

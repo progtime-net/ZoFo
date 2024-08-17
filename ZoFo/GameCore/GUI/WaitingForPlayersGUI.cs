@@ -31,12 +31,13 @@ public class WaitingForPlayersGUI : AbstractGUI
         menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures\\GUI\\background\\Waiting" };
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content);
-     //   string pcIp = 
-        ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font3" };
-        Elements.Add(ip); 
+        //   string pcIp = 
+
         if (isHost)
         {
-            Button startButton = new Button(Manager) 
+            ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font3" };
+            Elements.Add(ip);
+            Button startButton = new Button(Manager)
             {
                 rectangle = new Rectangle(width / 2 - (width / 15) / 2, height / 2 + height / 4, (int)(width / 15), (int)(height / 20)),
                 text = "Start",
@@ -45,13 +46,33 @@ public class WaitingForPlayersGUI : AbstractGUI
                 mainColor = Color.Gray,
                 fontName = "Fonts/Font"
             };
-            startButton.LeftButtonPressed += () => 
+            startButton.LeftButtonPressed += () =>
             {
                 // start
-              
+
                 // ваш код здесь 
             };
             Elements.Add(startButton);
+        }
+        else {
+            ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.client.InfoConnect.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font3" };
+            Elements.Add(ip);
+            Button waitButton = new Button(Manager)
+            {
+                rectangle = new Rectangle(width / 2 - (width / 15) / 2, height / 2 + height / 4, (int)(width / 15), (int)(height / 20)),
+                text = "WAITING",
+                scale = 0.3f,
+                fontColor = Color.White,
+                mainColor = Color.Gray,
+                fontName = "Fonts/Font"
+            };
+            waitButton.LeftButtonPressed += () =>
+            {
+                // start
+
+                // ваш код здесь 
+            };
+            Elements.Add(waitButton);
         }
         
         Button bTExit = new Button(Manager)
