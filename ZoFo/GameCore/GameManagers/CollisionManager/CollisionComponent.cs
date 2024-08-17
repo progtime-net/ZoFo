@@ -38,10 +38,12 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
 
 
-        //events 
+        //events DoorInteraction
         public event EventHandler<CollisionComponent> OnTriggerEnter;
         public event EventHandler<CollisionComponent> OnTriggerZone;
         public event EventHandler<CollisionComponent> OnTriggerExit;
+
+        public event EventHandler<CollisionComponent> OnTriggerInteract;
 
         // methods-event
         public void TriggerEnter(object component, Player player,

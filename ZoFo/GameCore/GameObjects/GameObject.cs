@@ -3,8 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using ZoFo.GameCore.GameManagers;
-using ZoFo.GameCore.ZoFo_graphics;
 using ZoFo.GameCore;
+using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameObjects;
 

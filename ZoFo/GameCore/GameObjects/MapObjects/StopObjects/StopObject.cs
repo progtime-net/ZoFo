@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using ZoFo.GameCore.GameManagers.CollisionManager;
-using ZoFo.GameCore.ZoFo_graphics;
 
 namespace ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 
