@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZoFo.GameCore.ZoFo_graphics;
+using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameObjects.Entities
 {

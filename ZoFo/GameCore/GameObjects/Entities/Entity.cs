@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ZoFo.GameCore.GameManagers.CollisionManager;
-using ZoFo.GameCore.ZoFo_graphics;
 
 namespace ZoFo.GameCore.GameObjects.Entities
 {

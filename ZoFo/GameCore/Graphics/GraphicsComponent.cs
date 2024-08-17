@@ -1,16 +1,11 @@
-﻿using ZoFo.GameCore.GameObjects;
-using ZoFo.GameCore.GameManagers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using Zofo.GameCore.ZoFo_grafics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ZoFo.GameCore.GameManagers;
 
-namespace ZoFo.GameCore.ZoFo_graphics
+namespace ZoFo.GameCore.Graphics
 {
 
     public class GraphicsComponent
@@ -129,7 +124,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
             }
         }
 
-        public void AnimationInit(string animationId, bool reverse = false)
+        public void AnimationSelect(string animationId, bool reverse = false)
         {
             currentAnimation = animations.Find(x => x.Id == animationId);
             if (reverse)
@@ -151,7 +146,7 @@ namespace ZoFo.GameCore.ZoFo_graphics
             animating = true;
         }
         
-        public void StepAnimation()
+        public void AnimationStep()
         {
             currentFrame += step;
         }

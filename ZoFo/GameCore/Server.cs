@@ -149,11 +149,24 @@ namespace ZoFo.GameCore
             }
 
             AddData(new UpdateGameObjectCreated()
-            { GameObjectType = gameObject.GetType().Name }
+                { GameObjectType = gameObject.GetType().Name }
             ); 
             
         }
+        
+        /// <summary>
+        /// Удаляет игровой объект
+        /// </summary>
+        /// <param name="gameObject"></param>
+        public void DeleteObject(GameObject gameObject)
+        {
+            gameObjects.Remove(gameObject);
+            AddData(new UpdateGameObjectDeleted()
+                { GameObjectType = gameObject.GetType().Name}
+            );
+        }
     }
+    
     #endregion
 
     #endregion

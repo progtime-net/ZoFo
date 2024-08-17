@@ -3,7 +3,7 @@ using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
-using ZoFo.GameCore.ZoFo_graphics;
+using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameObjects.Entities.Interactables;
 
@@ -15,6 +15,7 @@ public class Interactable : Entity
     {
         collisionComponent.OnTriggerEnter += (sender, e) => ChangeInteraction(sender, e, true);
         collisionComponent.OnTriggerExit += (sender, e) => ChangeInteraction(sender, e, false);
+        collisionComponent.OnTriggerInteract += OnInteraction;
     }
 
     private void ChangeInteraction(object sender, CollisionComponent e, bool isReady)
@@ -22,7 +23,7 @@ public class Interactable : Entity
         AppManager.Instance.server.AddData(new UpdateInteractionReady((sender as Player).Id, isReady));
     }
 
-    public virtual void OnInteraction()
+    public virtual void OnInteraction(object sender, CollisionComponent e)
     {
         
     }
