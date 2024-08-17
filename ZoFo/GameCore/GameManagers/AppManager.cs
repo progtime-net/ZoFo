@@ -91,7 +91,7 @@ namespace ZoFo.GameCore.GameManagers
                 Keyboard.GetState().IsKeyDown(Keys.Escape)) { server.CloseConnection(); Exit(); }
 
 
-            debugHud.Set("key", "value");
+         //   debugHud.Set("key", "value");
 
             InputManager.Update();
             currentGUI.Update(gameTime);
@@ -104,7 +104,7 @@ namespace ZoFo.GameCore.GameManagers
                     client.Update(gameTime);
                     break;
                 case GameState.ClientPlaying:
-                    server.Update(gameTime);
+                    client.Update(gameTime);
                     break;
                 default:
                     break;

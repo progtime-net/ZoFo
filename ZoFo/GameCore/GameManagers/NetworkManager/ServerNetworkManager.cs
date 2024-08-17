@@ -143,7 +143,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             for (int i = 0; i < playNumber; i++)
             {
                 Socket client = socket.Accept();
-                AppManager.Instance.debugHud.Set("Connect", client.ToString());
+                AppManager.Instance.debugHud.Set("Connect", client.LocalEndPoint.ToString());
                 Thread thread = new Thread(StartListening);
                 thread.IsBackground = true;
                 thread.Start(client);

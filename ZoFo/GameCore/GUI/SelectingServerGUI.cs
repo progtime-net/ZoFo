@@ -102,8 +102,11 @@ public class SelectingServerGUI : AbstractGUI
 
             // host
             Server server = new Server();   //Server Logic MultiPlayer
-            server.CreateRoom(1);
+            Client client = new Client();
+            server.CreateRoom(2);
+            client.JoinYourself(server.MyIp.Port);
             AppManager.Instance.SetServer(server);
+            AppManager.Instance.SetClient(client);
             string key = server.MyIp.ToString();
             AppManager.Instance.debugHud.Set(key, "MultiPlayer");
             // ваш код здесь 
