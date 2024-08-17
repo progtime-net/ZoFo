@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers.MapManager.MapElements;
 using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
-using ZoFo.GameCore.GameObjects.MapObjects.Tiles;
 
 namespace ZoFo.GameCore.GameManagers.MapManager
 {
