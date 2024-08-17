@@ -15,13 +15,14 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
     public class ClientNetworkManager
     {
-        private int port = 7632;
-        private EndPoint endPoint;
+        private int port = 0;
+        private IPEndPoint endPoint;
         private Socket socket;
         List<UpdateData> updates = new List<UpdateData>();
         public delegate void OnDataSent(string Data);
         public event OnDataSent GetDataSent; // event
         public bool IsConnected { get { return socket.Connected; } }
+        public IPEndPoint InfoConnect => (IPEndPoint)socket.LocalEndPoint ?? endPoint;
 
         public ClientNetworkManager()
         {
@@ -60,26 +61,45 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="port"></param>
-        public void JoinRoom(string ip) // multyplayer
+        public void JoinRoom(string ip, int port) // multyplayer
         {
 
             endPoint = new IPEndPoint(IPAddress.Parse(ip), port);
             socket.Connect(endPoint);
             SendData();
             Thread listen = new Thread(StartListening);
+            listen.IsBackground = true;
+            listen.Start();
+        }
+        public void JoinRoom(IPEndPoint endPoint) // multyplayer
+        {
+
+            this.endPoint = endPoint;
+            socket.Connect(endPoint);
+            SendData();
+            Thread listen = new Thread(StartListening);
+            listen.IsBackground = true;
             listen.Start();
         }
 
         /// <summary> 
         /// создается одиночная комната к которой ты подключаешься 
         /// </summary>
-        public void JoinYourself()  // single player
+        public void JoinYourself(int port)  // single player
         {
-            endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+            endPoint = new IPEndPoint(GetIp(), port);
             socket.Connect(endPoint);
             SendData();
             Thread listen = new Thread(StartListening);
+            listen.IsBackground = true;
             listen.Start();
+        }
+
+        public static IPAddress GetIp()
+        {
+            string hostName = Dns.GetHostName(); // Retrive the Name of HOST                                              
+            string myIP = Dns.GetHostByName(hostName).AddressList[1].ToString();// Get the IP
+            return IPAddress.Parse(myIP);
         }
 
         //поток 2
