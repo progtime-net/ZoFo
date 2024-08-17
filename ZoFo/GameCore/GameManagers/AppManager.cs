@@ -59,7 +59,7 @@ namespace ZoFo.GameCore.GameManagers
             SettingsManager.LoadSettings();
             SoundManager = new SoundManager();
             SoundManager.LoadSounds();
-            
+
 
             currentGUI = new MainMenuGUI();
             debugHud = new DebugHUD();
@@ -70,7 +70,7 @@ namespace ZoFo.GameCore.GameManagers
         protected override void Initialize()
         {
             currentGUI.Initialize();
-            debugHud.Initialize(); 
+            debugHud.Initialize();
 
 
             base.Initialize();
@@ -83,15 +83,13 @@ namespace ZoFo.GameCore.GameManagers
             currentGUI.LoadContent();
             animationBuilder = new AnimationBuilder();
             animationBuilder.LoadAnimations();
-            
-
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+                Keyboard.GetState().IsKeyDown(Keys.Escape)) { server.CloseConnection(); Exit(); }
+
 
             debugHud.Set("key", "value");
 
@@ -121,7 +119,9 @@ namespace ZoFo.GameCore.GameManagers
 
             currentGUI.Draw(_spriteBatch);
             debugHud.Draw(_spriteBatch);
-            _spriteBatch.Begin();
+            
+            // Pointwrap
+            _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
             switch (gamestate)
             {
                 case GameState.ClientPlaying:

@@ -18,8 +18,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
     public class ServerNetworkManager
     {
-        private IPAddress ip =IPAddress.Parse("127.0.0.1"); //IPAddress.Any
-        private int port = 7632;
+        private IPAddress ip = IPAddress.Parse("127.0.0.1");
+        private const int port = 0;
         private IPEndPoint endPoint;
         private Socket socket;
         private List<Socket> clients;
@@ -28,6 +28,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public event OnDataSend GetDataSend;   // event
         Dictionary<Socket, Thread> managerThread;
         Thread serverTheread;
+        public IPEndPoint InfoConnect => (IPEndPoint)socket.LocalEndPoint ?? endPoint;
 
         public ServerNetworkManager() { Init(); }
 
@@ -36,6 +37,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// </summary>
         private void Init()
         {
+            ip = GetIp();
             endPoint = new IPEndPoint(ip, port);
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             managerThread = new Dictionary<Socket, Thread>();
@@ -46,9 +48,20 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         }
 
         /// <summary>
+        /// Получает IP устройства
+        /// </summary>
+        /// <returns></returns>
+        public static IPAddress GetIp()
+        {
+            string hostName = Dns.GetHostName(); // Retrive the Name of HOST                                              
+            string myIP = Dns.GetHostByName(hostName).AddressList[1].ToString();// Get the IP
+            return IPAddress.Parse(myIP);
+        }
+
+        /// <summary>
         /// отправляет клиенту Data
         /// </summary>
-        public void SendData() 
+        public void SendData()
         {
             for (int i = 0; i < updates.Count; i++)
             {
@@ -84,7 +97,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// <summary>
         /// По сути конец игры и отключение игроков
         /// </summary>
-        public void CloseConnection() 
+        public void CloseConnection()
         {
             foreach (var item in clients)
             {
@@ -112,11 +125,11 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public void Start(object players)
         {
             serverTheread = new Thread(StartWaitingForPlayers);
+            serverTheread.IsBackground = true;
             serverTheread.Start(players);
         }
 
         //Потоки Клиентов
-
         /// <summary>
         /// Слушает игроков, которые хотят подключиться
         /// </summary>
@@ -124,12 +137,13 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public void StartWaitingForPlayers(object players)
         {
             int playNumber = (int)players;
-          
+
             socket.Listen(playNumber);
             for (int i = 0; i < playNumber; i++)
             {
                 Socket client = socket.Accept();
                 Thread thread = new Thread(StartListening);
+                thread.IsBackground = true;
                 thread.Start(client);
                 managerThread.Add(client, thread);
                 clients.Add(client);  //добавляем клиентов в лист
@@ -152,7 +166,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 string response = Encoding.UTF8.GetString(buff, 0, answ);
                 GetDataSend(response);
             }
-            Thread.Sleep(-1);
+            Task.Delay(-1);
 
         }
     }

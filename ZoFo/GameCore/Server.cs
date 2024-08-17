@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace ZoFo.GameCore
     {
         private ServerNetworkManager networkManager;
         private int ticks = 0;
+        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } } 
         public Server()
         {
             networkManager = new ServerNetworkManager();
@@ -44,6 +46,11 @@ namespace ZoFo.GameCore
         {
 
             //ТУТ Switch case будет честное слово
+        }
+
+        public void CloseConnection()
+        {
+            networkManager.CloseConnection();
         }
 
         /// <summary>
