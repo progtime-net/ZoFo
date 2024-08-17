@@ -139,18 +139,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/background/waiting.png
 
-#begin Textures/GUI/checkboxs_off-on.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/GUI/checkboxs_off-on.png
-
 #begin Textures/GUI/checkboxs_off.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -162,6 +150,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/checkboxs_off.png
+
+#begin Textures/GUI/checkboxs_off-on.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/checkboxs_off-on.png
 
 #begin Textures/GUI/checkboxs_on.png
 /importer:TextureImporter
@@ -199,18 +199,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/mouse.png
 
-#begin Textures/GUI/Switch_backgrownd.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/GUI/Switch_backgrownd.png
-
 #begin Textures/GUI/switch.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -223,7 +211,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/switch.png
 
-#begin Textures/TileSets/TilesetFloor.png
+#begin Textures/GUI/Switch_backgrownd.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -233,5 +221,17 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/TileSets/TilesetFloor.png;Textures/TileSets/TileSet 1.png
+/build:Textures/GUI/Switch_backgrownd.png
+
+#begin Textures/TileSetImages/TilesetFloor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetFloor.png
 

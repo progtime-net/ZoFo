@@ -39,7 +39,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
             List<TileSet> tileSets = new List<TileSet>();
             foreach (TileSetInfo tileSetInfo in tileMap.TileSets) 
             {
-                TileSet tileSet = LoadTileSet("Content\\MapData\\TileMaps/" + tileSetInfo.Source);
+                TileSet tileSet = LoadTileSet("Content/MapData/TileMaps/" + tileSetInfo.Source);
                 tileSet.FirstGid = tileSetInfo.FirstGid;
                 tileSets.Add(tileSet);
             }
@@ -62,12 +62,14 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                 Rectangle sourceRectangle = new Rectangle(relativeColumn * tileSet.TileWidth, relativeRow * tileSet.TileHeight,
                                    tileSet.TileWidth, tileSet.TileHeight);
 
-                                Vector2 position = new Vector2((i % chunk.Width) * tileSet.TileWidth + chunk.X * tileSet.TileWidth, (i / chunk.Height)*tileSet.TileHeight + chunk.Y * tileSet.TileHeight) ;
+                                Vector2 position = new Vector2((i % chunk.Width) * tileSet.TileWidth + chunk.X * tileSet.TileWidth, 
+                                    (i / chunk.Height) * tileSet.TileHeight + chunk.Y * tileSet.TileHeight) ;
 
                                 switch (layer.Class)
                                 {
                                     case "Tile":
-                                        AppManager.Instance.server.RegisterGameObject(new MapObject(position, new Vector2(tileSet.TileWidth, tileSet.TileHeight), sourceRectangle, "Textures\\TileSets\\"+tileSet.Name)); //fix naming
+                                        AppManager.Instance.server.RegisterGameObject(new MapObject(position, new Vector2(tileSet.TileWidth, tileSet.TileHeight), 
+                                            sourceRectangle, "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", "")));
                                         break;
                                     case "StopObject":
                                         // new StopObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, tileSet.Name);
