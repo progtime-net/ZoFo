@@ -43,6 +43,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                 tileSet.FirstGid = tileSetInfo.FirstGid;
                 tileSets.Add(tileSet);
             }
+            tileSets.Reverse();
 
             foreach (var layer in tileMap.Layers)
             {
@@ -52,7 +53,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                     {
                         foreach (var tileSet in tileSets)
                         {
-                            if (tileSet.FirstGid - chunk.Data[i] <= 0)
+                            if (tileSet.FirstGid <= chunk.Data[i])
                             {
                                 int number = chunk.Data[i] - tileSet.FirstGid;
 
@@ -67,10 +68,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                     (i % chunk.Width) * tileSet.TileWidth + chunk.X * tileSet.TileWidth,
                                     (i / chunk.Height) * tileSet.TileHeight + chunk.Y * tileSet.TileHeight);
 
-                                Tile
-                                    tile = tileSet
-                                        .Tiles
-                                            [i]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
+                                Tile tile = tileSet.Tiles[number]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
 
                                 switch (tile.Type)
                                 {
@@ -89,11 +87,11 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                             "Textures/TileSetImages/" +
                                             Path.GetFileName(tileSet.Image).Replace(".png", ""),
                                             collisionRectangles.ToArray()));
-                                        // TODO: изменить конструктор, засунув коллизии.
                                         break;
                                     default:
                                         break;
                                 }
+                                break;
                             }
                         }
                     }
@@ -126,6 +124,11 @@ namespace ZoFo.GameCore.GameManagers.MapManager
         /// <returns></returns>
         private List<Rectangle> LoadRectangles(Tile tile)
         {
+            if (tile.Objectgroup == null)
+            {
+                return new List<Rectangle>();
+            }
+
             List<Rectangle> collisionRectangles = new List<Rectangle>();
             foreach (var obj in tile.Objectgroup.Objects)
             {
