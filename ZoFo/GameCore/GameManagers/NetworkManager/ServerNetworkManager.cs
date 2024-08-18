@@ -38,11 +38,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private void Init()
         {
             endPoint = new IPEndPoint(GetIp(), port);
-            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             managerThread = new Dictionary<Socket, Thread>();
             clients = new List<Socket>();
             updates = new List<UpdateData>();
-            managerThread = new Dictionary<Socket, Thread>();
             socket.Bind(endPoint);
         }
 
