@@ -1,0 +1,1 @@
+{"id":"player_look_down_weapon","textureName":"Textures/AnimationTextures/Character/hr-level1_idle_gun","startSpriteRectangle":{"X":0,"Y":512,"Width":110,"Height":128},"frameSecond":[{"Item1":0,"Item2":5}],"textureFrameInterval":0,"framesCount":22,"isCycle":true,"offset":"0, 0"}

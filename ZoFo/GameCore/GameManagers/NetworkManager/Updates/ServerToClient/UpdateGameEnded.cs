@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
-    public class UpdateGameEnded : IUpdateData    //хранит полученый лут и уведомляет о конце игры
+    /// <summary>
+    /// Хранит полученый лут и уведомляет о конце игры
+    /// </summary>
+    public class UpdateGameEnded : UpdateData   
     {
-        public int IdEntity { get; set; }
-        public string UpdateType { get; set; }
+      public UpdateGameEnded() { UpdateType = "UpdateGameEnded"; }
     }
 }

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
-    public class UpdateEntityHealth : IUpdateData//хранит новое хп entity
+    /// <summary>
+    /// Обнивляет хп сущности
+    /// </summary>
+    public class UpdateEntityHealth : UpdateData
     {
-        public int IdEntity { get; set; }
-        public string UpdateType { get; set; }
+       public UpdateEntityHealth() { UpdateType = "UpdateEntityHealth"; }
     }
 }

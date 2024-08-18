@@ -1,0 +1,21 @@
+{
+  "id": "testAnimation",
+  "textureName": "Textures/AnimationTextures/Character/hr-level1_idle",
+  "startSpriteRectangle": {
+    "X": 0,
+    "Y": 0,
+    "Width": 53,
+    "Height": 116
+  },
+  "frameSecond": [
+    {
+      "Item1": 0,
+      "Item2": 5
+    }
+  ],
+  "textureFrameInterval": 0,
+  "framesCount": 11,
+  "isCycle": true,
+  "offset": "0, 0"
+
+}

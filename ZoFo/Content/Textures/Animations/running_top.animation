@@ -1,0 +1,20 @@
+{
+  "id": "running_top",
+  "textureName": "unicorn",
+  "startSpriteRectangle": {
+    "X": 0,
+    "Y": 30,
+    "Width": 30,
+    "Height": 60
+  },
+  "frameSecond": [
+    {
+      "Item1": 0,
+      "Item2": 2
+    }
+  ],
+  "textureFrameInterval": 1,
+  "framesCount": 22,
+  "isCycle": true,
+  "offset": "0, 0"
+}
