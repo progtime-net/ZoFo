@@ -51,18 +51,17 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// </summary>
         /// <returns></returns>
         public static IPAddress GetIp()
-        {
-            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
-            var ipList = Dns.GetHostEntry(hostName).AddressList;
-
+        { 
+            /*string hostName = Dns.GetHostName(); // Retrive the Name of HOST
+            var ipList = Dns.GetHostByName(hostName).AddressList; 
             foreach (var ip in ipList)
             {
                 if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                 {
                     return ip;
-                }
-            }
-            return IPAddress.Loopback;
+                } 
+            }*/
+          return IPAddress.Parse("127.0.0.1"); 
         }
 
         /// <summary>

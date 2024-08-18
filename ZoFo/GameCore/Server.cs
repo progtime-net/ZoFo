@@ -12,6 +12,7 @@ using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.MapManager;
 using ZoFo.GameCore.GameManagers.NetworkManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.Entities;
@@ -78,11 +79,17 @@ namespace ZoFo.GameCore
                     break;
                 case "UpdatePlayerParametrs":
                     break;
-                case "UpdatePosition":
+                case "UpdateInput":
+                    players[0].HandleNewInput(updateData as UpdateInput);
                     break;
                 case "UpdateTileCreated":
                     break;
-
+                case "UpdateInputInteraction":
+                    players[0].HandleInteract(updateData as UpdateInputInteraction);
+                    break;
+                case "UpdateInputShoot":
+                    players[0].HandleShoot(updateData as UpdateInputShoot);
+                    break;
             }
         }
 
@@ -131,6 +138,9 @@ namespace ZoFo.GameCore
             //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));
             AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(740, 140)));
             AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1000, 1000)));
+            AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300, 1000)));
+            AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1500, 1000)));
+            AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1700, 1000)));
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(140, 440)));
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(240, 440)));
         }

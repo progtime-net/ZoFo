@@ -50,8 +50,17 @@ namespace ZoFo.GameCore
                 networkManager.AddData(new UpdateInput()
                 {
                     InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
-                    InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
-                }); 
+                    InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection 
+                });
+                
+            };
+            AppManager.Instance.InputManager.OnInteract += () =>
+            {
+                networkManager.AddData(new UpdateInputInteraction() { });
+            };
+            AppManager.Instance.InputManager.ShootEvent += () => 
+            {
+                networkManager.AddData(new UpdateInputShoot() { }); 
             };
         }
 
@@ -88,6 +97,7 @@ namespace ZoFo.GameCore
         List<GameObject> gameObjects = new List<GameObject>(); 
         List<Player> players = new List<Player>();
         List<StopObject> stopObjects = new List<StopObject>();
+
         /// <summary>
         /// Клиент должен обнговлять игру анимаций
         /// </summary>
@@ -99,6 +109,8 @@ namespace ZoFo.GameCore
                 AppManager.Instance.debugHud.Set("GameTime", gameTime.TotalGameTime.ToString());
                 gameObjects[i].UpdateAnimations();
             }
+
+            networkManager.SendData();//set to ticks
         }
         internal void Draw(SpriteBatch spriteBatch)
         {

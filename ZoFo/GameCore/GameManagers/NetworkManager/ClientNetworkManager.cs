@@ -42,6 +42,13 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         public void SendData()
         {
+            for (int i = 0; i < updates.Count; i++)
+            {
+
+                AppManager.Instance.server.ProcessIUpdateData(updates[i]);
+            }
+            updates.Clear();
+            return;// TODO remove
                 byte[] bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(updates));  //нужно сериализовать
                 socket.Send(bytes);
         }
@@ -98,7 +105,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         public static IPAddress GetIp()
         {
-            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
+            /*string hostName = Dns.GetHostName(); // Retrive the Name of HOST
             var ipList = Dns.GetHostByName(hostName).AddressList;
 
             foreach (var ip in ipList)
@@ -107,8 +114,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 {
                     return ip;
                 }
-            }
-            return IPAddress.Loopback;
+            }*/
+            return IPAddress.Parse("127.0.0.1");
         }
 
         //поток 2

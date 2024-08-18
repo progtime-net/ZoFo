@@ -14,9 +14,9 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
         public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "zombie_damaged","zombie_walk","zombie_idle","zombie_attack","zombie_death" }, "zombie_walk");
         public Zombie(Vector2 position) : base(position)
         {
-            health = 5;
+            health = 5; 
             speed =2;
-            collisionComponent.stopRectangle = new Rectangle(0, 0, 52, 100);
+            collisionComponent.stopRectangle = new Rectangle(0, 0, 52, 100); 
             graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 100, 100);
         }
         
