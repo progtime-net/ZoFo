@@ -9,7 +9,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.Interactables;
 
 public class Interactable : Entity
 {
-    public override AnimatedGraphicsComponent graphicsComponent => throw new System.NotImplementedException();
+    public override StaticGraphicsComponent graphicsComponent => throw new System.NotImplementedException();
 
     public Interactable(Vector2 position) : base(position)
     {

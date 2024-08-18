@@ -12,33 +12,38 @@ namespace ZoFo.GameCore.Graphics
     public class StaticGraphicsComponent : GraphicsComponent
     {
         private Texture2D texture;
-        private string textureName;
-
+        public string _textureName;
 
         public StaticGraphicsComponent()
         {
-           
+            LoadContent();
         }
-
+        
         public StaticGraphicsComponent(string textureName)
         {
             BuildComponent(textureName);
+            LoadContent();
         }
 
         public void BuildComponent(string textureName)
         {
-            this.textureName = textureName;
+            _textureName = textureName;
         }
         
 
         public override void LoadContent()
         {
-            texture = AppManager.Instance.Content.Load<Texture2D>(textureName);
+            if (_textureName is null)
+            {
+                return;
+            }
+            
+            texture = AppManager.Instance.Content.Load<Texture2D>(_textureName);
         }
 
         public override void Update()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch)

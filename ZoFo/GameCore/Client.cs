@@ -12,12 +12,17 @@ using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using System.Drawing;
 using System.Reflection;
-using ZoFo.GameCore.GameObjects.Entities;
+using ZoFo.GameCore.GameObjects.Entities; 
+using System.Net.Sockets;
+using System.Net; 
+using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using System.Linq;
 using System.Web;
 using ZoFo.GameCore.GUI;
-
+using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
+using ZoFo.GameCore.GameObjects.MapObjects.StopObjects; 
 namespace ZoFo.GameCore
 {
     public class Client
@@ -27,10 +32,19 @@ namespace ZoFo.GameCore
         ClientNetworkManager networkManager;
 
         public bool IsConnected { get { return networkManager.IsConnected; } }
+        public IPEndPoint InfoConnect => networkManager.InfoConnect;
+
         public Client()
         {
             networkManager = new ClientNetworkManager();
             networkManager.GetDataSent += OnDataSend;
+
+            // Подписка на действия инпутменеджера.
+            // Отправляются данные апдейтса с обновлением инпута
+            AppManager.Instance.InputManager.ActionEvent += () => networkManager.AddData(new UpdateInput(){
+                InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
+                InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
+            });
         }
 
         public void OnDataSend(string data)
@@ -55,6 +69,7 @@ namespace ZoFo.GameCore
 
         List<MapObject> mapObjects = new List<MapObject>();
         List<GameObject> gameObjects = new List<GameObject>();
+        List<StopObject> stopObjects = new List<StopObject>();
         /// <summary>
         /// Клиент должен обнговлять игру анимаций
         /// </summary>
@@ -72,6 +87,10 @@ namespace ZoFo.GameCore
             {
                 mapObjects[i].Draw(spriteBatch);
             }
+            for (int i = 0; i < stopObjects.Count; i++)
+            {
+                stopObjects[i].Draw(spriteBatch);
+            }
             for (int i = 0; i < gameObjects.Count; i++)
             {
                 gameObjects[i].Draw(spriteBatch);
@@ -80,7 +99,7 @@ namespace ZoFo.GameCore
 
         internal void GotData(UpdateData update)
         {
-            if (update is UpdateTileCreated)
+            if (update is UpdateTileCreated) 
             {
                 mapObjects.Add(
                 new MapObject(
@@ -90,13 +109,26 @@ namespace ZoFo.GameCore
                     (update as UpdateTileCreated).tileSetName
                     ));
             }
+            else if (update is UpdateStopObjectCreated) 
+            {
+                stopObjects.Add(
+                new StopObject(
+                    (update as UpdateStopObjectCreated).Position,
+                    (update as UpdateStopObjectCreated).Size.ToVector2(),
+                    (update as UpdateStopObjectCreated).sourceRectangle,
+                    (update as UpdateStopObjectCreated).tileSetName,
+                    (update as UpdateStopObjectCreated).collisions
+                    ));
+            }
             else if (update is UpdateGameObjectCreated)
             {
                 if ((update as UpdateGameObjectCreated).GameObjectType == "EntittyForAnimationTests")
                     gameObjects.Add(new EntittyForAnimationTests((update as UpdateGameObjectCreated).position));
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
                     gameObjects.Add(new Player((update as UpdateGameObjectCreated).position));
-
+                if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
+                    gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position));
+                
                 (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
                 //var a = Assembly.GetAssembly(typeof(GameObject));
                 //gameObjects.Add( TODO reflection

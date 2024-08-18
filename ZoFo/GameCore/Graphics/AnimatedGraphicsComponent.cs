@@ -12,17 +12,16 @@ namespace ZoFo.GameCore.Graphics
     public class AnimatedGraphicsComponent : GraphicsComponent
     {
 
-
-
-        public event Action<string> OnAnimationEnd;
-        private List<AnimationContainer> animations;
+        public event Action<string> actionOfAnimationEnd;
+        public List<AnimationContainer> animations;
         private List<Texture2D> textures;
-        public List<string> texturesNames; //rethink public and following that errors
+        private List<string> texturesNames;
         private AnimationContainer currentAnimation;
-
-        public bool animating = true;
-        private int step = 1;
-        
+        static public int scaling = 6;
+        static public int Camera_XW=800;
+        static public int Camera_YH = 400;
+        static public Vector2 CameraSize = new Vector2(1800, 960);
+        public int parentId;
         public AnimationContainer CurrentAnimation
         {
             get
@@ -36,7 +35,7 @@ namespace ZoFo.GameCore.Graphics
             get { return currentAnimation.Id; }
         }
 
-        private AnimationContainer idleAnimation;
+        private AnimationContainer neitralAnimation;
         //private SpriteBatch _spriteBatch;
 
         private int currentFrame;
@@ -47,33 +46,34 @@ namespace ZoFo.GameCore.Graphics
                 return currentFrame;
             }
         }
+        
+        // Needed to ckeck whether the frame has changed since last update call
+        private int lastUpdateCallFrame;
+        public int LastUpdateCallFrame
+        {
+            get
+            {
+                return lastUpdateCallFrame;
+            }
+        }
+        public int CurrentFrameInterval { get => interval; }
+        public void Force_Set_CurrentFrameInterval(int newFrameInterval) { }
         private int interval;
         private int lastInterval;
         private Rectangle sourceRectangle;
-        public AnimatedGraphicsComponent(List<string> animationsId, string neitralAnimationId, Rectangle objectDrawRectangle = new())
+        public AnimatedGraphicsComponent(List<string> animationsId, string neitralAnimationId)
         {
-            ObjectDrawRectangle = objectDrawRectangle;
             //this._spriteBatch = _spriteBatch;
             currentFrame = 0;
             lastInterval = 1;
             LoadAnimations(animationsId, neitralAnimationId);
-            currentAnimation = idleAnimation;
+            currentAnimation = neitralAnimation;
             SetInterval();
             buildSourceRectangle();
         }
 
-        
         public AnimatedGraphicsComponent(string textureName)
         {
-            BuildComponent(textureName);
-        }
-        public AnimatedGraphicsComponent()
-        {
-        }
-        public void BuildComponent(string textureName)
-        {
-            mainTextureName = textureName;
-            //texturesNames.Add(textureName);//Added by SD
             animations = new List<AnimationContainer>();
             textures = new List<Texture2D>();
             var texture = AppManager.Instance.Content.Load<Texture2D>(textureName);
@@ -87,7 +87,7 @@ namespace ZoFo.GameCore.Graphics
             animationContainer.FrameTime = new List<Tuple<int, int>>() { new Tuple<int, int>(0, 10) };
             animationContainer.Id = texture.Name;
             currentAnimation = animationContainer;
-            idleAnimation = animationContainer;
+            neitralAnimation = animationContainer;
             animations.Add(animationContainer);
         }
 
@@ -99,7 +99,7 @@ namespace ZoFo.GameCore.Graphics
                 animations.Add(AppManager.Instance.animationBuilder.Animations.Find(x => x.Id == id));
                 if (id == neitralAnimationId)
                 {
-                    idleAnimation = animations.Last();
+                    neitralAnimation = animations.Last();
                 }
             }
         }
@@ -108,11 +108,6 @@ namespace ZoFo.GameCore.Graphics
         {
             textures = new List<Texture2D>();
             texturesNames = new List<string>();
-
-            if (animations is null)
-            {
-                return;
-            }
 
             foreach (var animation in animations)
             {
@@ -124,86 +119,56 @@ namespace ZoFo.GameCore.Graphics
             }
         }
 
-        public void AnimationSelect(string animationId, bool reverse = false)
+        public void StartAnimation(string startedanimationId)
         {
-            currentAnimation = animations.Find(x => x.Id == animationId);
-            if (reverse)
-            {
-                currentFrame = currentAnimation.FramesCount;
-                step = -1;
-            }
-            else
-            {
-                step = 1;
-                currentFrame = 1;
-            }
+            currentFrame = 0;
+            currentAnimation = animations.Find(x => x.Id == startedanimationId);
+
             buildSourceRectangle();
             SetInterval();
-        }
-
-        public void StartAnimation()
-        {
-            animating = true;
-        }
-        
-        public void AnimationStep()
-        {
-            currentFrame += step;
-        }
-
-        public void SetFrame(int frame)
-        {
-            currentFrame = frame;
         }
 
         public void StopAnimation()
         {
             currentFrame = 0;
             interval = 0;
-            currentAnimation = idleAnimation;
+            currentAnimation = neitralAnimation;
             buildSourceRectangle();
             SetInterval();
         }
 
-        private void AnimationEnd()
-        {
-            if (!currentAnimation.IsCycle)
-            {
-                if (OnAnimationEnd != null)
-                {
-                    OnAnimationEnd(currentAnimation.Id);
-                }
-                currentAnimation = idleAnimation;
-                animating = false;
-            }
-            currentFrame = 0;
-        }
-
         public override void Update()
         {
-            if (currentAnimation.FramesCount <= currentFrame || currentFrame < 0)
-            {
-                AnimationEnd();
-            }
-            
-            if (!animating)
-                return;
-
+            lastUpdateCallFrame = currentFrame;
             if (interval == 0)
             {
-                currentFrame += step;
+                currentFrame++;
+                if (currentAnimation.FramesCount <= currentFrame)
+                {
+                    if (!currentAnimation.IsCycle)
+                    {
+                        if (actionOfAnimationEnd != null)
+                        {
+                            actionOfAnimationEnd(currentAnimation.Id);
+                        }
+                        currentAnimation = neitralAnimation;
+
+                    }
+
+                    currentFrame = 0;
+
+                }
+
                 buildSourceRectangle();
                 SetInterval();
             }
-            
+
             interval--;
         }
-        
 
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch)
         {
             Texture2D texture = textures[texturesNames.FindIndex(x => x == currentAnimation.TextureName)];
-
             float scale;
             if (currentAnimation.Offset.X != 0)
             {
@@ -225,13 +190,10 @@ namespace ZoFo.GameCore.Graphics
             destinationRectangle = Scaling(destinationRectangle);
             _spriteBatch.Draw(texture,
                 destinationRectangle, sourceRectangle, Color.White);
-
         }
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch, Rectangle sourceRectangle)
         {
-
             Texture2D texture = textures[texturesNames.FindIndex(x => x == currentAnimation.TextureName)];
-
             float scale;
             if (currentAnimation.Offset.X != 0)
             {
@@ -253,13 +215,21 @@ namespace ZoFo.GameCore.Graphics
             destinationRectangle = Scaling(destinationRectangle);
             _spriteBatch.Draw(texture,
                 destinationRectangle, sourceRectangle, Color.White);
+        }
+        private Rectangle Scaling(Rectangle destinationRectangle)
+        {
+            destinationRectangle.X *= scaling;
+            destinationRectangle.Y *= scaling;
+            destinationRectangle.Width *= scaling;
+            destinationRectangle.Height *= scaling;
+            return destinationRectangle;
         }
         private void buildSourceRectangle()
         {
             sourceRectangle = new Rectangle();
             if (currentAnimation == null)
             {
-                currentAnimation = idleAnimation;
+                currentAnimation = neitralAnimation;
             }
             sourceRectangle.X = currentAnimation.StartSpriteRectangle.X + currentFrame *
                 (currentAnimation.StartSpriteRectangle.Width + currentAnimation.TextureFrameInterval);
@@ -281,35 +251,6 @@ namespace ZoFo.GameCore.Graphics
                 interval = lastInterval;
             }
         }
-        public static void SetCameraPosition(Vector2 playerPosition)
-        {
-            CameraPosition = (playerPosition).ToPoint();
-            CameraPosition.X -= 200;
-            CameraPosition.Y -= 120;
-            
-            // TODO
-            /*
-            if (CameraPosition.X > AppManager.Instance.GameManager.CameraBorder.Y - 460)
-            {
-                CameraPosition.X = (int)AppManager.Instance.GameManager.CameraBorder.Y - 460;
-            }
-            
-            if (CameraPosition.Y < AppManager.Instance.GameManager.CameraBorder.Z)
-            {
-                CameraPosition.Y = (int)AppManager.Instance.GameManager.CameraBorder.Z;
-            }
-            if (CameraPosition.X < AppManager.Instance.GameManager.CameraBorder.X)
-            {
-                CameraPosition.X = (int)AppManager.Instance.GameManager.CameraBorder.X;
-            }
-            if (CameraPosition.Y > AppManager.Instance.GameManager.CameraBorder.W - 240)
-            {
-                CameraPosition.Y = (int)AppManager.Instance.GameManager.CameraBorder.W - 240;
-            }
-            
-            AppManager.Instance.DebugHUD.Set("CameraPosition", $"{CameraPosition.X}, {CameraPosition.Y}");
-        */
-        }
-        public static Point CameraPosition = new Point(0, 0);
+
     }
 }

@@ -8,9 +8,9 @@ namespace ZoFo.GameCore.GameManagers.MapManager.MapElements
 {
     public class Object
     {
-        public int Height { get; set; }
-        public int Width { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+        public double Height { get; set; }
+        public double Width { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
     }
 }

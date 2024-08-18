@@ -17,17 +17,21 @@ namespace ZoFo.GameCore.GameManagers
 
     public class InputManager
     {
-        public delegate void Delegat();
-        public event Delegat ShootEvent; // событие удара(когда нажат X, событие срабатывает)
+        public event Action ShootEvent; // событие удара(когда нажат X, событие срабатывает)
         
-        public event Delegat OnInteract; // событие взаимодействия с collectable(например, лутом)
+        public event Action OnInteract; // событие взаимодействия с collectable(например, лутом)
         //с помощью кнопки E.
+
+        public event Action ActionEvent;
         public Vector2 InputMovementDirection;
+        private Vector2 prevInputMovementDirection;
         public Vector2 InputAttackDirection;
+        private Vector2 prevInputAttackDirection;
 
-        public event Delegat TalkEvent;
+        public event Action TalkEvent;
 
-        ScopeState currentScopeState;        // Положение оружия. Left, Right, Straight, Back, StraightLeft, StraightRight, BackLeft, BackRight.
+        public ScopeState currentScopeState;        // Положение оружия. Left, Right, Straight, Back, StraightLeft, StraightRight, BackLeft, BackRight.
+        private ScopeState prevCurrentScopeState;
         private bool _cheatsEnabled = false;
         public bool InvincibilityCheat { get; private set; } = false;
         public bool CollisionsCheat { get; private set; } = false;
@@ -128,6 +132,7 @@ namespace ZoFo.GameCore.GameManagers
                 lastGamePadState = gamePadState;
             #endregion
             #region Работа с KeyBoard
+
                 #region InputAttack with mouse
                 MouseState mouseState = Mouse.GetState();
                 AppManager.Instance.debugHud.Set("mouse position", $"({mouseState.X}, {mouseState.Y}");
@@ -231,6 +236,17 @@ namespace ZoFo.GameCore.GameManagers
                 lastKeyboardState = keyBoardState;
             
             #endregion 
+            #region ActionEvent
+                if(InputMovementDirection != prevInputMovementDirection  ||
+                InputAttackDirection != prevInputAttackDirection || 
+                currentScopeState != prevCurrentScopeState)
+                {
+                    ActionEvent?.Invoke();
+                }
+                prevInputMovementDirection = InputMovementDirection;
+                prevInputAttackDirection = InputAttackDirection;
+                prevCurrentScopeState = currentScopeState;
+            #endregion
         }
     }
 }
