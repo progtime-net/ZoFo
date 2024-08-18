@@ -362,8 +362,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-<<<<<<< HEAD
-=======
+
 /build:Textures/GUI/switch.png
 
 #begin Textures/icons/12.png
@@ -496,7 +495,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
->>>>>>> aa6f003605d9e74d99ed25af0bb80ad8f16a352d
+
 /build:Textures/Test/pickaxe.webp
 
 #begin Textures/Test/rock.jpg
@@ -535,11 +534,8 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Test/wood.jpg
 
-<<<<<<< HEAD
 #begin Textures/TileSetImages/Pipes.png
-=======
-#begin Textures/TileSets/Tilelist1.png
->>>>>>> aa6f003605d9e74d99ed25af0bb80ad8f16a352d
+
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -549,11 +545,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-
 /build:Textures/TileSetImages/Pipes.png
 
 #begin Textures/TileSetImages/Tilelist1.png
-
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -563,14 +557,10 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-<<<<<<< HEAD
 /build:Textures/TileSetImages/Tilelist1.png
 
 #begin Textures/TileSetImages/Tilelist2.png
-=======
-/build:Textures/TileSets/Tilelist2.png
 
-#begin Textures/TileSets/Tilelist3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -580,44 +570,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/TileSets/Tilelist3.png
 
-#begin Textures/TileSets/Tilelist4.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/TileSets/Tilelist4.png
-
-#begin Textures/TileSets/TilesetFloor.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/TileSets/TilesetFloor.png
-
-#begin Textures/TileSets/TilesetFloor.png
->>>>>>> aa6f003605d9e74d99ed25af0bb80ad8f16a352d
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-<<<<<<< HEAD
 /build:Textures/TileSetImages/Tilelist2.png
 
 #begin Textures/TileSetImages/Tilelist3.png
@@ -835,7 +788,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/TileSetImages/TilesetWater.png
-=======
-/build:Textures/TileSets/TilesetFloor.png
->>>>>>> aa6f003605d9e74d99ed25af0bb80ad8f16a352d
 
