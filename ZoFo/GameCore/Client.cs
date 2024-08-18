@@ -24,6 +24,8 @@ using ZoFo.GameCore.GUI;
 using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 namespace ZoFo.GameCore
 {
     public class Client
@@ -54,13 +56,21 @@ namespace ZoFo.GameCore
 
         public void OnDataSend(string data)
         {
-            List<UpdateData> updateDatas = JsonSerializer.Deserialize<List<UpdateData>>(data);
+            //List<UpdateTileCreated> updateDatas = JsonSerializer.Deserialize<List<UpdateTileCreated>>(data);
+            JArray jToken = JsonConvert.DeserializeObject(data) as JArray;
+
+            //string[] brands = jToken.SelectToken("")?.ToObject<string[]>();
+            foreach (JToken update in jToken.Children())
+            {
+                string a = update.ToString();
+                UpdateTileCreated u = System.Text.Json.JsonSerializer.Deserialize<UpdateTileCreated>(a);
+            }
             // тут будет switch
             AppManager.Instance.debugHud.Log(data);
-            foreach (var item in updateDatas)
-            {
-                GotData(item);
-            }
+            //foreach (var item in updateDatas)
+            //{
+            //    GotData(item);
+            //}
 
         }
         public void GameEndedUnexpectedly() { }
@@ -112,22 +122,21 @@ namespace ZoFo.GameCore
                 mapObjects.Add(
                 new MapObject(
                     (update as UpdateTileCreated).Position,
-                    (update as UpdateTileCreated).Size.ToVector2(),
-                    (update as UpdateTileCreated).sourceRectangle,
+                    (update as UpdateTileCreated).Size.GetPoint().ToVector2(),
+                    (update as UpdateTileCreated).sourceRectangle.GetRectangle(),
                     (update as UpdateTileCreated).tileSetName
                     ));
             }
-            else if (update is UpdateStopObjectCreated)
-            {
-                stopObjects.Add(
-                new StopObject(
-                    (update as UpdateStopObjectCreated).Position,
-                    (update as UpdateStopObjectCreated).Size.ToVector2(),
-                    (update as UpdateStopObjectCreated).sourceRectangle,
-                    (update as UpdateStopObjectCreated).tileSetName,
-                    (update as UpdateStopObjectCreated).collisions
-                    ));
-            }
+            //else if (update is UpdateStopObjectCreated)
+            //{
+            //    stopObjects.Add(
+            //    new StopObject(
+            //        (update as UpdateStopObjectCreated).Position,
+            //        (update as UpdateStopObjectCreated).Size.ToVector2(),
+            //        (update as UpdateStopObjectCreated).sourceRectangle,
+            //        (update as UpdateStopObjectCreated).tileSetName
+            //        ));
+            //}
             else if (update is UpdateGameObjectCreated)
             {
                 GameObject created_gameObject;
