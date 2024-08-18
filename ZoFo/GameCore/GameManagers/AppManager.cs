@@ -27,9 +27,10 @@ namespace ZoFo.GameCore.GameManagers
         public GameState gamestate;
         public AbstractGUI currentGUI;
         public DebugHUD debugHud;
-        public Point CurentScreenResolution = new Point(1920, 1080);
+        public Point CurentScreenResolution;
         public Client client;
         public Server server;
+        public PlayerData playerData;
 
 
         #region Managers
@@ -45,14 +46,17 @@ namespace ZoFo.GameCore.GameManagers
 
         public AppManager()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);    
+            CurentScreenResolution = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
             SetResolution(CurentScreenResolution.X, CurentScreenResolution.Y);
-            // FulscrreenSwitch();
+            //FulscrreenSwitch();
 
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+            playerData = new PlayerData();
+            ItemManager = new ItemManager.ItemManager();
             Instance = this;
             InputManager = new InputManager();
             SettingsManager = new SettingsManager();
@@ -71,6 +75,7 @@ namespace ZoFo.GameCore.GameManagers
         {
             currentGUI.Initialize();
             debugHud.Initialize(); 
+            ItemManager.Initialize();
 
 
             base.Initialize();
@@ -81,6 +86,7 @@ namespace ZoFo.GameCore.GameManagers
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             debugHud.LoadContent();
             currentGUI.LoadContent();
+            ItemManager.LoadItemTextures();
 
 
 
@@ -118,8 +124,6 @@ namespace ZoFo.GameCore.GameManagers
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            currentGUI.Draw(_spriteBatch);
-            debugHud.Draw(_spriteBatch);
             _spriteBatch.Begin();
             switch (gamestate)
             {
@@ -132,6 +136,9 @@ namespace ZoFo.GameCore.GameManagers
                     break;
             }
             _spriteBatch.End();
+            
+            currentGUI.Draw(_spriteBatch);
+            debugHud.Draw(_spriteBatch);
 
             base.Draw(gameTime);
         }
