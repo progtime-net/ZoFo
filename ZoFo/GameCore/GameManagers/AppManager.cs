@@ -56,6 +56,7 @@ namespace ZoFo.GameCore.GameManagers
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+            server = new Server();
             playerData = new PlayerData();
             ItemManager = new ItemManager.ItemManager();
             Instance = this;

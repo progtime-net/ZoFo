@@ -34,6 +34,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Font3.spritefont
 
+#begin Fonts/Font4.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Font4.spritefont
+
 #begin MapData/TileMaps/main.tmj
 /copy:MapData/TileMaps/main.tmj
 

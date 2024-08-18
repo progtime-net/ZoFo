@@ -19,17 +19,20 @@ namespace ZoFo.GameCore.GUI;
 public class BaseGUI : AbstractGUI
 {
     private DrawableUIElement menuBackground;
-    private List<ItemDisplayLabel> ItemDisplayButtonsList;
+    private List<ItemDisplayLabel> ItemDisplayLabelsList;
+    private List<ItemDisplayButton> ItemDisplayButtonsList;
     private int buttonIndex = 0;
     private string textureName;
 
     protected override void CreateUI()
     {
-        ItemDisplayButtonsList = new List<ItemDisplayLabel>();
+        ItemDisplayLabelsList = new List<ItemDisplayLabel>();
+        ItemDisplayButtonsList = new List<ItemDisplayButton>();
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
         Dictionary<string, int> playerItems = AppManager.Instance.playerData.items;
         Dictionary<string, ItemInfo> items = AppManager.Instance.ItemManager.tagItemPairs;
+        int numberCraftItem = 0;
 
         menuBackground = new DrawableUIElement(Manager)
         {
@@ -46,57 +49,37 @@ public class BaseGUI : AbstractGUI
             fontName = "Fonts\\Font"
         });
 
-        DrawableUIElement baseHudBack = new DrawableUIElement(Manager)
+        DrawableUIElement baseItemBack = new DrawableUIElement(Manager)
         {
-            rectangle = new Rectangle(width / 2 - (int)(width / 1.5) / 2, height / 2 - (int)(height / 1.5) / 2,
-                (int)(width / 1.5), (int)(height / 1.5)),
+            rectangle = new Rectangle(width / 2 - (height / 16 + (int)(width / 2.5)) / 2, height / 2 - (int)(height / 1.5) / 2,
+                height / 40 + width / 5, (int)(height / 1.5)),
             mainColor = Color.LightGray
         };
-        Elements.Add(baseHudBack);
+        Elements.Add(baseItemBack);
+        DrawableUIElement baseCraftBack = new DrawableUIElement(Manager)
+        {
+            rectangle = new Rectangle(width / 2 + height / 160, height / 2 - (int)(height / 1.5) / 2,
+                height / 40 + width / 5, (int)(height / 1.5)),
+            mainColor = Color.LightGray
+        };
+        Elements.Add(baseCraftBack);
 
         //player itams
         foreach (var item in playerItems)
         {
-            textureName = AppManager.Instance.ItemManager.GetItemInfo(item.Key).textureName;
-            var temp = new ItemDisplayLabel(Manager)
+            if (item.Value > 0)
             {
-                rectangle = new Rectangle(width / 2 - (int)(width / 1.5) / 2 + height / 80,
-                    height / 2 - (int)(height / 1.5) / 2 + height / 80 + (height / 20 + height / 80) * (buttonIndex),
-                    (int)(width / 5), (int)(height / 20)),
-                text1 = item.Key,
-                scale1 = 0.4f,
-                count = item.Value,
-                itemTextureName = textureName,
-                fontColor1 = Color.White,
-                mainColor = Color.Gray,
-                fontName1 = "Fonts\\Font3"
-            };
-            Elements.Add(temp);
-            temp.Initialize();
-            temp.LoadTexture(AppManager.Instance.Content);
-            ItemDisplayButtonsList.Add(temp);
-
-            buttonIndex++;
-        }
-
-        // craftable items
-        buttonIndex = 0;
-        foreach (var item in items)
-        {
-            ItemInfo itemInfo = AppManager.Instance.ItemManager.GetItemInfo(item.Key);
-
-            if (itemInfo.isCraftable)
-            {
+                textureName = AppManager.Instance.ItemManager.GetItemInfo(item.Key).textureName;
                 var temp = new ItemDisplayLabel(Manager)
                 {
-                    rectangle = new Rectangle(width / 2 - (int)(width / 1.5) / 2 + height / 40 + width / 5,
+                    rectangle = new Rectangle(width / 2 - (height / 16 + (int)(width / 2.5)) / 2 + height / 80,
                         height / 2 - (int)(height / 1.5) / 2 + height / 80 +
                         (height / 20 + height / 80) * (buttonIndex),
                         (int)(width / 5), (int)(height / 20)),
                     text1 = item.Key,
                     scale1 = 0.4f,
-                    count = 0,
-                    itemTextureName = itemInfo.textureName,
+                    count = item.Value,
+                    itemTextureName = textureName,
                     fontColor1 = Color.White,
                     mainColor = Color.Gray,
                     fontName1 = "Fonts\\Font3"
@@ -104,9 +87,59 @@ public class BaseGUI : AbstractGUI
                 Elements.Add(temp);
                 temp.Initialize();
                 temp.LoadTexture(AppManager.Instance.Content);
-                ItemDisplayButtonsList.Add(temp);
+                ItemDisplayLabelsList.Add(temp);
 
                 buttonIndex++;
+            }
+        }
+
+        // craftable items
+        buttonIndex = 0;
+        foreach (var item in items)
+        {
+            ItemInfo itemInfo = AppManager.Instance.ItemManager.GetItemInfo(item.Key);
+            if (itemInfo.isCraftable)
+            {
+                Dictionary<string, int> needToCraft = AppManager.Instance.ItemManager.GetItemInfo(item.Key).resourcesNeededToCraft;
+                numberCraftItem = playerItems[needToCraft.Keys.First()] / needToCraft.Values.First();
+                foreach (var itemNeedToCraft in needToCraft)
+                {
+                    int xValue = playerItems[itemNeedToCraft.Key] / itemNeedToCraft.Value;
+                    if (numberCraftItem > xValue)
+                    {
+                        numberCraftItem = xValue;
+                    }
+                }
+
+                if (numberCraftItem > 0)
+                {
+                    var temp = new ItemDisplayButton(Manager)
+                    {
+                        rectangle = new Rectangle(width / 2 - (height / 16 + (int)(width / 2.5)) / 2 + height / 20 + width / 5,
+                            height / 2 - (int)(height / 1.5) / 2 + height / 80 + (height / 20 + height / 80) * (buttonIndex),
+                            (int)(width / 5), (int)(height / 20)),
+                        text1 = item.Key,
+                        scale1 = 0.4f,
+                        count = numberCraftItem,
+                        itemTextureName = itemInfo.textureName,
+                        fontColor1 = Color.White,
+                        mainColor = Color.Gray,
+                        fontName1 = "Fonts\\Font4",
+                        discriptions1 = itemInfo.description,
+                        resourcesNeededToCraft1 = itemInfo.resourcesNeededToCraft
+                    };
+                    Elements.Add(temp);
+                    temp.Initialize();
+                    temp.LoadTexture(AppManager.Instance.Content);
+                    ItemDisplayButtonsList.Add(temp);
+                    temp.LeftButtonPressed += () =>
+                    {
+                        AppManager.Instance.playerData.CraftItem(item.Key);
+                        AppManager.Instance.SetGUI(new BaseGUI());
+                    };
+
+                    buttonIndex++;
+                }
             }
         }
 
@@ -123,5 +156,12 @@ public class BaseGUI : AbstractGUI
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        foreach (var item in ItemDisplayButtonsList)
+        {
+            if (item.Update(gameTime))
+            {
+                AppManager.Instance.SetGUI(new BaseGUI());
+            }
+        }
     }
 }

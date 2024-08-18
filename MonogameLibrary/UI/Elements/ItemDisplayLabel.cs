@@ -75,5 +75,6 @@ public class ItemDisplayLabel : DrawableUIElement
     public override void Draw(SpriteBatch _spriteBatch)
     {
         base.Draw(_spriteBatch);
+        _spriteBatch.Draw(texture, rectangle, Color.White);
     }
 }

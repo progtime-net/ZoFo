@@ -35,16 +35,20 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
             {
                 items[item.Key] -= item.Value;
             }
+
+            items[itemTag] += 1;
             return true;
         }
+        
 
         public void LoadPlayerData()
         {
             //TODO
             items = new Dictionary<string, int>();
-            items.Add("wood", 2);
+            items.Add("wood", 5);
             items.Add("steel", 110);
             items.Add("rock", 6);
+            items.Add("pickaxe", 0);
         }
     }
 }
