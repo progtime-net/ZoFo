@@ -11,7 +11,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
 {
     class Zombie : Enemy
     {
-        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "zombie_damaged" }, "zombie_damaged");
+        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "zombie_damaged","zombie_walk","zombie_idle","zombie_attack","zombie_death" }, "zombie_walk");
         public Zombie(Vector2 position) : base(position)
         {
             health = 5;
@@ -26,8 +26,17 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
                 AppManager.Instance.server.players[0].position - position
                 );
             velocity=new Vector2(duration.X * speed, duration.Y*speed);
-            
-            
+            if (Random.Shared.NextDouble() > 0.9)
+            {
+
+                StartAnimation("zombie_damaged");
+            }
+            if (Random.Shared.NextDouble() > 0.9)
+            {
+
+                StartAnimation("zombie_idle");
+            }
+
         }
     }
 }

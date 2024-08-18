@@ -24,6 +24,7 @@ using ZoFo.GameCore.GUI;
 using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
+using ZoFo.GameCore.Graphics;
 namespace ZoFo.GameCore
 {
     public class Client
@@ -157,8 +158,14 @@ namespace ZoFo.GameCore
             {
                 var ent = FindEntityById(update.IdEntity);
 
-                ent.position = (update as UpdatePosition).NewPosition;
-                DebugHUD.Instance.Log("newPosition " + ent.position);
+                ent.position = (update as UpdatePosition).NewPosition; 
+            }
+            else if (update is UpdateAnimation)
+            {
+                var ent = FindEntityById(update.IdEntity);
+
+                ((ent as Entity).graphicsComponent as AnimatedGraphicsComponent).StartAnimation((update as UpdateAnimation).animationId);
+                DebugHUD.Instance.Log("new Animation " + ent.position);
             }
         }
 

@@ -196,7 +196,6 @@
 #begin Textures/Animations/testAnimationExample.animation
 /copy:Textures/Animations/testAnimationExample.animation
 
-<<<<<<< HEAD
 #begin Textures/Animations/zombie_attack.animation
 /copy:Textures/Animations/zombie_attack.animation
 
@@ -212,8 +211,6 @@
 #begin Textures/Animations/zombie_walk.animation
 /copy:Textures/Animations/zombie_walk.animation
 
-=======
->>>>>>> 46c28524c7c601856e78b88316c9caa71da724d3
 #begin Textures/AnimationTextures/Character/hr-level1_idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
