@@ -12,5 +12,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
     public class UpdateGameObjectDeleted : UpdateData    
     {
         public UpdateGameObjectDeleted() { UpdateType = "UpdateGameObjectDeleted"; }
+        public string GameObjectType;
     }
 }

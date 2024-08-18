@@ -87,7 +87,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// </summary>
         public void JoinYourself(int port)  // single player
         {
-            endPoint = new IPEndPoint(GetIp(), port);
+            endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
             socket.Connect(endPoint);
             SendData();
             Thread listen = new Thread(StartListening);

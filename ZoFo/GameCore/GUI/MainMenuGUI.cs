@@ -40,6 +40,7 @@ public class MainMenuGUI : AbstractGUI
         };
         playButton.LeftButtonPressed += () =>
         {
+            AppManager.Instance.SoundManager.StartAmbientSound("Loot");
             AppManager.Instance.SetGUI(new SelectModeMenu());
         };
         Elements.Add(playButton);
@@ -54,6 +55,7 @@ public class MainMenuGUI : AbstractGUI
         };
         optionButton.LeftButtonPressed += () =>
         {
+            AppManager.Instance.SoundManager.StartAmbientSound("Loot");
             AppManager.Instance.SetGUI(new OptionsGUI());
         };
         Elements.Add(optionButton);

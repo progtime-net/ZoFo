@@ -37,8 +37,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// </summary>
         private void Init()
         {
-            ip = GetIp();
-            endPoint = new IPEndPoint(ip, port);
+            endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             managerThread = new Dictionary<Socket, Thread>();
             clients = new List<Socket>();

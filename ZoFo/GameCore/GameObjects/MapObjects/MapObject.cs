@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
-using ZoFo.GameCore.ZoFo_graphics;
+using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameObjects.MapObjects
 {
@@ -36,6 +36,8 @@ namespace ZoFo.GameCore.GameObjects.MapObjects
         public override void Draw(SpriteBatch spriteBatch)
         {
             graphicsComponent.DrawAnimation(graphicsComponent.ObjectDrawRectangle, spriteBatch, sourceRectangle);
+        
+        
         }
 
     }

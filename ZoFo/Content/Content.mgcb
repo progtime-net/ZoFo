@@ -40,8 +40,8 @@
 #begin MapData/TileMaps/main.tmx
 /copy:MapData/TileMaps/main.tmx
 
-#begin MapData/TileSets/TileSet 1.tsj
-/copy:MapData/TileSets/TileSet 1.tsj
+#begin MapData/TileSets/CollisionTileSet.tsj
+/copy:MapData/TileSets/CollisionTileSet.tsj
 
 #begin sounds/Loot.wav
 /importer:WavImporter
@@ -73,12 +73,6 @@
 /processorParam:Quality=Best
 /build:sounds/Tabletki 2.wav
 
-#begin sounds/Tabletki.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:sounds/Tabletki.mp3
-
 #begin sounds/Zombi napal.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -90,6 +84,24 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/Zombi stoit.wav
+
+#begin Textures/Animations/player_idle_rotate_weapon.animation
+/copy:Textures/Animations/player_idle_rotate_weapon.animation
+
+#begin Textures/Animations/player_idle_top_noweapon.animation
+/copy:Textures/Animations/player_idle_top_noweapon.animation
+
+#begin Textures/Animations/player_idle_top-right_noweapon.animation
+/copy:Textures/Animations/player_idle_top-right_noweapon.animation
+
+#begin Textures/Animations/player_running_top_rotate.animation
+/copy:Textures/Animations/player_running_top_rotate.animation
+
+#begin Textures/Animations/running_top.animation
+/copy:Textures/Animations/running_top.animation
+
+#begin Textures/Animations/testAnimationExample.animation
+/copy:Textures/Animations/testAnimationExample.animation
 
 #begin Textures/AnimationTextures/Character/hr-level1_idle_gun.png
 /importer:TextureImporter
@@ -259,18 +271,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/background/waiting.png
 
-#begin Textures/GUI/checkboxs_off.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/GUI/checkboxs_off.png
-
 #begin Textures/GUI/checkboxs_off-on.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -282,6 +282,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/checkboxs_off-on.png
+
+#begin Textures/GUI/checkboxs_off.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/checkboxs_off.png
 
 #begin Textures/GUI/checkboxs_on.png
 /importer:TextureImporter
@@ -319,6 +331,18 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/mouse.png
 
+#begin Textures/GUI/Switch_backgrownd.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/Switch_backgrownd.png
+
 #begin Textures/GUI/switch.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -331,7 +355,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/switch.png
 
-#begin Textures/GUI/Switch_backgrownd.png
+#begin Textures/icons/12.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -341,7 +365,163 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/GUI/Switch_backgrownd.png
+/build:Textures/icons/12.png
+
+#begin Textures/icons/13.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/icons/13.png
+
+#begin Textures/icons/14.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/icons/14.png
+
+#begin Textures/icons/21.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/icons/21.png
+
+#begin Textures/icons/22.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/icons/22.png
+
+#begin Textures/icons/5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/icons/5.png
+
+#begin Textures/icons/6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/icons/6.png
+
+#begin Textures/icons/7.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/icons/7.png
+
+#begin Textures/icons/8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/icons/8.png
+
+#begin Textures/icons/9.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/icons/9.png
+
+#begin Textures/TileSetImages/Tilelist1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/Tilelist1.png
+
+#begin Textures/TileSetImages/Tilelist2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/Tilelist2.png
+
+#begin Textures/TileSetImages/Tilelist3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/Tilelist3.png
+
+#begin Textures/TileSetImages/Tilelist4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/Tilelist4.png
 
 #begin Textures/TileSetImages/TilesetFloor.png
 /importer:TextureImporter

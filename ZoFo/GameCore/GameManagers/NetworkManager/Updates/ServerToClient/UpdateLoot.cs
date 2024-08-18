@@ -11,6 +11,12 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
     /// </summary>
     public class UpdateLoot : UpdateData 
     {
-      public UpdateLoot() { UpdateType = "UpdateLoot"; }
+        public string lootName;
+        public UpdateLoot() { UpdateType = "UpdateLoot"; }
+        public UpdateLoot(string lootName) 
+        { 
+            UpdateType = "UpdateLoot";
+            this.lootName = lootName;
+        }
     }
 }
