@@ -37,11 +37,14 @@
 #begin MapData/TileMaps/main.tmj
 /copy:MapData/TileMaps/main.tmj
 
-#begin MapData/TileMaps/main.tmx
-/copy:MapData/TileMaps/main.tmx
+#begin MapData/TileSets/tileset 1 collision.tsj
+/copy:MapData/TileSets/tileset 1 collision.tsj
 
-#begin MapData/TileSets/CollisionTileSet.tsj
-/copy:MapData/TileSets/CollisionTileSet.tsj
+#begin MapData/TileSets/TileSet 1.tsj
+/copy:MapData/TileSets/TileSet 1.tsj
+
+#begin MapData/TileSets/TilesetNature.tsj
+/copy:MapData/TileSets/TilesetNature.tsj
 
 #begin sounds/Loot.wav
 /importer:WavImporter
@@ -193,6 +196,7 @@
 #begin Textures/Animations/testAnimationExample.animation
 /copy:Textures/Animations/testAnimationExample.animation
 
+<<<<<<< HEAD
 #begin Textures/Animations/zombie_attack.animation
 /copy:Textures/Animations/zombie_attack.animation
 
@@ -208,6 +212,8 @@
 #begin Textures/Animations/zombie_walk.animation
 /copy:Textures/Animations/zombie_walk.animation
 
+=======
+>>>>>>> 46c28524c7c601856e78b88316c9caa71da724d3
 #begin Textures/AnimationTextures/Character/hr-level1_idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -652,7 +658,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Test/wood.jpg
 
-#begin Textures/TileSets/Tilelist1.png
+#begin Textures/TileSetImages/Pipes.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -662,9 +668,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/TileSets/Tilelist1.png
+/build:Textures/TileSetImages/Pipes.png
 
-#begin Textures/TileSets/Tilelist2.png
+#begin Textures/TileSetImages/Tilelist1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -674,9 +680,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/TileSets/Tilelist2.png
+/build:Textures/TileSetImages/Tilelist1.png
 
-#begin Textures/TileSets/Tilelist3.png
+#begin Textures/TileSetImages/Tilelist2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -686,9 +692,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/TileSets/Tilelist3.png
+/build:Textures/TileSetImages/Tilelist2.png
 
-#begin Textures/TileSets/Tilelist4.png
+#begin Textures/TileSetImages/Tilelist3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -698,9 +704,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/TileSets/Tilelist4.png
+/build:Textures/TileSetImages/Tilelist3.png
 
-#begin Textures/TileSets/TilesetFloor.png
+#begin Textures/TileSetImages/Tilelist4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -710,5 +716,197 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/TileSets/TilesetFloor.png
+/build:Textures/TileSetImages/Tilelist4.png
+
+#begin Textures/TileSetImages/TilesetDesert.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetDesert.png
+
+#begin Textures/TileSetImages/TilesetDungeon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetDungeon.png
+
+#begin Textures/TileSetImages/TilesetElement.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetElement.png
+
+#begin Textures/TileSetImages/TilesetField.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetField.png
+
+#begin Textures/TileSetImages/TilesetFloor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetFloor.png
+
+#begin Textures/TileSetImages/TilesetFloorB.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetFloorB.png
+
+#begin Textures/TileSetImages/TilesetFloorDetail.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetFloorDetail.png
+
+#begin Textures/TileSetImages/TilesetHole.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetHole.png
+
+#begin Textures/TileSetImages/TilesetHouse.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetHouse.png
+
+#begin Textures/TileSetImages/TilesetLogic.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetLogic.png
+
+#begin Textures/TileSetImages/TilesetNature.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetNature.png
+
+#begin Textures/TileSetImages/TilesetRelief.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetRelief.png
+
+#begin Textures/TileSetImages/TilesetReliefDetail.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetReliefDetail.png
+
+#begin Textures/TileSetImages/TilesetTowers.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetTowers.png
+
+#begin Textures/TileSetImages/TilesetVillageAbandoned.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetVillageAbandoned.png
+
+#begin Textures/TileSetImages/TilesetWater.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/TilesetWater.png
 
