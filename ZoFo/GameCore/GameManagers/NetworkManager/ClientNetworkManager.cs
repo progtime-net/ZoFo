@@ -124,7 +124,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             while(socket.Connected)
             {
                 byte[] bytes = new byte[65535];
-                var countAnsw = socket.Receive(bytes, SocketFlags.Partial);    //Вылетает если кто то закрыл
+                var countAnsw = socket.Receive(bytes);    //Вылетает если кто то закрыл
                 string update = Encoding.UTF8.GetString(bytes, 0, countAnsw);   // обновление отосланные сервером
                 GetDataSent(update);
             }

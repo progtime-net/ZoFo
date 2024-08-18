@@ -12,7 +12,7 @@ namespace ZoFo.GameCore.Graphics
         public void LoadAnimations()
         {
             Animations = new List<AnimationContainer>();
-            string[] animationFilesNames = Directory.GetFiles(Path.Combine(AppContext.BaseDirectory, "Content", "Textures", "Animations"));
+            string[] animationFilesNames = Directory.GetFiles(Path.Combine(AppContext.BaseDirectory, "Content", "Textures", "Animations"), "*.animation", SearchOption.AllDirectories);
 
             StreamReader reader;
             foreach (var fileName in animationFilesNames)
