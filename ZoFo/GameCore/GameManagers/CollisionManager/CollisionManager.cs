@@ -211,8 +211,8 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
     {
         public static Rectangle SetOrigin(this Rectangle rectangle, Vector2 origin)
         {
-            rectangle.X = (int)origin.X;
-            rectangle.Y = (int)origin.Y;
+            rectangle.X += (int)origin.X;
+            rectangle.Y += (int)origin.Y;
             return rectangle;
         }
     }

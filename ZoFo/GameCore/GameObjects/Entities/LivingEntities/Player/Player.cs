@@ -26,8 +26,8 @@ public class Player : LivingEntity
     //public bool isTryingToInteract { get; set; }
     public Player(Vector2 position) : base(position)
     {
-        graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 100, 100);
-        collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100); 
+        graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 30, 30);
+        collisionComponent.stopRectangle = new Rectangle(0, 20, 30, 10); 
         speed = 10;
         //isTryingToInteract = false;
         //IsTryingToShoot = false; 

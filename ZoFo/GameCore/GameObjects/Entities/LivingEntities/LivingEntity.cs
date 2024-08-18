@@ -33,7 +33,7 @@ public class LivingEntity : Entity
 
     public void OnCollision(CollisionComponent component)
     {
-        
+
     }
 
     public override void UpdateAnimations()
@@ -43,9 +43,9 @@ public class LivingEntity : Entity
     Vector2 prevPosition_forClient;
     public override void Draw(SpriteBatch spriteBatch)
     {
-        if ((position - prevPosition_forClient).X< 0)
+        if ((position - prevPosition_forClient).X < 0)
             graphicsComponent.Flip = SpriteEffects.FlipHorizontally;
-        else if((position - prevPosition_forClient).X > 0)
+        else if ((position - prevPosition_forClient).X > 0)
             graphicsComponent.Flip = SpriteEffects.None;
         base.Draw(spriteBatch);
         prevPosition_forClient = position;

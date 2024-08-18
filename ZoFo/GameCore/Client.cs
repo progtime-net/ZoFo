@@ -93,6 +93,7 @@ namespace ZoFo.GameCore
 
         #endregion
 
+        Player myPlayer;
         List<MapObject> mapObjects = new List<MapObject>();
         List<GameObject> gameObjects = new List<GameObject>(); 
         List<Player> players = new List<Player>();
@@ -111,6 +112,8 @@ namespace ZoFo.GameCore
             }
 
             networkManager.SendData();//set to ticks
+            if (myPlayer!=null)
+                GraphicsComponent.CameraPosition = (myPlayer.position + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2()/2 - AppManager.Instance.CurentScreenResolution.ToVector2()/(2*GraphicsComponent.scaling)).ToPoint();
         }
         internal void Draw(SpriteBatch spriteBatch)
         {
@@ -140,16 +143,17 @@ namespace ZoFo.GameCore
                     (update as UpdateTileCreated).tileSetName
                     ));
             }
-            //else if (update is UpdateStopObjectCreated)
-            //{
-            //    stopObjects.Add(
-            //    new StopObject(
-            //        (update as UpdateStopObjectCreated).Position,
-            //        (update as UpdateStopObjectCreated).Size.ToVector2(),
-            //        (update as UpdateStopObjectCreated).sourceRectangle,
-            //        (update as UpdateStopObjectCreated).tileSetName
-            //        ));
-            //}
+            else if (update is UpdateStopObjectCreated)
+            {
+                stopObjects.Add(
+                new StopObject(
+                    (update as UpdateStopObjectCreated).Position,
+                    (update as UpdateStopObjectCreated).Size.GetPoint().ToVector2(),
+                    (update as UpdateStopObjectCreated).sourceRectangle.GetRectangle(),
+                    (update as UpdateStopObjectCreated).tileSetName,
+                    (update as UpdateStopObjectCreated).collisions.Select(x =>x.GetRectangle()).ToArray()
+                    ));
+            }
             else if (update is UpdateGameObjectCreated)
             {
                 GameObject created_gameObject;
@@ -159,6 +163,7 @@ namespace ZoFo.GameCore
                 {
                     created_gameObject = new Player((update as UpdateGameObjectCreated).position);
                     players.Add(created_gameObject as Player);
+                    myPlayer = players[0]; 
                     gameObjects.Add(created_gameObject);
                 }
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")

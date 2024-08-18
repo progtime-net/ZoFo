@@ -169,7 +169,31 @@ namespace ZoFo.GameCore.GameManagers
                 #endregion // Cheats
 
                 #region Обработка состояния объекта. Задает значение полю scopeState.
-                if (keyBoardState.IsKeyDown(Keys.Up) || keyBoardState.IsKeyDown(Keys.W))
+                if(keyBoardState.IsKeyDown(Keys.Right) && keyBoardState.IsKeyDown(Keys.Up) || 
+                keyBoardState.IsKeyDown(Keys.D) && keyBoardState.IsKeyDown(Keys.W))
+                {
+                    currentScopeState = ScopeState.StraightRight;
+                    InputMovementDirection = new Vector2(1, -1);
+                }
+                else if(keyBoardState.IsKeyDown(Keys.Left) && keyBoardState.IsKeyDown(Keys.Up) || 
+                keyBoardState.IsKeyDown(Keys.A) && keyBoardState.IsKeyDown(Keys.W))
+                {
+                    currentScopeState = ScopeState.StraightLeft;
+                    InputMovementDirection = new Vector2(-1, -1);
+                }
+                else if(keyBoardState.IsKeyDown(Keys.Right) && keyBoardState.IsKeyDown(Keys.Down) || 
+                keyBoardState.IsKeyDown(Keys.D) && keyBoardState.IsKeyDown(Keys.S))
+                {
+                    currentScopeState = ScopeState.BackRight;
+                    InputMovementDirection = new Vector2(1, 1);
+                }
+                else if(keyBoardState.IsKeyDown(Keys.Left) && keyBoardState.IsKeyDown(Keys.Down) || 
+                keyBoardState.IsKeyDown(Keys.A) && keyBoardState.IsKeyDown(Keys.S))
+                {
+                    currentScopeState = ScopeState.BackLeft;
+                    InputMovementDirection = new Vector2(-1, 1);
+                }
+                else if (keyBoardState.IsKeyDown(Keys.Up) || keyBoardState.IsKeyDown(Keys.W))
                 {
                     currentScopeState = ScopeState.Straight;
                     InputMovementDirection = new Vector2(0, -1);
@@ -188,30 +212,6 @@ namespace ZoFo.GameCore.GameManagers
                 {
                     currentScopeState = ScopeState.Right;
                     InputMovementDirection = new Vector2(1, 0);
-                }
-                else if(keyBoardState.IsKeyDown(Keys.Right) && keyBoardState.IsKeyDown(Keys.Up) || 
-                keyBoardState.IsKeyDown(Keys.D) && keyBoardState.IsKeyDown(Keys.W))
-                {
-                    currentScopeState = ScopeState.StraightRight;
-                    InputMovementDirection = new Vector2(1, 1);
-                }
-                else if(keyBoardState.IsKeyDown(Keys.Left) && keyBoardState.IsKeyDown(Keys.Up) || 
-                keyBoardState.IsKeyDown(Keys.A) && keyBoardState.IsKeyDown(Keys.W))
-                {
-                    currentScopeState = ScopeState.StraightLeft;
-                    InputMovementDirection = new Vector2(-1, 1);
-                }
-                else if(keyBoardState.IsKeyDown(Keys.Right) && keyBoardState.IsKeyDown(Keys.Down) || 
-                keyBoardState.IsKeyDown(Keys.D) && keyBoardState.IsKeyDown(Keys.S))
-                {
-                    currentScopeState = ScopeState.BackRight;
-                    InputMovementDirection = new Vector2(1, -1);
-                }
-                else if(keyBoardState.IsKeyDown(Keys.Left) && keyBoardState.IsKeyDown(Keys.Down) || 
-                keyBoardState.IsKeyDown(Keys.A) && keyBoardState.IsKeyDown(Keys.S))
-                {
-                    currentScopeState = ScopeState.BackLeft;
-                    InputMovementDirection = new Vector2(-1, -1);
                 }
                 #endregion
 

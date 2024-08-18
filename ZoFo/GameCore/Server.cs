@@ -183,6 +183,22 @@ namespace ZoFo.GameCore
         {
 
             gameObjects.Add(gameObject);
+            if (gameObject is StopObject)
+            {
+                AddData(new UpdateStopObjectCreated()
+                {
+                    Position = (gameObject as StopObject).position,
+                    sourceRectangle = new SerializableRectangle((gameObject as StopObject).sourceRectangle),
+                    Size = new SerializablePoint((gameObject as StopObject).graphicsComponent.ObjectDrawRectangle.Size),
+                    tileSetName = ((gameObject as StopObject).graphicsComponent as StaticGraphicsComponent)._textureName,
+                    collisions = (gameObject as StopObject).collisionComponents.Select(x=>new SerializableRectangle(x.stopRectangle)).ToArray()
+                });//TODO 
+                foreach (var col in (gameObject as StopObject).collisionComponents)
+                {
+                    collisionManager.Register(col);
+                }
+                return;
+            }
             if (gameObject is MapObject)
             {
                 AddData(new UpdateTileCreated()
@@ -191,7 +207,7 @@ namespace ZoFo.GameCore
                     sourceRectangle = new SerializableRectangle((gameObject as MapObject).sourceRectangle),
                     Size = new SerializablePoint((gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size),
                     tileSetName = ((gameObject as MapObject).graphicsComponent as StaticGraphicsComponent)._textureName
-                });//TODO 
+                }); 
                 return;
             }
             if (gameObject is Entity entity)
@@ -207,9 +223,7 @@ namespace ZoFo.GameCore
 
 
             if (gameObject is Player)
-            {
-                players.Add(gameObject as Player); 
-            }
+                players.Add(gameObject as Player);
             ////var elems = gameObject.GetType().GetProperties(System.Reflection.BindingFlags.Public);
             ////if (elems.Count()>0) TODO
             ////{ 
