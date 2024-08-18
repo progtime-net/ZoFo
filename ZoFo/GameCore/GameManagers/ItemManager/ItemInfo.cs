@@ -11,10 +11,10 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
     {
         //поля
         string tag;
-        string textureName;
+        public string textureName;
         Texture2D itemTexture;
-        bool isCraftable;
-        Dictionary<string, int> resourcesNeededToCraft;
+        public bool isCraftable;
+        public Dictionary<string, int> resourcesNeededToCraft;
         public ItemInfo (string tag)
         {
             this.tag = tag;

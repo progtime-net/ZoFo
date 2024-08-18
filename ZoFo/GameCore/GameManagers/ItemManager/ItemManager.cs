@@ -9,24 +9,30 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
     public class ItemManager
     {
         //поля
-        Dictionary<string, ItemInfo> tagItemPairs;
+        public Dictionary<string, ItemInfo> tagItemPairs;
         //методы
-        ItemInfo GetItemInfo(string tag)
+        public ItemInfo GetItemInfo(string tag)
         {
-            return tagItemPairs.GetValueOrDefault(tag);
+            return tagItemPairs[tag];
         }
-        void LoadItemTextures()
+        public void LoadItemTextures()
         {
             foreach (var item in tagItemPairs)
             {
                 item.Value.LoadTexture();
             }
         }
-        void Initialize()
-        {
-            tagItemPairs.Add("Wood", new ItemInfo("Wood","Wood",false,null));
-            tagItemPairs.Add("Peeble", new ItemInfo("Peeble", "Peeble", false, null));
-            tagItemPairs.Add("Steel", new ItemInfo("Steel", "Steel", false, null));
+        public void Initialize()
+        { 
+            tagItemPairs = new Dictionary<string, ItemInfo>();
+            tagItemPairs.Add("wood", new ItemInfo("wood","Textures\\Test\\wood",false,null));
+            tagItemPairs.Add("rock", new ItemInfo("rock", "Textures\\Test\\rock", false, null));
+            tagItemPairs.Add("steel", new ItemInfo("steel", "Textures\\Test\\steel", false, null));
+            tagItemPairs.Add("pickaxe", new ItemInfo("steel", "Textures\\Test\\pickaxe", true, new Dictionary<string, int>()
+            {
+                {"wood", 2},
+                {"Steel", 3}
+            })); 
         }
         
     }

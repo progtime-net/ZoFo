@@ -44,9 +44,23 @@ public class MainMenuGUI : AbstractGUI
             AppManager.Instance.SetGUI(new SelectModeMenu());
         };
         Elements.Add(playButton);
-        Button optionButton = new Button(Manager)
+        Button baseButton = new Button(Manager) 
         {
             rectangle = new Rectangle(width / 2 - (int)(width / 10), height / 3 + (height / 20 + height / 40) * 2, (int)(width / 5), (int)(height / 20)),
+            text = "Base",
+            scale = 0.2f,
+            fontColor = Color.White,
+            mainColor = Color.Gray,
+            fontName = "Fonts\\Font"
+        };
+        baseButton.LeftButtonPressed += () =>
+        {
+            AppManager.Instance.SetGUI(new BaseGUI());
+        };
+        Elements.Add(baseButton);
+        Button optionButton = new Button(Manager)
+        {
+            rectangle = new Rectangle(width / 2 - (int)(width / 10), height / 3 + (height / 20 + height / 40) * 3, (int)(width / 5), (int)(height / 20)),
             text = "Options",
             scale = 0.2f,
             fontColor = Color.White,
@@ -61,7 +75,7 @@ public class MainMenuGUI : AbstractGUI
         Elements.Add(optionButton);
         Button exitButton = new Button(Manager)
         {
-            rectangle = new Rectangle(width / 2 - (int)(width / 10), height / 3 + (height / 20 + height / 40) * 3, (int)(width / 5), (int)(height / 20)),
+            rectangle = new Rectangle(width / 2 - (int)(width / 10), height / 3 + (height / 20 + height / 40) * 4, (int)(width / 5), (int)(height / 20)),
             text = "Exit",
             scale = 0.2f,
             fontColor = Color.White,
