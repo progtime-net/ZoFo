@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using DangerousD.GameCore.Graphics;
+using ZoFo.GameCore.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,6 +12,7 @@ using ZoFo.GameCore.GameManagers.ItemManager;
 using ZoFo.GameCore.GUI;
 using static System.Collections.Specialized.BitVector32;
 using MonogameLibrary.UI.Base;
+using ZoFo.GameCore.GameObjects;
 
 namespace ZoFo.GameCore.GameManagers
 {
@@ -20,52 +21,63 @@ namespace ZoFo.GameCore.GameManagers
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        
-        
-        
+
+
+
         public static AppManager Instance { get; private set; }
         public GameState gamestate;
         public AbstractGUI currentGUI;
         public DebugHUD debugHud;
-        public Point CurentScreenResolution = new Point(1920, 1080);
+        public Point CurentScreenResolution;
         public Client client;
         public Server server;
+        public PlayerData playerData;
 
-            
+
         #region Managers
-        
+
         public InputManager InputManager;
         public ItemManager.ItemManager ItemManager;
+        public SettingsManager SettingsManager;
+        public SoundManager SoundManager;
 
-        public AnimationBuilder animationBuilder{get;set; }
+        public AnimationBuilder animationBuilder { get; set; }
 
         #endregion
 
         public AppManager()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);    
+            CurentScreenResolution = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
             SetResolution(CurentScreenResolution.X, CurentScreenResolution.Y);
-            FulscrreenSwitch();
-            
-            
+            //FulscrreenSwitch();
+
+
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+            playerData = new PlayerData();
+            ItemManager = new ItemManager.ItemManager();
             Instance = this;
             InputManager = new InputManager();
-            
-            
+            SettingsManager = new SettingsManager();
+            SettingsManager.LoadSettings();
+            SoundManager = new SoundManager();
+            SoundManager.LoadSounds();
+
 
             currentGUI = new MainMenuGUI();
             debugHud = new DebugHUD();
+            IsMouseVisible = false;
 
         }
 
         protected override void Initialize()
         {
             currentGUI.Initialize();
-            debugHud.Initialize();
             
+            debugHud.Initialize(); 
+            ItemManager.Initialize(); 
 
 
             base.Initialize();
@@ -75,20 +87,25 @@ namespace ZoFo.GameCore.GameManagers
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             debugHud.LoadContent();
-            currentGUI.LoadContent();
+            currentGUI.LoadContent(); 
+            ItemManager.LoadItemTextures();
 
 
-
+ 
+            animationBuilder = new AnimationBuilder();
+            animationBuilder.LoadAnimations();
+            GameObject.debugTexture = new Texture2D(GraphicsDevice, 1, 1);
+            GameObject.debugTexture.SetData(new Color[] { Color.White }); 
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-            
-            debugHud.Set("key", "value");
-            
+                Keyboard.GetState().IsKeyDown(Keys.Escape)) { server.CloseConnection(); Exit(); }
+
+
+         //   debugHud.Set("key", "value");
+
             InputManager.Update();
             currentGUI.Update(gameTime);
             switch (gamestate)
@@ -100,7 +117,7 @@ namespace ZoFo.GameCore.GameManagers
                     client.Update(gameTime);
                     break;
                 case GameState.ClientPlaying:
-                    server.Update(gameTime);
+                    client.Update(gameTime);
                     break;
                 default:
                     break;
@@ -112,21 +129,24 @@ namespace ZoFo.GameCore.GameManagers
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+ 
             
-
-            debugHud.Draw(_spriteBatch);
-            currentGUI.Draw(_spriteBatch);
+            // Pointwrap
+            _spriteBatch.Begin(samplerState: SamplerState.PointWrap); 
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
                 case GameState.HostPlaying:
-                    client.Draw(_spriteBatch); 
+                    client.Draw(_spriteBatch);
                     break;
                 case GameState.NotPlaying:
                 default:
                     break;
             }
+            
+            _spriteBatch.End(); 
+            currentGUI.Draw(_spriteBatch);
+            debugHud.Draw(_spriteBatch);
 
             base.Draw(gameTime);
         }
@@ -136,7 +156,7 @@ namespace ZoFo.GameCore.GameManagers
         }
         public void SetGUI(AbstractGUI gui)
         {
-            currentGUI = gui; 
+            currentGUI = gui;
             currentGUI.Initialize();
             currentGUI.LoadContent();
 
@@ -158,5 +178,8 @@ namespace ZoFo.GameCore.GameManagers
         {
             _graphics.IsFullScreen = !_graphics.IsFullScreen;
         }
+
+        public void SetServer(Server server) { this.server = server; }
+        public void SetClient(Client client) { this.client = client; }
     }
 }

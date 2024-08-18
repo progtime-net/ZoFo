@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,14 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
-    public class UpdateGameObjectCreated : IUpdateData     //Хранит объект, который только отправили
+    /// <summary>
+    /// Хранит объект, который только отправили
+    /// </summary>
+    public class UpdateGameObjectCreated : UpdateData     
     {
-        public int IdEntity { get; set; }
-        public string UpdateType { get; set; }
+        public UpdateGameObjectCreated() { UpdateType = "UpdateGameObjectCreated"; }
+        public string GameObjectType;
+        public string GameObjectId;
+        public Vector2 position;
     }
 }

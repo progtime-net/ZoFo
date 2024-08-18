@@ -11,8 +11,11 @@
         <ApplicationIcon>Icon.ico</ApplicationIcon>
     </PropertyGroup>
     <ItemGroup>
+      <Compile Remove="Content\sounds\Zombie\**" />
       <Compile Remove="GameCore\GameObjects\BaseClasses\**" />
+      <EmbeddedResource Remove="Content\sounds\Zombie\**" />
       <EmbeddedResource Remove="GameCore\GameObjects\BaseClasses\**" />
+      <None Remove="Content\sounds\Zombie\**" />
       <None Remove="GameCore\GameObjects\BaseClasses\**" />
     </ItemGroup>
     <ItemGroup>
@@ -32,6 +35,8 @@
       <ProjectReference Include="..\MonogameLibrary\MonogameLibrary.csproj" />
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="Content\sounds\Zombie\" />
+      <Folder Include="Content\Textures\Animations\PlayerAFK\" />
       <Folder Include="Content\Textures\GUI\" />
     </ItemGroup>
     <Target Name="RestoreDotnetTools" BeforeTargets="Restore">

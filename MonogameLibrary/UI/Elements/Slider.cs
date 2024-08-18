@@ -21,7 +21,10 @@ namespace MonogameLibrary.UI.Elements
         public int indentation = 5;
 
         Texture2D texture2; 
-        public Rectangle sliderRect = new Rectangle(0, 0, 30, 30);
+        /// <summary>
+        /// ректенгл ползунка
+        /// </summary>
+        public Rectangle sliderRect = new Rectangle(0, 0, 40, 40);
         private float sliderValue = 0;
         private float minValue = 0, maxValue = 1;
         SliderState sliderState = SliderState.None;
@@ -56,7 +59,7 @@ namespace MonogameLibrary.UI.Elements
 
         public override void LoadTexture(ContentManager content)
         {
-            texture2 = content.Load<Texture2D>("Textures\\GUI\\checkboxs_off");
+            texture2 = content.Load<Texture2D>("Textures/GUI/switch");
             base.LoadTexture(content);
         }
 
@@ -73,11 +76,11 @@ namespace MonogameLibrary.UI.Elements
             sliderRect.X += (int)(sliderValue * (rectangle.Width - sliderRect.Width - indentation * 2) + indentation);
             sliderRect.Y -= sliderRect.Height / 2 - rectangle.Height / 2;
             if (sliderState == SliderState.Moving)
-                _spriteBatch.Draw(texture2, sliderRect, Color.DarkRed);
+                _spriteBatch.Draw(texture2, sliderRect, Color.Gray);
             else if(sliderState == SliderState.HoveringOverSliderButton)
-                _spriteBatch.Draw(texture2, sliderRect, new Color(200,0 ,0));
+                _spriteBatch.Draw(texture2, sliderRect, Color.DarkGray);
             else
-                _spriteBatch.Draw(texture2, sliderRect, Color.Red);
+                _spriteBatch.Draw(texture2, sliderRect, Color.White);
             DrawText(_spriteBatch);
         }
     }

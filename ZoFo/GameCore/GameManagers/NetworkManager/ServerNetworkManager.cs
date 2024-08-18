@@ -1,9 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -16,44 +18,92 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
     public class ServerNetworkManager
     {
-        private IPAddress ip = IPAddress.Any;
-        private int port = 7632;
+        private IPAddress ip = IPAddress.Parse("127.0.0.1");
+        private const int port = 0;
         private IPEndPoint endPoint;
         private Socket socket;
         private List<Socket> clients;
-        private List<IUpdateData> updates;
+        public List<UpdateData> updates;
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
         Dictionary<Socket, Thread> managerThread;
+        Thread serverTheread;
+        public IPEndPoint InfoConnect => (IPEndPoint)socket.LocalEndPoint ?? endPoint;
 
-        public void Init()   //create Socket
+        public ServerNetworkManager() { Init(); }
+
+        /// <summary>
+        /// Initialize varibles and Sockets
+        /// </summary>
+        private void Init()
         {
-            endPoint = new IPEndPoint(ip, port);
+            endPoint = new IPEndPoint(GetIp(), port);
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             managerThread = new Dictionary<Socket, Thread>();
+            clients = new List<Socket>();
+            updates = new List<UpdateData>();
+            managerThread = new Dictionary<Socket, Thread>();
+            socket.Bind(endPoint);
         }
+
+        /// <summary>
+        /// Получает IP устройства
+        /// </summary>
+        /// <returns></returns>
+        public static IPAddress GetIp()
+        {
+            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
+            var ipList = Dns.GetHostByName(hostName).AddressList;
+            foreach (var ip in ipList)
+            {
+                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                {
+                    return ip;
+                }
+            }
+          return IPAddress.Loopback;
+        }
+
         /// <summary>
         /// отправляет клиенту Data
         /// </summary>
-        public void SendData() 
+        public void SendData()
         {
-            string data = JsonSerializer.Serialize(updates);
+            for (int i = 0; i < updates.Count; i++)
+            {
+
+                AppManager.Instance.client.GotData(updates[i]);
+            }
+            updates.Clear();
+            return; //TODO TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK
+            //Что это?
+            //по 10 паков за раз TODO FIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXIT
+            List<UpdateData> datasToSend = new List<UpdateData>();
+            for (int i = 0; i < 5 && i<updates.Count; i++)
+                datasToSend.Add(updates[i]);
+            string data = JsonSerializer.Serialize(datasToSend);
             var databytes = Encoding.UTF8.GetBytes(data);
             foreach (var item in clients)
             {
                 item.SendAsync(databytes);
             }
+            for (int i = 0; i < 5 && i< datasToSend.Count; i++)
+                updates.RemoveAt(0); 
         }
+
         /// <summary>
         /// добавляет в лист updates новую data
         /// </summary>
         /// <param name="data"></param>
-        public void AddData(IUpdateData data)
+        public void AddData(UpdateData data)
         {
             updates.Add(data);
         }
 
-        public void CloseConnection() //По сути коне игры и отключение игроков
+        /// <summary>
+        /// По сути конец игры и отключение игроков
+        /// </summary>
+        public void CloseConnection()
         {
             foreach (var item in clients)
             {
@@ -74,23 +124,47 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             clients.Clear();
         }
 
+        /// <summary>
+        /// Начинает работу сервера (Ожидает подключений)
+        /// </summary>
+        /// <param name="players"></param>
+        public void Start(object players)
+        {
+            serverTheread = new Thread(StartWaitingForPlayers);
+            serverTheread.IsBackground = true;
+            serverTheread.Start(players);
+        }
+
         //Потоки Клиентов
-        public void StartWaitingForPlayers(object players)//Слушает игроков, которые хотят подключиться
+        /// <summary>
+        /// Слушает игроков, которые хотят подключиться
+        /// </summary>
+        /// <param name="players"></param>
+        public void StartWaitingForPlayers(object players)
         {
             int playNumber = (int)players;
-            socket.Bind(endPoint);
+
             socket.Listen(playNumber);
             for (int i = 0; i < playNumber; i++)
             {
                 Socket client = socket.Accept();
+                AppManager.Instance.debugHud.Log($"Connect {client.LocalEndPoint.ToString()}");
                 Thread thread = new Thread(StartListening);
+                thread.IsBackground = true;
                 thread.Start(client);
                 managerThread.Add(client, thread);
-                clients.Add(client);  //добавляем клиентов в лист
+                clients.Add(client);
+               //AppManager.Instance.ChangeState(GameState.HostPlaying);
+                //добавляем клиентов в лист
             }
-
+            AppManager.Instance.ChangeState(GameState.HostPlaying);
         }
-        private void StartListening(object socket)//начать слушать клиентов в самой игре активируют Ивент
+
+        /// <summary>
+        /// начать слушать клиентов в самой игре активируют Ивент
+        /// </summary>
+        /// <param name="socket"></param>
+        private void StartListening(object socket)
         {
             // obj to Socket
             Socket client = (Socket)socket;
@@ -101,7 +175,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 string response = Encoding.UTF8.GetString(buff, 0, answ);
                 GetDataSend(response);
             }
-            Thread.Sleep(-1);
+            Task.Delay(-1);
 
         }
     }

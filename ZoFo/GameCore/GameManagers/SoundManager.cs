@@ -6,9 +6,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using System.Linq;
-using DangerousD.GameCore.Graphics;
+
 using Newtonsoft.Json;
-using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Media; 
+using System.Runtime.InteropServices; 
+using ZoFo.GameCore.GUI; 
 
 namespace ZoFo.GameCore.GameManagers
 {
@@ -20,29 +22,42 @@ namespace ZoFo.GameCore.GameManagers
 
         public void LoadSounds() // метод для загрузки звуков из папки
         {
-            var k = Directory.GetFiles("../../..//Content//sounds").Where(x => x.EndsWith("mp3"));
-
-            if (k.Count() > 0)
+            //List<string> sounds = AppManager.Instance.Content.Load<List<string>>("sounds/"); 
+            
+            string a = Path.Combine("Content", "sounds");
+            string[] k;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                k = Directory.GetFiles(Path.Combine("bin", "Debug", "net8.0", "Content", "sounds")).Where(x => x.EndsWith("xnb")).ToArray();
+            }
+            else{
+                k = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Content", "sounds")).Where(x => x.EndsWith("xnb")).ToArray();
+            }
+            if (k.Length > 0) 
             {
 
-                string[] soundFiles = k.Select(x => x.Split("\\").Last().Split("/").Last().Replace(".mp3", "")).ToArray();// папка со звуками там где exe 
+                string[] soundFiles = k.Select(x => x.Split("\\").Last().Split("/").Last().Replace(".xnb", "")).ToArray();// папка со звуками там где exe 
                 foreach (var soundFile in soundFiles)
                 {
-                    Sounds.Add(soundFile, AppManager.Instance.Content.Load<SoundEffect>("sounds//" + soundFile));
+                    Sounds.Add(soundFile, AppManager.Instance.Content.Load<SoundEffect>(Path.Combine("sounds",  soundFile)));
                 }
 
             }
-
-            if (k.Count() > 0)
+            /*/if (sounds.Count() > 0)
             {
+                foreach (var soundFile in sounds)
+                {
+                    Sounds.Add(soundFile, AppManager.Instance.Content.Load<SoundEffect>("sounds/" + soundFile));
+                }
+            }/*/
 
-            }
+
         }
 
         public void StartAmbientSound(string soundName) // запустить звук у которого нет позиции
         {
             var sound = new Sound(Sounds[soundName].CreateInstance(), Vector2.One, true);
-            // ждать пока настройки появятся sound.SoundEffect.Volume = sound.baseVolume * AppManager.Instance.SettingsManager.MusicVolume * AppManager.Instance.SettingsManager.MainVolume;
+            sound.SoundEffect.Volume = sound.baseVolume * AppManager.Instance.SettingsManager.MusicVolume * AppManager.Instance.SettingsManager.MainVolume;
             sound.SoundEffect.IsLooped = false;
 
             sound.SoundEffect.Play();
@@ -57,7 +72,7 @@ namespace ZoFo.GameCore.GameManagers
         {
             var sound = new Sound(Sounds[soundName].CreateInstance(), soundPos, false) { baseVolume = baseVolume, basePich = pitch };
             sound.SoundEffect.IsLooped = false;
-            //ждать пока настройки появятся sound.SoundEffect.Volume = sound.baseVolume * AppManager.Instance.SettingsManager.SoundEffectsVolume * AppManager.Instance.SettingsManager.MainVolume;
+            sound.SoundEffect.Volume = sound.baseVolume * AppManager.Instance.SettingsManager.SoundEffectsVolume * AppManager.Instance.SettingsManager.MainVolume;
             sound.SoundEffect.Pitch = pitch;
             sound.SoundEffect.Play();
             PlayingSounds.Add(sound);
@@ -78,7 +93,7 @@ namespace ZoFo.GameCore.GameManagers
         {
             for (int i = 0; i < PlayingSounds.Count; i++)
             {
-                //PlayingSounds[i].UpdateVolume(Vector2.Zero);
+                PlayingSounds[i].UpdateVolume(Vector2.Zero);
                 if (PlayingSounds[i].SoundEffect.State == SoundState.Stopped)
                 {
                     PlayingSounds.Remove(PlayingSounds[i]);
@@ -114,14 +129,14 @@ namespace ZoFo.GameCore.GameManagers
             SoundEffect = soundEffect;
             Position = position;
         }
-        /*/public void UpdateVolume(Vector2 playerPos)
+        public void UpdateVolume(Vector2 playerPos)
         {
             if (isAmbient)
                 SoundEffect.Volume = baseVolume * AppManager.Instance.SettingsManager.MusicVolume * AppManager.Instance.SettingsManager.MainVolume;
             else
                 SoundEffect.Volume = baseVolume * AppManager.Instance.SettingsManager.SoundEffectsVolume * AppManager.Instance.SettingsManager.MainVolume;// * (float)Math.Clamp(1 - GetDistanceVol(playerPos),0,1);
 
-        }/*/
+        }
 
         public double GetDistanceVol(Vector2 playerPos) // получение дистанции до объедка от игрока
         {

@@ -13,14 +13,16 @@ public class DebugHUD
     private SpriteFont _spriteFont;
     private Dictionary<string, string> _text = new();
     private List<string> _log = new();
+    public static DebugHUD Instance { get; private set; }
 
     public void Initialize()
     {
+        Instance = this;
     }
 
     public void LoadContent()
     {
-        _spriteFont = AppManager.Instance.Content.Load<SpriteFont>("Fonts\\Font2");
+        _spriteFont = AppManager.Instance.Content.Load<SpriteFont>("Fonts/Font2");
     }
 
     public void Update(GameTime gameTime)

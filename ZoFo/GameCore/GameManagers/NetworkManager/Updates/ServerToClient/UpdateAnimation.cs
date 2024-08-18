@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
-    public class UpdateAnimation : IUpdateData          //хранит новую анимации
+    /// <summary>
+    /// Хранит новое сосотяние анимации
+    /// </summary>
+    public class UpdateAnimation : UpdateData
     {
-        public int IdEntity { get; set; }
-        public string UpdateType { get; set; }
+        public UpdateAnimation() { UpdateType = "UpdateAnimation"; }
     }
 }

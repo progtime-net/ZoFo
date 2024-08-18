@@ -1,68 +1,72 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Formats.Tar;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers
 { 
-    public enum ScopeState { Up, Middle, Down }
-    public enum ControlsState { Gamepad, Keyboard }
+    public enum ScopeState { Idle, Left, Right, Straight, Back, StraightLeft, StraightRight, BackLeft, BackRight }
+
     public class InputManager
     {
-        public delegate void Delegat();
-        public event Delegat MovEventJump;
-        public event Delegat MovEventDown;
-        public event Delegat ShootEvent;
+        public event Action ShootEvent; // событие удара(когда нажат X, событие срабатывает)
+        
+        public event Action OnInteract; // событие взаимодействия с collectable(например, лутом)
+        //с помощью кнопки E.
 
-        Vector2 vectorMovementDirection;
-        ScopeState scopeState;        // Положение оружия. Up, Middle, Down.
-        ControlsState controlsState;
-        private bool _overrideControls = false;
+        public event Action ActionEvent;
+        public Vector2 InputMovementDirection;
+        private Vector2 prevInputMovementDirection;
+        public Vector2 InputAttackDirection;
+        private Vector2 prevInputAttackDirection;
+
+        public event Action TalkEvent;
+
+        public ScopeState currentScopeState;        // Положение оружия. Left, Right, Straight, Back, StraightLeft, StraightRight, BackLeft, BackRight.
+        private ScopeState prevCurrentScopeState;
         private bool _cheatsEnabled = false;
         public bool InvincibilityCheat { get; private set; } = false;
         public bool CollisionsCheat { get; private set; } = false;
         public bool InfiniteAmmoCheat { get; private set; } = false;
 
-        private bool isJumpDown;      // Блокирует физическое нажатие прыжка и спуска
         private bool isShoot;
+        private bool isInteract;
 
         private KeyboardState lastKeyboardState;
         private GamePadState lastGamePadState;
-
-
-        public Vector2 VectorMovementDirection { get => vectorMovementDirection; }
-        public ScopeState ScopeState { get => scopeState; }
+        public ScopeState ScopeState { get => currentScopeState; }
         public string currentControlsState;
+        public ScopeState CurrentScopeState { get => currentScopeState; } // получить текущее состояние
 
         public InputManager()
         {
-            this.isJumpDown = false;
+            InputMovementDirection = new Vector2(0, 0);
+            InputAttackDirection = new Vector2(0, 0);
             this.isShoot = false;
-            scopeState = ScopeState.Middle;
-            controlsState = ControlsState.Keyboard;
-            vectorMovementDirection = new Vector2(0, 0);
+            currentScopeState = ScopeState.Idle;
         }
         public void Update()
         {
             if (_cheatsEnabled)
             {
-                //AppManager.Instance.DebugHUD.Set("cheats", _cheatsEnabled.ToString());
-                //AppManager.Instance.DebugHUD.Set("invincible", InvincibilityCheat.ToString());
-                //AppManager.Instance.DebugHUD.Set("infinite ammo", InfiniteAmmoCheat.ToString()); //TODO
+                AppManager.Instance.debugHud.Set("cheats", _cheatsEnabled.ToString());
+                AppManager.Instance.debugHud.Set("invincible", InvincibilityCheat.ToString());
+                AppManager.Instance.debugHud.Set("infinite ammo", InfiniteAmmoCheat.ToString()); //TODO
             }
 
             #region Работа с GamePad
-            if (_overrideControls ? controlsState == ControlsState.Gamepad : GamePad.GetState(0).IsConnected)
-            {
-                controlsState = ControlsState.Gamepad;
-
                 #region Обработка гейм-пада. Задает Vector2 vectorMovementDirection являющийся вектором отклонения левого стика.
                 GamePadState gamePadState = GamePad.GetState(0);
-                vectorMovementDirection = gamePadState.ThumbSticks.Left;
+                InputMovementDirection = gamePadState.ThumbSticks.Left;
+                InputAttackDirection = gamePadState.ThumbSticks.Right;
                 #endregion
 
                 #region читы 
@@ -78,60 +82,71 @@ namespace ZoFo.GameCore.GameManagers
                 }
                 #endregion // Cheats
 
-                #region Обработка нажатия прыжка и спуска. Вызывает события MovEvent.
-                if (vectorMovementDirection.Y < -0.2 && gamePadState.Buttons.A == ButtonState.Pressed && !isJumpDown)
-                {
-                    isJumpDown = true;
-                    MovEventDown?.Invoke();
-                    Debug.WriteLine("Спуск");
+                #region set ScopeState
+                int currentSection = (int)Math.Ceiling(Math.Atan2(InputMovementDirection.Y,
+                 InputMovementDirection.X) * 180 / Math.PI * 16 / 360);
+                switch(currentSection){
+                    case 1 or 0 or 16:
+                    currentScopeState = ScopeState.Right;
+                    break; 
+                    case 2 or 3:
+                    currentScopeState = ScopeState.StraightRight;
+                    break;
+                    case 4 or 5:
+                    currentScopeState = ScopeState.Straight;
+                    break;
+                    case 6 or 7:
+                    currentScopeState = ScopeState.StraightLeft;
+                    break;
+                    case 8 or 9:
+                    currentScopeState = ScopeState.Left;
+                    break;
+                    case 10 or 11:
+                    currentScopeState = ScopeState.BackLeft;
+                    break;
+                    case 12 or 13:
+                    currentScopeState = ScopeState.Back;
+                    break;
+                    case 14 or 15:
+                    currentScopeState = ScopeState.BackRight;
+                    break;
+                    default:
+                    break;
                 }
-                else if (gamePadState.Buttons.A == ButtonState.Pressed && lastGamePadState.Buttons.A == ButtonState.Released)
-                {
-                    MovEventJump?.Invoke();
-                    Debug.WriteLine("Прыжок");
-                }
-                #endregion
-
-                #region Обработка положения оружия. Задает значение полю scopeState.
-                if (vectorMovementDirection.Y >= 0.7)
-                {
-                    scopeState = ScopeState.Up;
-                }
-                else if (vectorMovementDirection.Y <= -0.7 && !isJumpDown)
-                {
-                    scopeState = ScopeState.Down;
-                }
-                else
-                {
-                    scopeState = ScopeState.Middle;
-                }
+                
                 #endregion
 
                 #region Обработка нажатия выстрела. Вызывает событие ShootEvent
-                if (gamePadState.Buttons.X == ButtonState.Pressed && !isJumpDown && !isShoot)
+                if (gamePadState.Buttons.X == ButtonState.Pressed && !isShoot)
                 {
                     isShoot = true;
                     ShootEvent?.Invoke();
                     Debug.WriteLine("Выстрел");
                 }
-                else if (gamePadState.Buttons.X == ButtonState.Released && !isJumpDown)
+                else if (gamePadState.Buttons.X == ButtonState.Released)
                 {
                     isShoot = false;
                 }
                 #endregion
 
                 lastGamePadState = gamePadState;
-            }
             #endregion
             #region Работа с KeyBoard
-            else
-            {
-                controlsState = ControlsState.Keyboard;
+
+                #region InputAttack with mouse
+                MouseState mouseState = Mouse.GetState();
+                AppManager.Instance.debugHud.Set("mouse position", $"({mouseState.X}, {mouseState.Y}");
+                // TODO: CurentScreenResolution
+                Vector2 a = (AppManager.Instance.CurentScreenResolution / new Point(2, 2)).ToVector2();
+
+                InputAttackDirection = Vector2.Normalize(new Vector2(mouseState.X - a.X, mouseState.Y - a.Y));
+                AppManager.Instance.debugHud.Set("AttackDir(normalize)", $"({a.X}, {a.Y})");
+                #endregion
 
                 #region Состояние клавиатуры
                 KeyboardState keyBoardState = Keyboard.GetState();  // Состояние клавиатуры
                 #endregion
-
+                
                 #region читы 
                 if (keyBoardState.IsKeyDown(Keys.LeftShift) && keyBoardState.IsKeyDown(Keys.RightShift))
                     _cheatsEnabled = true;
@@ -154,76 +169,84 @@ namespace ZoFo.GameCore.GameManagers
                 }
                 #endregion // Cheats
 
-                #region Обработка движения вправо-влево. Меняет у вектора vectorMovementDirection значение X на -1/0/1.
-                if (keyBoardState.IsKeyDown(Keys.Left))
+                #region Обработка состояния объекта. Задает значение полю scopeState.
+                if (keyBoardState.IsKeyDown(Keys.Up) || keyBoardState.IsKeyDown(Keys.W))
                 {
-                    vectorMovementDirection.X = -1;
+                    currentScopeState = ScopeState.Straight;
                 }
-                else if (keyBoardState.IsKeyDown(Keys.Right))
+                else if (keyBoardState.IsKeyDown(Keys.Down) || keyBoardState.IsKeyDown(Keys.S))
                 {
-                    vectorMovementDirection.X = 1;
+                    currentScopeState = ScopeState.Back;
                 }
-                else
+                else if(keyBoardState.IsKeyDown(Keys.Left) || keyBoardState.IsKeyDown(Keys.A))
                 {
-                    vectorMovementDirection.X = 0;
+                    currentScopeState = ScopeState.Left;
                 }
-                #endregion
-
-                #region Обработка прыжка и спуска. Вызываются события MovEvent.
-                if (keyBoardState.IsKeyDown(Keys.LeftShift) && !isJumpDown && keyBoardState.IsKeyDown(Keys.Down))
+                else if(keyBoardState.IsKeyDown(Keys.Right) || keyBoardState.IsKeyDown(Keys.D))
                 {
-                    isJumpDown = true;
-                    MovEventDown?.Invoke();
-                    Debug.WriteLine("Спуск");
+                    currentScopeState = ScopeState.Right;
                 }
-                else if (keyBoardState.IsKeyDown(Keys.LeftShift) && !isJumpDown)
+                else if(keyBoardState.IsKeyDown(Keys.Right) && keyBoardState.IsKeyDown(Keys.Up) || 
+                keyBoardState.IsKeyDown(Keys.D) && keyBoardState.IsKeyDown(Keys.W))
                 {
-                    isJumpDown = true;
-                    MovEventJump?.Invoke();
-                    Debug.WriteLine("Прыжок");
+                    currentScopeState = ScopeState.StraightRight;
                 }
-                else if (keyBoardState.IsKeyUp(Keys.LeftShift))
+                else if(keyBoardState.IsKeyDown(Keys.Left) && keyBoardState.IsKeyDown(Keys.Up) || 
+                keyBoardState.IsKeyDown(Keys.A) && keyBoardState.IsKeyDown(Keys.W))
                 {
-                    isJumpDown = false;
+                    currentScopeState = ScopeState.StraightLeft;
                 }
-                #endregion
-
-                #region Обработка положения оружия. Задает значение полю scopeState.
-                if (keyBoardState.IsKeyDown(Keys.Up))
+                else if(keyBoardState.IsKeyDown(Keys.Right) && keyBoardState.IsKeyDown(Keys.Down) || 
+                keyBoardState.IsKeyDown(Keys.D) && keyBoardState.IsKeyDown(Keys.S))
                 {
-                    scopeState = ScopeState.Up;
+                    currentScopeState = ScopeState.BackRight;
                 }
-                else if (keyBoardState.IsKeyDown(Keys.Down) && !isJumpDown)
+                else if(keyBoardState.IsKeyDown(Keys.Left) && keyBoardState.IsKeyDown(Keys.Down) || 
+                keyBoardState.IsKeyDown(Keys.A) && keyBoardState.IsKeyDown(Keys.S))
                 {
-                    scopeState = ScopeState.Down;
-                }
-                else
-                {
-                    scopeState = ScopeState.Middle;
+                    currentScopeState = ScopeState.BackLeft;
                 }
                 #endregion
 
                 #region Обработка нажатия выстрела. Вызывает событие ShootEvent
-                if (keyBoardState.IsKeyDown(Keys.X) && !isJumpDown && !isShoot)
+                if (keyBoardState.IsKeyDown(Keys.P) && !isShoot)
                 {
                     isShoot = true;
                     ShootEvent?.Invoke();
                     Debug.WriteLine("Выстрел");
                 }
-                else if (keyBoardState.IsKeyUp(Keys.X) && !isJumpDown)
+                else if (keyBoardState.IsKeyUp(Keys.P))
                 {
                     isShoot = false;
                 }
                 #endregion
 
-                SetState(ControlsState.Keyboard);
+                #region Обработка взаимодействия с collectable(например лутом). Вызывает событие OnInteract
+                if (keyBoardState.IsKeyDown(Keys.E) && !isInteract)
+                {
+                  
+                    OnInteract?.Invoke();
+                    Debug.WriteLine("взаимодействие с Collectable");
+                }
+                else if (keyBoardState.IsKeyUp(Keys.E))
+                {
+                    isInteract = false;
+                }
+                #endregion
                 lastKeyboardState = keyBoardState;
-            }
+            
             #endregion 
-        }
-        public void SetState(ControlsState controlsState)
-        {
-            currentControlsState = controlsState.ToString();
+            #region ActionEvent
+                if(InputMovementDirection != prevInputMovementDirection  ||
+                InputAttackDirection != prevInputAttackDirection || 
+                currentScopeState != prevCurrentScopeState)
+                {
+                    ActionEvent?.Invoke();
+                }
+                prevInputMovementDirection = InputMovementDirection;
+                prevInputAttackDirection = InputAttackDirection;
+                prevCurrentScopeState = currentScopeState;
+            #endregion
         }
     }
 }
