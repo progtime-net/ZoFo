@@ -42,6 +42,13 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         public void SendData()
         {
+            for (int i = 0; i < updates.Count; i++)
+            {
+
+                AppManager.Instance.server.ProcessIUpdateData(updates[i]);
+            }
+            updates.Clear();
+            return;// TODO remove
                 byte[] bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(updates));  //нужно сериализовать
                 socket.Send(bytes);
         }

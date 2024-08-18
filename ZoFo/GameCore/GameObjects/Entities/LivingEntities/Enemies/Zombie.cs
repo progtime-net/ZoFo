@@ -15,7 +15,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
         public Zombie(Vector2 position) : base(position)
         {
             health = 5;
-            speed =2;
+            speed =5;
             collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100);
             graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 100, 100);
         }
