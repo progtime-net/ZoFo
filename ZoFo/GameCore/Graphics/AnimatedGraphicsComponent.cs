@@ -202,7 +202,6 @@ namespace ZoFo.GameCore.Graphics
 
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch)
         {
-            DebugHUD.Instance.Log($"{destinationRectangle.Width}   :   {destinationRectangle.Height}");
             Texture2D texture = textures[texturesNames.FindIndex(x => x == currentAnimation.TextureName)];
 
             float scale;
@@ -226,7 +225,6 @@ namespace ZoFo.GameCore.Graphics
             destinationRectangle = Scaling(destinationRectangle);
             _spriteBatch.Draw(texture,
                 destinationRectangle, sourceRectangle, Color.White);
-            DebugHUD.Instance.Log(texture.Name);
 
         }
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch, Rectangle sourceRectangle)
