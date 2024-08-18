@@ -52,8 +52,9 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// <returns></returns>
         public static IPAddress GetIp()
         {
-            string hostName = Dns.GetHostName(); // Retrive the Name of HOST                                              
-            string myIP = Dns.GetHostByName(hostName).AddressList[1].ToString();// Get the IP
+            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
+            var ipList = Dns.GetHostByName(hostName).AddressList;
+            string myIP = ipList[ipList.Count()-1].ToString();// Get the IP
             return IPAddress.Parse(myIP);
         }
 
@@ -69,7 +70,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             }
             updates.Clear();
             return; //TODO TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK
-
+            //Что это?
             //по 10 паков за раз TODO FIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXIT
             List<UpdateData> datasToSend = new List<UpdateData>();
             for (int i = 0; i < 5 && i<updates.Count; i++)
@@ -141,13 +142,16 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             for (int i = 0; i < playNumber; i++)
             {
                 Socket client = socket.Accept();
+                AppManager.Instance.debugHud.Log($"Connect {client.LocalEndPoint.ToString()}");
                 Thread thread = new Thread(StartListening);
                 thread.IsBackground = true;
                 thread.Start(client);
                 managerThread.Add(client, thread);
-                clients.Add(client);  //добавляем клиентов в лист
+                clients.Add(client);
+               //AppManager.Instance.ChangeState(GameState.HostPlaying);
+                //добавляем клиентов в лист
             }
-
+            AppManager.Instance.ChangeState(GameState.HostPlaying);
         }
 
         /// <summary>

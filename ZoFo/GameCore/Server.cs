@@ -27,8 +27,7 @@ namespace ZoFo.GameCore
     {
         private ServerNetworkManager networkManager;
         private int ticks = 0;
-        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } }
-         
+        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } } 
         public Server()
         {
             networkManager = new ServerNetworkManager();
@@ -56,6 +55,32 @@ namespace ZoFo.GameCore
         {
 
             //ТУТ Switch case будет честное слово
+            switch (updateData.UpdateType)
+            {
+                case "UpdateAnimation":
+                    break;
+                case "UpdateEntityHealth":
+                    break;
+                case "UpdateGameEnded":
+                    break;
+                case "UpdateGameObjectCreated":
+                    break;
+                case "UpdateGameObjectDeleted":
+                    break;
+                case "UpdateInteraction":
+                    break;
+                case "UpdateInteractionReady":
+                    break;
+                case "UpdateLoot":
+                    break;
+                case "UpdatePlayerParametrs":
+                    break;
+                case "UpdatePosition":
+                    break;
+                case "UpdateTileCreated":
+                    break;
+
+            }
         }
 
         public void CloseConnection()
@@ -102,6 +127,7 @@ namespace ZoFo.GameCore
             AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(40, 40)));
             AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(740, 140)));
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(140, 440)));
+            AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(240, 440)));
         }
 
         /// <summary>
@@ -179,14 +205,14 @@ namespace ZoFo.GameCore
                 AddData(new UpdateGameObjectCreated() { GameObjectType = gameObject.GetType().Name,
                     position = gameObject.position
                 });
-
+  
 
             ////var elems = gameObject.GetType().GetProperties(System.Reflection.BindingFlags.Public);
             ////if (elems.Count()>0) TODO
             ////{ 
             ////    AppManager.Instance.server.collisionManager.Register((elems.First().GetValue(gameObject) as CollisionComponent));
             ////}
-            
+             
         }
         
         /// <summary>

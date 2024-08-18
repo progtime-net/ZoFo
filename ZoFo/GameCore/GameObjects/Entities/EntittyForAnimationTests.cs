@@ -12,7 +12,7 @@ namespace ZoFo.GameCore.GameObjects.Entities
     {
         
         //public override GraphicsComponent graphicsComponent { get; } = new GraphicsComponent(new List<string> { "тут пишите название анимации" }, "сдублируйте " +
-        public override GraphicsComponent graphicsComponent { get; } = new GraphicsComponent(new List<string> { "player_running_top_rotate" }, "player_running_top_rotate");
+        public override GraphicsComponent graphicsComponent { get; } = new GraphicsComponent(new List<string> { "player_idle_top-right_noweapon" }, "player_idle_top-right_noweapon");
         public EntittyForAnimationTests(Vector2 position) : base(position)
         {
             graphicsComponent.ObjectDrawRectangle = new Rectangle(0,0,16*12, 16 * 16);
