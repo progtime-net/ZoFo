@@ -22,7 +22,8 @@ using System.Linq;
 using System.Web;
 using ZoFo.GameCore.GUI;
 using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
-using ZoFo.GameCore.GameObjects.MapObjects.StopObjects; 
+using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
 namespace ZoFo.GameCore
 {
     public class Client
@@ -129,8 +130,10 @@ namespace ZoFo.GameCore
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
                     gameObjects.Add(new Player((update as UpdateGameObjectCreated).position));
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
-                    gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position));
-                
+                    gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position))                if ((update as UpdateGameObjectCreated).GameObjectType == "Zombie")
+                    gameObjects.Add(new Zombie((update as UpdateGameObjectCreated).position));
+
+
                 (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
                 //var a = Assembly.GetAssembly(typeof(GameObject));
                 //gameObjects.Add( TODO reflection
