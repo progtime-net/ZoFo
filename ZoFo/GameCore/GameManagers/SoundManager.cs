@@ -28,7 +28,7 @@ namespace ZoFo.GameCore.GameManagers
             if (k.Length > 0) 
             {
 
-                string[] soundFiles = k.Select(x => x.Split("/").Last().Replace(".xnb", "")).ToArray();// папка со звуками там где exe 
+                string[] soundFiles = k.Select(x => x.Split("\\").Last().Split("/").Last().Replace(".xnb", "")).ToArray();// папка со звуками там где exe 
                 foreach (var soundFile in soundFiles)
                 {
                     Sounds.Add(soundFile, AppManager.Instance.Content.Load<SoundEffect>(Path.Combine("sounds",  soundFile)));
