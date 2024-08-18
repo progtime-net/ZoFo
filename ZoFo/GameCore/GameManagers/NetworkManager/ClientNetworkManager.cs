@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
@@ -87,7 +88,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// </summary>
         public void JoinYourself(int port)  // single player
         {
-            endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+            endPoint = new IPEndPoint(GetIp(), port);
             socket.Connect(endPoint);
             SendData();
             Thread listen = new Thread(StartListening);
@@ -97,8 +98,9 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         public static IPAddress GetIp()
         {
-            string hostName = Dns.GetHostName(); // Retrive the Name of HOST                                              
-            string myIP = Dns.GetHostByName(hostName).AddressList[1].ToString();// Get the IP
+            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
+            var ipList = Dns.GetHostByName(hostName).AddressList;
+            string myIP = ipList[ipList.Count() - 1].ToString();// Get the IP
             return IPAddress.Parse(myIP);
         }
 

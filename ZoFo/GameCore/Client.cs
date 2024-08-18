@@ -51,6 +51,7 @@ namespace ZoFo.GameCore
         {
             List<UpdateData> updateDatas = JsonSerializer.Deserialize<List<UpdateData>>(data);
             // тут будет switch
+            AppManager.Instance.debugHud.Log(data);
             foreach (var item in updateDatas)
             {
                 GotData(item);
@@ -78,6 +79,7 @@ namespace ZoFo.GameCore
         {
             for (int i = 0; i < gameObjects.Count; i++)
             {
+                AppManager.Instance.debugHud.Set("GameTime", gameTime.TotalGameTime.ToString());
                 gameObjects[i].UpdateAnimations();
             }
         }

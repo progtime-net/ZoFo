@@ -43,6 +43,7 @@ namespace ZoFo.GameCore
         public void OnDataSend(string data)
         {
             List<UpdateData> updateDatas = JsonSerializer.Deserialize<List<UpdateData>>(data);
+            AppManager.Instance.debugHud.Log(data);
             for (int i = 0; i < updateDatas.Count; i++)
             {
                 ProcessIUpdateData(updateDatas[i]);
