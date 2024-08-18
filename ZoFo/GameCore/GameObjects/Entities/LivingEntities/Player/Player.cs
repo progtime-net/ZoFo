@@ -29,6 +29,8 @@ public class Player : LivingEntity
         //InputPlayerRotation = new Vector2(0, 0);
         graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 100, 100);
         collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100);
+
+        StartAnimation("player_look_down");
     }
 
 
@@ -40,17 +42,16 @@ public class Player : LivingEntity
     float t;
     public void MovementLogic()
     { 
-        IsTryingToShoot = true; 
-        StartAnimation("player_look_down");//gslkjfsnblkjsdfnnlkjbn;zkcjnb;kkjnzx;cjkb;kzjxb;kSErgo 
+        IsTryingToShoot = true; //gslkjfsnblkjsdfnnlkjbn;zkcjnb;kkjnzx;cjkb;kzjxb;kSErgo 
         //velocity.X = 3+(float)Math.Sin(t);
         t++;
         if (InputPlayerRotation.X > 0.9)
         {
         }
-        if (Keyboard.GetState().IsKeyDown(Keys.D)) velocity.X = 5;
-        if (Keyboard.GetState().IsKeyDown(Keys.A)) velocity.X = -5;
-        if (Keyboard.GetState().IsKeyDown(Keys.S)) velocity.Y = 5;
-        if (Keyboard.GetState().IsKeyDown(Keys.W)) velocity.Y = -5;
+        if (Keyboard.GetState().IsKeyDown(Keys.D)) velocity.X += 5;
+        if (Keyboard.GetState().IsKeyDown(Keys.A)) velocity.X += -5;
+        if (Keyboard.GetState().IsKeyDown(Keys.S)) velocity.Y += 5;
+        if (Keyboard.GetState().IsKeyDown(Keys.W)) velocity.Y += -5;
     }
     public void HandleNewInput(UpdateInput updateInput)
     {

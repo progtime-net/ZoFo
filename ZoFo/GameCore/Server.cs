@@ -212,12 +212,18 @@ namespace ZoFo.GameCore
         /// Удаляет игровой объект
         /// </summary>
         /// <param name="gameObject"></param>
-        public void DeleteObject(GameObject gameObject)
+        public void DeleteObject(Entity entity)
         {
-            gameObjects.Remove(gameObject);
+            if (gameObjects.Contains(entity))
+                gameObjects.Remove(entity);
+            if (entities.Contains(entity))
+                entities.Remove(entity);
+            if (players.Contains(entity))
+                players.Remove(entity as Player);
             AddData(new UpdateGameObjectDeleted()
-                { GameObjectType = gameObject.GetType().Name}
+                { GameObjectType = entity.GetType().Name, IdEntity = entity .Id}
             );
+            collisionManager.Deregister(entity.collisionComponent);
         }
     }
     
