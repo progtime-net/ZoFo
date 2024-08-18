@@ -167,14 +167,22 @@ namespace ZoFo.GameCore
             {
                 var ent = FindEntityById(update.IdEntity);
  
-                ent.position = (update as UpdatePosition).NewPosition; 
+                ent.position = (update as UpdatePosition).NewPosition;
             }
             else if (update is UpdateAnimation)
             {
                 var ent = FindEntityById(update.IdEntity);
+                if (ent != null)
+                    ((ent as Entity).graphicsComponent as AnimatedGraphicsComponent).StartAnimation((update as UpdateAnimation).animationId);
+               //DebugHUD.Instance.Log("new Animation " + ent.position);
+            }
+            else if (update is UpdateGameObjectDeleted)
+            {
+                var ent = FindEntityById(update.IdEntity);
 
-                ((ent as Entity).graphicsComponent as AnimatedGraphicsComponent).StartAnimation((update as UpdateAnimation).animationId);
-                DebugHUD.Instance.Log("new Animation " + ent.position); 
+                if (ent != null)
+                    DeleteObject(ent);
+
             }
         }
 
@@ -192,6 +200,16 @@ namespace ZoFo.GameCore
                 }
             }
             return null;
+        }
+        public void DeleteObject(Entity entity)
+        {
+
+            if (gameObjects.Contains(entity))
+                gameObjects.Remove(entity);
+            //if (entities.Contains(entity))
+            //    entities.Remove(entity);
+            if (players.Contains(entity))
+                players.Remove(entity as Player);
         }
 
     }

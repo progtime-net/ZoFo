@@ -25,7 +25,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
             Vector2 duration = Vector2.Normalize(
                 AppManager.Instance.server.players[0].position - position
                 );
-            velocity=new Vector2(duration.X * speed, duration.Y*speed);
+            velocity+=new Vector2(duration.X * speed, duration.Y*speed);
             if (Random.Shared.NextDouble() > 0.9)
             {
 
