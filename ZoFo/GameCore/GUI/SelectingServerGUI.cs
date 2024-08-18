@@ -21,30 +21,32 @@ public class SelectingServerGUI : AbstractGUI
     {
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
-        
+
         menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures/GUI/background/join" };
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content);
-        
-        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = "Select server", fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts/Font"});
 
-        TextBox ipBox = new TextBox(Manager) 
+        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = "Select server", fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts/Font" });
+
+        TextBox ipBox = new TextBox(Manager)
         {
             rectangle = new Rectangle(width / 4 - (width / 4) / 2, height / 4, (int)(width / 4), (int)(height / 20)),
             text = "ip",
-            scale = 0.2f,
+            scale = 0.5f,
             fontColor = Color.White,
             mainColor = Color.Gray,
             textAligment = MonogameLibrary.UI.Enums.TextAligment.Left,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font3"
         };
-        ipBox.TextChanged += input => {
+        ipBox.TextChanged += input =>
+        {
             if (input == "ip")
             {
                 ipBox.text = ""; ipBox.fontColor = Color.White;
             }
         };
-        ipBox.StopChanging += input => {
+        ipBox.StopChanging += input =>
+        {
             if (input.Length == 0)
             {
                 ipBox.fontColor = Color.White;
@@ -52,7 +54,7 @@ public class SelectingServerGUI : AbstractGUI
             }
         };
         Elements.Add(ipBox);
-        Button joinButton = new Button(Manager) 
+        Button joinButton = new Button(Manager)
         {
             rectangle = new Rectangle(width / 4 + (width / 4) / 2, height / 4, (int)(width / 15), (int)(height / 20)),
             text = "Join",
@@ -61,23 +63,32 @@ public class SelectingServerGUI : AbstractGUI
             mainColor = Color.Gray,
             fontName = "Fonts/Font"
         };
-        joinButton.LeftButtonPressed += () => 
+        joinButton.LeftButtonPressed += () =>
         {
 
             // join
             Client client = new Client();
-        var endpoint = ipBox.text.Split(':');
+            var endpoint = ipBox.text.Split(':');
             int port;
-            if (int.TryParse(endpoint[1], out port))
+            try
             {
-                client.JoinRoom(endpoint[0], port);
-                AppManager.Instance.SetClient(client);
-                AppManager.Instance.SetGUI(new WaitingForPlayersGUI(false));
+                if (int.TryParse(endpoint[1], out port))
+                {
+                    client.JoinRoom(endpoint[0], port);
+                    AppManager.Instance.SetClient(client);
+                    AppManager.Instance.SetGUI(new WaitingForPlayersGUI(false));
+                }
             }
+            catch (Exception)
+            {
+
+                //  throw;
+            }
+
             // ваш код здесь
         };
         Elements.Add(joinButton);
-        Button hostButton = new Button(Manager) 
+        Button hostButton = new Button(Manager)
         {
             rectangle = new Rectangle(width / 4 + (width / 4) / 2 + (width / 15), height / 4, (int)(width / 15), (int)(height / 20)),
             text = "Host",
@@ -86,22 +97,25 @@ public class SelectingServerGUI : AbstractGUI
             mainColor = Color.Gray,
             fontName = "Fonts/Font"
         };
-        hostButton.LeftButtonPressed += () => 
+        hostButton.LeftButtonPressed += () =>
         {
-            
+
             // host
             Server server = new Server();   //Server Logic MultiPlayer
-            server.CreateRoom(5);
+            Client client = new Client();
+            server.CreateRoom(2);
+            client.JoinYourself(server.MyIp.Port);
             AppManager.Instance.SetServer(server);
+            AppManager.Instance.SetClient(client);
             string key = server.MyIp.ToString();
             AppManager.Instance.debugHud.Set(key, "MultiPlayer");
             // ваш код здесь 
             AppManager.Instance.SetGUI(new WaitingForPlayersGUI(true));
         };
         Elements.Add(hostButton);
-        
+
         Button bTExit = new Button(Manager)
-            { fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off"};
+        { fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off" };
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {

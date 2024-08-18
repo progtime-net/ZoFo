@@ -1,29 +1,37 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Formats.Tar;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers
 { 
-    public enum ScopeState { Left, Right, Straight, Back, StraightLeft, StraightRight, BackLeft, BackRight }
+    public enum ScopeState { Idle, Left, Right, Straight, Back, StraightLeft, StraightRight, BackLeft, BackRight }
 
     public class InputManager
     {
-        public delegate void Delegat();
-        public event Delegat ShootEvent; // событие удара(когда нажат X, событие срабатывает)
+        public event Action ShootEvent; // событие удара(когда нажат X, событие срабатывает)
         
-        public event Delegat OnInteract; // событие взаимодействия с collectable(например, лутом)
+        public event Action OnInteract; // событие взаимодействия с collectable(например, лутом)
         //с помощью кнопки E.
 
-        public event Delegat TalkEvent;
+        public event Action ActionEvent;
+        public Vector2 InputMovementDirection;
+        private Vector2 prevInputMovementDirection;
+        public Vector2 InputAttackDirection;
+        private Vector2 prevInputAttackDirection;
 
-        Vector2 vectorMovementDirection;
-        ScopeState currentScopeState;        // Положение оружия. Left, Right, Straight, Back, StraightLeft, StraightRight, BackLeft, BackRight.
+        public event Action TalkEvent;
+
+        public ScopeState currentScopeState;        // Положение оружия. Left, Right, Straight, Back, StraightLeft, StraightRight, BackLeft, BackRight.
+        private ScopeState prevCurrentScopeState;
         private bool _cheatsEnabled = false;
         public bool InvincibilityCheat { get; private set; } = false;
         public bool CollisionsCheat { get; private set; } = false;
@@ -34,18 +42,16 @@ namespace ZoFo.GameCore.GameManagers
 
         private KeyboardState lastKeyboardState;
         private GamePadState lastGamePadState;
-
-
-        public Vector2 VectorMovementDirection { get => vectorMovementDirection; }
         public ScopeState ScopeState { get => currentScopeState; }
         public string currentControlsState;
         public ScopeState CurrentScopeState { get => currentScopeState; } // получить текущее состояние
 
         public InputManager()
         {
+            InputMovementDirection = new Vector2(0, 0);
+            InputAttackDirection = new Vector2(0, 0);
             this.isShoot = false;
-            currentScopeState = ScopeState.Straight;
-            vectorMovementDirection = new Vector2(0, 0);
+            currentScopeState = ScopeState.Idle;
         }
         public void Update()
         {
@@ -59,7 +65,8 @@ namespace ZoFo.GameCore.GameManagers
             #region Работа с GamePad
                 #region Обработка гейм-пада. Задает Vector2 vectorMovementDirection являющийся вектором отклонения левого стика.
                 GamePadState gamePadState = GamePad.GetState(0);
-                vectorMovementDirection = gamePadState.ThumbSticks.Left;
+                InputMovementDirection = gamePadState.ThumbSticks.Left;
+                InputAttackDirection = gamePadState.ThumbSticks.Right;
                 #endregion
 
                 #region читы 
@@ -75,39 +82,38 @@ namespace ZoFo.GameCore.GameManagers
                 }
                 #endregion // Cheats
 
-                #region Обработка положения оружия. Задает значение полю scopeState.
-                if (vectorMovementDirection.Y >= 0.6)
-                {
-                    currentScopeState = ScopeState.Straight;
-                }
-                else if(vectorMovementDirection.Y <= 0.6)
-                {
-                    currentScopeState = ScopeState.Back;
-                }
-                else if(vectorMovementDirection.X >= 0.6)
-                {
+                #region set ScopeState
+                int currentSection = (int)Math.Ceiling(Math.Atan2(InputMovementDirection.Y,
+                 InputMovementDirection.X) * 180 / Math.PI * 16 / 360);
+                switch(currentSection){
+                    case 1 or 0 or 16:
                     currentScopeState = ScopeState.Right;
-                }
-                else if(vectorMovementDirection.X <= 0.6)
-                {
-                    currentScopeState = ScopeState.Left;
-                }
-                else if(vectorMovementDirection.Y >= 0.6 && vectorMovementDirection.X >= 0.6)
-                {
+                    break; 
+                    case 2 or 3:
                     currentScopeState = ScopeState.StraightRight;
-                }
-                else if(vectorMovementDirection.Y >= 0.6 && vectorMovementDirection.X <= 0.6)
-                {
+                    break;
+                    case 4 or 5:
+                    currentScopeState = ScopeState.Straight;
+                    break;
+                    case 6 or 7:
                     currentScopeState = ScopeState.StraightLeft;
-                }
-                else if(vectorMovementDirection.Y <= 0.6 && vectorMovementDirection.X >= 0.6)
-                {
-                    currentScopeState = ScopeState.BackRight;
-                }
-                else if(vectorMovementDirection.Y <= 0.6 && vectorMovementDirection.X <= 0.6)
-                {
+                    break;
+                    case 8 or 9:
+                    currentScopeState = ScopeState.Left;
+                    break;
+                    case 10 or 11:
                     currentScopeState = ScopeState.BackLeft;
+                    break;
+                    case 12 or 13:
+                    currentScopeState = ScopeState.Back;
+                    break;
+                    case 14 or 15:
+                    currentScopeState = ScopeState.BackRight;
+                    break;
+                    default:
+                    break;
                 }
+                
                 #endregion
 
                 #region Обработка нажатия выстрела. Вызывает событие ShootEvent
@@ -126,10 +132,21 @@ namespace ZoFo.GameCore.GameManagers
                 lastGamePadState = gamePadState;
             #endregion
             #region Работа с KeyBoard
+
+                #region InputAttack with mouse
+                MouseState mouseState = Mouse.GetState();
+                AppManager.Instance.debugHud.Set("mouse position", $"({mouseState.X}, {mouseState.Y}");
+                // TODO: CurentScreenResolution
+                Vector2 a = (AppManager.Instance.CurentScreenResolution / new Point(2, 2)).ToVector2();
+
+                InputAttackDirection = Vector2.Normalize(new Vector2(mouseState.X - a.X, mouseState.Y - a.Y));
+                AppManager.Instance.debugHud.Set("AttackDir(normalize)", $"({a.X}, {a.Y})");
+                #endregion
+
                 #region Состояние клавиатуры
                 KeyboardState keyBoardState = Keyboard.GetState();  // Состояние клавиатуры
                 #endregion
-
+                
                 #region читы 
                 if (keyBoardState.IsKeyDown(Keys.LeftShift) && keyBoardState.IsKeyDown(Keys.RightShift))
                     _cheatsEnabled = true;
@@ -219,6 +236,17 @@ namespace ZoFo.GameCore.GameManagers
                 lastKeyboardState = keyBoardState;
             
             #endregion 
+            #region ActionEvent
+                if(InputMovementDirection != prevInputMovementDirection  ||
+                InputAttackDirection != prevInputAttackDirection || 
+                currentScopeState != prevCurrentScopeState)
+                {
+                    ActionEvent?.Invoke();
+                }
+                prevInputMovementDirection = InputMovementDirection;
+                prevInputAttackDirection = InputAttackDirection;
+                prevCurrentScopeState = currentScopeState;
+            #endregion
         }
     }
 }

@@ -3,8 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using ZoFo.GameCore.GameManagers;
-using ZoFo.GameCore.ZoFo_graphics;
 using ZoFo.GameCore;
+using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameObjects;
 
@@ -13,18 +13,23 @@ public abstract class GameObject
     public Vector2 position;
 
     public Vector2 rotation; //вектор направления объекта
-    public abstract GraphicsComponent graphicsComponent { get; }
+    public virtual GraphicsComponent graphicsComponent { get; }
 
     #region ServerSide
     public GameObject(Vector2 position)
     {
         this.position = position; 
-
         graphicsComponent.LoadContent();
+
+        graphicsComponent.ObjectDrawRectangle.X = (int)position.X;
+        graphicsComponent.ObjectDrawRectangle.Y = (int)position.Y;
+
     }
-    public virtual void UpdateLogic(GameTime gameTime)
+    public virtual void UpdateLogic()
     { 
         PlayAnimation_OnServer();
+
+
     }
 
 
@@ -41,6 +46,7 @@ public abstract class GameObject
 
     #region Client Side
 
+    public static Texture2D debugTexture;
     /// <summary>
     /// Для клиента
     /// Это вызывается в клиентской части игры
@@ -75,21 +81,23 @@ public abstract class GameObject
     /// </summary>
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        graphicsComponent.DrawAnimation(graphicsComponent.ObjectDrawRectangle, spriteBatch);
+        graphicsComponent.Draw(graphicsComponent.ObjectDrawRectangle, spriteBatch);
         //debug
+        DrawDebugRectangle(spriteBatch, graphicsComponent.ObjectDrawRectangle);
+
         if (AppManager.Instance.InputManager.CollisionsCheat)
             DrawDebugRectangle(spriteBatch, graphicsComponent.ObjectDrawRectangle);
 
     }
     public void DrawDebugRectangle(SpriteBatch spriteBatch, Rectangle _rectangle, Nullable<Color> color = null)
     {
-        if (color is null) color = new Color(1, 0, 0, 0.25f);
+        if (color is null) color = new Color(1, 0, 0, 0.1f);
         if (color.Value.A == 255) color = new Color(color.Value, 0.25f);
-        //spriteBatch.Draw(debugTexture,
-        //                     new Rectangle((_rectangle.X - graphicsComponent.CameraPosition.X) * graphicsComponent.scaling,
-        //                     (_rectangle.Y - graphicsComponent.CameraPosition.Y) * graphicsComponent.scaling,
-        //                     _rectangle.Width * graphicsComponent.scaling,
-        //                     _rectangle.Height * graphicsComponent.scaling), color.Value);
+        spriteBatch.Draw(debugTexture,
+                             new Rectangle((_rectangle.X - GraphicsComponent.CameraPosition.X) * GraphicsComponent.scaling,
+                             (_rectangle.Y - GraphicsComponent.CameraPosition.Y) * GraphicsComponent.scaling,
+                             _rectangle.Width * GraphicsComponent.scaling,
+                             _rectangle.Height * GraphicsComponent.scaling), color.Value);
      
         //TODO: debugTexture
     }

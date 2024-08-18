@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
@@ -97,9 +98,17 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         public static IPAddress GetIp()
         {
-            string hostName = Dns.GetHostName(); // Retrive the Name of HOST                                              
-            string myIP = Dns.GetHostByName(hostName).AddressList[1].ToString();// Get the IP
-            return IPAddress.Parse(myIP);
+            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
+            var ipList = Dns.GetHostByName(hostName).AddressList;
+            foreach (var ip in ipList)
+            {
+                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                {
+                    return ip;
+                }
+            }
+            return IPAddress.Loopback;
+
         }
 
         //поток 2
@@ -108,7 +117,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             while(socket.Connected)
             {
                 byte[] bytes = new byte[2048];
-                var countAnsw = socket.Receive(bytes);
+                var countAnsw = socket.Receive(bytes);    //Вылетает если кто то закрыл
                 string update = Encoding.UTF8.GetString(bytes, 0, countAnsw);   // обновление отосланные сервером
                 GetDataSent(update);
             }
