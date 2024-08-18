@@ -52,7 +52,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// <returns></returns>
         public static IPAddress GetIp()
         {
-            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
+            /*string hostName = Dns.GetHostName(); // Retrive the Name of HOST
             var ipList = Dns.GetHostByName(hostName).AddressList;
             foreach (var ip in ipList)
             {
@@ -60,8 +60,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 {
                     return ip;
                 }
-            }
-          return IPAddress.Loopback;
+            }*/
+          return IPAddress.Parse("127.0.0.1");
         }
 
         /// <summary>
