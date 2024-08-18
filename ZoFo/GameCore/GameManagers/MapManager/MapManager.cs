@@ -76,7 +76,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                         AppManager.Instance.server.RegisterGameObject(new MapObject(position,
                                             new Vector2(tileSet.TileWidth, tileSet.TileHeight),
                                             sourceRectangle,
-                                            "Textures/TileSetImages/" +
+                                            "Textures/TileSets/" +
                                             Path.GetFileName(tileSet.Image).Replace(".png", "")));
                                         break;
                                     case "StopObject":
@@ -84,7 +84,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                         AppManager.Instance.server.RegisterGameObject(new StopObject(position/4,//TODO
                                             new Vector2(tileSet.TileWidth, tileSet.TileHeight),
                                             sourceRectangle,
-                                            "Textures/TileSetImages/" +
+                                            "Textures/TileSets/" +
                                             Path.GetFileName(tileSet.Image).Replace(".png", ""),
                                             collisionRectangles.ToArray()));
                                         break;
