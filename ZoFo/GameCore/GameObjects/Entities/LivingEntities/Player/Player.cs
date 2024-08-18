@@ -23,14 +23,15 @@ public class Player : LivingEntity
     private int health;
     public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_look_down" }, "player_look_down");
     private LootData lootData;
-    //public bool isTryingToInteract { get; set; }
+    public bool IsTryingToInteract { get; set; }
+    public bool IsTryingToShoot { get; set; }
     public Player(Vector2 position) : base(position)
     {
         graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 100, 100);
         collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100); 
         speed = 10;
-        //isTryingToInteract = false;
-        //IsTryingToShoot = false; 
+        IsTryingToInteract = false;
+        IsTryingToShoot = false; 
 
         StartAnimation("player_look_down"); 
     }
@@ -38,7 +39,7 @@ public class Player : LivingEntity
 
     public  override void Update()
     {
-
+        //StartAnimation("wood");
         MovementLogic();
     }
     public void MovementLogic() 
@@ -53,10 +54,10 @@ public class Player : LivingEntity
     }
     public void HandleInteract(UpdateInputInteraction updateInputInteraction)
     {
-        //isTryingToInteract = true;
+        IsTryingToInteract = true;
     }
     public void HandleShoot(UpdateInputShoot updateInputShoot)
     {
-
+        IsTryingToShoot = true;
     }
 }

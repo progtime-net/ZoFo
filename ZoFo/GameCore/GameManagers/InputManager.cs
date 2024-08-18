@@ -82,37 +82,7 @@ namespace ZoFo.GameCore.GameManagers
                 #endregion // Cheats
 
                 #region set ScopeState
-                int currentSection = (int)Math.Ceiling(Math.Atan2(InputMovementDirection.Y,
-                 InputMovementDirection.X) * 180 / Math.PI * 16 / 360);
-                switch(currentSection){
-                    case 1 or 0 or 16:
-                    currentScopeState = ScopeState.Right;
-                    break; 
-                    case 2 or 3:
-                    currentScopeState = ScopeState.StraightRight;
-                    break;
-                    case 4 or 5:
-                    currentScopeState = ScopeState.Straight;
-                    break;
-                    case 6 or 7:
-                    currentScopeState = ScopeState.StraightLeft;
-                    break;
-                    case 8 or 9:
-                    currentScopeState = ScopeState.Left;
-                    break;
-                    case 10 or 11:
-                    currentScopeState = ScopeState.BackLeft;
-                    break;
-                    case 12 or 13:
-                    currentScopeState = ScopeState.Back;
-                    break;
-                    case 14 or 15:
-                    currentScopeState = ScopeState.BackRight;
-                    break;
-                    default:
-                    break;
-                }
-                
+                ConvertVector2ToState(InputMovementDirection);
                 #endregion
 
                 #region Обработка нажатия выстрела. Вызывает событие ShootEvent
@@ -171,48 +141,21 @@ namespace ZoFo.GameCore.GameManagers
                 #region Обработка состояния объекта. Задает значение полю scopeState.
                 if (keyBoardState.IsKeyDown(Keys.Up) || keyBoardState.IsKeyDown(Keys.W))
                 {
-                    currentScopeState = ScopeState.Straight;
-                    InputMovementDirection = new Vector2(0, -1);
+                    InputMovementDirection += new Vector2(0, -1);
                 }
-                else if (keyBoardState.IsKeyDown(Keys.Down) || keyBoardState.IsKeyDown(Keys.S))
+                if (keyBoardState.IsKeyDown(Keys.Down) || keyBoardState.IsKeyDown(Keys.S))
                 {
-                    currentScopeState = ScopeState.Back;
-                    InputMovementDirection = new Vector2(0, 1);
+                    InputMovementDirection += new Vector2(0, 1);
                 }
-                else if(keyBoardState.IsKeyDown(Keys.Left) || keyBoardState.IsKeyDown(Keys.A))
+                if (keyBoardState.IsKeyDown(Keys.Right) || keyBoardState.IsKeyDown(Keys.D))
                 {
-                    currentScopeState = ScopeState.Left;
-                    InputMovementDirection = new Vector2(-1, 0);
+                    InputMovementDirection += new Vector2(1, 0);
                 }
-                else if(keyBoardState.IsKeyDown(Keys.Right) || keyBoardState.IsKeyDown(Keys.D))
+                if (keyBoardState.IsKeyDown(Keys.Left) || keyBoardState.IsKeyDown(Keys.A))
                 {
-                    currentScopeState = ScopeState.Right;
-                    InputMovementDirection = new Vector2(1, 0);
+                    InputMovementDirection += new Vector2(-1, 0);
                 }
-                else if(keyBoardState.IsKeyDown(Keys.Right) && keyBoardState.IsKeyDown(Keys.Up) || 
-                keyBoardState.IsKeyDown(Keys.D) && keyBoardState.IsKeyDown(Keys.W))
-                {
-                    currentScopeState = ScopeState.StraightRight;
-                    InputMovementDirection = new Vector2(1, 1);
-                }
-                else if(keyBoardState.IsKeyDown(Keys.Left) && keyBoardState.IsKeyDown(Keys.Up) || 
-                keyBoardState.IsKeyDown(Keys.A) && keyBoardState.IsKeyDown(Keys.W))
-                {
-                    currentScopeState = ScopeState.StraightLeft;
-                    InputMovementDirection = new Vector2(-1, 1);
-                }
-                else if(keyBoardState.IsKeyDown(Keys.Right) && keyBoardState.IsKeyDown(Keys.Down) || 
-                keyBoardState.IsKeyDown(Keys.D) && keyBoardState.IsKeyDown(Keys.S))
-                {
-                    currentScopeState = ScopeState.BackRight;
-                    InputMovementDirection = new Vector2(1, -1);
-                }
-                else if(keyBoardState.IsKeyDown(Keys.Left) && keyBoardState.IsKeyDown(Keys.Down) || 
-                keyBoardState.IsKeyDown(Keys.A) && keyBoardState.IsKeyDown(Keys.S))
-                {
-                    currentScopeState = ScopeState.BackLeft;
-                    InputMovementDirection = new Vector2(-1, -1);
-                }
+                ConvertVector2ToState(InputMovementDirection);
                 #endregion
 
                 #region Обработка нажатия выстрела. Вызывает событие ShootEvent
@@ -257,5 +200,40 @@ namespace ZoFo.GameCore.GameManagers
         
         DebugHUD.Instance.Set("controls", currentScopeState.ToString());
         }
+        #region работа с ScopeState и Vector2
+            public ScopeState ConvertVector2ToState(Vector2 vector){
+                int currentSection = (int)Math.Ceiling(Math.Atan2(InputMovementDirection.Y,
+                 InputMovementDirection.X) * 180 / Math.PI * 16 / 360);
+                switch(currentSection){
+                    case 1 or 0 or 16:
+                    currentScopeState = ScopeState.Right;
+                    break; 
+                    case 2 or 3:
+                    currentScopeState = ScopeState.StraightRight;
+                    break;
+                    case 4 or 5:
+                    currentScopeState = ScopeState.Straight;
+                    break;
+                    case 6 or 7:
+                    currentScopeState = ScopeState.StraightLeft;
+                    break;
+                    case 8 or 9:
+                    currentScopeState = ScopeState.Left;
+                    break;
+                    case 10 or 11:
+                    currentScopeState = ScopeState.BackLeft;
+                    break;
+                    case 12 or 13:
+                    currentScopeState = ScopeState.Back;
+                    break;
+                    case 14 or 15:
+                    currentScopeState = ScopeState.BackRight;
+                    break;
+                    default:
+                    break;
+                }
+                return currentScopeState;
+            }
+        #endregion
     }
 }
