@@ -100,6 +100,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         {
             string hostName = Dns.GetHostName(); // Retrive the Name of HOST
             var ipList = Dns.GetHostByName(hostName).AddressList;
+
             foreach (var ip in ipList)
             {
                 if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)

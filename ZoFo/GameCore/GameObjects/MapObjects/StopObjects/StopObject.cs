@@ -20,13 +20,10 @@ public class StopObject : MapObject
         {
             collisionComponents[i] = new CollisionComponent(this, true, new Rectangle(0,0, (int)size.X, (int)size.Y)/*collisions[i]*/);
         }
-        //REDO
-        // TODO: Написать коллизию, пусть тразмер будет чисто таким же как и текстурка.
-              // Поменяйте уровень защиты конструктора, после снимите в MapManager комментарий в методе LoadMap с создания StopObject-а
     }
     public override void Draw(SpriteBatch spriteBatch)
     {
         base.Draw(spriteBatch);
-            DrawDebugRectangle(spriteBatch, new Rectangle((int)position.X, (int)position.Y, collisionComponents[0].stopRectangle.Width, collisionComponents[0].stopRectangle.Height));
+        DrawDebugRectangle(spriteBatch, new Rectangle((int)position.X, (int)position.Y, collisionComponents[0].stopRectangle.Width, collisionComponents[0].stopRectangle.Height));
     }
 }
