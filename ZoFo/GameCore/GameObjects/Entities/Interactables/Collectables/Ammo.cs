@@ -13,7 +13,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
 {
     class Ammo:Collectable
     {
-        public override StaticGraphicsComponent graphicsComponent { get; } = new("Textures/icons/8");
+        public override StaticGraphicsComponent graphicsComponent { get; } = new(_path + "Ammo");
         public Ammo(Vector2 position) : base(position)
         {
             graphicsComponent.ObjectDrawRectangle.Width = 20;

@@ -1,0 +1,18 @@
+{ "object":
+    {
+     "gid":3,
+     "height":16,
+     "id":11,
+     "name":"BottleOfWater",
+     "rotation":0,
+     "type":"",
+     "visible":true,
+     "width":16
+    },
+ "tileset":
+    {
+     "firstgid":1,
+     "source":"..\/TileSets\/IconSet.tsj"
+    },
+ "type":"template"
+}

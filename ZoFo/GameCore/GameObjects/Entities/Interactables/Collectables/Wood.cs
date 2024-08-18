@@ -9,7 +9,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
 
 public class Wood : Collectable
 {
-    public override StaticGraphicsComponent graphicsComponent { get; } = new("Wood");
+    public override StaticGraphicsComponent graphicsComponent { get; } = new(_path + "Wood");
 
     public Wood(Vector2 position) : base(position)
     {

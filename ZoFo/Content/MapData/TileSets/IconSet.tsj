@@ -1,0 +1,60 @@
+{ "columns":0,
+ "grid":
+    {
+     "height":1,
+     "orientation":"orthogonal",
+     "width":1
+    },
+ "margin":0,
+ "name":"IconSet",
+ "spacing":0,
+ "tilecount":7,
+ "tiledversion":"1.10.2",
+ "tileheight":1200,
+ "tiles":[
+        {
+         "id":0,
+         "image":"..\/..\/Textures\/icons\/Collectables\/ammunition.png",
+         "imageheight":512,
+         "imagewidth":512
+        }, 
+        {
+         "id":1,
+         "image":"..\/..\/Textures\/icons\/Collectables\/Blue Potion.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":2,
+         "image":"..\/..\/Textures\/icons\/Collectables\/Water Bottle.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":3,
+         "image":"..\/..\/Textures\/icons\/Collectables\/Wood Log.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":4,
+         "image":"..\/..\/Textures\/icons\/Collectables\/Silver Ingot.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":5,
+         "image":"..\/..\/Textures\/icons\/Collectables\/Monster Meat.png",
+         "imageheight":32,
+         "imagewidth":32
+        }, 
+        {
+         "id":6,
+         "image":"..\/..\/Textures\/icons\/Collectables\/Stone.png",
+         "imageheight":1200,
+         "imagewidth":1200
+        }],
+ "tilewidth":1200,
+ "type":"tileset",
+ "version":"1.10"
+}

@@ -7,6 +7,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
 public class Collectable : Interactable
 {
+    protected static readonly string _path = "Textures/icons/Collectables/";
     public Collectable(Vector2 position) : base(position)
     {
     }
