@@ -85,9 +85,6 @@
 /processorParam:Quality=Best
 /build:sounds/Zombi stoit.wav
 
-#begin Textures/Animations/player_idle_rotate_weapon.animation
-/copy:Textures/Animations/player_idle_rotate_weapon.animation
-
 #begin Textures/Animations/player_idle_top_noweapon.animation
 /copy:Textures/Animations/player_idle_top_noweapon.animation
 
