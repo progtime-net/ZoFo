@@ -107,6 +107,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         {
             /*string hostName = Dns.GetHostName(); // Retrive the Name of HOST
             var ipList = Dns.GetHostByName(hostName).AddressList;
+
             foreach (var ip in ipList)
             {
                 if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
@@ -122,8 +123,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         {
             while(socket.Connected)
             {
-                byte[] bytes = new byte[2048];
-                var countAnsw = socket.Receive(bytes);    //Вылетает если кто то закрыл
+                byte[] bytes = new byte[65535];
+                var countAnsw = socket.Receive(bytes, SocketFlags.Partial);    //Вылетает если кто то закрыл
                 string update = Encoding.UTF8.GetString(bytes, 0, countAnsw);   // обновление отосланные сервером
                 GetDataSent(update);
             }

@@ -11,12 +11,12 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
 {
     class Zombie : Enemy
     {
-        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent("Textures/icons/8");
+        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "zombie_damaged","zombie_walk","zombie_idle","zombie_attack","zombie_death" }, "zombie_walk");
         public Zombie(Vector2 position) : base(position)
         {
-            health = 5;
-            speed =5;
-            collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100);
+            health = 5; 
+            speed =2;
+            collisionComponent.stopRectangle = new Rectangle(0, 0, 52, 100); 
             graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 100, 100);
         }
         
@@ -25,13 +25,18 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
             Vector2 duration = Vector2.Normalize(
                 AppManager.Instance.server.players[0].position - position
                 );
-            velocity=new Vector2(duration.X * speed, duration.Y*speed);
-            if(position.X>595 && 605>position.X && position.Y>495 && 505>position.Y)
+            velocity+=new Vector2(duration.X * speed, duration.Y*speed);
+            if (Random.Shared.NextDouble() > 0.9)
             {
-                velocity = Vector2.Zero;
+
+                StartAnimation("zombie_damaged");
             }
-            //position.X += velocity.X*t;
-            //position.Y += velocity.Y * t;
+            if (Random.Shared.NextDouble() > 0.9)
+            {
+
+                StartAnimation("zombie_idle");
+            }
+
         }
     }
 }

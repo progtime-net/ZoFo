@@ -12,5 +12,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
     public class UpdateAnimation : UpdateData
     {
         public UpdateAnimation() { UpdateType = "UpdateAnimation"; }
+        public string animationId { get; set; }
     }
 }

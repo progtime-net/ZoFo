@@ -11,7 +11,7 @@ public class Collectable : Interactable
     {
     }
 
-    public override void OnInteraction(object sender, CollisionComponent e)
+    public override void OnInteraction(GameObject sender)
     {
         // 
         AppManager.Instance.server.AddData(new UpdateLoot());

@@ -22,6 +22,7 @@ using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 using ZoFo.GameCore.Graphics;
+using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
 
 namespace ZoFo.GameCore
 {
@@ -165,7 +166,7 @@ namespace ZoFo.GameCore
                 {
                     go.UpdateLogic();
                 }
-                collisionManager.UpdatePositions();
+                collisionManager.ResolvePhysics();
                 ticks = 0;
                 networkManager.SendData();
             }
@@ -182,30 +183,13 @@ namespace ZoFo.GameCore
         {
 
             gameObjects.Add(gameObject);
-            if (gameObject is StopObject)
-            {
-                AddData(new UpdateStopObjectCreated()
-                {
-                    Position = (gameObject as StopObject).position,
-                    sourceRectangle = (gameObject as StopObject).sourceRectangle,
-                    Size = (gameObject as StopObject).graphicsComponent.ObjectDrawRectangle.Size,
-                    collisions = (gameObject as StopObject).collisionComponents.Select(x=>x.stopRectangle).ToArray(),
-                    tileSetName = ((gameObject as StopObject).graphicsComponent as StaticGraphicsComponent)._textureName
-                });//TODO 
-                foreach (var item in (gameObject as StopObject).collisionComponents)
-                {
-                    collisionManager.Register(item);
-
-                }
-                return;
-            }
             if (gameObject is MapObject)
             {
                 AddData(new UpdateTileCreated()
                 {
                     Position = (gameObject as MapObject).position,
-                    sourceRectangle = (gameObject as MapObject).sourceRectangle,
-                    Size = (gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size,
+                    sourceRectangle = new SerializableRectangle((gameObject as MapObject).sourceRectangle),
+                    Size = new SerializablePoint((gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size),
                     tileSetName = ((gameObject as MapObject).graphicsComponent as StaticGraphicsComponent)._textureName
                 });//TODO 
                 return;
@@ -238,12 +222,18 @@ namespace ZoFo.GameCore
         /// Удаляет игровой объект
         /// </summary>
         /// <param name="gameObject"></param>
-        public void DeleteObject(GameObject gameObject)
+        public void DeleteObject(Entity entity)
         {
-            gameObjects.Remove(gameObject);
+            if (gameObjects.Contains(entity))
+                gameObjects.Remove(entity);
+            if (entities.Contains(entity))
+                entities.Remove(entity);
+            if (players.Contains(entity))
+                players.Remove(entity as Player);
             AddData(new UpdateGameObjectDeleted()
-                { GameObjectType = gameObject.GetType().Name}
+                { GameObjectType = entity.GetType().Name, IdEntity = entity .Id}
             );
+            collisionManager.Deregister(entity.collisionComponent);
         }
     }
     

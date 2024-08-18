@@ -24,15 +24,7 @@ namespace ZoFo.GameCore.GameManagers
         {
             //List<string> sounds = AppManager.Instance.Content.Load<List<string>>("sounds/"); 
             
-            string a = Path.Combine("Content", "sounds");
-            string[] k;
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                k = Directory.GetFiles(Path.Combine("bin", "Debug", "net8.0", "Content", "sounds")).Where(x => x.EndsWith("xnb")).ToArray();
-            }
-            else{
-                k = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Content", "sounds")).Where(x => x.EndsWith("xnb")).ToArray();
-            }
+            string[] k = Directory.GetFiles(Path.Combine(AppContext.BaseDirectory, "Content", "sounds")).Where(x => x.EndsWith("xnb")).ToArray();
             if (k.Length > 0) 
             {
 

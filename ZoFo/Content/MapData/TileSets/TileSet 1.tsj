@@ -8,15 +8,15 @@
      "width":24
     },
  "image":"..\/..\/Textures\/TileSetImages\/TilesetFloor.png",
- "imageheight":832,
- "imagewidth":704,
+ "imageheight":417,
+ "imagewidth":352,
  "margin":0,
  "name":"TileSet 1",
  "objectalignment":"topleft",
  "spacing":0,
  "tilecount":572,
  "tiledversion":"1.10.2",
- "tileheight":32,
+ "tileheight":16,
  "tiles":[
         {
          "id":0,
@@ -2315,7 +2315,7 @@
          "id":571,
          "type":"Tile"
         }],
- "tilewidth":32,
+ "tilewidth":16,
  "type":"tileset",
  "version":"1.10",
  "wangsets":[

@@ -27,10 +27,12 @@ public class Player : LivingEntity
     public Player(Vector2 position) : base(position)
     {
         graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 100, 100);
-        collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100);
+        collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100); 
         speed = 10;
         //isTryingToInteract = false;
-        //IsTryingToShoot = false;
+        //IsTryingToShoot = false; 
+
+        StartAnimation("player_look_down"); 
     }
 
 
@@ -39,9 +41,9 @@ public class Player : LivingEntity
 
         MovementLogic();
     }
-    public void MovementLogic()
+    public void MovementLogic() 
     {
-        velocity = InputPlayerRotation * speed;
+        velocity = InputPlayerRotation * speed; 
     }
     public void HandleNewInput(UpdateInput updateInput)
     {
