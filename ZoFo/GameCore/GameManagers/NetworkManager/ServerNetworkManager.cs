@@ -53,8 +53,9 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// <returns></returns>
         public static IPAddress GetIp()
         {
-            string hostName = Dns.GetHostName(); // Retrive the Name of HOST                                              
-            string myIP = Dns.GetHostByName(hostName).AddressList[1].ToString();// Get the IP
+            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
+            var ipList =Dns.GetHostByName(hostName).AddressList;                                              
+            string myIP = ipList[ipList.Count()-1].ToString();// Get the IP
             return IPAddress.Parse(myIP);
         }
 
