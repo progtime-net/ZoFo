@@ -98,8 +98,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public static IPAddress GetIp()
         {
             string hostName = Dns.GetHostName(); // Retrive the Name of HOST                                              
-            string myIP = Dns.GetHostByName(hostName).AddressList[1].ToString();// Get the IP
-            return IPAddress.Parse(myIP);
+            //string myIP = Dns.GetHostByName(hostName).AddressList[1].ToString();// Get the IP
+            return IPAddress.Parse("127.0.0.1");
         }
 
         //поток 2
