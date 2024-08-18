@@ -199,6 +199,21 @@
 #begin Textures/Animations/testAnimationExample.animation
 /copy:Textures/Animations/testAnimationExample.animation
 
+#begin Textures/Animations/zombie_attack.animation
+/copy:Textures/Animations/zombie_attack.animation
+
+#begin Textures/Animations/zombie_damaged.animation
+/copy:Textures/Animations/zombie_damaged.animation
+
+#begin Textures/Animations/zombie_death.animation
+/copy:Textures/Animations/zombie_death.animation
+
+#begin Textures/Animations/zombie_idle.animation
+/copy:Textures/Animations/zombie_idle.animation
+
+#begin Textures/Animations/zombie_walk.animation
+/copy:Textures/Animations/zombie_walk.animation
+
 #begin Textures/AnimationTextures/Character/hr-level1_idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -282,6 +297,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/AnimationTextures/unicorn.png
+
+#begin Textures/AnimationTextures/Zombie/zombie_spritesheet_v1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Zombie/zombie_spritesheet_v1.png
+
+#begin Textures/AnimationTextures/Zombie/zombie_spritesheet_v2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Zombie/zombie_spritesheet_v2.png
 
 #begin Textures/GUI/background/base.png
 /importer:TextureImporter

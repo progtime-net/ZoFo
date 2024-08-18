@@ -15,7 +15,7 @@ public class Wood : Collectable
     {
 
     }
-    public override void OnInteraction(object sender, CollisionComponent e)
+    public override void OnInteraction(GameObject sender)
     {
         AppManager.Instance.server.AddData(new UpdateLoot("Wood"));
         AppManager.Instance.server.DeleteObject(this);

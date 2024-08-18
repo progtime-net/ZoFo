@@ -51,18 +51,17 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// </summary>
         /// <returns></returns>
         public static IPAddress GetIp()
-        {
-            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
-            var ipList = Dns.GetHostByName(hostName).AddressList;
-
+        { 
+            /*string hostName = Dns.GetHostName(); // Retrive the Name of HOST
+            var ipList = Dns.GetHostByName(hostName).AddressList; 
             foreach (var ip in ipList)
             {
                 if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                 {
                     return ip;
-                }
-            }
-            return IPAddress.Loopback;
+                } 
+            }*/
+          return IPAddress.Parse("127.0.0.1"); 
         }
 
         /// <summary>
@@ -80,15 +79,15 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             //Что это?
             //по 10 паков за раз TODO FIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXIT
             List<UpdateData> datasToSend = new List<UpdateData>();
-            for (int i = 0; i < 5 && i<updates.Count; i++)
+            for (int i = 0; i < 200 && i<updates.Count; i++)
                 datasToSend.Add(updates[i]);
             string data = JsonSerializer.Serialize(datasToSend);
             var databytes = Encoding.UTF8.GetBytes(data);
-            foreach (var item in clients)
+            foreach (Socket socket in clients)
             {
-                item.SendAsync(databytes);
+                clients[0].SendAsync(databytes, SocketFlags.Partial);
             }
-            for (int i = 0; i < 5 && i< datasToSend.Count; i++)
+            for (int i = 0; i < 200 && i< datasToSend.Count; i++)
                 updates.RemoveAt(0); 
         }
 
@@ -171,8 +170,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             Socket client = (Socket)socket;
             while (client.Connected)
             {
-                var buff = new byte[1024];
-                var answ = client.Receive(buff);
+                var buff = new byte[65535];
+                var answ = client.Receive(buff, SocketFlags.Partial);
                 string response = Encoding.UTF8.GetString(buff, 0, answ);
                 GetDataSend(response);
             }

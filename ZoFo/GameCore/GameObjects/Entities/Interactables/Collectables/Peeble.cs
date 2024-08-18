@@ -20,7 +20,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
         {
 
         }
-        public override void OnInteraction(object sender, CollisionComponent e)
+        public override void OnInteraction(GameObject sender)
         {
             AppManager.Instance.server.AddData(new UpdateLoot("Peeble"));
             AppManager.Instance.server.DeleteObject(this);

@@ -16,7 +16,7 @@ public class Door : Interactable
         //graphicsComponent.OnAnimationEnd += _ => { isOpened = !isOpened; };//���������, ��� ����� ������ ������������� - SD
     }
 
-    public override void OnInteraction(object sender, CollisionComponent e)
+    public override void OnInteraction(GameObject sender)
     {
         //graphicsComponent.AnimationSelect("DoorInteraction", isOpened);
         //graphicsComponent.AnimationStep();

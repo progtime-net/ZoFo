@@ -41,7 +41,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
             // Загрузка TileSet-ов по TileSetInfo
             foreach (TileSetInfo tileSetInfo in _tileMap.TileSets)
             {
-                TileSet tileSet = LoadTileSet(Path.Combine("Content", "MapData", "TileMaps", tileSetInfo.Source));
+                TileSet tileSet = LoadTileSet(Path.Combine(AppContext.BaseDirectory, "Content", "MapData", "TileMaps", tileSetInfo.Source));
                 tileSet.FirstGid = tileSetInfo.FirstGid;
                 _tileSets.Add(tileSet);
             }

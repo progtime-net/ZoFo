@@ -43,12 +43,11 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         public GameObject gameObject { get; set; }
 
 
-        bool doesStop;
-        bool hasCollision;
+        public bool hasCollision;
         public Rectangle stopRectangle;
 
         // triggers for rectangle
-        bool isTrigger;
+        public bool isTrigger;
         public Rectangle triggerRectangle;
 
         //delegate
@@ -58,13 +57,21 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
 
         //events DoorInteraction
-        public event EventHandler<CollisionComponent> OnTriggerEnter;
-        public event EventHandler<CollisionComponent> OnTriggerZone;
-        public event EventHandler<CollisionComponent> OnTriggerExit;
- 
-        public event EventHandler<CollisionComponent> OnCollision; 
+        public delegate void CollisionAction(Player player);
+        public event CollisionAction? OnTriggerEnter;
+        public event CollisionAction? OnTriggerZone;
+        public event CollisionAction? OnTriggerExit;
 
-         
-         
+        public delegate void CoollisionEvent(GameObject gameObject);
+        public event CoollisionEvent? OnCollision;
+
+
+
+        public void PlayerInZone(Player player) => OnTriggerZone?.Invoke(player);
+        public void PlayerEnter(Player player) => OnTriggerEnter?.Invoke(player);
+        public void PlayerExit(Player player) => OnTriggerExit?.Invoke(player);
+        public void OnCollisionWithObject(GameObject gameObject) => OnCollision?.Invoke(gameObject);
+
+
     }   
 }

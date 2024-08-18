@@ -18,17 +18,21 @@ public class Player : LivingEntity
     /// <summary>
     /// Факт того, что плеер в этом апдейте пытается стрелять
     /// </summary>
-    public bool IsTryingToShoot { get; set; }
+    //public bool IsTryingToShoot { get; set; }
     private float speed;
     private int health;
     public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_look_down" }, "player_look_down");
     private LootData lootData;
+    //public bool isTryingToInteract { get; set; }
     public Player(Vector2 position) : base(position)
     {
-        //InputWeaponRotation = new Vector2(0, 0);
-        //InputPlayerRotation = new Vector2(0, 0);
         graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 100, 100);
-        collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100);
+        collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100); 
+        speed = 10;
+        //isTryingToInteract = false;
+        //IsTryingToShoot = false; 
+
+        StartAnimation("player_look_down"); 
     }
 
 
@@ -37,20 +41,21 @@ public class Player : LivingEntity
 
         MovementLogic();
     }
-    float t;
-    public void MovementLogic()
+    public void MovementLogic() 
     {
-        //velocity.X = 3+(float)Math.Sin(t);
-        t++;
-        if (InputPlayerRotation.X > 0.9)
-        {
-        }
-        if (Keyboard.GetState().IsKeyDown(Keys.D)) velocity.X = 5;
-        if (Keyboard.GetState().IsKeyDown(Keys.A)) velocity.X = -5;
-        if (Keyboard.GetState().IsKeyDown(Keys.S)) velocity.Y = 5;
-        if (Keyboard.GetState().IsKeyDown(Keys.W)) velocity.Y = -5;
+        velocity = InputPlayerRotation * speed; 
     }
     public void HandleNewInput(UpdateInput updateInput)
+    {
+        InputPlayerRotation = updateInput.InputMovementDirection;
+        InputWeaponRotation = updateInput.InputAttackDirection;
+
+    }
+    public void HandleInteract(UpdateInputInteraction updateInputInteraction)
+    {
+        //isTryingToInteract = true;
+    }
+    public void HandleShoot(UpdateInputShoot updateInputShoot)
     {
 
     }

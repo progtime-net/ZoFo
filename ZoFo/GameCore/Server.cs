@@ -12,6 +12,7 @@ using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.MapManager;
 using ZoFo.GameCore.GameManagers.NetworkManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.Entities;
@@ -21,6 +22,7 @@ using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 using ZoFo.GameCore.Graphics;
+using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
 
 namespace ZoFo.GameCore
 {
@@ -77,11 +79,17 @@ namespace ZoFo.GameCore
                     break;
                 case "UpdatePlayerParametrs":
                     break;
-                case "UpdatePosition":
+                case "UpdateInput":
+                    players[0].HandleNewInput(updateData as UpdateInput);
                     break;
                 case "UpdateTileCreated":
                     break;
-
+                case "UpdateInputInteraction":
+                    players[0].HandleInteract(updateData as UpdateInputInteraction);
+                    break;
+                case "UpdateInputShoot":
+                    players[0].HandleShoot(updateData as UpdateInputShoot);
+                    break;
             }
         }
 
@@ -130,6 +138,9 @@ namespace ZoFo.GameCore
             //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));
             AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(740, 140)));
             AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1000, 1000)));
+            AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300, 1000)));
+            AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1500, 1000)));
+            AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1700, 1000)));
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(140, 440)));
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(240, 440)));
         }
@@ -155,7 +166,7 @@ namespace ZoFo.GameCore
                 {
                     go.UpdateLogic();
                 }
-                collisionManager.UpdatePositions();
+                collisionManager.ResolvePhysics();
                 ticks = 0;
                 networkManager.SendData();
             }
@@ -172,30 +183,13 @@ namespace ZoFo.GameCore
         {
 
             gameObjects.Add(gameObject);
-            if (gameObject is StopObject)
-            {
-                AddData(new UpdateStopObjectCreated()
-                {
-                    Position = (gameObject as StopObject).position,
-                    sourceRectangle = (gameObject as StopObject).sourceRectangle,
-                    Size = (gameObject as StopObject).graphicsComponent.ObjectDrawRectangle.Size,
-                    collisions = (gameObject as StopObject).collisionComponents.Select(x=>x.stopRectangle).ToArray(),
-                    tileSetName = ((gameObject as StopObject).graphicsComponent as StaticGraphicsComponent)._textureName
-                });//TODO 
-                foreach (var item in (gameObject as StopObject).collisionComponents)
-                {
-                    collisionManager.Register(item);
-
-                }
-                return;
-            }
             if (gameObject is MapObject)
             {
                 AddData(new UpdateTileCreated()
                 {
                     Position = (gameObject as MapObject).position,
-                    sourceRectangle = (gameObject as MapObject).sourceRectangle,
-                    Size = (gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size,
+                    sourceRectangle = new SerializableRectangle((gameObject as MapObject).sourceRectangle),
+                    Size = new SerializablePoint((gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size),
                     tileSetName = ((gameObject as MapObject).graphicsComponent as StaticGraphicsComponent)._textureName
                 });//TODO 
                 return;
@@ -228,12 +222,18 @@ namespace ZoFo.GameCore
         /// Удаляет игровой объект
         /// </summary>
         /// <param name="gameObject"></param>
-        public void DeleteObject(GameObject gameObject)
+        public void DeleteObject(Entity entity)
         {
-            gameObjects.Remove(gameObject);
+            if (gameObjects.Contains(entity))
+                gameObjects.Remove(entity);
+            if (entities.Contains(entity))
+                entities.Remove(entity);
+            if (players.Contains(entity))
+                players.Remove(entity as Player);
             AddData(new UpdateGameObjectDeleted()
-                { GameObjectType = gameObject.GetType().Name}
+                { GameObjectType = entity.GetType().Name, IdEntity = entity .Id}
             );
+            collisionManager.Deregister(entity.collisionComponent);
         }
     }
     
