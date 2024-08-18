@@ -14,7 +14,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
 {
     public class BottleOfWater : Collectable
     {
-        public override GraphicsComponent graphicsComponent { get; } = new(new List<string> { "BottleOfWater" }, "BottleOfWater");
+        public override StaticGraphicsComponent graphicsComponent { get; } = new("BottleOfWater");
         public BottleOfWater(Vector2 position) : base(position)
         {
 

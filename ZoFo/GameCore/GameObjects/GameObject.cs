@@ -13,7 +13,7 @@ public abstract class GameObject
     public Vector2 position;
 
     public Vector2 rotation; //вектор направления объекта
-    public abstract GraphicsComponent graphicsComponent { get; }
+    public virtual GraphicsComponent graphicsComponent { get; }
 
     #region ServerSide
     public GameObject(Vector2 position)
@@ -81,7 +81,7 @@ public abstract class GameObject
     /// </summary>
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        graphicsComponent.DrawAnimation(graphicsComponent.ObjectDrawRectangle, spriteBatch);
+        graphicsComponent.Draw(graphicsComponent.ObjectDrawRectangle, spriteBatch);
         //debug
         DrawDebugRectangle(spriteBatch, graphicsComponent.ObjectDrawRectangle);
 

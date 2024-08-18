@@ -13,7 +13,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
 {
     class RottenFlesh:Collectable
     {
-        public override GraphicsComponent graphicsComponent { get; } = new(new List<string> { "RottenFlesh" }, "RottenFlesh");
+        public override StaticGraphicsComponent graphicsComponent { get; } = new("RottenFlesh");
         public RottenFlesh(Vector2 position) : base(position)
         {
 

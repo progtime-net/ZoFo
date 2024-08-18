@@ -13,7 +13,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
 {
     class Antiradine:Collectable
     {
-        public override GraphicsComponent graphicsComponent { get; } = new(new List<string> { "Antiradine" }, "Antiradine");
+        public override StaticGraphicsComponent graphicsComponent { get; } = new("Antiradine");
         public Antiradine(Vector2 position) : base(position)
         {
 

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Input;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
@@ -21,15 +21,14 @@ public class Player : LivingEntity
     public bool IsTryingToShoot { get; set; }
     private float speed;
     private int health;
+    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_running_top_rotate" }, "player_running_top_rotate");
     private LootData lootData;
-    public override GraphicsComponent graphicsComponent { get; } = new GraphicsComponent(new List<string> { "player_running_top_rotate" }, "player_running_top_rotate");
     public Player(Vector2 position) : base(position)
     {
         //InputWeaponRotation = new Vector2(0, 0);
         //InputPlayerRotation = new Vector2(0, 0);
-
+        graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 100, 100);
         collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100);
-        graphicsComponent.ObjectDrawRectangle = new Rectangle(0,0,100,100);
     }
 
 

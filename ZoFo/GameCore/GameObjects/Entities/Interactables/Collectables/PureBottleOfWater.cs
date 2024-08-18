@@ -13,7 +13,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
 {
      class PureBottleOfWater:Collectable
     {
-        public override GraphicsComponent graphicsComponent { get; } = new(new List<string> { "PureBottleOfWater" }, "PureBottleOfWater");
+        public override StaticGraphicsComponent graphicsComponent { get; } = new("PureBottleOfWater");
 
         public PureBottleOfWater(Vector2 position) : base(position)
         {
