@@ -17,7 +17,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
             health = 5;
             speed = 2;
             graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 30, 30);
-            collisionComponent.stopRectangle = new Rectangle(0, 10, 30, 20);
+            collisionComponent.stopRectangle = new Rectangle(10, 20, 10, 10);
         }
 
         public override void Update()
