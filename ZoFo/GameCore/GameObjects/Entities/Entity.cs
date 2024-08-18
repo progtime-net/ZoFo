@@ -48,6 +48,12 @@ namespace ZoFo.GameCore.GameObjects.Entities
             });
 
         }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            DrawDebugRectangle(spriteBatch, collisionComponent.stopRectangle.SetOrigin(position), Color.Orange);
+
+            base.Draw(spriteBatch);
+        }
     }
 }
 
