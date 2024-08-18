@@ -8,7 +8,6 @@ using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.Graphics
 {
-
     public class StaticGraphicsComponent : GraphicsComponent
     {
         private Texture2D texture;
@@ -18,7 +17,7 @@ namespace ZoFo.GameCore.Graphics
         {
             LoadContent();
         }
-        
+
         public StaticGraphicsComponent(string textureName)
         {
             BuildComponent(textureName);
@@ -29,7 +28,7 @@ namespace ZoFo.GameCore.Graphics
         {
             _textureName = textureName;
         }
-        
+
 
         public override void LoadContent()
         {
@@ -37,7 +36,7 @@ namespace ZoFo.GameCore.Graphics
             {
                 return;
             }
-            
+
             texture = AppManager.Instance.Content.Load<Texture2D>(_textureName);
         }
 
@@ -53,19 +52,23 @@ namespace ZoFo.GameCore.Graphics
             destinationRectangle.X -= CameraPosition.X;
             destinationRectangle.Y -= CameraPosition.Y;
             destinationRectangle = Scaling(destinationRectangle);
-            _spriteBatch.Draw(texture, destinationRectangle, Color.White);
+            _spriteBatch.Draw(texture, destinationRectangle, texture.Bounds, Color.White, Rotation,
+                Vector2.Zero, Flip, 0);
         }
 
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch, Rectangle sourceRectangle)
-        {
-            //DebugHUD.Instance.Log("draw ");
+        { 
+            //DebugHUD.Instance.Log("draw "); 
+            // Uncomment to go brrrr
+            //Rotation = new Random().Next(1, 365); 
 
             destinationRectangle.X -= CameraPosition.X;
             destinationRectangle.Y -= CameraPosition.Y;
 
             destinationRectangle = Scaling(destinationRectangle);
             _spriteBatch.Draw(texture,
-                destinationRectangle, sourceRectangle, Color.White);
+                destinationRectangle, sourceRectangle, Color.White, Rotation,
+                Vector2.Zero, Flip, 0);
         }
     }
 }

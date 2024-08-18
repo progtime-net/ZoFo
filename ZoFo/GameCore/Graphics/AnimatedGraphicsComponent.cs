@@ -125,8 +125,9 @@ namespace ZoFo.GameCore.Graphics
 
             buildSourceRectangle();
             SetInterval();
-        }
 
+        }
+         
         public void StopAnimation()
         {
             currentFrame = 0;
@@ -163,6 +164,7 @@ namespace ZoFo.GameCore.Graphics
             }
 
             interval--;
+            
         }
 
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch)
@@ -187,8 +189,9 @@ namespace ZoFo.GameCore.Graphics
             destinationRectangle.Y -= CameraPosition.Y;
 
             destinationRectangle = Scaling(destinationRectangle);
-            _spriteBatch.Draw(texture,
-                destinationRectangle, sourceRectangle, Color.White);
+
+            _spriteBatch.Draw(texture, destinationRectangle, sourceRectangle, Color.White, Rotation,
+                Vector2.Zero, Flip, 0);
         }
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch, Rectangle sourceRectangle)
         {
@@ -213,7 +216,8 @@ namespace ZoFo.GameCore.Graphics
 
             destinationRectangle = Scaling(destinationRectangle);
             _spriteBatch.Draw(texture,
-                destinationRectangle, sourceRectangle, Color.White);
+                destinationRectangle, sourceRectangle, Color.White, 0,
+                Vector2.Zero, Flip, 0);
         } 
         private void buildSourceRectangle()
         {

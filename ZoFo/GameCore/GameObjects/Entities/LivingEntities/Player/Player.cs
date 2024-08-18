@@ -39,8 +39,9 @@ public class Player : LivingEntity
     }
     float t;
     public void MovementLogic()
-    {
-        IsTryingToShoot = true;
+    { 
+        IsTryingToShoot = true; 
+        StartAnimation("player_look_down");//gslkjfsnblkjsdfnnlkjbn;zkcjnb;kkjnzx;cjkb;kzjxb;kSErgo 
         //velocity.X = 3+(float)Math.Sin(t);
         t++;
         if (InputPlayerRotation.X > 0.9)
