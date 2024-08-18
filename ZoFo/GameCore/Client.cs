@@ -12,9 +12,9 @@ using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using System.Drawing;
 using System.Reflection;
-using ZoFo.GameCore.GameObjects.Entities; 
+using ZoFo.GameCore.GameObjects.Entities;
 using System.Net.Sockets;
-using System.Net; 
+using System.Net;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
@@ -42,10 +42,14 @@ namespace ZoFo.GameCore
 
             // Подписка на действия инпутменеджера.
             // Отправляются данные апдейтса с обновлением инпута
-            AppManager.Instance.InputManager.ActionEvent += () => networkManager.AddData(new UpdateInput(){
-                InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
-                InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
-            });
+            AppManager.Instance.InputManager.ActionEvent += () =>
+            {
+                networkManager.AddData(new UpdateInput()
+                {
+                    InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
+                    InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
+                });
+            };
         }
 
         public void OnDataSend(string data)
@@ -70,7 +74,8 @@ namespace ZoFo.GameCore
         #endregion
 
         List<MapObject> mapObjects = new List<MapObject>();
-        List<GameObject> gameObjects = new List<GameObject>();
+        List<GameObject> gameObjects = new List<GameObject>(); 
+        List<Player> players = new List<Player>();
         List<StopObject> stopObjects = new List<StopObject>();
         /// <summary>
         /// Клиент должен обнговлять игру анимаций
@@ -102,7 +107,7 @@ namespace ZoFo.GameCore
 
         internal void GotData(UpdateData update)
         {
-            if (update is UpdateTileCreated) 
+            if (update is UpdateTileCreated)
             {
                 mapObjects.Add(
                 new MapObject(
@@ -112,7 +117,7 @@ namespace ZoFo.GameCore
                     (update as UpdateTileCreated).tileSetName
                     ));
             }
-            else if (update is UpdateStopObjectCreated) 
+            else if (update is UpdateStopObjectCreated)
             {
                 stopObjects.Add(
                 new StopObject(
@@ -125,12 +130,18 @@ namespace ZoFo.GameCore
             }
             else if (update is UpdateGameObjectCreated)
             {
+                GameObject created_gameObject;
                 if ((update as UpdateGameObjectCreated).GameObjectType == "EntittyForAnimationTests")
                     gameObjects.Add(new EntittyForAnimationTests((update as UpdateGameObjectCreated).position));
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
-                    gameObjects.Add(new Player((update as UpdateGameObjectCreated).position));
+                {
+                    created_gameObject = new Player((update as UpdateGameObjectCreated).position);
+                    players.Add(created_gameObject as Player);
+                    gameObjects.Add(created_gameObject);
+                }
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
-                    gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position))                if ((update as UpdateGameObjectCreated).GameObjectType == "Zombie")
+                    gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position));
+                if ((update as UpdateGameObjectCreated).GameObjectType == "Zombie")
                     gameObjects.Add(new Zombie((update as UpdateGameObjectCreated).position));
 
 

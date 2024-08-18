@@ -1,5 +1,5 @@
 {
-  "id": "player_look_down",
+  "id": "player_down_idle",
   "textureName": "Textures/AnimationTextures/Character/hr-level1_idle",
   "startSpriteRectangle": {
     "X": 0,

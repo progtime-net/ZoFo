@@ -21,7 +21,7 @@ public class Player : LivingEntity
     public bool IsTryingToShoot { get; set; }
     private float speed;
     private int health;
-    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_running_top_rotate" }, "player_running_top_rotate");
+    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_look_down" }, "player_look_down");
     private LootData lootData;
     public Player(Vector2 position) : base(position)
     {

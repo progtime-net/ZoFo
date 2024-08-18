@@ -1,11 +1,11 @@
 {
-  "id": "player_look_down",
-  "textureName": "Textures/AnimationTextures/Character/hr-level1_idle",
+  "id": "player_top_mining",
+  "textureName": "Textures/AnimationTextures/Character/hr-level1_mining_tool-1",
   "startSpriteRectangle": {
     "X": 0,
-    "Y": 464,
-    "Width": 92,
-    "Height": 116
+    "Y": 0,
+    "Width": 196,
+    "Height": 194
   },
   "frameSecond": [
     {
@@ -14,7 +14,8 @@
     }
   ],
   "textureFrameInterval": 0,
-  "framesCount": 22,
+  "framesCount": 13,
   "isCycle": true,
   "offset": "0, 0"
+
 }

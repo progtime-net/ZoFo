@@ -1,0 +1,21 @@
+{
+  "id": "player_idle_left_mining",
+  "textureName": "Textures/AnimationTextures/Character/hr-level1_mining_tool-1",
+  "startSpriteRectangle": {
+    "X": 0,
+    "Y": 1358,
+    "Width": 196,
+    "Height": 194
+  },
+  "frameSecond": [
+    {
+      "Item1": 0,
+      "Item2": 5
+    }
+  ],
+  "textureFrameInterval": 0,
+  "framesCount": 13,
+  "isCycle": true,
+  "offset": "0, 0"
+
+}

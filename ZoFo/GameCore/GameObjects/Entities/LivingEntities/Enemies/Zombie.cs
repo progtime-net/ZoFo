@@ -11,7 +11,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
 {
     class Zombie : Enemy
     {
-        public override GraphicsComponent graphicsComponent { get; } = new("Textures/icons/8");
+        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent("Textures/icons/8");
         public Zombie(Vector2 position) : base(position)
         {
             health = 5;
@@ -22,7 +22,9 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
         
         public override void Update()
         {
-            Vector2 duration = Vector2.Normalize(new Vector2(600 - position.X, 500 - position.Y));
+            Vector2 duration = Vector2.Normalize(
+                AppManager.Instance.server.players[0].position - position
+                );
             velocity=new Vector2(duration.X * speed, duration.Y*speed);
             if(position.X>595 && 605>position.X && position.Y>495 && 505>position.Y)
             {

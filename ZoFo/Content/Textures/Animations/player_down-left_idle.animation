@@ -1,9 +1,9 @@
 {
-  "id": "player_look_down",
+  "id": "player_down-left_idle",
   "textureName": "Textures/AnimationTextures/Character/hr-level1_idle",
   "startSpriteRectangle": {
     "X": 0,
-    "Y": 464,
+    "Y": 560,
     "Width": 92,
     "Height": 116
   },
@@ -17,4 +17,5 @@
   "framesCount": 22,
   "isCycle": true,
   "offset": "0, 0"
+
 }

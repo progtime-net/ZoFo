@@ -17,12 +17,20 @@ namespace ZoFo.GameCore.Graphics
             StreamReader reader;
             foreach (var fileName in animationFilesNames)
             {
-                if (!fileName.EndsWith(".animation")) continue;
-                reader = new StreamReader(fileName);
-                string json = reader.ReadToEnd();
-                AnimationContainer animation = JsonConvert.DeserializeObject<AnimationContainer>(json);
-                Animations.Add(animation);
-                reader.Close();
+                try
+                {
+                    if (!fileName.EndsWith(".animation")) continue;
+                    reader = new StreamReader(fileName);
+                    string json = reader.ReadToEnd();
+                    AnimationContainer animation = JsonConvert.DeserializeObject<AnimationContainer>(json);
+                    Animations.Add(animation);
+                    reader.Close();
+                }
+                catch 
+                {
+
+
+                }
             }
             
         }
