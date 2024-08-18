@@ -9,6 +9,7 @@ using System.Linq;
 
 using Newtonsoft.Json;
 using Microsoft.Xna.Framework.Media;
+using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.GameManagers
 {
@@ -21,15 +22,14 @@ namespace ZoFo.GameCore.GameManagers
         public void LoadSounds() // метод для загрузки звуков из папки
         {
             //List<string> sounds = AppManager.Instance.Content.Load<List<string>>("sounds/");
-            
-            var k = Directory.GetFiles(Directory.GetCurrentDirectory() + "//Content//sounds").Where(x => x.EndsWith("xnb"));
+            var k = Directory.GetFiles(Path.Combine(AppContext.BaseDirectory, "Content", "sounds")).Where(x => x.EndsWith("xnb"));
             if (k.Count() > 0)
             {
 
                 string[] soundFiles = k.Select(x => x.Split("\\").Last().Split("/").Last().Replace(".xnb", "")).ToArray();// папка со звуками там где exe 
                 foreach (var soundFile in soundFiles)
                 {
-                    Sounds.Add(soundFile, AppManager.Instance.Content.Load<SoundEffect>("sounds//" + soundFile));
+                    Sounds.Add(soundFile, AppManager.Instance.Content.Load<SoundEffect>(Path.Combine("sounds",  soundFile)));
                 }
 
             }
