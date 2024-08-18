@@ -33,13 +33,13 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                 PropertyNameCaseInsensitive = true
             };
             TileMap tileMap =
-                JsonSerializer.Deserialize<TileMap>(File.ReadAllText(string.Format(_templatePath, mapName)), options);
+                JsonSerializer.Deserialize<TileMap>(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, string.Format(_templatePath, mapName))), options);
 
             // Загрузка TileSet-ов по TileSetInfo
             List<TileSet> tileSets = new List<TileSet>();
             foreach (TileSetInfo tileSetInfo in tileMap.TileSets)
             {
-                TileSet tileSet = LoadTileSet(Path.Combine("Content", "MapData", "TileMaps", tileSetInfo.Source));
+                TileSet tileSet = LoadTileSet(Path.Combine(AppContext.BaseDirectory, "Content", "MapData", "TileMaps", tileSetInfo.Source));
                 tileSet.FirstGid = tileSetInfo.FirstGid;
                 tileSets.Add(tileSet);
             }
@@ -75,14 +75,15 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                         (i / chunk.Height) * tileMap.TileHeight + chunk.Y * tileMap.TileHeight);
 
                                     Tile tile = tileSet.Tiles[number]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
-
+                                    string textureName = Path.Combine(AppContext.BaseDirectory, "Content", "Textures", "TileSetImages",
+                                        Path.GetFileName(tileSet.Image).Replace(".png", ""));
                                     switch (tile.Type)
                                     {
                                         case "Tile":
                                             AppManager.Instance.server.RegisterGameObject(new MapObject(position,
                                                 new Vector2(tileSet.TileWidth, tileSet.TileHeight),
                                                 sourceRectangle,
-                                                "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", "")));
+                                                textureName));
                                             break;
 
                                         case "StopObject":
@@ -91,7 +92,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                             AppManager.Instance.server.RegisterGameObject(new StopObject(position,
                                                 new Vector2(tileSet.TileWidth, tileSet.TileHeight),
                                                 sourceRectangle,
-                                                "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", ""),
+                                                textureName,
                                                 collisionRectangles.ToArray()));
                                             break;
 
