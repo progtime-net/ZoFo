@@ -74,6 +74,7 @@ public class SelectingServerGUI : AbstractGUI
             {
                 if (int.TryParse(endpoint[1], out port))
                 {
+
                     client.JoinRoom(endpoint[0], port);
                     AppManager.Instance.SetClient(client);
                     AppManager.Instance.SetGUI(new WaitingForPlayersGUI(false));

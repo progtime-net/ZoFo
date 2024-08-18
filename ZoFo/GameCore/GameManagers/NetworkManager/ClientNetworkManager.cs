@@ -20,11 +20,13 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private IPEndPoint endPoint;
         private Socket socket;
         List<UpdateData> updates = new List<UpdateData>();
+        private List<Datagramm> waitingDatagramm = new List<Datagramm>();
+        private int currentServerDatagrammId = 0;
         public delegate void OnDataSent(string Data);
         public event OnDataSent GetDataSent; // event
         public bool IsConnected { get { return socket.Connected; } }
         public IPEndPoint InfoConnect => (IPEndPoint)socket.LocalEndPoint ?? endPoint;
-
+        public EndPoint EndPointServer { get; set; }
         public ClientNetworkManager()
         {
             Init();
@@ -42,8 +44,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         public void SendData()
         {
-                byte[] bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(updates));  //нужно сериализовать
-                socket.Send(bytes);
+            byte[] bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(updates));  //нужно сериализовать
+            socket.Send(bytes);
         }
 
         public void AddData(UpdateData UpdateData)
@@ -51,12 +53,66 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             updates.Add(UpdateData);
         }
 
+#region Working With Data RDP
+
+        public void AnalyzeData(string data)
+        {
+            Datagramm Dgramm = JsonSerializer.Deserialize<Datagramm>(data);
+            if (Dgramm.isImportant)
+            {
+                if (Dgramm.DatagrammId == currentServerDatagrammId + 1)
+                {
+                    ExecuteDatagramm(Dgramm);
+                    currentServerDatagrammId++;
+                    CheckDatagramm();
+                }
+                else if (Dgramm.DatagrammId > currentServerDatagrammId + 1)
+                {
+                    waitingDatagramm.Add(Dgramm);
+                }
+                else
+                {
+                    Console.WriteLine("Апдейты " + Dgramm.DatagrammId + ", уже приходили, пропускаем");
+                }
+                SendAcknowledgement(Dgramm.DatagrammId);
+            }
+            else
+            {
+                ExecuteDatagramm(Dgramm);
+            }
+
+        }
+        public void SendAcknowledgement(int DatagrammId)
+        {
+           
+            Datagramm Dgramm = new Datagramm() { DatagrammId = DatagrammId };
+            string data = JsonSerializer.Serialize(Dgramm);
+            byte[] buffer = Encoding.UTF8.GetBytes(data);
+            socket.SendTo(buffer, EndPointServer);
+
+        }
+        void CheckDatagramm()
+        {
+            Datagramm orderedDgramm = waitingDatagramm.Find(x => x.DatagrammId == currentServerDatagrammId + 1);
+            while (orderedDgramm != null)
+            {
+                ExecuteDatagramm(orderedDgramm);
+                currentServerDatagrammId++;
+                orderedDgramm = waitingDatagramm.Find(x => x.DatagrammId == currentServerDatagrammId + 1);
+            }
+        }
+        void ExecuteDatagramm(Datagramm Dgramm)
+        {
+            //Достаёт Update и передает в ивент
+        }
+
+#endregion
         public void StopConnection()
-        { 
+        {
             socket.Shutdown(SocketShutdown.Both);
             socket.Close();
         }
-
+        #region Join
         /// <summary>
         /// приложение пытается подключиться к комнате
         /// </summary>
@@ -95,7 +151,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             listen.IsBackground = true;
             listen.Start();
         }
-
+        #endregion
         public static IPAddress GetIp()
         {
             string hostName = Dns.GetHostName(); // Retrive the Name of HOST
@@ -114,12 +170,16 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         //поток 2
         public void StartListening()
         {
-            while(socket.Connected)
+            byte[] buffer = new byte[65535];
+            string data;
+            while (socket != null)
             {
-                byte[] bytes = new byte[65535];
-                var countAnsw = socket.Receive(bytes, SocketFlags.Partial);    //Вылетает если кто то закрыл
-                string update = Encoding.UTF8.GetString(bytes, 0, countAnsw);   // обновление отосланные сервером
-                GetDataSent(update);
+                EndPoint senderRemote = new IPEndPoint(IPAddress.Any, 0);
+                int size = socket.ReceiveFrom(buffer, buffer.Length, SocketFlags.None, ref senderRemote);
+                byte[] correctedBuffer = new byte[size];
+                Array.Copy(buffer, correctedBuffer, size);
+                data = Encoding.UTF8.GetString(correctedBuffer);
+                AnalyzeData(data);
             }
         }
     }
