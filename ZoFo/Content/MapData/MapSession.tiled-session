@@ -10,6 +10,9 @@
         "TileMaps"
     ],
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
         "TileMaps/TileSets/TileSet 1.tsj": {
             "scaleInDock": 1
         },
@@ -21,15 +24,24 @@
                 "y": 553.0303030303031
             }
         },
+        "TileMaps/main.tmj#IconSet": {
+            "dynamicWrapping": true,
+            "scaleInEditor": 1
+        },
         "TileSets/CollisionTileSet.tsj": {
             "scaleInDock": 0.75,
             "scaleInEditor": 1
         },
+        "TileSets/IconSet.tsj": {
+            "dynamicWrapping": true
+        },
         "TileSets/TileSet 1.tsj": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1.5
         },
         "TileSets/TilesetNature.tsj": {
+            "dynamicWrapping": false
             "scaleInDock": 1
         },
         "TileSets/WallSet.tsj": {
@@ -40,7 +52,8 @@
             "scaleInDock": 1
         }
     },
-    "last.imagePath": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/Textures/TileSetImages",
+    "last.imagePath": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/Textures/icons",
+    "last.objectTemplatePath": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/MapData/Templates",
     "openFiles": [
         "TileSets/TileSet 1.tsj",
         "TileMaps/main.tmj"
@@ -52,12 +65,14 @@
         "TileSets/CollisionTileSet.tsj",
         "TileSets/WallSet.tsj"
     ],
-    "stampsFolder": "C:/Users/artem/source/repos/ZoFo/ZoFo/Content/MapData/TileStamps",
+    "stampsFolder": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/MapData/TileStamps",
+    "tileset.embedInMap": false,
     "tileset.lastUsedFormat": "json",
     "tileset.margin": 0,
     "tileset.spacing": 0,
     "tileset.tileSize": {
         "height": 16,
         "width": 16
-    }
+    },
+    "tileset.type": 1
 }
