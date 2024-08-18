@@ -11,12 +11,12 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
 {
     class Zombie : Enemy
     {
-        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent("Textures/icons/8");
+        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "zombie_damaged" }, "zombie_damaged");
         public Zombie(Vector2 position) : base(position)
         {
             health = 5;
             speed =2;
-            collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100);
+            collisionComponent.stopRectangle = new Rectangle(0, 0, 52, 100);
             graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 100, 100);
         }
         
@@ -26,12 +26,8 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
                 AppManager.Instance.server.players[0].position - position
                 );
             velocity=new Vector2(duration.X * speed, duration.Y*speed);
-            if(position.X>595 && 605>position.X && position.Y>495 && 505>position.Y)
-            {
-                velocity = Vector2.Zero;
-            }
-            //position.X += velocity.X*t;
-            //position.Y += velocity.Y * t;
+            
+            
         }
     }
 }
