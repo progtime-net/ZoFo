@@ -23,7 +23,7 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
             }
         }
         public void Initialize()
-        {
+        { 
             tagItemPairs = new Dictionary<string, ItemInfo>();
             tagItemPairs.Add("wood", new ItemInfo("wood","Textures\\Test\\wood",false,null));
             tagItemPairs.Add("rock", new ItemInfo("rock", "Textures\\Test\\rock", false, null));
@@ -32,7 +32,7 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
             {
                 {"wood", 2},
                 {"Steel", 3}
-            }));
+            })); 
         }
         
     }

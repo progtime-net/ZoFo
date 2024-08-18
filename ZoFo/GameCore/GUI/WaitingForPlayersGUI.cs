@@ -17,6 +17,7 @@ public class WaitingForPlayersGUI : AbstractGUI
 {
     private DrawableUIElement menuBackground;
     private bool isHost;
+    private Label ip;
 
     public WaitingForPlayersGUI(bool isHost)
     {
@@ -26,35 +27,59 @@ public class WaitingForPlayersGUI : AbstractGUI
     {
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
-        
-        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures\\GUI\\background\\Waiting" };
+
+        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures/GUI/background/Waiting" };
         Elements.Add(menuBackground);
-        menuBackground.LoadTexture(AppManager.Instance.Content);
-        
-        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = "Waiting", fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font"});
-        
+        menuBackground.LoadTexture(AppManager.Instance.Content); 
+        //   string pcIp = 
+ 
+     //   string pcIp = 
+        ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts/Font3" };
+        Elements.Add(ip);  
         if (isHost)
         {
-            Button startButton = new Button(Manager) 
+            ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font3" };
+            Elements.Add(ip);
+            Button startButton = new Button(Manager)
             {
                 rectangle = new Rectangle(width / 2 - (width / 15) / 2, height / 2 + height / 4, (int)(width / 15), (int)(height / 20)),
                 text = "Start",
                 scale = 0.3f,
                 fontColor = Color.White,
                 mainColor = Color.Gray,
-                fontName = "Fonts\\Font"
+                fontName = "Fonts/Font"
             };
-            startButton.LeftButtonPressed += () => 
+            startButton.LeftButtonPressed += () =>
             {
                 // start
-                
+                AppManager.Instance.ChangeState(GameState.HostPlaying);
                 // ваш код здесь 
             };
             Elements.Add(startButton);
         }
+        else {
+            ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.client.InfoConnect.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font3" };
+            Elements.Add(ip);
+            Button waitButton = new Button(Manager)
+            {
+                rectangle = new Rectangle(width / 2 - (width / 15) / 2, height / 2 + height / 4, (int)(width / 15), (int)(height / 20)),
+                text = "WAITING",
+                scale = 0.3f,
+                fontColor = Color.White,
+                mainColor = Color.Gray,
+                fontName = "Fonts/Font"
+            };
+            waitButton.LeftButtonPressed += () =>
+            {
+                // start
+                AppManager.Instance.ChangeState(GameState.ClientPlaying);
+                // ваш код здесь 
+            };
+            Elements.Add(waitButton);
+        }
         
         Button bTExit = new Button(Manager)
-            { fontName = "Fonts\\Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures\\GUI\\checkboxs_off"};
+            { fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off"};
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -10,15 +11,14 @@ using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers.MapManager.MapElements;
 using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
-using ZoFo.GameCore.GameObjects.MapObjects.Tiles;
 
 namespace ZoFo.GameCore.GameManagers.MapManager
 {
     public class MapManager
     {
-
         private static readonly string _templatePath = "Content/MapData/TileMaps/{0}.tmj";
-        private static readonly float _scale = 1.0f;
+
+        //private static readonly float _scale = 1.0f;
         private List<TileSet> _tileSets = new List<TileSet>();
 
         /// <summary>
@@ -32,16 +32,18 @@ namespace ZoFo.GameCore.GameManagers.MapManager
             {
                 PropertyNameCaseInsensitive = true
             };
-            TileMap tileMap = JsonSerializer.Deserialize<TileMap>(File.ReadAllText(string.Format(_templatePath, mapName)), options);
+            TileMap tileMap =
+                JsonSerializer.Deserialize<TileMap>(File.ReadAllText(string.Format(_templatePath, mapName)), options);
 
             // Загрузка TileSet-ов по TileSetInfo
             List<TileSet> tileSets = new List<TileSet>();
-            foreach (TileSetInfo tileSetInfo in tileMap.TileSets) 
+            foreach (TileSetInfo tileSetInfo in tileMap.TileSets)
             {
-                TileSet tileSet = LoadTileSet("Content/MapData/"+tileSetInfo.Source);
+                TileSet tileSet = LoadTileSet(Path.Combine("Content", "MapData", "TileMaps", tileSetInfo.Source));
                 tileSet.FirstGid = tileSetInfo.FirstGid;
                 tileSets.Add(tileSet);
             }
+            tileSets.Reverse();
 
             foreach (var layer in tileMap.Layers)
             {
@@ -51,30 +53,45 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                     {
                         foreach (var tileSet in tileSets)
                         {
-                            if (tileSet.FirstGid - chunk.Data[i] < 0)
+                            if (tileSet.FirstGid <= chunk.Data[i])
                             {
                                 int number = chunk.Data[i] - tileSet.FirstGid;
 
-                                int relativeColumn = (number % tileSet.Columns) * tileSet.TileWidth;
-                                int relativeRow = (number / tileSet.Columns) * tileSet.TileHeight;
+                                int relativeColumn = number % tileSet.Columns;
+                                int relativeRow = number / tileSet.Columns; // относительно левого угла чанка
 
-                                Rectangle sourceRectangle = new Rectangle(relativeColumn * tileSet.TileWidth, relativeRow * tileSet.TileHeight,
-                                   /* relativeColumn * tileSet.TileWidth +*/ tileSet.TileWidth, /*relativeRow * tileSet.TileHeight +*/ tileSet.TileHeight);
+                                Rectangle sourceRectangle = new Rectangle(relativeColumn * tileSet.TileWidth,
+                                    relativeRow * tileSet.TileHeight,
+                                    tileSet.TileWidth, tileSet.TileHeight);
 
-                                Vector2 position = new Vector2((i % chunk.Width) * tileSet.TileWidth + chunk.X * chunk.Width, (i / chunk.Height)*tileSet.TileHeight + chunk.Y * chunk.Height) ;
+                                Vector2 position = new Vector2(
+                                    (i % chunk.Width) * tileSet.TileWidth + chunk.X * tileSet.TileWidth,
+                                    (i / chunk.Height) * tileSet.TileHeight + chunk.Y * tileSet.TileHeight);
 
-                                switch (layer.Class)
+                                Tile tile = tileSet.Tiles[number]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
+
+                                switch (tile.Type)
                                 {
                                     case "Tile":
-                                        AppManager.Instance.server.RegisterGameObject(new MapObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, "Textures\\TileSets\\"+tileSet.Name)); //fix naming
+                                        AppManager.Instance.server.RegisterGameObject(new MapObject(position,
+                                            new Vector2(tileSet.TileWidth, tileSet.TileHeight),
+                                            sourceRectangle,
+                                            "Textures/TileSetImages/" +
+                                            Path.GetFileName(tileSet.Image).Replace(".png", "")));
                                         break;
                                     case "StopObject":
-                                        // new StopObject(position, new Vector2(tileSet.TileWidth * _scale, tileSet.TileHeight * _scale), sourceRectangle, tileSet.Name);
+                                        var collisionRectangles = LoadRectangles(tile); // Грузит коллизии обьектов
+                                        AppManager.Instance.server.RegisterGameObject(new StopObject(position/4,//TODO
+                                            new Vector2(tileSet.TileWidth, tileSet.TileHeight),
+                                            sourceRectangle,
+                                            "Textures/TileSetImages/" +
+                                            Path.GetFileName(tileSet.Image).Replace(".png", ""),
+                                            collisionRectangles.ToArray()));
                                         break;
                                     default:
                                         break;
                                 }
-
+                                break;
                             }
                         }
                     }
@@ -98,6 +115,27 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                 string data = reader.ReadToEnd();
                 return JsonSerializer.Deserialize<TileSet>(data, options);
             }
+        }
+
+        /// <summary>
+        /// Загружает все квадраты коллизии тайла.
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns></returns>
+        private List<Rectangle> LoadRectangles(Tile tile)
+        {
+            if (tile.Objectgroup == null)
+            {
+                return new List<Rectangle>();
+            }
+
+            List<Rectangle> collisionRectangles = new List<Rectangle>();
+            foreach (var obj in tile.Objectgroup.Objects)
+            {
+                collisionRectangles.Add(new Rectangle((int)obj.X, (int)obj.Y, (int)obj.Width, (int)obj.Height));
+            }
+
+            return collisionRectangles;
         }
     }
 }

@@ -40,8 +40,8 @@
 #begin MapData/TileMaps/main.tmx
 /copy:MapData/TileMaps/main.tmx
 
-#begin MapData/TileSets/TileSet 1.tsj
-/copy:MapData/TileSets/TileSet 1.tsj
+#begin MapData/TileSets/CollisionTileSet.tsj
+/copy:MapData/TileSets/CollisionTileSet.tsj
 
 #begin sounds/Loot.wav
 /importer:WavImporter
@@ -73,12 +73,6 @@
 /processorParam:Quality=Best
 /build:sounds/Tabletki 2.wav
 
-#begin sounds/Tabletki.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:sounds/Tabletki.mp3
-
 #begin sounds/Zombi napal.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -90,6 +84,105 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/Zombi stoit.wav
+
+#begin Textures/Animations/player_idle_top_noweapon.animation
+/copy:Textures/Animations/player_idle_top_noweapon.animation
+
+#begin Textures/Animations/player_idle_top-right_noweapon.animation
+/copy:Textures/Animations/player_idle_top-right_noweapon.animation
+
+#begin Textures/Animations/player_running_top_rotate.animation
+/copy:Textures/Animations/player_running_top_rotate.animation
+
+#begin Textures/Animations/running_top.animation
+/copy:Textures/Animations/running_top.animation
+
+#begin Textures/Animations/testAnimationExample.animation
+/copy:Textures/Animations/testAnimationExample.animation
+
+#begin Textures/AnimationTextures/Character/hr-level1_idle_gun.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_idle_gun.png
+
+#begin Textures/AnimationTextures/Character/hr-level1_idle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_idle.png
+
+#begin Textures/AnimationTextures/Character/hr-level1_mining_tool-1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_mining_tool-1.png
+
+#begin Textures/AnimationTextures/Character/hr-level1_mining_tool-2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_mining_tool-2.png
+
+#begin Textures/AnimationTextures/Character/hr-level1_running_gun.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_running_gun.png
+
+#begin Textures/AnimationTextures/Character/hr-level1_running.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_running.png
+
+#begin Textures/AnimationTextures/unicorn.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/unicorn.png
 
 #begin Textures/GUI/background/base.png
 /importer:TextureImporter
@@ -258,8 +351,8 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/switch.png
-
-#begin Textures/Test/pickaxe.webp
+ 
+#begin Textures/Test/pickaxe.webp 
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -269,9 +362,10 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+
 /build:Textures/Test/pickaxe.webp
 
-#begin Textures/Test/rock.jpg
+#begin Textures/Test/rock.jpg 
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -281,9 +375,11 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+
 /build:Textures/Test/rock.jpg
 
 #begin Textures/Test/steel.png
+
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -293,9 +389,11 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+
 /build:Textures/Test/steel.png
 
 #begin Textures/Test/wood.jpg
+
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -305,9 +403,11 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+
 /build:Textures/Test/wood.jpg
 
 #begin Textures/TileSets/TilesetFloor.png
+
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -317,5 +417,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+
 /build:Textures/TileSets/TilesetFloor.png
+
 

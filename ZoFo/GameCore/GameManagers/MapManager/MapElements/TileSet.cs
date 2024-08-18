@@ -20,5 +20,6 @@ namespace ZoFo.GameCore.GameManagers.MapManager.MapElements
         public int TileWidth { get; set; }
         public int Columns { get; set; }
         public int FirstGid { get; set; }
+        public List<Tile> Tiles { get; set; }
     }
 }

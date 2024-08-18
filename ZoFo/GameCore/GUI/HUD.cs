@@ -13,7 +13,7 @@ using ZoFo.GameCore.GameManagers;
 
 namespace ZoFo.GameCore.GUI;
 
-public class HUD : AbstractGUI
+public class HUD : AbstractGUI 
 {
     protected override void CreateUI()
     {

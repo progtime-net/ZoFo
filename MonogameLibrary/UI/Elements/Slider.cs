@@ -59,7 +59,7 @@ namespace MonogameLibrary.UI.Elements
 
         public override void LoadTexture(ContentManager content)
         {
-            texture2 = content.Load<Texture2D>("Textures\\GUI\\switch");
+            texture2 = content.Load<Texture2D>("Textures/GUI/switch");
             base.LoadTexture(content);
         }
 

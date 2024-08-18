@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using DangerousD.GameCore.Graphics;
+using ZoFo.GameCore.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,6 +12,7 @@ using ZoFo.GameCore.GameManagers.ItemManager;
 using ZoFo.GameCore.GUI;
 using static System.Collections.Specialized.BitVector32;
 using MonogameLibrary.UI.Base;
+using ZoFo.GameCore.GameObjects;
 
 namespace ZoFo.GameCore.GameManagers
 {
@@ -63,7 +64,7 @@ namespace ZoFo.GameCore.GameManagers
             SettingsManager.LoadSettings();
             SoundManager = new SoundManager();
             SoundManager.LoadSounds();
-            
+
 
             currentGUI = new MainMenuGUI();
             debugHud = new DebugHUD();
@@ -74,8 +75,9 @@ namespace ZoFo.GameCore.GameManagers
         protected override void Initialize()
         {
             currentGUI.Initialize();
+            
             debugHud.Initialize(); 
-            ItemManager.Initialize();
+            ItemManager.Initialize(); 
 
 
             base.Initialize();
@@ -85,20 +87,24 @@ namespace ZoFo.GameCore.GameManagers
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             debugHud.LoadContent();
-            currentGUI.LoadContent();
+            currentGUI.LoadContent(); 
             ItemManager.LoadItemTextures();
 
 
-
+ 
+            animationBuilder = new AnimationBuilder();
+            animationBuilder.LoadAnimations();
+            GameObject.debugTexture = new Texture2D(GraphicsDevice, 1, 1);
+            GameObject.debugTexture.SetData(new Color[] { Color.White }); 
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+                Keyboard.GetState().IsKeyDown(Keys.Escape)) { server.CloseConnection(); Exit(); }
 
-            debugHud.Set("key", "value");
+
+         //   debugHud.Set("key", "value");
 
             InputManager.Update();
             currentGUI.Update(gameTime);
@@ -111,7 +117,7 @@ namespace ZoFo.GameCore.GameManagers
                     client.Update(gameTime);
                     break;
                 case GameState.ClientPlaying:
-                    server.Update(gameTime);
+                    client.Update(gameTime);
                     break;
                 default:
                     break;
@@ -123,8 +129,10 @@ namespace ZoFo.GameCore.GameManagers
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            _spriteBatch.Begin();
+ 
+            
+            // Pointwrap
+            _spriteBatch.Begin(samplerState: SamplerState.PointWrap); 
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
@@ -135,8 +143,8 @@ namespace ZoFo.GameCore.GameManagers
                 default:
                     break;
             }
-            _spriteBatch.End();
             
+            _spriteBatch.End(); 
             currentGUI.Draw(_spriteBatch);
             debugHud.Draw(_spriteBatch);
 

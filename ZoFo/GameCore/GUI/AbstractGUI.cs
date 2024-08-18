@@ -39,7 +39,7 @@ public abstract class AbstractGUI
     public virtual void LoadContent()
     {
         Manager.LoadContent(AppManager.Instance.Content, "Font");
-        mouse = AppManager.Instance.Content.Load<Texture2D>("Textures\\GUI\\mouse");
+        mouse = AppManager.Instance.Content.Load<Texture2D>("Textures/GUI/mouse");
     }
 
     public virtual void Update(GameTime gameTime)
