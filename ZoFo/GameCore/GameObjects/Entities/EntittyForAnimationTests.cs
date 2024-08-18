@@ -12,6 +12,7 @@ namespace ZoFo.GameCore.GameObjects.Entities
     {
         
         //public override GraphicsComponent graphicsComponent { get; } = new GraphicsComponent(new List<string> { "тут пишите название анимации" }, "сдублируйте " +
+
  
         public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_idle_rotate_weapon" }, "player_idle_rotate_weapon");
  
