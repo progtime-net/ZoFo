@@ -8,8 +8,9 @@ using Microsoft.Xna.Framework.Content;
 using System.Linq;
 
 using Newtonsoft.Json;
-using Microsoft.Xna.Framework.Media;
-using System.Runtime.InteropServices;
+using Microsoft.Xna.Framework.Media; 
+using System.Runtime.InteropServices; 
+using ZoFo.GameCore.GUI; 
 
 namespace ZoFo.GameCore.GameManagers
 {
@@ -21,7 +22,7 @@ namespace ZoFo.GameCore.GameManagers
 
         public void LoadSounds() // метод для загрузки звуков из папки
         {
-            //List<string> sounds = AppManager.Instance.Content.Load<List<string>>("sounds/");
+            //List<string> sounds = AppManager.Instance.Content.Load<List<string>>("sounds/"); 
             
             string a = Path.Combine("Content", "sounds");
             string[] k;
@@ -32,13 +33,13 @@ namespace ZoFo.GameCore.GameManagers
             else{
                 k = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Content", "sounds")).Where(x => x.EndsWith("xnb")).ToArray();
             }
-            if (k.Length > 0)
+            if (k.Length > 0) 
             {
 
                 string[] soundFiles = k.Select(x => x.Split("\\").Last().Split("/").Last().Replace(".xnb", "")).ToArray();// папка со звуками там где exe 
                 foreach (var soundFile in soundFiles)
                 {
-                    Sounds.Add(soundFile, AppManager.Instance.Content.Load<SoundEffect>("sounds//" + soundFile));
+                    Sounds.Add(soundFile, AppManager.Instance.Content.Load<SoundEffect>(Path.Combine("sounds",  soundFile)));
                 }
 
             }

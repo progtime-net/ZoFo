@@ -13,12 +13,17 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using System.Drawing;
 using System.Reflection;
 using ZoFo.GameCore.GameObjects.Entities;
+using System.Net.Sockets;
+using System.Net;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using System.Linq;
 using System.Web;
 using ZoFo.GameCore.GUI;
+using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
+using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
 namespace ZoFo.GameCore
 {
     public class Client
@@ -28,6 +33,8 @@ namespace ZoFo.GameCore
         ClientNetworkManager networkManager;
 
         public bool IsConnected { get { return networkManager.IsConnected; } }
+        public IPEndPoint InfoConnect => networkManager.InfoConnect;
+
         public Client()
         {
             networkManager = new ClientNetworkManager();
@@ -35,16 +42,21 @@ namespace ZoFo.GameCore
 
             // Подписка на действия инпутменеджера.
             // Отправляются данные апдейтса с обновлением инпута
-            AppManager.Instance.InputManager.ActionEvent += () => networkManager.AddData(new UpdateInput(){
-                InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
-                InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
-            });
+            AppManager.Instance.InputManager.ActionEvent += () =>
+            {
+                networkManager.AddData(new UpdateInput()
+                {
+                    InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
+                    InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
+                });
+            };
         }
 
         public void OnDataSend(string data)
         {
             List<UpdateData> updateDatas = JsonSerializer.Deserialize<List<UpdateData>>(data);
             // тут будет switch
+            AppManager.Instance.debugHud.Log(data);
             foreach (var item in updateDatas)
             {
                 GotData(item);
@@ -62,7 +74,9 @@ namespace ZoFo.GameCore
         #endregion
 
         List<MapObject> mapObjects = new List<MapObject>();
-        List<GameObject> gameObjects = new List<GameObject>();
+        List<GameObject> gameObjects = new List<GameObject>(); 
+        List<Player> players = new List<Player>();
+        List<StopObject> stopObjects = new List<StopObject>();
         /// <summary>
         /// Клиент должен обнговлять игру анимаций
         /// </summary>
@@ -71,6 +85,7 @@ namespace ZoFo.GameCore
         {
             for (int i = 0; i < gameObjects.Count; i++)
             {
+                AppManager.Instance.debugHud.Set("GameTime", gameTime.TotalGameTime.ToString());
                 gameObjects[i].UpdateAnimations();
             }
         }
@@ -79,6 +94,10 @@ namespace ZoFo.GameCore
             for (int i = 0; i < mapObjects.Count; i++)
             {
                 mapObjects[i].Draw(spriteBatch);
+            }
+            for (int i = 0; i < stopObjects.Count; i++)
+            {
+                stopObjects[i].Draw(spriteBatch);
             }
             for (int i = 0; i < gameObjects.Count; i++)
             {
@@ -98,12 +117,33 @@ namespace ZoFo.GameCore
                     (update as UpdateTileCreated).tileSetName
                     ));
             }
+            else if (update is UpdateStopObjectCreated)
+            {
+                stopObjects.Add(
+                new StopObject(
+                    (update as UpdateStopObjectCreated).Position,
+                    (update as UpdateStopObjectCreated).Size.ToVector2(),
+                    (update as UpdateStopObjectCreated).sourceRectangle,
+                    (update as UpdateStopObjectCreated).tileSetName,
+                    (update as UpdateStopObjectCreated).collisions
+                    ));
+            }
             else if (update is UpdateGameObjectCreated)
             {
+                GameObject created_gameObject;
                 if ((update as UpdateGameObjectCreated).GameObjectType == "EntittyForAnimationTests")
                     gameObjects.Add(new EntittyForAnimationTests((update as UpdateGameObjectCreated).position));
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
-                    gameObjects.Add(new Player((update as UpdateGameObjectCreated).position));
+                {
+                    created_gameObject = new Player((update as UpdateGameObjectCreated).position);
+                    players.Add(created_gameObject as Player);
+                    gameObjects.Add(created_gameObject);
+                }
+                if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
+                    gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position));
+                if ((update as UpdateGameObjectCreated).GameObjectType == "Zombie")
+                    gameObjects.Add(new Zombie((update as UpdateGameObjectCreated).position));
+
 
                 (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
                 //var a = Assembly.GetAssembly(typeof(GameObject));

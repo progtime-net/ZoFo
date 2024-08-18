@@ -1,13 +1,11 @@
-﻿using DangerousD.GameCore.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using System;
 using NativeFileDialogSharp;
 using System.IO;
 using System.Linq;
 using System.Reflection.Metadata;
-using Zofo.GameCore.ZoFo_grafics;
-
+using ZoFo.GameCore.Graphics;
 namespace AnimationsFileCreator
 {
     class Program

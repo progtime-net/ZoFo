@@ -10,6 +10,6 @@ namespace ZoFo.GameCore.GameManagers.MapManager.MapElements
     {
         public int Id { get; set; }
         public string Type { get; set; }
-        public List<ObjectGroup> Objectgroup { get; set; }
+        public ObjectGroup Objectgroup { get; set; }
     }
 }

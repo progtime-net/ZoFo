@@ -44,9 +44,12 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
             foreach (var item in ObjectsWithCollisions)//фильтрация 
             {
-                if (Math.Abs(item.stopRectangle.X - entity.collisionComponent.stopRectangle.X) < 550
-                    && Math.Abs(item.stopRectangle.Y - entity.collisionComponent.stopRectangle.Y) < 550
-                    && tryingRectX.Intersects(item.stopRectangle))
+                if (item == componentOfEntity) continue;
+                
+                Rectangle rectChecking = item.stopRectangle.SetOrigin(item.gameObject.position);
+                if (Math.Abs(item.gameObject.position.X - componentOfEntity.gameObject.position.X) < 550
+                    && Math.Abs(item.gameObject.position.Y - componentOfEntity.gameObject.position.Y) < 550
+                    && tryingRectX.Intersects(rectChecking))
 
                 {
                     collidedX = true;// меняем значение соприкосновения на true
@@ -75,9 +78,11 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
             foreach (var item in ObjectsWithCollisions)//фильтрация 
             {
-                if (Math.Abs(item.stopRectangle.X - entity.collisionComponent.stopRectangle.X) < 550
-                    && Math.Abs(item.stopRectangle.Y - entity.collisionComponent.stopRectangle.Y) < 550
-                    && tryingRectY.Intersects(item.stopRectangle))
+                if (item == componentOfEntity) continue;
+                Rectangle rectChecking = item.stopRectangle.SetOrigin(item.gameObject.position);
+                if (Math.Abs(item.gameObject.position.X - componentOfEntity.gameObject.position.X) < 550
+                    && Math.Abs(item.gameObject.position.Y - componentOfEntity.gameObject.position.Y) < 550
+                    && tryingRectY.Intersects(rectChecking))
 
                 {
                     collidedY = true;// меняем значение соприкосновения на true
@@ -135,4 +140,14 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
 
     }
+    public static class ExtentionClass
+    {
+        public static Rectangle SetOrigin(this Rectangle rectangle, Vector2 origin)
+        {
+            rectangle.X = (int)origin.X;
+            rectangle.Y = (int)origin.Y;
+            return rectangle;
+        }
+    }
+
 }
