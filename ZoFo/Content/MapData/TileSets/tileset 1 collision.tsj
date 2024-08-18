@@ -11,46 +11,57 @@
  "tiles":[
         {
          "id":0,
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
          "id":1,
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
          "id":2,
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
          "id":3,
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
          "id":4,
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
          "id":5,
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
          "id":6,
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
          "id":7,
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
          "id":8,
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
          "id":9,
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
          "id":10,
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -114,6 +125,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -141,6 +153,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -168,6 +181,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -195,6 +209,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -222,6 +237,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -249,6 +265,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -276,6 +293,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -303,6 +321,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -330,6 +349,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -357,6 +377,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -384,6 +405,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -447,6 +469,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -474,6 +497,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -501,6 +525,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -528,6 +553,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -555,6 +581,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -582,6 +609,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -609,6 +637,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -636,6 +665,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -663,6 +693,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -690,6 +721,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -717,6 +749,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -848,6 +881,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -875,6 +909,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -902,6 +937,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -997,6 +1033,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -1024,6 +1061,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {
@@ -1051,6 +1089,7 @@
              "x":0,
              "y":0
             },
+         "probability":0.100000001490116,
          "type":"StopObject"
         }, 
         {

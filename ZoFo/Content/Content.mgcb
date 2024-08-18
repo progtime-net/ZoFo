@@ -43,6 +43,9 @@
 #begin MapData/TileSets/TileSet 1.tsj
 /copy:MapData/TileSets/TileSet 1.tsj
 
+#begin MapData/TileSets/TilesetNature.tsj
+/copy:MapData/TileSets/TilesetNature.tsj
+
 #begin sounds/Loot.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -352,19 +355,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/Switch_backgrownd.png
 
-#begin Textures/Test/pickaxe.webp
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-
-/build:Textures/GUI/switch.png
-
 #begin Textures/icons/12.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -495,7 +485,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-
 /build:Textures/Test/pickaxe.webp
 
 #begin Textures/Test/rock.jpg
@@ -535,7 +524,6 @@
 /build:Textures/Test/wood.jpg
 
 #begin Textures/TileSetImages/Pipes.png
-
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -560,7 +548,6 @@
 /build:Textures/TileSetImages/Tilelist1.png
 
 #begin Textures/TileSetImages/Tilelist2.png
-
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -570,7 +557,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-
 /build:Textures/TileSetImages/Tilelist2.png
 
 #begin Textures/TileSetImages/Tilelist3.png
