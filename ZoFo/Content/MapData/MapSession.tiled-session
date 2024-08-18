@@ -5,20 +5,20 @@
     },
     "activeFile": "TileMaps/main.tmj",
     "expandedProjectPaths": [
+        ".",
         "TileSets",
-        "TileMaps",
-        "."
+        "TileMaps"
     ],
     "fileStates": {
         "TileMaps/TileSets/TileSet 1.tsj": {
             "scaleInDock": 1
         },
         "TileMaps/main.tmj": {
-            "scale": 0.5,
+            "scale": 0.33,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 895,
-                "y": 270
+                "x": 1010.6060606060606,
+                "y": 553.0303030303031
             }
         },
         "TileSets/CollisionTileSet.tsj": {
@@ -29,25 +29,30 @@
             "scaleInDock": 1,
             "scaleInEditor": 1.5
         },
+        "TileSets/TilesetNature.tsj": {
+            "scaleInDock": 1
+        },
         "TileSets/WallSet.tsj": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "TileSets/tileset 1 collision.tsj": {
+            "scaleInDock": 1
         }
     },
     "last.imagePath": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/Textures/TileSetImages",
     "openFiles": [
         "TileSets/TileSet 1.tsj",
-        "TileMaps/main.tmj",
-        "TileSets/CollisionTileSet.tsj"
+        "TileMaps/main.tmj"
     ],
     "project": "MapSession.tiled-project",
     "recentFiles": [
+        "TileSets/TileSet 1.tsj",
         "TileMaps/main.tmj",
         "TileSets/CollisionTileSet.tsj",
-        "TileSets/TileSet 1.tsj",
         "TileSets/WallSet.tsj"
     ],
-    "stampsFolder": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/MapData/TileStamps",
+    "stampsFolder": "C:/Users/artem/source/repos/ZoFo/ZoFo/Content/MapData/TileStamps",
     "tileset.lastUsedFormat": "json",
     "tileset.margin": 0,
     "tileset.spacing": 0,
