@@ -155,7 +155,7 @@ namespace ZoFo.GameCore
                 {
                     go.UpdateLogic();
                 }
-                collisionManager.UpdatePositions();
+                collisionManager.ResolvePhysics();
                 ticks = 0;
                 networkManager.SendData();
             }

@@ -48,7 +48,7 @@ namespace ZoFo.GameCore.Graphics
 
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch)
         {
-            DebugHUD.Instance.Log("draw ");
+            //DebugHUD.Instance.Log("draw ");
 
             destinationRectangle.X -= CameraPosition.X;
             destinationRectangle.Y -= CameraPosition.Y;
@@ -58,7 +58,7 @@ namespace ZoFo.GameCore.Graphics
 
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch, Rectangle sourceRectangle)
         {
-            DebugHUD.Instance.Log("draw ");
+            //DebugHUD.Instance.Log("draw ");
 
             destinationRectangle.X -= CameraPosition.X;
             destinationRectangle.Y -= CameraPosition.Y;

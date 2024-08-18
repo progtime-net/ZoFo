@@ -12,6 +12,7 @@ using ZoFo.GameCore.GameObjects.Entities;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.Graphics;
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player; 
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
@@ -53,8 +54,9 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
                 {
                     collidedX = true;// меняем значение соприкосновения на true
-                    entity.OnCollision(item);//подписываем entity на ивент коллизии
-
+                    //entity.OnCollision(item);//подписываем entity на ивент коллизии
+                    item.OnCollisionWithObject(entity);
+                    entity.collisionComponent.OnCollisionWithObject(item.gameObject);
                     break;// выход
                 }
             }
@@ -109,35 +111,72 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             entity.velocity = Vector2.Zero;
         }
 
+        public void UpdateTriggerZones(Player player)
+        {
+
+            var entity = player as LivingEntity; 
+            var currentRect = entity.collisionComponent.stopRectangle;//задаём РЕК
+            currentRect.X += (int)entity.position.X;
+            currentRect.Y += (int)entity.position.Y;
+             
+             
+
+            foreach (var item in ObjectsWithTriggers)//фильтрация 
+            {
+                if (item.triggerRectangle.SetOrigin(item.gameObject.position).Intersects(currentRect))
+                {
+                    item.PlayerInZone(player);
+                }
+            }
+        }
+
         //обновление позиции объекта 
 
-        public void UpdatePositions()
+        public void ResolvePhysics()
         {
             foreach (var item in EntitiesWithMovements)
             {
                 CheckComponentCollision(item);
             }
+            foreach (var item in AppManager.Instance.server.players)
+            {
+                UpdateTriggerZones(item);
+            }
         }
 
 
         public CollisionManager()
-        {
-            //graphicsComponent
-            //.ObjectDrawRectangle = new Rectangle(0, 0, 16 * 12, 16 * 16);
+        { 
             EntitiesWithMovements = new List<CollisionComponent>();
             ObjectsWithCollisions = new List<CollisionComponent>();
+            ObjectsWithTriggers = new List<CollisionComponent>();
         }
         //регистрация компонента(его коллизии)
         public void Register(CollisionComponent component)
         {
-            ObjectsWithCollisions.Add(component);
+            if (component.hasCollision)
+                ObjectsWithCollisions.Add(component);
+            if (component.isTrigger)
+                ObjectsWithTriggers.Add(component);
             if (component.gameObject is LivingEntity)
             {
                 EntitiesWithMovements.Add(component);
             }
         }
 
+        public Player[] GetPlayersInZone(Rectangle rectangle)
+        {
 
+            List<Player> players = new List<Player>();
+            foreach (var item in AppManager.Instance.server.players)//фильтрация 
+            {
+                if (item.collisionComponent.stopRectangle.SetOrigin(item.position).Intersects(rectangle))
+                {
+                    players.Add(item);
+                }
+            }
+            return players.ToArray();
+        }
 
     }
     public static class ExtentionClass

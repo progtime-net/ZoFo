@@ -48,7 +48,7 @@ namespace ZoFo.GameCore
                 {
                     InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
                     InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
-                });
+                }); 
             };
         }
 
@@ -158,7 +158,7 @@ namespace ZoFo.GameCore
                 var ent = FindEntityById(update.IdEntity);
 
                 ent.position = (update as UpdatePosition).NewPosition;
-                DebugHUD.Instance.Log("newPosition " + ent.position);
+                //DebugHUD.Instance.Log("newPosition " + ent.position);
             }
         }
 
