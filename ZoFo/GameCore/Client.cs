@@ -128,7 +128,14 @@ namespace ZoFo.GameCore
                     gameObjects.Add(new Player((update as UpdateGameObjectCreated).position));
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
                     gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position));
+<<<<<<< Updated upstream
+                if ((update as UpdateGameObjectCreated).GameObjectType == "Zombie")
+                    gameObjects.Add(new Zombie((update as UpdateGameObjectCreated).position));
+
+=======
+
                 
+>>>>>>> Stashed changes
                 (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
                 //var a = Assembly.GetAssembly(typeof(GameObject));
                 //gameObjects.Add( TODO reflection
