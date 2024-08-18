@@ -12,7 +12,9 @@ using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using System.Drawing;
 using System.Reflection;
-using ZoFo.GameCore.GameObjects.Entities;
+using ZoFo.GameCore.GameObjects.Entities; 
+using System.Net.Sockets;
+using System.Net; 
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
@@ -20,7 +22,7 @@ using System.Linq;
 using System.Web;
 using ZoFo.GameCore.GUI;
 using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
-using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
+using ZoFo.GameCore.GameObjects.MapObjects.StopObjects; 
 namespace ZoFo.GameCore
 {
     public class Client
@@ -30,6 +32,8 @@ namespace ZoFo.GameCore
         ClientNetworkManager networkManager;
 
         public bool IsConnected { get { return networkManager.IsConnected; } }
+        public IPEndPoint InfoConnect => networkManager.InfoConnect;
+
         public Client()
         {
             networkManager = new ClientNetworkManager();
