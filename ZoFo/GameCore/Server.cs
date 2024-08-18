@@ -20,6 +20,7 @@ using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
+using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore
 {
@@ -174,7 +175,7 @@ namespace ZoFo.GameCore
                     sourceRectangle = (gameObject as StopObject).sourceRectangle,
                     Size = (gameObject as StopObject).graphicsComponent.ObjectDrawRectangle.Size,
                     collisions = (gameObject as StopObject).collisionComponents.Select(x=>x.stopRectangle).ToArray(),
-                    tileSetName = (gameObject as StopObject).graphicsComponent.mainTextureName
+                    tileSetName = ((gameObject as StopObject).graphicsComponent as StaticGraphicsComponent)._textureName
                 });//TODO 
                 foreach (var item in (gameObject as StopObject).collisionComponents)
                 {
@@ -190,7 +191,7 @@ namespace ZoFo.GameCore
                     Position = (gameObject as MapObject).position,
                     sourceRectangle = (gameObject as MapObject).sourceRectangle,
                     Size = (gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size,
-                    tileSetName = (gameObject as MapObject).graphicsComponent.mainTextureName
+                    tileSetName = ((gameObject as MapObject).graphicsComponent as StaticGraphicsComponent)._textureName
                 });//TODO 
                 return;
             }

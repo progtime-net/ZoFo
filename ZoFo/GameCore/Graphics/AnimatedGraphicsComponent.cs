@@ -16,8 +16,7 @@ namespace ZoFo.GameCore.Graphics
         public List<AnimationContainer> animations;
         private List<Texture2D> textures;
         private List<string> texturesNames;
-        private AnimationContainer currentAnimation;
-        static public int scaling = 6;
+        private AnimationContainer currentAnimation; 
         static public int Camera_XW=800;
         static public int Camera_YH = 400;
         static public Vector2 CameraSize = new Vector2(1800, 960);
@@ -215,15 +214,7 @@ namespace ZoFo.GameCore.Graphics
             destinationRectangle = Scaling(destinationRectangle);
             _spriteBatch.Draw(texture,
                 destinationRectangle, sourceRectangle, Color.White);
-        }
-        private Rectangle Scaling(Rectangle destinationRectangle)
-        {
-            destinationRectangle.X *= scaling;
-            destinationRectangle.Y *= scaling;
-            destinationRectangle.Width *= scaling;
-            destinationRectangle.Height *= scaling;
-            return destinationRectangle;
-        }
+        } 
         private void buildSourceRectangle()
         {
             sourceRectangle = new Rectangle();
