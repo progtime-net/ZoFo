@@ -134,7 +134,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
         {
             if (tile.Objectgroup == null)
             {
-                return new List<Rectangle>();
+                return new List<Rectangle>() { new Rectangle(0, 0, 0, 0) };
             }
 
             List<Rectangle> collisionRectangles = new List<Rectangle>();
