@@ -9,6 +9,9 @@ public abstract class GraphicsComponent
     public static int scaling = 1;
     public string mainTextureName;//TODO костыль - пофиксить
 
+    public SpriteEffects Flip = SpriteEffects.None;
+    public float Rotation;
+
     public abstract void LoadContent();
     public abstract void Update();
     public abstract void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch);
