@@ -51,7 +51,7 @@ namespace ZoFo.GameCore
                 {
                     InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
                     InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
-                });
+                }); 
             };
         }
 
@@ -166,7 +166,7 @@ namespace ZoFo.GameCore
             else if (update is UpdatePosition)
             {
                 var ent = FindEntityById(update.IdEntity);
-
+ 
                 ent.position = (update as UpdatePosition).NewPosition; 
             }
             else if (update is UpdateAnimation)
@@ -174,7 +174,7 @@ namespace ZoFo.GameCore
                 var ent = FindEntityById(update.IdEntity);
 
                 ((ent as Entity).graphicsComponent as AnimatedGraphicsComponent).StartAnimation((update as UpdateAnimation).animationId);
-                DebugHUD.Instance.Log("new Animation " + ent.position);
+                DebugHUD.Instance.Log("new Animation " + ent.position); 
             }
         }
 
