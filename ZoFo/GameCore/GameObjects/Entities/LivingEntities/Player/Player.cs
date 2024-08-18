@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GameManagers.AssetsManager;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
@@ -21,7 +22,7 @@ public class Player : LivingEntity
     public bool IsTryingToShoot { get; set; }
     private float speed;
     private int health;
-    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_look_down" }, "player_look_down");
+    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(AssetManager.Player);
     private LootData lootData;
     public Player(Vector2 position) : base(position)
     {
