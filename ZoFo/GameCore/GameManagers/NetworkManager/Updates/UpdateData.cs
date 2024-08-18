@@ -27,7 +27,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates
     public class UpdateData
     {
         public int IdEntity { get; set; } //Id объекта
-        public string UpdateType { get; protected set; }  //тип обновления
+        public string UpdateType { get; set; }  //тип обновления
+        public bool isImportant { get; set; }
 
         public UpdateData()
         {

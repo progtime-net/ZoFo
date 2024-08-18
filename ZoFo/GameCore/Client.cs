@@ -121,7 +121,7 @@ namespace ZoFo.GameCore
             {
                 mapObjects.Add(
                 new MapObject(
-                    (update as UpdateTileCreated).Position,
+                    (update as UpdateTileCreated).Position.GetVector2(),
                     (update as UpdateTileCreated).Size.GetPoint().ToVector2(),
                     (update as UpdateTileCreated).sourceRectangle.GetRectangle(),
                     (update as UpdateTileCreated).tileSetName
