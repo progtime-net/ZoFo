@@ -108,7 +108,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 }
             }
             return IPAddress.Loopback;
-
         }
 
         //поток 2
