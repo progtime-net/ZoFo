@@ -126,6 +126,7 @@ namespace ZoFo.GameCore
 
             AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(40, 40)));
             AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(740, 140)));
+            AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1000, 1000)));
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(140, 440)));
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(240, 440)));
         }
