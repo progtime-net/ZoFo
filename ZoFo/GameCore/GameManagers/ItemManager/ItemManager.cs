@@ -24,9 +24,9 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
         }
         void Initialize()
         {
-            tagItemPairs.Add("wood", new ItemInfo("wood","wood",false,null));
-            tagItemPairs.Add("rock", new ItemInfo("rock", "rock", false, null));
-            tagItemPairs.Add("steel", new ItemInfo("steel", "steel", false, null));
+            tagItemPairs.Add("Wood", new ItemInfo("Wood","Wood",false,null));
+            tagItemPairs.Add("Peeble", new ItemInfo("Peeble", "Peeble", false, null));
+            tagItemPairs.Add("Steel", new ItemInfo("Steel", "Steel", false, null));
         }
         
     }

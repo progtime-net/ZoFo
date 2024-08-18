@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using DangerousD.GameCore.Graphics;
+using ZoFo.GameCore.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,6 +12,7 @@ using ZoFo.GameCore.GameManagers.ItemManager;
 using ZoFo.GameCore.GUI;
 using static System.Collections.Specialized.BitVector32;
 using MonogameLibrary.UI.Base;
+using ZoFo.GameCore.GameObjects;
 
 namespace ZoFo.GameCore.GameManagers
 {
@@ -83,6 +84,8 @@ namespace ZoFo.GameCore.GameManagers
             currentGUI.LoadContent();
             animationBuilder = new AnimationBuilder();
             animationBuilder.LoadAnimations();
+            GameObject.debugTexture = new Texture2D(GraphicsDevice, 1, 1);
+            GameObject.debugTexture.SetData(new Color[] { Color.White });
         }
 
         protected override void Update(GameTime gameTime)
@@ -117,8 +120,7 @@ namespace ZoFo.GameCore.GameManagers
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            currentGUI.Draw(_spriteBatch);
-            debugHud.Draw(_spriteBatch);
+            
             
             // Pointwrap
             _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
@@ -132,7 +134,10 @@ namespace ZoFo.GameCore.GameManagers
                 default:
                     break;
             }
+            
             _spriteBatch.End();
+            currentGUI.Draw(_spriteBatch);
+            debugHud.Draw(_spriteBatch);
 
             base.Draw(gameTime);
         }

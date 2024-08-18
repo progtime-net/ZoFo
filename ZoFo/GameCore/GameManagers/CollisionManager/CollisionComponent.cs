@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Win32;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,55 +12,59 @@ using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
     public class CollisionComponent
-    {
+    { 
+        //==КОНСТРУКТОР== 
+        public CollisionComponent(GameObject gameObject)
+        {
+
+            this.gameObject = gameObject;
+            hasCollision = false;
+            this.isTrigger = false;
+        } 
+
+        public CollisionComponent(GameObject gameObject, bool hasCollision = false, Rectangle? collisionRectangle = null, bool isTrigger = false, Rectangle? triggerRectangle = null)
+        {
+            this.gameObject = gameObject;
+
+            this.hasCollision = hasCollision;
+            this.isTrigger = isTrigger;
+            if (hasCollision)
+                this.stopRectangle = collisionRectangle.Value;
+            if (isTrigger)
+                this.triggerRectangle = triggerRectangle.Value;
+            
+            
+
+            
+        }
+
         //==ПОЛЯ==
 
         public GameObject gameObject { get; set; }
-        //public Rectangle Bounds { get; set; }
-
-        //public Rectangle Rectangle => new Rectangle();
-
 
 
         bool doesStop;
+        bool hasCollision;
         public Rectangle stopRectangle;
 
         // triggers for rectangle
         bool isTrigger;
-        public Rectangle triggerRectanglee;
+        public Rectangle triggerRectangle;
 
         //delegate
         public delegate void EventHandler(object sender, EventArgs e);
 
-        //public CollisionComponent(int x, int y, int width, int height)
-        //{
-         //   Bounds = new Rectangle(x, y, width, height);
-        //}
 
 
 
-        //events 
+        //events DoorInteraction
         public event EventHandler<CollisionComponent> OnTriggerEnter;
         public event EventHandler<CollisionComponent> OnTriggerZone;
         public event EventHandler<CollisionComponent> OnTriggerExit;
+ 
+        public event EventHandler<CollisionComponent> OnCollision; 
 
-        // methods-event
-        public void TriggerEnter(object component, Player player,
-            EventArgs e)
-        {
-
-        }
-        public void TriggerZone(object component,Player player,
-             EventArgs e)
-        {
-
-        }
-        public void TriggerExit(object component,Player player,
-             EventArgs e)
-        {
-
-        }
-
-
+         
+         
     }   
 }

@@ -1,0 +1,1 @@
+{"IsFullScreen":false,"MainVolume":1.0,"MusicVolume":1.0,"SoundEffectsVolume":1.0,"Resolution":{"X":1440,"Y":900}}

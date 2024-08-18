@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.ItemManager
 {
-    class ItemInfo
+    public class ItemInfo
     {
         //поля
         string tag;
