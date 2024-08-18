@@ -47,6 +47,7 @@
         "TileSets/TileSet 1.tsj",
         "TileSets/WallSet.tsj"
     ],
+    "stampsFolder": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/MapData/TileStamps",
     "tileset.lastUsedFormat": "json",
     "tileset.margin": 0,
     "tileset.spacing": 0,

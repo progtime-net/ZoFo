@@ -125,8 +125,9 @@ namespace ZoFo.GameCore.Graphics
 
             buildSourceRectangle();
             SetInterval();
-        }
 
+        }
+         
         public void StopAnimation()
         {
             currentFrame = 0;

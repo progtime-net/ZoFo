@@ -1,0 +1,1 @@
+{"id":"zombie_death","textureName":"Textures/AnimationTextures/Zombie/zombie_spritesheet_v1","startSpriteRectangle":{"X":0,"Y":96,"Width":32,"Height":32},"frameSecond":[{"Item1":0,"Item2":5}],"textureFrameInterval":0,"framesCount":9,"isCycle":true,"offset":"0, 0"}
