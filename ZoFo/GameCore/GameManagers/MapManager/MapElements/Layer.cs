@@ -15,5 +15,6 @@ namespace ZoFo.GameCore.GameManagers.MapManager.MapElements
         public int Id { get; set; }
         public bool Visibility { get; set; }
         public string Class { get; set; }
+        public string Type { get; set; }
     }
 }

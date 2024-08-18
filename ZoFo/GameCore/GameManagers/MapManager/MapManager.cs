@@ -47,51 +47,59 @@ namespace ZoFo.GameCore.GameManagers.MapManager
 
             foreach (var layer in tileMap.Layers)
             {
-                foreach (var chunk in layer.Chunks)
+                if (layer.Type == "objectgroup")
                 {
-                    for (int i = 0; i < chunk.Data.Length; i++)
+
+                }
+                else
+                {
+                    foreach (var chunk in layer.Chunks)
                     {
-                        foreach (var tileSet in tileSets)
+                        for (int i = 0; i < chunk.Data.Length; i++)
                         {
-                            if (tileSet.FirstGid <= chunk.Data[i])
+                            foreach (var tileSet in tileSets)
                             {
-                                int number = chunk.Data[i] - tileSet.FirstGid;
-
-                                int relativeColumn = number % tileSet.Columns;
-                                int relativeRow = number / tileSet.Columns; // относительно левого угла чанка
-
-                                Rectangle sourceRectangle = new Rectangle(relativeColumn * tileSet.TileWidth,
-                                    relativeRow * tileSet.TileHeight,
-                                    tileSet.TileWidth, tileSet.TileHeight);
-
-                                Vector2 position = new Vector2(
-                                    (i % chunk.Width) * tileSet.TileWidth + chunk.X * tileSet.TileWidth,
-                                    (i / chunk.Height) * tileSet.TileHeight + chunk.Y * tileSet.TileHeight);
-
-                                Tile tile = tileSet.Tiles[number]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
-
-                                switch (tile.Type)
+                                if (tileSet.FirstGid <= chunk.Data[i])
                                 {
-                                    case "Tile":
-                                        AppManager.Instance.server.RegisterGameObject(new MapObject(position,
-                                            new Vector2(tileSet.TileWidth, tileSet.TileHeight),
-                                            sourceRectangle,
-                                            "Textures/TileSetImages/" +
-                                            Path.GetFileName(tileSet.Image).Replace(".png", "")));
-                                        break;
-                                    case "StopObject":
-                                        var collisionRectangles = LoadRectangles(tile); // Грузит коллизии обьектов
-                                        AppManager.Instance.server.RegisterGameObject(new StopObject(position/4,//TODO
-                                            new Vector2(tileSet.TileWidth, tileSet.TileHeight),
-                                            sourceRectangle,
-                                            "Textures/TileSetImages/" +
-                                            Path.GetFileName(tileSet.Image).Replace(".png", ""),
-                                            collisionRectangles.ToArray()));
-                                        break;
-                                    default:
-                                        break;
+                                    int number = chunk.Data[i] - tileSet.FirstGid;
+
+                                    int relativeColumn = number % tileSet.Columns;
+                                    int relativeRow = number / tileSet.Columns; // относительно левого угла чанка
+
+                                    Rectangle sourceRectangle = new Rectangle(relativeColumn * (tileSet.TileWidth + tileSet.Spacing) + tileSet.Margin,
+                                        relativeRow * (tileSet.TileHeight + tileSet.Spacing) + tileSet.Margin,
+                                        tileSet.TileWidth, tileSet.TileHeight);
+
+                                    Vector2 position = new Vector2(
+                                        (i % chunk.Width) * tileMap.TileWidth + chunk.X * tileMap.TileWidth,
+                                        (i / chunk.Height) * tileMap.TileHeight + chunk.Y * tileMap.TileHeight);
+
+                                    Tile tile = tileSet.Tiles[number]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
+
+                                    switch (tile.Type)
+                                    {
+                                        case "Tile":
+                                            AppManager.Instance.server.RegisterGameObject(new MapObject(position,
+                                                new Vector2(tileSet.TileWidth, tileSet.TileHeight),
+                                                sourceRectangle,
+                                                "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", "")));
+                                            break;
+
+                                        case "StopObject":
+                                            var collisionRectangles = LoadRectangles(tile); // Грузит коллизии обьектов
+
+                                            AppManager.Instance.server.RegisterGameObject(new StopObject(position,
+                                                new Vector2(tileSet.TileWidth, tileSet.TileHeight),
+                                                sourceRectangle,
+                                                "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", ""),
+                                                collisionRectangles.ToArray()));
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                    break;
                                 }
-                                break;
                             }
                         }
                     }

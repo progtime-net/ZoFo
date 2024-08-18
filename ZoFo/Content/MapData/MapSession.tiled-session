@@ -5,20 +5,20 @@
     },
     "activeFile": "TileMaps/main.tmj",
     "expandedProjectPaths": [
-        ".",
         "TileSets",
-        "TileMaps"
+        "TileMaps",
+        "."
     ],
     "fileStates": {
         "TileMaps/TileSets/TileSet 1.tsj": {
             "scaleInDock": 1
         },
         "TileMaps/main.tmj": {
-            "scale": 0.75,
-            "selectedLayer": 0,
+            "scale": 0.5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 578,
-                "y": 482.66666666666674
+                "x": 895,
+                "y": 270
             }
         },
         "TileSets/CollisionTileSet.tsj": {
@@ -43,15 +43,15 @@
     "project": "MapSession.tiled-project",
     "recentFiles": [
         "TileMaps/main.tmj",
-        "TileSets/TileSet 1.tsj",
         "TileSets/CollisionTileSet.tsj",
+        "TileSets/TileSet 1.tsj",
         "TileSets/WallSet.tsj"
     ],
     "tileset.lastUsedFormat": "json",
-    "tileset.margin": 2,
-    "tileset.spacing": 2,
+    "tileset.margin": 0,
+    "tileset.spacing": 0,
     "tileset.tileSize": {
-        "height": 128,
-        "width": 128
+        "height": 16,
+        "width": 16
     }
 }
