@@ -23,7 +23,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private bool isMultiplayer;
         //Player Id to Player endPoint
         private List<IPEndPoint> clientsEP;
-        private IPEndPoint endPoint;
+        public IPEndPoint endPoint;
         private List<UpdateData> commonUpdates;
         private List<UpdateData> importantUpdates;
         private List<Datagramm> sendedData;

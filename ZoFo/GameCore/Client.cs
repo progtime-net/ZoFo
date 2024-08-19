@@ -77,8 +77,6 @@ namespace ZoFo.GameCore
 
         public void JoinRoom(string ip, int port)
         {
-            EndPoint endPoint = new IPEndPoint(IPAddress.Parse(ip), port);
-            networkManager.EndPointServer = endPoint;
             networkManager.JoinRoom(ip, port);
         }
         public void JoinYourself(int port) { networkManager.JoinYourself(port); }

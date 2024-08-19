@@ -18,6 +18,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
     {
         private int port = 0;
         private IPEndPoint endPoint;
+        private IPEndPoint sendingEP;
         private Socket socket;
         List<UpdateData> updates = new List<UpdateData>();
         private List<Datagramm> waitingDatagramm = new List<Datagramm>();
@@ -26,21 +27,15 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public event OnDataSent GetDataSent; // event
         public bool IsConnected { get { return socket.Connected; } }
         public IPEndPoint InfoConnect => (IPEndPoint)socket.LocalEndPoint ?? endPoint;
-        public EndPoint EndPointServer { get; set; }
         public ClientNetworkManager()
         {
             Init();
         }
 
-        public bool SocketConnected()
-        {
-            return socket.Connected;
-        }
-
         public void Init() //create endPoint, socket
         {
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            endPoint = new IPEndPoint(GetIp(), 0);
+            endPoint = new IPEndPoint(GetIp(), 8081);
             socket.Bind(endPoint);
             Thread thread = new Thread(StartListening);
             thread.Start();
@@ -48,8 +43,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         public void SendData()
         {
-            byte[] bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(updates));  //нужно сериализовать
-            socket.Send(bytes);
+            Datagramm Datagramm = new Datagramm();
+            Datagramm.updateDatas = updates;
+            byte[] bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(Datagramm));  //нужно сериализовать
+            socket.SendTo(bytes, sendingEP);
         }
 
         public void AddData(UpdateData UpdateData)
@@ -92,7 +89,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             Datagramm Dgramm = new Datagramm() { DatagrammId = DatagrammId };
             string data = JsonSerializer.Serialize(Dgramm);
             byte[] buffer = Encoding.UTF8.GetBytes(data);
-            socket.SendTo(buffer, EndPointServer);
+            socket.SendTo(buffer, sendingEP);
 
         }
         void CheckDatagramm()
@@ -124,19 +121,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// <param name="port"></param>
         public void JoinRoom(string ip, int port) // multyplayer
         {
-
-            endPoint = new IPEndPoint(IPAddress.Parse(ip), port);
-            socket.Connect(endPoint);
-            SendData();
-            Thread listen = new Thread(StartListening);
-            listen.IsBackground = true;
-            listen.Start();
-        }
-        public void JoinRoom(IPEndPoint endPoint) // multyplayer
-        {
-
-            this.endPoint = endPoint;
-            socket.Connect(endPoint);
+            sendingEP = new IPEndPoint(IPAddress.Parse(ip), port);
             SendData();
             Thread listen = new Thread(StartListening);
             listen.IsBackground = true;
@@ -148,8 +133,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// </summary>
         public void JoinYourself(int port)  // single player
         {
-            endPoint = new IPEndPoint(GetIp(), port);
-            socket.Connect(endPoint);
+            sendingEP = AppManager.Instance.server.MyIp;
             SendData();
             Thread listen = new Thread(StartListening);
             listen.IsBackground = true;
@@ -159,7 +143,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public static IPAddress GetIp()
         {
             string hostName = Dns.GetHostName(); // Retrive the Name of HOST
-            var ipList = Dns.GetHostByName(hostName).AddressList;
+            var ipList = Dns.GetHostEntry(hostName).AddressList;
 
             foreach (var ip in ipList)
             {

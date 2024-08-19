@@ -41,10 +41,10 @@ public class SelectModeMenu : AbstractGUI
             // single
             Server server = new Server();
             Client client = new Client();
-            server.CreateRoom(false);
-            client.JoinYourself(server.MyIp.Port);
             AppManager.Instance.SetServer(server);
             AppManager.Instance.SetClient(client);
+            server.CreateRoom(false);
+            client.JoinYourself(server.MyIp.Port);
             AppManager.Instance.ChangeState(GameState.HostPlaying);
             AppManager.Instance.SetGUI(new HUD());
 
