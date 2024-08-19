@@ -91,12 +91,19 @@ public class Player : LivingEntity
     {
         IsTryingToShoot = true;
 
-        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, 200, 200);
-        Entity[] entities = AppManager.Instance.server.collisionManager.GetEntities(rectangle);
-        DebugHUD.DebugSet("ent[0]", entities[0].ToString());
-        if(entities != null){
-            foreach (Entity entity in entities){
-                AppManager.Instance.server.DeleteObject(entity);
+        var rect = collisionComponent.stopRectangle.SetOrigin(position);
+        rect.Width += 100;
+        rect.Height += 100;
+        Entity[] entities = AppManager.Instance.server.collisionManager.GetEntities(rect, this);
+        if (entities.Length>0)
+        {
+            DebugHUD.DebugSet("ent[0]", entities[0].ToString());
+            if (entities != null)
+            {
+                foreach (Entity entity in entities)
+                {
+                    AppManager.Instance.server.DeleteObject(entity);
+                }
             }
         }
     }

@@ -208,7 +208,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             }
             return players.ToArray();
         }
-        public Entity[] GetEntities(Rectangle rectangle)
+        public Entity[] GetEntities(Rectangle rectangle, Entity entity)
         {
 
             List<Entity> entities = new List<Entity>();
@@ -219,6 +219,8 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
                     entities.Add(item);
                 }
             }
+            if (entities.Contains(entity))
+                entities.Remove(entity);
             return entities.ToArray();
         }
 

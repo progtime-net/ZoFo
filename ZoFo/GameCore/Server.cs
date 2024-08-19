@@ -22,6 +22,7 @@ using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 using ZoFo.GameCore.Graphics;
 using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
+using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore
 {
@@ -79,7 +80,10 @@ namespace ZoFo.GameCore
                 case "UpdatePlayerParametrs":
                     break;
                 case "UpdateInput":
-                    players[0].HandleNewInput(updateData as UpdateInput);
+                    if (players.Count > 0)
+                        players[0].HandleNewInput(updateData as UpdateInput);//TODO id instead of 0
+                    else
+                        DebugHUD.DebugLog("NO PLAYER ON MAP");
                     break;
                 case "UpdateTileCreated":
                     break;
@@ -218,6 +222,7 @@ namespace ZoFo.GameCore
                     position = gameObject.position
                 });
                 collisionManager.Register(entity.collisionComponent);
+                entities.Add(entity);
             }
             else
                 AddData(new UpdateGameObjectCreated()
