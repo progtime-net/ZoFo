@@ -2113,15 +2113,15 @@
                  "x":112,
                  "y":80
                 }],
-         "height":144,
+         "height":96,
          "id":5,
          "name":"Collidable",
          "opacity":1,
-         "startx":-16,
-         "starty":-16,
+         "startx":0,
+         "starty":0,
          "type":"tilelayer",
          "visible":true,
-         "width":208,
+         "width":128,
          "x":0,
          "y":0
         }, 
@@ -2148,10 +2148,10 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":1,
+ "nextobjectid":2,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.11.0",
+ "tiledversion":"1.10.2",
  "tileheight":16,
  "tilesets":[
         {
@@ -2165,6 +2165,10 @@
         {
          "firstgid":813,
          "source":"..\/TileSets\/TilesetNature.tsj"
+        }, 
+        {
+         "firstgid":1317,
+         "source":"..\/TileSets\/IconSet.tsj"
         }],
  "tilewidth":16,
  "type":"map",

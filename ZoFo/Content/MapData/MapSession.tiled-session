@@ -1,78 +1,36 @@
 {
-    "Map/SizeTest": {
-        "height": 4300,
-        "width": 2
-    },
-    "activeFile": "TileMaps/main.tmj",
+    "activeFile": "",
     "expandedProjectPaths": [
-        ".",
-        "TileSets",
-        "TileMaps"
     ],
     "fileStates": {
-        "": {
-            "scaleInDock": 1
-        },
-        "TileMaps/TileSets/TileSet 1.tsj": {
-            "scaleInDock": 1
-        },
         "TileMaps/main.tmj": {
-            "scale": 0.33,
-            "selectedLayer": 1,
+            "scale": 0.5,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 1010.6060606060606,
-                "y": 553.0303030303031
+                "x": 745,
+                "y": 756
             }
-        },
-        "TileMaps/main.tmj#IconSet": {
-            "dynamicWrapping": true,
-            "scaleInEditor": 1
-        },
-        "TileSets/CollisionTileSet.tsj": {
-            "scaleInDock": 0.75,
-            "scaleInEditor": 1
         },
         "TileSets/IconSet.tsj": {
             "dynamicWrapping": true
         },
         "TileSets/TileSet 1.tsj": {
-            "dynamicWrapping": false,
-            "scaleInDock": 1,
-            "scaleInEditor": 1.5
-        },
-        "TileSets/TilesetNature.tsj": {
-            "dynamicWrapping": false
             "scaleInDock": 1
         },
-        "TileSets/WallSet.tsj": {
-            "scaleInDock": 1,
-            "scaleInEditor": 1
+        "TileSets/TilesetNature.tsj": {
+            "scaleInDock": 1.5
         },
         "TileSets/tileset 1 collision.tsj": {
+            "dynamicWrapping": false,
             "scaleInDock": 1
         }
     },
     "last.imagePath": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/Textures/icons",
-    "last.objectTemplatePath": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/MapData/Templates",
+    "last.objectTemplatePath": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/MapData/Templates/Enemies",
     "openFiles": [
-        "TileSets/TileSet 1.tsj",
-        "TileMaps/main.tmj"
     ],
     "project": "MapSession.tiled-project",
     "recentFiles": [
-        "TileSets/TileSet 1.tsj",
-        "TileMaps/main.tmj",
-        "TileSets/CollisionTileSet.tsj",
-        "TileSets/WallSet.tsj"
-    ],
-    "stampsFolder": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/MapData/TileStamps",
-    "tileset.embedInMap": false,
-    "tileset.lastUsedFormat": "json",
-    "tileset.margin": 0,
-    "tileset.spacing": 0,
-    "tileset.tileSize": {
-        "height": 16,
-        "width": 16
-    },
-    "tileset.type": 1
+        "TileMaps/main.tmj"
+    ]
 }
