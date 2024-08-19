@@ -183,8 +183,9 @@ namespace ZoFo.GameCore
             else if (update is UpdatePosition)
             {
                 var ent = FindEntityById(update.IdEntity);
- 
-                ent.position = (update as UpdatePosition).NewPosition;
+
+                if (ent != null)
+                    ent.position = (update as UpdatePosition).NewPosition;
             }
             else if (update is UpdateAnimation)
             {
