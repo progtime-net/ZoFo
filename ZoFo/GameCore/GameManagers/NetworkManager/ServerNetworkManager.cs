@@ -43,7 +43,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private void Init()
         {
             endPoint = new IPEndPoint(GetIp(), 8080);
-            sendedData = new List<Datagramm>();
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             clientsEP = new List<IPEndPoint>();
             commonUpdates = new List<UpdateData>();

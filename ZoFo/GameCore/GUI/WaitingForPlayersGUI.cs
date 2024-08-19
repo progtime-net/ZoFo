@@ -53,7 +53,7 @@ public class WaitingForPlayersGUI : AbstractGUI
             {
                 // start
                 AppManager.Instance.ChangeState(GameState.HostPlaying);
-                AppManager.Instance.SetGUI(new HUD());
+                AppManager.Instance.SetGUI(new HUD());////
                 AppManager.Instance.server.StartGame();
                 // ваш код здесь 
             };
