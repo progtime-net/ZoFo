@@ -29,11 +29,10 @@ namespace ZoFo.GameCore
     {
         private ServerNetworkManager networkManager;
         private int ticks = 0;
-        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } } 
+        //public IPEndPoint MyIp { get { return networkManager.InfoConnect; } } 
         public Server()
         {
             networkManager = new ServerNetworkManager();
-            networkManager.GetDataSend += OnDataSend;
             collisionManager = new CollisionManager();
 
         }
@@ -86,10 +85,6 @@ namespace ZoFo.GameCore
             }
         }
 
-        public void CloseConnection()
-        {
-            networkManager.CloseConnection();
-        }
 
         /// <summary>
         /// Для красоты)   Отдел Серверов 
@@ -105,9 +100,10 @@ namespace ZoFo.GameCore
         /// Создает комнату и запускает ожидание подключений
         /// </summary>
         /// <param name="players"></param>
-        public void CreateRoom(int players)
+        public void CreateRoom(bool isMultiplayer)
         {
-            networkManager.Start(players);
+            networkManager.SetIsMultiplayer(isMultiplayer);
+            networkManager.Start();
         }
 
         #endregion
@@ -142,7 +138,6 @@ namespace ZoFo.GameCore
         {
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
-            networkManager.CloseConnection();
         }
 
         public List<GameObject> gameObjects;

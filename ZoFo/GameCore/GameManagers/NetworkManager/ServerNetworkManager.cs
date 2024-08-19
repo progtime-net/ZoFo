@@ -18,17 +18,21 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
     public class ServerNetworkManager
     {
-        private IPAddress ip = IPAddress.Parse("127.0.0.1");
-        private const int port = 0;
-        private IPEndPoint endPoint;
         private Socket socket;
-        private List<Socket> clients;
-        public List<UpdateData> updates;
+        private IPAddress ip = IPAddress.Parse("127.0.0.1");
+        private bool isMultiplayer;
+        //Player Id to Player endPoint
+        private List<IPEndPoint> clientsEP;
+        private IPEndPoint endPoint;
+        private List<UpdateData> commonUpdates;
+        private List<UpdateData> importantUpdates;
+        private List<Datagramm> sendedData;
+        private List<int> arrivingDataId = new List<int>();
+        private int currentDatagrammId = 1;
+        private int nextPlayerId = 0;
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
-        Dictionary<Socket, Thread> managerThread;
-        Thread serverTheread;
-        public IPEndPoint InfoConnect => (IPEndPoint)socket.LocalEndPoint ?? endPoint;
+        Thread serverThread;
 
         public ServerNetworkManager() { Init(); }
 
@@ -37,12 +41,18 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// </summary>
         private void Init()
         {
-            endPoint = new IPEndPoint(GetIp(), port);
+            endPoint = new IPEndPoint(GetIp(), 8080);
+            sendedData = new List<Datagramm>();
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            managerThread = new Dictionary<Socket, Thread>();
-            clients = new List<Socket>();
-            updates = new List<UpdateData>();
+            clientsEP = new List<IPEndPoint>();
+            commonUpdates = new List<UpdateData>();
+            importantUpdates = new List<UpdateData>();
+            sendedData = new List<Datagramm>();
+
+            GetDataSend += AnalyzeData;
+
             socket.Bind(endPoint);
+
         }
 
         /// <summary>
@@ -63,32 +73,77 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             }
             return IPAddress.Loopback;
         }
+        public void SetIsMultiplayer(bool isMultiplayer)
+        {
+            this.isMultiplayer = isMultiplayer;
+        }
 
         /// <summary>
         /// отправляет клиенту Data
         /// </summary>
         public void SendData()
         {
-            for (int i = 0; i < updates.Count; i++)
-            {
+            #region Network Sending SinglePlayerFix
+            //for (int i = 0; i < updates.Count; i++)
+            //{
 
-                AppManager.Instance.client.GotData(updates[i]);
-            }
-            updates.Clear();
-            return; //TODO TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK
+            //    AppManager.Instance.client.GotData(updates[i]);
+            //}
+            //updates.Clear();
+            //return; //TODO TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK TODO REMOVE TO ADD NETWORK
             //Что это?
             //по 10 паков за раз TODO FIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXITFIXIT
-            List<UpdateData> datasToSend = new List<UpdateData>();
-            for (int i = 0; i < 200 && i<updates.Count; i++)
-                datasToSend.Add(updates[i]);
-            string data = JsonSerializer.Serialize(datasToSend);
-            var databytes = Encoding.UTF8.GetBytes(data);
-            foreach (Socket socket in clients)
+            #endregion  
+            if (arrivingDataId.Count != 0)
             {
-                clients[0].SendAsync(databytes, SocketFlags.Partial);
+                List<int> actualArrivingId = arrivingDataId;
+                for (int i = 0; i < actualArrivingId.Count; i++)
+                {
+                    sendedData.Remove(sendedData.Find(x => x.DatagrammId == actualArrivingId[i]));
+                }
+                arrivingDataId.Clear();
             }
-            for (int i = 0; i < 200 && i< datasToSend.Count; i++)
-                updates.RemoveAt(0); 
+            List<UpdateData> dataToSend;
+            if (importantUpdates.Count != 0) 
+            {
+                Datagramm impDgramm = new Datagramm();
+                impDgramm.DatagrammId = currentDatagrammId;
+                currentDatagrammId++;
+
+                dataToSend = new List<UpdateData>();
+                for (int i = 0; i < 200 && i < importantUpdates.Count; i++)
+                    dataToSend.Add(importantUpdates[i]);
+
+                impDgramm.updateDatas = dataToSend;
+                impDgramm.isImportant = true;
+                sendedData.Add(impDgramm);
+                foreach (Datagramm Dgramm in sendedData)
+                {
+                    string impData = JsonSerializer.Serialize(Dgramm);
+                    byte[] impBuffer = Encoding.UTF8.GetBytes(impData);
+                    foreach (EndPoint sendingEP in clientsEP)
+                    {
+                        socket.SendTo(impBuffer, sendingEP);
+                    }
+                }
+                for (int i = 0; i < 200 && i < dataToSend.Count; i++)
+                    importantUpdates.RemoveAt(0);
+            }
+            Datagramm unImpDgramm = new Datagramm();
+
+            dataToSend = new List<UpdateData>();
+            for (int i = 0; i < 200 && i < commonUpdates.Count; i++)
+                dataToSend.Add(commonUpdates[i]);
+
+            unImpDgramm.updateDatas = dataToSend;
+            string data = JsonSerializer.Serialize(unImpDgramm);
+            byte[] buffer = Encoding.UTF8.GetBytes(data);
+            foreach (EndPoint sendingEP in clientsEP)
+            {
+                socket.SendTo(buffer, sendingEP);
+            }
+            for (int i = 0; i < 200 && i < dataToSend.Count; i++)
+                commonUpdates.RemoveAt(0);
         }
 
         /// <summary>
@@ -97,42 +152,24 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// <param name="data"></param>
         public void AddData(UpdateData data)
         {
-            updates.Add(data);
-        }
-
-        /// <summary>
-        /// По сути конец игры и отключение игроков
-        /// </summary>
-        public void CloseConnection()
-        {
-            foreach (var item in clients)
+            if (data.isImportant)
             {
-                //Закрывает сокеты клиентов
-                item.Shutdown(SocketShutdown.Both);
-                item.Close();
+                importantUpdates.Add(data);
             }
-            foreach (var item in managerThread)
-            {
-                foreach (var socket in clients)
-                {
-                    //Закрывает потоки клиентов
-                    managerThread[socket].Interrupt();
-                }
+            else {
+                commonUpdates.Add(data);
             }
-            //очищает листы
-            managerThread.Clear();
-            clients.Clear();
         }
 
         /// <summary>
         /// Начинает работу сервера (Ожидает подключений)
         /// </summary>
         /// <param name="players"></param>
-        public void Start(object players)
+        public void Start()
         {
-            serverTheread = new Thread(StartWaitingForPlayers);
-            serverTheread.IsBackground = true;
-            serverTheread.Start(players);
+            serverThread = new Thread(StartWaitingForPlayers);
+            serverThread.IsBackground = true;
+            serverThread.Start();
         }
 
         //Потоки Клиентов
@@ -140,42 +177,42 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// Слушает игроков, которые хотят подключиться
         /// </summary>
         /// <param name="players"></param>
-        public void StartWaitingForPlayers(object players)
+        public void StartWaitingForPlayers()
         {
-            int playNumber = (int)players;
-
-            socket.Listen(playNumber);
-            for (int i = 0; i < playNumber; i++)
+            byte[] buffer = new byte[65535];
+            string data;
+            while (socket != null)
             {
-                Socket client = socket.Accept();
-                AppManager.Instance.debugHud.Log($"Connect {client.LocalEndPoint.ToString()}");
-                Thread thread = new Thread(StartListening);
-                thread.IsBackground = true;
-                thread.Start(client);
-                managerThread.Add(client, thread);
-                clients.Add(client);
-               //AppManager.Instance.ChangeState(GameState.HostPlaying);
-                //добавляем клиентов в лист
+                EndPoint senderRemote = (EndPoint)new IPEndPoint(IPAddress.Any, 0);
+                int size = socket.ReceiveFrom(buffer, buffer.Length, SocketFlags.None, ref senderRemote);
+                if (AppManager.Instance.gamestate != GameState.HostPlaying && !clientsEP.Contains(senderRemote) &&
+                    senderRemote != new IPEndPoint(IPAddress.Any, 0))
+                {
+                    clientsEP.Add((IPEndPoint)senderRemote);
+                    AppManager.Instance.debugHud.Log($"Connect {senderRemote.ToString()}");
+                    if (!isMultiplayer) AppManager.Instance.ChangeState(GameState.HostPlaying);
+                    // Отправлять Init апдейт с информацией об ID игрока и ID датаграмма на сервере
+                    //Можно добавить bool isInit для Датаграммов
+                }
+                byte[] correctedBuffer = new byte[size];
+                Array.Copy(buffer, correctedBuffer, size);
+                data = Encoding.UTF8.GetString(correctedBuffer);
+                GetDataSend(data);
+
             }
-            AppManager.Instance.ChangeState(GameState.HostPlaying);
         }
-
-        /// <summary>
-        /// начать слушать клиентов в самой игре активируют Ивент
-        /// </summary>
-        /// <param name="socket"></param>
-        private void StartListening(object socket)
+        public void AnalyzeData(string data) 
         {
-            // obj to Socket
-            Socket client = (Socket)socket;
-            while (client.Connected)
+            Datagramm Dgramm = JsonSerializer.Deserialize<Datagramm>(data);
+            if (Dgramm.updateDatas == null)
             {
-                var buff = new byte[65535];
-                var answ = client.Receive(buff, SocketFlags.Partial);
-                string response = Encoding.UTF8.GetString(buff, 0, answ);
-                GetDataSend(response);
+                //Обработка acknowledgement
+                arrivingDataId.Add(Dgramm.DatagrammId);
             }
-            Task.Delay(-1);
+            else
+            {
+                //Настроить десериализацию и применять неважные апдейты
+            }
 
         }
     }

@@ -41,7 +41,7 @@ public class SelectModeMenu : AbstractGUI
             // single
             Server server = new Server();
             Client client = new Client();
-            server.CreateRoom(1);
+            server.CreateRoom(false);
             client.JoinYourself(server.MyIp.Port);
             AppManager.Instance.SetServer(server);
             AppManager.Instance.SetClient(client);
