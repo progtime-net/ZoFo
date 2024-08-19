@@ -140,7 +140,7 @@ namespace ZoFo.GameCore
             networkManager.AddData(gameEnded);
         }
 
-        public List<GameObject> gameObjects;
+        public List<GameObject> gameObjects = new List<GameObject>();
         public List<Entity> entities;  //entity
         public List<Player> players; 
         public void Update(GameTime gameTime)
