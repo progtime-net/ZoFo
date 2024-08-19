@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.Graphics;
 
@@ -33,6 +34,8 @@ public class ManualGraphicsComponent : GraphicsComponent
         currentFrame = 0;
         interval = frames[currentFrame].FrameTime;
         LoadContent();
+        IsCycle = true;
+        animating = true;
     }
 
     public void StartAnimation()
@@ -68,15 +71,14 @@ public class ManualGraphicsComponent : GraphicsComponent
             currentFrame++;
             if (currentFrame >= frames.Count)
             {
-                EndAnimation();
+                currentFrame = 0;
+                interval = frames[currentFrame].FrameTime;
             }
 
             interval = frames[currentFrame].FrameTime;
         }
-        else
-        {
-            interval--;
-        }
+        
+        interval--;
     }
 
     public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch)
@@ -84,6 +86,10 @@ public class ManualGraphicsComponent : GraphicsComponent
         destinationRectangle.X -= CameraPosition.X;
         destinationRectangle.Y -= CameraPosition.Y;
         destinationRectangle = Scaling(destinationRectangle);
+        if (currentFrame != 0)
+        {
+            DebugHUD.Instance.Log(currentFrame.ToString());
+        }
         _spriteBatch.Draw(texture, destinationRectangle, frames[currentFrame].SourceRectangle, Color.White, Rotation,
             Vector2.Zero, Flip, 0);
     }
