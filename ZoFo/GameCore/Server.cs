@@ -16,8 +16,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.Entities;
-using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
+using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables; 
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
@@ -162,9 +161,9 @@ namespace ZoFo.GameCore
         {
             if (ticks == 3) //ОБРАБАТЫВАЕТСЯ 20 РАЗ В СЕКУНДУ
             {
-                foreach (var go in gameObjects)
+                for (int i = 0; i < gameObjects.Count; i++)
                 {
-                    go.UpdateLogic();
+                    gameObjects[i].UpdateLogic();
                 }
                 collisionManager.ResolvePhysics();
                 ticks = 0;

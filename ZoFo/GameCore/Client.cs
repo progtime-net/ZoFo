@@ -23,7 +23,6 @@ using System.Web;
 using ZoFo.GameCore.GUI;
 using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
 using ZoFo.GameCore.Graphics;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
@@ -50,17 +49,17 @@ namespace ZoFo.GameCore
                 networkManager.AddData(new UpdateInput()
                 {
                     InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
-                    InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection 
+                    InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
                 });
-                
+
             };
             AppManager.Instance.InputManager.OnInteract += () =>
             {
                 networkManager.AddData(new UpdateInputInteraction() { });
             };
-            AppManager.Instance.InputManager.ShootEvent += () => 
+            AppManager.Instance.InputManager.ShootEvent += () =>
             {
-                networkManager.AddData(new UpdateInputShoot() { }); 
+                networkManager.AddData(new UpdateInputShoot() { });
             };
         }
 
@@ -95,7 +94,7 @@ namespace ZoFo.GameCore
 
         Player myPlayer;
         List<MapObject> mapObjects = new List<MapObject>();
-        List<GameObject> gameObjects = new List<GameObject>(); 
+        List<GameObject> gameObjects = new List<GameObject>();
         List<Player> players = new List<Player>();
         List<StopObject> stopObjects = new List<StopObject>();
 
@@ -112,8 +111,13 @@ namespace ZoFo.GameCore
             }
 
             networkManager.SendData();//set to ticks
-            if (myPlayer!=null)
-                GraphicsComponent.CameraPosition = (myPlayer.position + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2()/2 - AppManager.Instance.CurentScreenResolution.ToVector2()/(2*GraphicsComponent.scaling)).ToPoint();
+            if (myPlayer != null)
+                GraphicsComponent.CameraPosition =
+                    ((GraphicsComponent.CameraPosition.ToVector2() *0.9f +
+                    (myPlayer.position + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2 - AppManager.Instance.CurentScreenResolution.ToVector2() / (2 * GraphicsComponent.scaling)
+                    ) * 0.1f
+                    ) )
+                .ToPoint();
         }
         internal void Draw(SpriteBatch spriteBatch)
         {
@@ -151,47 +155,47 @@ namespace ZoFo.GameCore
                     (update as UpdateStopObjectCreated).Size.GetPoint().ToVector2(),
                     (update as UpdateStopObjectCreated).sourceRectangle.GetRectangle(),
                     (update as UpdateStopObjectCreated).tileSetName,
-                    (update as UpdateStopObjectCreated).collisions.Select(x =>x.GetRectangle()).ToArray()
+                    (update as UpdateStopObjectCreated).collisions.Select(x => x.GetRectangle()).ToArray()
                     ));
             }
             else if (update is UpdateGameObjectCreated)
             {
-                GameObject created_gameObject;
-                if ((update as UpdateGameObjectCreated).GameObjectType == "EntittyForAnimationTests")
-                    gameObjects.Add(new EntittyForAnimationTests((update as UpdateGameObjectCreated).position));
-                if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
+                GameObject created_gameObject; 
+                if((update as UpdateGameObjectCreated).GameObjectType == "Player")
                 {
                     created_gameObject = new Player((update as UpdateGameObjectCreated).position);
                     players.Add(created_gameObject as Player);
-                    myPlayer = players[0]; 
+                    myPlayer = players[0];
                     gameObjects.Add(created_gameObject);
                 }
-                if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
+                else if((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
                     gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position));
-                if ((update as UpdateGameObjectCreated).GameObjectType == "Zombie")
+                else if((update as UpdateGameObjectCreated).GameObjectType == "Zombie")
                     gameObjects.Add(new Zombie((update as UpdateGameObjectCreated).position));
+                else
+                {
+                    Type t = Type.GetType("ZoFo.GameCore.GameObjects." + (update as UpdateGameObjectCreated).GameObjectType);
+                    GameObject gameObject = Activator.CreateInstance(t, (update as UpdateGameObjectCreated).position) as GameObject;
+                    if (gameObject is Entity)
+                        (gameObject as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
+                    gameObjects.Add(gameObject);
+                }
+                (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity); 
 
-
-                (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
-                //var a = Assembly.GetAssembly(typeof(GameObject));
-                //gameObjects.Add( TODO reflection
-                //Activator.CreateInstance(Type.GetType("ZoFo.GameCore.GameObjects.Entities.EntittyForAnimationTests")
-                ///*(update as UpdateGameObjectCreated).GameObjectType*/, new []{ new Vector2(100, 100) })
-                //as GameObject
-                //);
             }
             else if (update is UpdatePosition)
             {
                 var ent = FindEntityById(update.IdEntity);
- 
-                ent.position = (update as UpdatePosition).NewPosition;
+
+                if (ent != null)
+                    ent.position = (update as UpdatePosition).NewPosition;
             }
             else if (update is UpdateAnimation)
             {
                 var ent = FindEntityById(update.IdEntity);
                 if (ent != null)
                     ((ent as Entity).graphicsComponent as AnimatedGraphicsComponent).StartAnimation((update as UpdateAnimation).animationId);
-               //DebugHUD.Instance.Log("new Animation " + ent.position);
+                //DebugHUD.Instance.Log("new Animation " + ent.position);
             }
             else if (update is UpdateGameObjectDeleted)
             {
