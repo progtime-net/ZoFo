@@ -4,7 +4,7 @@ using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 
-namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
+namespace ZoFo.GameCore.GameObjects;
 public class Collectable : Interactable
 {
     protected static readonly string _path = "Textures/icons/Collectables/";

@@ -139,22 +139,23 @@ namespace ZoFo.GameCore.GameManagers
                 }
                 #endregion // Cheats
 
-                #region Обработка состояния объекта. Задает значение полю scopeState.
+                #region Обработка состояния объекта. Задает значение полю scopeState. 
                 if (keyBoardState.IsKeyDown(Keys.Up) || keyBoardState.IsKeyDown(Keys.W))
                 {
-                    InputMovementDirection += new Vector2(0, -1);
+                    InputMovementDirection += new Vector2(0, -1); 
                 }
                 if (keyBoardState.IsKeyDown(Keys.Down) || keyBoardState.IsKeyDown(Keys.S))
-                {
-                    InputMovementDirection += new Vector2(0, 1);
+                { 
+                    InputMovementDirection += new Vector2(0, 1); 
                 }
                 if (keyBoardState.IsKeyDown(Keys.Right) || keyBoardState.IsKeyDown(Keys.D))
-                {
-                    InputMovementDirection += new Vector2(1, 0);
+                { 
+                    InputMovementDirection += new Vector2(1, 0); 
                 }
                 if (keyBoardState.IsKeyDown(Keys.Left) || keyBoardState.IsKeyDown(Keys.A))
-                {
+                { 
                     InputMovementDirection += new Vector2(-1, 0);
+
                 }
                 ConvertVector2ToState(InputMovementDirection);
                 #endregion

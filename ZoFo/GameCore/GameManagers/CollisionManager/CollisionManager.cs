@@ -30,9 +30,10 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         /// <summary>
         /// минимальный накоп изменения перед перевдижением
         /// </summary>
-        const float minimalValueToChange = 4;
+        const float minimalValueToChange = 0;
         public void CheckComponentCollision(CollisionComponent componentOfEntity)
         {
+            //ADD CHECKSPEED  TODO
             var entity = componentOfEntity.gameObject as LivingEntity;
             //for (int i = 0; i < ObjectsWithCollisions.Count; i++)
             //{
@@ -74,7 +75,8 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
                 }
                 else
                 {
-                    entity.position.X += entity.velocity.X; //update player position
+                    entity.position.X += (int)entity.velocity.X; //update player position
+                    //entity.position.X = (float)Math.Round(entity.position.X, 2);
                     newRect.X = tryingRectX.X;//значение по X для нового РЕК приравниваем к значению испытуемого РЕК
                 }
 
@@ -112,7 +114,8 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
                 }
                 else
                 {
-                    entity.position.Y += entity.velocity.Y;
+                    entity.position.Y += (int)entity.velocity.Y;
+                    //entity.position.Y = (float)Math.Round(entity.position.Y, 2);
                     newRect.Y = tryingRectY.Y;//значение по X для нового РЕК приравниваем к значению испытуемого РЕК
                 }
                 entity.velocity.Y = 0;
@@ -224,8 +227,8 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
     {
         public static Rectangle SetOrigin(this Rectangle rectangle, Vector2 origin)
         {
-            rectangle.X = (int)origin.X;
-            rectangle.Y = (int)origin.Y;
+            rectangle.X += (int)origin.X;
+            rectangle.Y += (int)origin.Y;
             return rectangle;
         }
     }

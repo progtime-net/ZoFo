@@ -16,8 +16,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.Entities;
-using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
+using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables; 
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
@@ -30,7 +29,7 @@ namespace ZoFo.GameCore
     {
         private ServerNetworkManager networkManager;
         private int ticks = 0;
-        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } } 
+        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } }
         public Server()
         {
             networkManager = new ServerNetworkManager();
@@ -137,10 +136,10 @@ namespace ZoFo.GameCore
 
             //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));
             AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(740, 140)));
-            AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1000, 1000)));
-            AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300, 1000)));
-            AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1500, 1000)));
-            AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1700, 1000)));
+            for (int i = 0; i < 20; i++)
+                for (int j = 0; j < 20; j++)
+                    AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300 + i*70, 1000+j*70)));
+
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(140, 440)));
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(240, 440)));
         }
@@ -157,14 +156,14 @@ namespace ZoFo.GameCore
 
         public List<GameObject> gameObjects;
         public List<Entity> entities;  //entity
-        public List<Player> players; 
+        public List<Player> players;
         public void Update(GameTime gameTime)
         {
             if (ticks == 3) //ОБРАБАТЫВАЕТСЯ 20 РАЗ В СЕКУНДУ
             {
-                foreach (var go in gameObjects)
+                for (int i = 0; i < gameObjects.Count; i++)
                 {
-                    go.UpdateLogic();
+                    gameObjects[i].UpdateLogic();
                 }
                 collisionManager.ResolvePhysics();
                 ticks = 0;
@@ -183,6 +182,22 @@ namespace ZoFo.GameCore
         {
 
             gameObjects.Add(gameObject);
+            if (gameObject is StopObject)
+            {
+                AddData(new UpdateStopObjectCreated()
+                {
+                    Position = (gameObject as StopObject).position,
+                    sourceRectangle = new SerializableRectangle((gameObject as StopObject).sourceRectangle),
+                    Size = new SerializablePoint((gameObject as StopObject).graphicsComponent.ObjectDrawRectangle.Size),
+                    tileSetName = ((gameObject as StopObject).graphicsComponent as StaticGraphicsComponent)._textureName,
+                    collisions = (gameObject as StopObject).collisionComponents.Select(x => new SerializableRectangle(x.stopRectangle)).ToArray()
+                });//TODO 
+                foreach (var col in (gameObject as StopObject).collisionComponents)
+                {
+                    collisionManager.Register(col);
+                }
+                return;
+            }
             if (gameObject is MapObject)
             {
                 AddData(new UpdateTileCreated()
@@ -191,25 +206,29 @@ namespace ZoFo.GameCore
                     sourceRectangle = new SerializableRectangle((gameObject as MapObject).sourceRectangle),
                     Size = new SerializablePoint((gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size),
                     tileSetName = ((gameObject as MapObject).graphicsComponent as StaticGraphicsComponent)._textureName
-                });//TODO 
+                });
                 return;
             }
             if (gameObject is Entity entity)
             {
-                AddData(new UpdateGameObjectCreated() { GameObjectType = gameObject.GetType().Name, IdEntity = entity.Id,
-                position = gameObject.position});
+                AddData(new UpdateGameObjectCreated()
+                {
+                    GameObjectType = gameObject.GetType().Name,
+                    IdEntity = entity.Id,
+                    position = gameObject.position
+                });
                 collisionManager.Register(entity.collisionComponent);
             }
             else
-                AddData(new UpdateGameObjectCreated() { GameObjectType = gameObject.GetType().Name,
+                AddData(new UpdateGameObjectCreated()
+                {
+                    GameObjectType = gameObject.GetType().Name,
                     position = gameObject.position
                 });
 
 
             if (gameObject is Player)
-            {
-                players.Add(gameObject as Player); 
-            }
+                players.Add(gameObject as Player);
             ////var elems = gameObject.GetType().GetProperties(System.Reflection.BindingFlags.Public);
             ////if (elems.Count()>0) TODO
             ////{ 
@@ -217,7 +236,7 @@ namespace ZoFo.GameCore
             ////}
 
         }
-        
+
         /// <summary>
         /// Удаляет игровой объект
         /// </summary>
@@ -231,12 +250,12 @@ namespace ZoFo.GameCore
             if (players.Contains(entity))
                 players.Remove(entity as Player);
             AddData(new UpdateGameObjectDeleted()
-                { GameObjectType = entity.GetType().Name, IdEntity = entity .Id}
+            { GameObjectType = entity.GetType().Name, IdEntity = entity.Id }
             );
             collisionManager.Deregister(entity.collisionComponent);
         }
     }
-    
+
     #endregion
 
     #endregion
