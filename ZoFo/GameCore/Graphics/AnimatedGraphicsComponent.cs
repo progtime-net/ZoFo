@@ -89,6 +89,7 @@ namespace ZoFo.GameCore.Graphics
             neitralAnimation = animationContainer;
             animations.Add(animationContainer);
         }
+        
 
         private void LoadAnimations(List<string> animationsId, string neitralAnimationId)
         {
