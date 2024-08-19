@@ -76,6 +76,7 @@ public class WaitingForPlayersGUI : AbstractGUI
                 // start
                 AppManager.Instance.client.SendData();
                 AppManager.Instance.ChangeState(GameState.ClientPlaying);
+                AppManager.Instance.SetGUI(new HUD());
                 // ваш код здесь 
             };
             Elements.Add(waitButton);
