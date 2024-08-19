@@ -46,7 +46,6 @@ namespace ZoFo.GameCore.GameObjects
                 animationId = animationId,
                 IdEntity = Id
             });
-
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
