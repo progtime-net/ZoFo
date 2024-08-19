@@ -9,14 +9,24 @@ namespace ZoFo.GameCore.Graphics;
 public class ManualGraphicsComponent : GraphicsComponent
 {
     private Texture2D texture;
-    private string textureName;
+    public string textureName;
     private List<FrameContainer> frames;
     private int currentFrame;
     private int interval;
     public bool IsCycle;
     private bool animating;
+
+    public ManualGraphicsComponent()
+    {
+        
+    }
     
     public ManualGraphicsComponent(string textureName, List<FrameContainer> frames)
+    {
+        BuildComponent(textureName, frames);
+    }
+
+    public void BuildComponent(string textureName, List<FrameContainer> frames)
     {
         this.textureName = textureName;
         this.frames = frames;

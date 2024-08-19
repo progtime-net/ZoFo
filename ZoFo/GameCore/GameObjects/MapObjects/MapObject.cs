@@ -17,7 +17,7 @@ namespace ZoFo.GameCore.GameObjects.MapObjects
         public virtual bool IsColliderOn { get; protected set; } = true;//Who added that?
         public Rectangle sourceRectangle;
         public override GraphicsComponent graphicsComponent { get; } 
-            = new StaticGraphicsComponent();
+            = new ManualGraphicsComponent();
 
         /// <summary>
         /// Создается простой объект на карте - no animations, только где, насколько крупно рисовать, по какой сорс ректанглу рисовать и из какой текстуры
@@ -26,13 +26,12 @@ namespace ZoFo.GameCore.GameObjects.MapObjects
         /// <param name="size"></param>
         /// <param name="sourceRectangle"></param>
         /// <param name="textureName"></param>
-        public MapObject(Vector2 position, Vector2 size, Rectangle sourceRectangle, string textureName) : base(position)
+        public MapObject(Vector2 position, Vector2 size, List<FrameContainer> frames, string textureName) : base(position)
         {
-            (graphicsComponent as StaticGraphicsComponent)._textureName = textureName;
-            (graphicsComponent as StaticGraphicsComponent).BuildComponent(textureName);
-            (graphicsComponent as StaticGraphicsComponent).ObjectDrawRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
-            (graphicsComponent as StaticGraphicsComponent).LoadContent();
+            (graphicsComponent as ManualGraphicsComponent).ObjectDrawRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+            (graphicsComponent as ManualGraphicsComponent).LoadContent();
             this.sourceRectangle = sourceRectangle;
+            (graphicsComponent as ManualGraphicsComponent).BuildComponent(textureName, frames);
 
         }
         public override void Draw(SpriteBatch spriteBatch)
