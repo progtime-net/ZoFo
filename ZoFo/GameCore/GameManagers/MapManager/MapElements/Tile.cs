@@ -11,5 +11,6 @@ namespace ZoFo.GameCore.GameManagers.MapManager.MapElements
         public int Id { get; set; }
         public string Type { get; set; }
         public ObjectGroup Objectgroup { get; set; }
+        public List<Frame> Animation { get; set; }
     }
 }
