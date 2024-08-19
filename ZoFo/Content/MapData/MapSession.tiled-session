@@ -21,6 +21,9 @@
         "TileSets/TilesetNature.tsj": {
             "scaleInDock": 1.5
         },
+        "TileSets/bonfire.tsj": {
+            "dynamicWrapping": false
+        },
         "TileSets/tileset 1 collision.tsj": {
             "dynamicWrapping": false,
             "scaleInDock": 1
@@ -35,7 +38,7 @@
     "recentFiles": [
         "TileMaps/main.tmj"
     ],
-    "stampsFolder": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/MapData/TileStamps",
+    "stampsFolder": "C:/Users/artem/source/repos/ZoFo/ZoFo/Content/MapData/TileStamps",
     "tileset.lastUsedFormat": "json",
     "tileset.tileSize": {
         "height": 32,

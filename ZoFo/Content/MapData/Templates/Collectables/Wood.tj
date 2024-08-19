@@ -9,10 +9,9 @@
      "visible":true,
      "width":16
     },
- "tileset":
-    {
-     "firstgid":1,
-     "source":"..\/TileSets\/IconSet.tsj"
-    },
+  "tileset": {
+    "firstgid": 1,
+    "source": "..\/..\/TileSets\/IconSet.tsj"
+  },
  "type":"template"
 }
