@@ -15,6 +15,7 @@
             "dynamicWrapping": true
         },
         "TileSets/TileSet 1.tsj": {
+            "dynamicWrapping": false,
             "scaleInDock": 1
         },
         "TileSets/TilesetNature.tsj": {
@@ -25,12 +26,19 @@
             "scaleInDock": 1
         }
     },
-    "last.imagePath": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/Textures/icons",
+    "frame.defaultDuration": 250,
+    "last.imagePath": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/Textures/TileSetImages",
     "last.objectTemplatePath": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/MapData/Templates/Enemies",
     "openFiles": [
     ],
     "project": "MapSession.tiled-project",
     "recentFiles": [
         "TileMaps/main.tmj"
-    ]
+    ],
+    "stampsFolder": "D:/C#/Я смотрел ваши ХАКАТОНЫ/ZoFo/ZoFo/Content/MapData/TileStamps",
+    "tileset.lastUsedFormat": "json",
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    }
 }

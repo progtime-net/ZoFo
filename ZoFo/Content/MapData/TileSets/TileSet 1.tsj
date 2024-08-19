@@ -8,13 +8,13 @@
      "width":24
     },
  "image":"..\/..\/Textures\/TileSetImages\/TilesetFloor.png",
- "imageheight":417,
+ "imageheight":464,
  "imagewidth":352,
  "margin":0,
  "name":"TileSet 1",
  "objectalignment":"topleft",
  "spacing":0,
- "tilecount":572,
+ "tilecount":638,
  "tiledversion":"1.10.2",
  "tileheight":16,
  "tiles":[
@@ -470,23 +470,6 @@
          "type":"Tile"
         }, 
         {
-         "animation":[
-                {
-                 "duration":100,
-                 "tileid":111
-                }, 
-                {
-                 "duration":100,
-                 "tileid":112
-                }, 
-                {
-                 "duration":100,
-                 "tileid":113
-                }, 
-                {
-                 "duration":100,
-                 "tileid":114
-                }],
          "id":111,
          "probability":0.100000001490116,
          "type":"Tile"
@@ -2349,8 +2332,14 @@
                  "name":"SandStone",
                  "probability":0.3,
                  "tile":110
+                }, 
+                {
+                 "color":"#0000ff",
+                 "name":"LightGrass",
+                 "probability":1,
+                 "tile":265
                 }],
-         "name":"\u041f\u0435\u0441\u0447\u0430\u043d\u044b\u0439",
+         "name":"\u0411\u0438\u043e\u043c\u043d\u044b\u0439",
          "tile":-1,
          "type":"corner",
          "wangtiles":[
@@ -2441,6 +2430,127 @@
                 {
                  "tileid":114,
                  "wangid":[0, 2, 0, 2, 0, 2, 0, 2]
+                }, 
+                {
+                 "tileid":244,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":245,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":264,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":265,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":266,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":267,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":268,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":578,
+                 "wangid":[0, 3, 0, 2, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":579,
+                 "wangid":[0, 3, 0, 2, 0, 2, 0, 3]
+                }, 
+                {
+                 "tileid":580,
+                 "wangid":[0, 3, 0, 3, 0, 2, 0, 3]
+                }, 
+                {
+                 "tileid":581,
+                 "wangid":[0, 2, 0, 3, 0, 2, 0, 2]
+                }, 
+                {
+                 "tileid":582,
+                 "wangid":[0, 2, 0, 2, 0, 3, 0, 2]
+                }, 
+                {
+                 "tileid":600,
+                 "wangid":[0, 2, 0, 2, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":601,
+                 "wangid":[0, 2, 0, 2, 0, 2, 0, 2]
+                }, 
+                {
+                 "tileid":602,
+                 "wangid":[0, 3, 0, 3, 0, 2, 0, 2]
+                }, 
+                {
+                 "tileid":603,
+                 "wangid":[0, 3, 0, 2, 0, 2, 0, 2]
+                }, 
+                {
+                 "tileid":604,
+                 "wangid":[0, 2, 0, 2, 0, 2, 0, 3]
+                }, 
+                {
+                 "tileid":622,
+                 "wangid":[0, 2, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":623,
+                 "wangid":[0, 2, 0, 3, 0, 3, 0, 2]
+                }, 
+                {
+                 "tileid":624,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 2]
+                }]
+        }, 
+        {
+         "colors":[
+                {
+                 "color":"#ff0000",
+                 "name":"",
+                 "probability":1,
+                 "tile":264
+                }],
+         "name":"\u0422\u0440\u0430\u0432\u0430",
+         "tile":244,
+         "type":"corner",
+         "wangtiles":[
+                {
+                 "tileid":244,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":245,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":264,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":265,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":266,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":267,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":268,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
                 }]
         }]
 }
