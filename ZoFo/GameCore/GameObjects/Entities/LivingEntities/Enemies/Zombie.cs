@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GameManagers.AssetsManager;
 using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
 {
     class Zombie : Enemy
     {
-        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "zombie_damaged", "zombie_walk", "zombie_idle", "zombie_attack", "zombie_death" }, "zombie_walk");
+        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(AppManager.Instance.AssetManager.Zombie);
         public Zombie(Vector2 position) : base(position)
         {
             health = 5;
