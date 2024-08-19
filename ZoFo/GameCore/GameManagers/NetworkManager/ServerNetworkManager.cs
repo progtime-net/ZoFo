@@ -13,6 +13,7 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
+using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
@@ -64,12 +65,17 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             string hostName = Dns.GetHostName(); // Retrive the Name of HOST
             var ipList = Dns.GetHostEntry(hostName).AddressList;
 
+            var ipV4List = new List<IPAddress>();
             foreach (var ip in ipList)
             {
                 if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                 {
-                    return ip;
+                    ipV4List.Add(ip);
                 }
+            }
+            if (ipV4List.Count > 0)
+            {
+                return ipV4List[ipV4List.Count - 1];
             }
             return IPAddress.Loopback;
         }
@@ -119,6 +125,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 sendedData.Add(impDgramm);
                 foreach (Datagramm Dgramm in sendedData)
                 {
+
                     string impData = JsonSerializer.Serialize(Dgramm);
                     byte[] impBuffer = Encoding.UTF8.GetBytes(impData);
                     foreach (EndPoint sendingEP in clientsEP)

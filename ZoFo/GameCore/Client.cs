@@ -24,6 +24,7 @@ using ZoFo.GameCore.GUI;
 using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
+using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 namespace ZoFo.GameCore
@@ -144,17 +145,17 @@ namespace ZoFo.GameCore
             {
                 GameObject created_gameObject;
                 if ((update as UpdateGameObjectCreated).GameObjectType == "EntittyForAnimationTests")
-                    gameObjects.Add(new EntittyForAnimationTests((update as UpdateGameObjectCreated).position));
+                    gameObjects.Add(new EntittyForAnimationTests((update as UpdateGameObjectCreated).position.GetVector2()));
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
                 {
-                    created_gameObject = new Player((update as UpdateGameObjectCreated).position);
+                    created_gameObject = new Player((update as UpdateGameObjectCreated).position.GetVector2());
                     players.Add(created_gameObject as Player);
                     gameObjects.Add(created_gameObject);
                 }
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
-                    gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position));
+                    gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position.GetVector2()));
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Zombie")
-                    gameObjects.Add(new Zombie((update as UpdateGameObjectCreated).position));
+                    gameObjects.Add(new Zombie((update as UpdateGameObjectCreated).position.GetVector2()));
 
 
                 (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
@@ -169,7 +170,7 @@ namespace ZoFo.GameCore
             {
                 var ent = FindEntityById(update.IdEntity);
 
-                ent.position = (update as UpdatePosition).NewPosition;
+                ent.position = (update as UpdatePosition).NewPosition.GetVector2();
                 DebugHUD.Instance.Log("newPosition " + ent.position);
             }
         }

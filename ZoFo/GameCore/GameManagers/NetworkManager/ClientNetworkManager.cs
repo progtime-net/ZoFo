@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
@@ -10,6 +12,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager
@@ -47,7 +50,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         {
             Datagramm Datagramm = new Datagramm();
             Datagramm.updateDatas = updates;
-            byte[] bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(Datagramm));  //нужно сериализовать
+            byte[] bytes = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(Datagramm));  //нужно сериализовать
             socket.SendTo(bytes, sendingEP);
         }
 
@@ -60,7 +63,13 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         public void AnalyzeData(string data)
         {
-            Datagramm Dgramm = JsonSerializer.Deserialize<Datagramm>(data);
+            JObject jObj = JsonConvert.DeserializeObject(data) as JObject;
+            JToken token = JToken.FromObject(jObj);
+            JToken updateDatas = token["updateDatas"];
+            Datagramm Dgramm = new Datagramm();
+            Dgramm.isImportant = token["isImportant"].ToObject<bool>();
+            Dgramm.DatagrammId = token["DatagrammId"].ToObject<int>();
+            Dgramm.updateDatas = GetSentUpdates(token["updateDatas"]);
             if (Dgramm.isImportant)
             {
                 if (Dgramm.DatagrammId == currentServerDatagrammId + 1)
@@ -85,11 +94,72 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             }
 
         }
+
+        public List<UpdateData> GetSentUpdates(JToken updatesToken)
+        {
+            List<UpdateData> data = new List<UpdateData>();
+            JArray updateDatas = updatesToken as JArray;
+            UpdateData update = new UpdateData();
+            foreach (JObject token in updateDatas.Children())
+            {
+                switch (token["UpdateType"].ToObject<string>())
+                {
+                    case "UpdateAnimation":
+                        update = token.ToObject<UpdateAnimation>();
+                        data.Add(update);
+                        break;
+                    case "UpdateEntityHealth":
+                        update = token.ToObject<UpdateEntityHealth>();
+                        data.Add(update);
+                        break;
+                    case "UpdateGameEnded":
+                        update = token.ToObject<UpdateGameEnded>();
+                        data.Add(update);
+                        break;
+                    case "UpdateGameObjectCreated":
+                        update = token.ToObject<UpdateGameObjectCreated>();
+                        data.Add(update);
+                        break;
+                    case "UpdateGameObjectDeleted":
+                        update = token.ToObject<UpdateGameObjectDeleted>();
+                        data.Add(update);
+                        break;
+                    case "UpdateInteraction":
+                        update = token.ToObject<UpdateInteraction>();
+                        data.Add(update);
+                        break;
+                    case "UpdateInteractionReady":
+                        update = token.ToObject<UpdateInteractionReady>();
+                        data.Add(update);
+                        break;
+                    case "UpdateLoot":
+                        update = token.ToObject<UpdateLoot>();
+                        data.Add(update);
+                        break;
+                    case "UpdatePlayerParametrs":
+                        update = token.ToObject<UpdatePlayerParametrs>();
+                        data.Add(update);
+                        break;
+                    case "UpdatePosition":
+                        update = token.ToObject<UpdatePosition>();
+                        data.Add(update);
+                        break;
+                    case "UpdateTileCreated":
+                        update = token.ToObject<UpdateTileCreated>();
+                        data.Add(update);
+                        break;
+
+                }
+            }
+
+            return data;
+        }
+
         public void SendAcknowledgement(int DatagrammId)
         {
            
             Datagramm Dgramm = new Datagramm() { DatagrammId = DatagrammId };
-            string data = JsonSerializer.Serialize(Dgramm);
+            string data = System.Text.Json.JsonSerializer.Serialize(Dgramm);
             byte[] buffer = Encoding.UTF8.GetBytes(data);
             socket.SendTo(buffer, sendingEP);
 
@@ -110,11 +180,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         }
 
 #endregion
-        public void StopConnection()
-        {
-            socket.Shutdown(SocketShutdown.Both);
-            socket.Close();
-        }
         #region Join
         /// <summary>
         /// приложение пытается подключиться к комнате
@@ -124,6 +189,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public void JoinRoom(string ip, int port) // multyplayer
         {
             sendingEP = new IPEndPoint(IPAddress.Parse(ip), port);
+
             SendData();
             Thread listen = new Thread(StartListening);
             listen.IsBackground = true;
@@ -173,7 +239,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 byte[] correctedBuffer = new byte[size];
                 Array.Copy(buffer, correctedBuffer, size);
                 data = Encoding.UTF8.GetString(correctedBuffer);
-                AnalyzeData(data);
+                GetDataSent(data);
             }
         }
     }

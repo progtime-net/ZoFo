@@ -45,7 +45,7 @@ public class SelectModeMenu : AbstractGUI
             AppManager.Instance.SetClient(client);
             server.CreateRoom(false);
             client.JoinYourself(server.MyIp.Port);
-            AppManager.Instance.ChangeState(GameState.HostPlaying);
+            //AppManager.Instance.ChangeState(GameState.HostPlaying);
             AppManager.Instance.SetGUI(new HUD());
 
             //server.CreateRoom(1);

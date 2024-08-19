@@ -2,15 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO
 {
+    [Serializable]
     public class SerializableVector2
     {
-        public float X; 
-        public float Y;
+        public float X { get; set; }
+        public float Y { get; set; }
         public SerializableVector2(Vector2 vector)
         {
             X = vector.X;

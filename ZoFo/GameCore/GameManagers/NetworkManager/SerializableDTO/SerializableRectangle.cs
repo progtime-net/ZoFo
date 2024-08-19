@@ -10,7 +10,6 @@ using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
 namespace ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO
 {
     [Serializable]
-    [JsonSerializable(typeof(SerializableRectangle))]
     public class SerializableRectangle
     {
         public SerializablePoint Size { get; set; }

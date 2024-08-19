@@ -17,8 +17,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
     /// </summary>
     public class UpdateTileCreated : UpdateData
     {
-        public UpdateTileCreated() { UpdateType = "UpdateTileCreated"; }
-        public Texture2D TextureTile { get; set; }
+        public UpdateTileCreated() { UpdateType = "UpdateTileCreated"; isImportant = true; }
+        [JsonInclude]
         public SerializableVector2 Position { get; set; } 
         public SerializablePoint Size { get; set; }
         public SerializableRectangle sourceRectangle { get; set; }

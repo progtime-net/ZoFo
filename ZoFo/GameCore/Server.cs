@@ -182,12 +182,12 @@ namespace ZoFo.GameCore
             if (gameObject is Entity entity)
             {
                 AddData(new UpdateGameObjectCreated() { GameObjectType = gameObject.GetType().Name, IdEntity = entity.Id,
-                position = gameObject.position});
+                position = new SerializableVector2(gameObject.position)});
                 collisionManager.Register(entity.collisionComponent);
             }
             else
                 AddData(new UpdateGameObjectCreated() { GameObjectType = gameObject.GetType().Name,
-                    position = gameObject.position
+                    position = new SerializableVector2(gameObject.position)
                 });
 
 
