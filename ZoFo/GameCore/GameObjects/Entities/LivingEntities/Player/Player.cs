@@ -8,6 +8,8 @@ using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.Graphics;
+using System.Diagnostics;
+using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 
@@ -21,7 +23,7 @@ public class Player : LivingEntity
     //public bool IsTryingToShoot { get; set; }
     private float speed;
     private int health;
-    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_look_down" }, "player_look_down");
+    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_look_down", "player_running_top_rotate" }, "player_look_down");
     private LootData lootData;
     public bool IsTryingToInteract { get; set; }
     public bool IsTryingToShoot { get; set; }
@@ -39,7 +41,35 @@ public class Player : LivingEntity
 
     public  override void Update()
     {
-        //StartAnimation("wood");
+        #region анимация управления, стрельбы 
+        switch(AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation))
+        {
+            case ScopeState.Top:
+                
+                break;
+            case ScopeState.Down:
+
+            break;
+            case ScopeState.Right:
+                //StartAnimation("player_running_top_rotate");
+            break;
+            case ScopeState.Left:
+                
+            break;
+            case ScopeState.TopRight:
+                
+            break;
+            case ScopeState.TopLeft:
+                
+            break;
+            case ScopeState.DownRight:
+                
+            break;
+            case ScopeState.DownLeft:
+                
+            break;
+        }
+        #endregion
         MovementLogic();
     }
     public void MovementLogic() 
@@ -59,5 +89,14 @@ public class Player : LivingEntity
     public void HandleShoot(UpdateInputShoot updateInputShoot)
     {
         IsTryingToShoot = true;
+
+        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, 200, 200);
+        Entity[] entities = AppManager.Instance.server.collisionManager.GetEntities(rectangle);
+        DebugHUD.DebugSet("ent[0]", entities[0].ToString());
+        if(entities != null){
+            foreach (Entity entity in entities){
+                AppManager.Instance.server.DeleteObject(entity);
+            }
+        }
     }
 }

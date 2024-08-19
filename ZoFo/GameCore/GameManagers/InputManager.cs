@@ -8,13 +8,14 @@ using System.Diagnostics;
 using System.Formats.Tar;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.GameManagers
 { 
-    public enum ScopeState { Idle, Left, Right, Straight, Back, StraightLeft, StraightRight, BackLeft, BackRight }
+    public enum ScopeState { Idle, Left, Right, Top, Down, TopLeft, TopRight, DownLeft, DownRight }
 
     public class InputManager
     {
@@ -198,36 +199,44 @@ namespace ZoFo.GameCore.GameManagers
                 prevCurrentScopeState = currentScopeState;
             #endregion
         
-        DebugHUD.Instance.Set("controls", currentScopeState.ToString());
+            DebugHUD.Instance.Set("controls", currentScopeState.ToString());
         }
         #region работа с ScopeState и Vector2
-            public ScopeState ConvertVector2ToState(Vector2 vector){
-                int currentSection = (int)Math.Ceiling(Math.Atan2(InputMovementDirection.Y,
-                 InputMovementDirection.X) * 180 / Math.PI * 16 / 360);
-                switch(currentSection){
-                    case 1 or 0 or 16:
+            public ScopeState ConvertVector2ToState(Vector2 vector)
+            {
+                //if()
+                    int currentSection = (int)Math.Ceiling(Math.Atan2(vector.Y,
+                    vector.X) * (180 / Math.PI) / 360 * 16);
+
+                 DebugHUD.DebugSet("current section", currentSection.ToString());
+                //DebugHUD.DebugSet("y", InputMovementDirection.Y.ToString());
+                //DebugHUD.DebugSet("x", InputMovementDirection.X.ToString());
+
+                switch(currentSection)
+                {
+                    case 0 or 1:
                     currentScopeState = ScopeState.Right;
                     break; 
                     case 2 or 3:
-                    currentScopeState = ScopeState.StraightRight;
+                    currentScopeState = ScopeState.DownRight;
                     break;
                     case 4 or 5:
-                    currentScopeState = ScopeState.Straight;
+                    currentScopeState = ScopeState.Down;
                     break;
                     case 6 or 7:
-                    currentScopeState = ScopeState.StraightLeft;
+                    currentScopeState = ScopeState.DownLeft;
                     break;
-                    case 8 or 9:
+                    case 8 or -7:
                     currentScopeState = ScopeState.Left;
                     break;
-                    case 10 or 11:
-                    currentScopeState = ScopeState.BackLeft;
+                    case -6 or -5:
+                    currentScopeState = ScopeState.TopLeft;
                     break;
-                    case 12 or 13:
-                    currentScopeState = ScopeState.Back;
+                    case -4 or -3:
+                    currentScopeState = ScopeState.Top;
                     break;
-                    case 14 or 15:
-                    currentScopeState = ScopeState.BackRight;
+                    case -2 or -1:
+                    currentScopeState = ScopeState.TopRight;
                     break;
                     default:
                     break;
