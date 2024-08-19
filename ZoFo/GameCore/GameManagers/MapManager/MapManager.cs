@@ -12,6 +12,8 @@ using ZoFo.GameCore.GameManagers.MapManager.MapElements;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
+using ZoFo.GameCore.Graphics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZoFo.GameCore.GameManagers.MapManager
 {
@@ -74,18 +76,19 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                             int number = chunk.Data[i] - tileSet.FirstGid;
                             Tile tile = tileSet.Tiles[number]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
 
-                            
+                            List<FrameContainer> animation = new List<FrameContainer>();
                             if (tile.Animation is not null)
                             {
-
+                                foreach (var frame in tile.Animation)
+                                {
+                                    animation.Add(new FrameContainer() { SourceRectangle = CreateSourceRectangle(tileSet, frame.TileId), FrameTime = frame.Duration / 50 } );
+                                }
+                            }
+                            else
+                            {
+                                animation.Add(new FrameContainer() { SourceRectangle = CreateSourceRectangle(tileSet, number), FrameTime = 0 });  // Потенциальная ошибка
                             }
 
-                            int relativeColumn = number % tileSet.Columns;
-                            int relativeRow = number / tileSet.Columns; // относительно левого угла чанка
-
-                            Rectangle sourceRectangle = new Rectangle(relativeColumn * (tileSet.TileWidth + tileSet.Spacing) + tileSet.Margin,
-                                relativeRow * (tileSet.TileHeight + tileSet.Spacing) + tileSet.Margin,
-                                tileSet.TileWidth, tileSet.TileHeight);
 
                             Vector2 position = new Vector2(
                                 (i % chunk.Width) * _tileMap.TileWidth + chunk.X * _tileMap.TileWidth,
@@ -97,7 +100,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                 case "Tile":
                                     AppManager.Instance.server.RegisterGameObject(new MapObject(position,
                                         new Vector2(tileSet.TileWidth, tileSet.TileHeight),
-                                        sourceRectangle,
+                                        animation,
                                         "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", "")));
                                     break;
 
@@ -106,7 +109,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
 
                                     AppManager.Instance.server.RegisterGameObject(new StopObject(position,
                                         new Vector2(tileSet.TileWidth, tileSet.TileHeight),
-                                        sourceRectangle,
+                                        animation,
                                         "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", ""),
                                         collisionRectangles.ToArray()));
                                     break;
@@ -119,6 +122,18 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                     }
                 }
             }
+        }
+
+        private Rectangle CreateSourceRectangle(TileSet tileSet, int id)
+        {
+            int relativeColumn = id % tileSet.Columns;
+            int relativeRow = id / tileSet.Columns; // относительно левого угла чанка
+
+            Rectangle sourceRectangle = new Rectangle(relativeColumn * (tileSet.TileWidth + tileSet.Spacing) + tileSet.Margin,
+                relativeRow * (tileSet.TileHeight + tileSet.Spacing) + tileSet.Margin,
+                tileSet.TileWidth, tileSet.TileHeight);
+
+            return sourceRectangle;
         }
 
         private void ProcessObjectLayers(Layer layer)
