@@ -139,7 +139,7 @@ namespace ZoFo.GameCore
                 new MapObject(
                     (update as UpdateTileCreated).Position,
                     (update as UpdateTileCreated).Size.GetPoint().ToVector2(),
-                    (update as UpdateTileCreated).sourceRectangle.GetRectangle(),
+                    (update as UpdateTileCreated).frames,
                     (update as UpdateTileCreated).tileSetName
                     ));
             }
@@ -149,7 +149,7 @@ namespace ZoFo.GameCore
                 new StopObject(
                     (update as UpdateStopObjectCreated).Position,
                     (update as UpdateStopObjectCreated).Size.GetPoint().ToVector2(),
-                    (update as UpdateStopObjectCreated).sourceRectangle.GetRectangle(),
+                    (update as UpdateStopObjectCreated).frames,
                     (update as UpdateStopObjectCreated).tileSetName,
                     (update as UpdateStopObjectCreated).collisions.Select(x =>x.GetRectangle()).ToArray()
                     ));

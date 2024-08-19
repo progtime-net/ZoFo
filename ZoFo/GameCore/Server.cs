@@ -188,9 +188,9 @@ namespace ZoFo.GameCore
                 AddData(new UpdateStopObjectCreated()
                 {
                     Position = (gameObject as StopObject).position,
-                    sourceRectangle = new SerializableRectangle((gameObject as StopObject).sourceRectangle),
+                    frames =((gameObject as StopObject).graphicsComponent as ManualGraphicsComponent).frames,
                     Size = new SerializablePoint((gameObject as StopObject).graphicsComponent.ObjectDrawRectangle.Size),
-                    tileSetName = ((gameObject as StopObject).graphicsComponent as StaticGraphicsComponent)._textureName,
+                    tileSetName = ((gameObject as StopObject).graphicsComponent as ManualGraphicsComponent).textureName,
                     collisions = (gameObject as StopObject).collisionComponents.Select(x => new SerializableRectangle(x.stopRectangle)).ToArray()
                 });//TODO 
                 foreach (var col in (gameObject as StopObject).collisionComponents)
@@ -204,9 +204,9 @@ namespace ZoFo.GameCore
                 AddData(new UpdateTileCreated()
                 {
                     Position = (gameObject as MapObject).position,
-                    sourceRectangle = new SerializableRectangle((gameObject as MapObject).sourceRectangle),
+                    frames = ((gameObject as MapObject).graphicsComponent as ManualGraphicsComponent).frames,
                     Size = new SerializablePoint((gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size),
-                    tileSetName = ((gameObject as MapObject).graphicsComponent as StaticGraphicsComponent)._textureName
+                    tileSetName = ((gameObject as MapObject).graphicsComponent as ManualGraphicsComponent).textureName
                 });
                 return;
             }

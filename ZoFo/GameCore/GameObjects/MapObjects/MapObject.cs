@@ -36,8 +36,9 @@ namespace ZoFo.GameCore.GameObjects.MapObjects
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            graphicsComponent.Draw(graphicsComponent.ObjectDrawRectangle, spriteBatch, sourceRectangle);
+            graphicsComponent.Draw(graphicsComponent.ObjectDrawRectangle, spriteBatch);
         }
+        
 
     }
 }

@@ -10,7 +10,7 @@ public class ManualGraphicsComponent : GraphicsComponent
 {
     private Texture2D texture;
     public string textureName;
-    private List<FrameContainer> frames;
+    public List<FrameContainer> frames;
     private int currentFrame;
     private int interval;
     public bool IsCycle;
@@ -32,6 +32,7 @@ public class ManualGraphicsComponent : GraphicsComponent
         this.frames = frames;
         currentFrame = 0;
         interval = frames[currentFrame].FrameTime;
+        LoadContent();
     }
 
     public void StartAnimation()
@@ -51,6 +52,9 @@ public class ManualGraphicsComponent : GraphicsComponent
 
     public override void LoadContent()
     {
+        if (textureName is null)
+            return;
+        
         texture = AppManager.Instance.Content.Load<Texture2D>(textureName);
     }
 
@@ -77,13 +81,21 @@ public class ManualGraphicsComponent : GraphicsComponent
 
     public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch)
     {
-        
+        destinationRectangle.X -= CameraPosition.X;
+        destinationRectangle.Y -= CameraPosition.Y;
+        destinationRectangle = Scaling(destinationRectangle);
         _spriteBatch.Draw(texture, destinationRectangle, frames[currentFrame].SourceRectangle, Color.White, Rotation,
             Vector2.Zero, Flip, 0);
     }
 
     public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch, Rectangle sourceRectangle)
     {
-        throw new System.NotImplementedException();
+        destinationRectangle.X -= CameraPosition.X;
+        destinationRectangle.Y -= CameraPosition.Y;
+
+        destinationRectangle = Scaling(destinationRectangle);
+        _spriteBatch.Draw(texture,
+            destinationRectangle, sourceRectangle, Color.White, Rotation,
+            Vector2.Zero, Flip, 0);
     }
 }
