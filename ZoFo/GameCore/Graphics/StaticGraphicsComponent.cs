@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -37,7 +38,7 @@ namespace ZoFo.GameCore.Graphics
                 return;
             }
 
-            texture = AppManager.Instance.Content.Load<Texture2D>(_textureName);
+            texture = AppManager.Instance.Content.Load<Texture2D>(Path.Combine(AppContext.BaseDirectory, _textureName));
         }
 
         public override void Update()
