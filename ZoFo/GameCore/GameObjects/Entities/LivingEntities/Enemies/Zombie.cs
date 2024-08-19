@@ -28,7 +28,7 @@ namespace ZoFo.GameCore.GameObjects
             isAttacking = false;
             StartAnimation("zombie_walk");
             collisionComponent.isTrigger = true;
-            collisionComponent.hasCollision = false;
+            collisionComponent.hasCollision = true;
             (graphicsComponent as AnimatedGraphicsComponent).actionOfAnimationEnd += EndAttack;
             collisionComponent.OnTriggerZone += OnPlayerClose;
             collisionComponent.triggerRectangle = new Rectangle(-5, -5, 40, 40);
