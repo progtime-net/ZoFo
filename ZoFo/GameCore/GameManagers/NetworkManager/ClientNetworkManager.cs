@@ -39,7 +39,11 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         public void Init() //create endPoint, socket
         {
-            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            endPoint = new IPEndPoint(GetIp(), 0);
+            socket.Bind(endPoint);
+            Thread thread = new Thread(StartListening);
+            thread.Start();
         }
 
         public void SendData()
@@ -53,7 +57,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             updates.Add(UpdateData);
         }
 
-#region Working With Data RDP
+        #region Working With Data RDP
 
         public void AnalyzeData(string data)
         {
