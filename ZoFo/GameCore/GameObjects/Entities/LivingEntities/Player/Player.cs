@@ -22,7 +22,7 @@ public class Player : LivingEntity
     public bool IsTryingToShoot { get; set; }
     private float speed;
     private int health;
-    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(AssetManager.Player);
+    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(AppManager.Instance.AssetManager.Player);
     private LootData lootData;
     public Player(Vector2 position) : base(position)
     {

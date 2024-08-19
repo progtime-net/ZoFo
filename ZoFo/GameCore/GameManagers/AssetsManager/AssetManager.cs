@@ -1,16 +1,18 @@
+using System.Collections.Generic;
+
 namespace ZoFo.GameCore.GameManagers.AssetsManager;
 
-public static class AssetManager
+public class AssetManager
 {
-    public static AssetContainer Zombie = new()
+    public AssetContainer Zombie = new()
     {
-        Animations = { "zombie_damaged", "zombie_walk", "zombie_idle", "zombie_attack", "zombie_death" },
+        Animations = ["zombie_damaged", "zombie_walk", "zombie_idle", "zombie_attack", "zombie_death"],
         IdleAnimation = "zombie_walk"
     };
 
-    public static AssetContainer Player = new()
+    public AssetContainer Player = new()
     {
-        Animations = { "player_look_down" },
+        Animations = [ "player_look_down" ],
         IdleAnimation = "player_look_down"
     };
 }

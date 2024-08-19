@@ -12,7 +12,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
 {
     class Zombie : Enemy
     {
-        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(AssetManager.Zombie);
+        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(AppManager.Instance.AssetManager.Zombie);
         public Zombie(Vector2 position) : base(position)
         {
             health = 5;

@@ -86,7 +86,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             var databytes = Encoding.UTF8.GetBytes(data);
             foreach (Socket socket in clients)
             {
-                clients[0].SendAsync(databytes, SocketFlags.Partial);
+                clients[0].SendAsync(databytes);
             }
             for (int i = 0; i < 200 && i< datasToSend.Count; i++)
                 updates.RemoveAt(0); 
@@ -172,7 +172,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             while (client.Connected)
             {
                 var buff = new byte[65535];
-                var answ = client.Receive(buff, SocketFlags.Partial);
+                var answ = client.Receive(buff);
                 string response = Encoding.UTF8.GetString(buff, 0, answ);
                 GetDataSend(response);
             }
