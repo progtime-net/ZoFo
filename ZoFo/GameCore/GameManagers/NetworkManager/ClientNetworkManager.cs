@@ -162,10 +162,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public void SendAcknowledgement(int DatagrammId)
         {
            
-            Datagramm Dgramm = new Datagramm() { DatagrammId = DatagrammId };
+/*            Datagramm Dgramm = new Datagramm() { DatagrammId = DatagrammId };
             string data = System.Text.Json.JsonSerializer.Serialize(Dgramm);
             byte[] buffer = Encoding.UTF8.GetBytes(data);
-            socket.SendTo(buffer, sendingEP);
+            socket.SendTo(buffer, sendingEP);*/
 
         }
         void CheckDatagramm()
