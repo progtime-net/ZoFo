@@ -36,7 +36,14 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
                 items[item.Key] -= item.Value;
             }
 
-            items[itemTag] += 1;
+            if (items.Keys.Contains(itemTag))
+            {
+                items[itemTag] += 1;
+            }
+            else
+            {
+                items.Add(itemTag, 1);
+            }
             return true;
         }
         
@@ -48,7 +55,6 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
             items.Add("wood", 5);
             items.Add("steel", 110);
             items.Add("rock", 6);
-            items.Add("pickaxe", 0);
         }
     }
 }
