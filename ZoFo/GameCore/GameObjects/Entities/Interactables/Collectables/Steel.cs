@@ -13,12 +13,12 @@ namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
 {
     class Steel:Collectable
     {
-        public override StaticGraphicsComponent graphicsComponent { get; } = new("Steel");
+        public override StaticGraphicsComponent graphicsComponent { get; } = new(_path + "Steel");
 
         public Steel(Vector2 position) : base(position)
         {
         }
-        public override void OnInteraction(object sender, CollisionComponent e)
+        public override void OnInteraction(GameObject sender)
         {
             AppManager.Instance.server.AddData(new UpdateLoot("Steel"));
             AppManager.Instance.server.DeleteObject(this);

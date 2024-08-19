@@ -24,6 +24,7 @@ using ZoFo.GameCore.GUI;
 using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
+using ZoFo.GameCore.Graphics;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 namespace ZoFo.GameCore
@@ -49,8 +50,17 @@ namespace ZoFo.GameCore
                 networkManager.AddData(new UpdateInput()
                 {
                     InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
-                    InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
+                    InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection 
                 });
+                
+            };
+            AppManager.Instance.InputManager.OnInteract += () =>
+            {
+                networkManager.AddData(new UpdateInputInteraction() { });
+            };
+            AppManager.Instance.InputManager.ShootEvent += () => 
+            {
+                networkManager.AddData(new UpdateInputShoot() { }); 
             };
         }
 
@@ -83,10 +93,12 @@ namespace ZoFo.GameCore
 
         #endregion
 
+        Player myPlayer;
         List<MapObject> mapObjects = new List<MapObject>();
         List<GameObject> gameObjects = new List<GameObject>(); 
         List<Player> players = new List<Player>();
         List<StopObject> stopObjects = new List<StopObject>();
+
         /// <summary>
         /// Клиент должен обнговлять игру анимаций
         /// </summary>
@@ -98,6 +110,10 @@ namespace ZoFo.GameCore
                 AppManager.Instance.debugHud.Set("GameTime", gameTime.TotalGameTime.ToString());
                 gameObjects[i].UpdateAnimations();
             }
+
+            networkManager.SendData();//set to ticks
+            if (myPlayer!=null)
+                GraphicsComponent.CameraPosition = (myPlayer.position + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2()/2 - AppManager.Instance.CurentScreenResolution.ToVector2()/(2*GraphicsComponent.scaling)).ToPoint();
         }
         internal void Draw(SpriteBatch spriteBatch)
         {
@@ -127,16 +143,17 @@ namespace ZoFo.GameCore
                     (update as UpdateTileCreated).tileSetName
                     ));
             }
-            //else if (update is UpdateStopObjectCreated)
-            //{
-            //    stopObjects.Add(
-            //    new StopObject(
-            //        (update as UpdateStopObjectCreated).Position,
-            //        (update as UpdateStopObjectCreated).Size.ToVector2(),
-            //        (update as UpdateStopObjectCreated).sourceRectangle,
-            //        (update as UpdateStopObjectCreated).tileSetName
-            //        ));
-            //}
+            else if (update is UpdateStopObjectCreated)
+            {
+                stopObjects.Add(
+                new StopObject(
+                    (update as UpdateStopObjectCreated).Position,
+                    (update as UpdateStopObjectCreated).Size.GetPoint().ToVector2(),
+                    (update as UpdateStopObjectCreated).sourceRectangle.GetRectangle(),
+                    (update as UpdateStopObjectCreated).tileSetName,
+                    (update as UpdateStopObjectCreated).collisions.Select(x =>x.GetRectangle()).ToArray()
+                    ));
+            }
             else if (update is UpdateGameObjectCreated)
             {
                 GameObject created_gameObject;
@@ -146,6 +163,7 @@ namespace ZoFo.GameCore
                 {
                     created_gameObject = new Player((update as UpdateGameObjectCreated).position);
                     players.Add(created_gameObject as Player);
+                    myPlayer = players[0]; 
                     gameObjects.Add(created_gameObject);
                 }
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
@@ -165,9 +183,23 @@ namespace ZoFo.GameCore
             else if (update is UpdatePosition)
             {
                 var ent = FindEntityById(update.IdEntity);
-
+ 
                 ent.position = (update as UpdatePosition).NewPosition;
-                DebugHUD.Instance.Log("newPosition " + ent.position);
+            }
+            else if (update is UpdateAnimation)
+            {
+                var ent = FindEntityById(update.IdEntity);
+                if (ent != null)
+                    ((ent as Entity).graphicsComponent as AnimatedGraphicsComponent).StartAnimation((update as UpdateAnimation).animationId);
+               //DebugHUD.Instance.Log("new Animation " + ent.position);
+            }
+            else if (update is UpdateGameObjectDeleted)
+            {
+                var ent = FindEntityById(update.IdEntity);
+
+                if (ent != null)
+                    DeleteObject(ent);
+
             }
         }
 
@@ -185,6 +217,16 @@ namespace ZoFo.GameCore
                 }
             }
             return null;
+        }
+        public void DeleteObject(Entity entity)
+        {
+
+            if (gameObjects.Contains(entity))
+                gameObjects.Remove(entity);
+            //if (entities.Contains(entity))
+            //    entities.Remove(entity);
+            if (players.Contains(entity))
+                players.Remove(entity as Player);
         }
 
     }
