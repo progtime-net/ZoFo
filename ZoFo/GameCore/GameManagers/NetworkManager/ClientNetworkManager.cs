@@ -48,10 +48,14 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         public void SendData()
         {
-            Datagramm Datagramm = new Datagramm();
-            Datagramm.updateDatas = updates;
-            byte[] bytes = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(Datagramm));  //нужно сериализовать
-            socket.SendTo(bytes, sendingEP);
+            if (updates != null)
+            {
+                Datagramm Datagramm = new Datagramm();
+                Datagramm.updateDatas = updates;
+                byte[] bytes = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(Datagramm));  //нужно сериализовать
+                socket.SendTo(bytes, sendingEP);
+            }
+            
         }
 
         public void AddData(UpdateData UpdateData)
