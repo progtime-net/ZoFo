@@ -6,7 +6,7 @@ using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.Graphics;
 
-namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities;
+namespace ZoFo.GameCore.GameObjects;
 public class LivingEntity : Entity
 {
     /// <summary>

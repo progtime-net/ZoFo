@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GameManagers.AssetsManager;
 using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.Graphics
@@ -60,7 +61,17 @@ namespace ZoFo.GameCore.Graphics
         private int interval;
         private int lastInterval;
         private Rectangle sourceRectangle;
+        public AnimatedGraphicsComponent(AssetContainer asset)
+        {
+            Build(asset.Animations, asset.IdleAnimation);
+        }
+
         public AnimatedGraphicsComponent(List<string> animationsId, string neitralAnimationId)
+        {
+            Build(animationsId, neitralAnimationId);
+        }
+
+        private void Build(List<string> animationsId, string neitralAnimationId)
         {
             //this._spriteBatch = _spriteBatch;
             currentFrame = 0;

@@ -6,18 +6,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GameManagers; 
 using ZoFo.GameCore.GameManagers.CollisionManager;
-using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient; 
+using ZoFo.GameCore.GameManagers.AssetsManager; 
 using ZoFo.GameCore.Graphics;
 using ZoFo.GameCore.GUI;
 
-namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
+namespace ZoFo.GameCore.GameObjects
 {
     class Zombie : Enemy
-    {
+    { 
         public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "zombie_damaged", "zombie_walk", "zombie_idle", "zombie_attack", "zombie_death" }, "zombie_walk");
-        public bool isAttacking;
+        public bool isAttacking; 
         public Zombie(Vector2 position) : base(position)
         {
             health = 5;
