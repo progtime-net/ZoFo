@@ -14,6 +14,8 @@ public class Player : LivingEntity
     Texture2D texture;
     private float speed;
     private int health;
+
+
     public Player(Vector2 position) : base(position)
     {
         //InputWeaponRotation = new Vector2(0, 0);
