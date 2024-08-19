@@ -119,60 +119,64 @@ namespace ZoFo.GameCore
             }
         }
 
-        internal void GotData(UpdateData update)
+        internal void GotData(List<UpdateData> updates)
         {
-            if (update is UpdateTileCreated)
+            foreach (UpdateData update in updates)
             {
-                mapObjects.Add(
-                new MapObject(
-                    (update as UpdateTileCreated).Position.GetVector2(),
-                    (update as UpdateTileCreated).Size.GetPoint().ToVector2(),
-                    (update as UpdateTileCreated).sourceRectangle.GetRectangle(),
-                    (update as UpdateTileCreated).tileSetName
-                    ));
-            }
-            //else if (update is UpdateStopObjectCreated)
-            //{
-            //    stopObjects.Add(
-            //    new StopObject(
-            //        (update as UpdateStopObjectCreated).Position,
-            //        (update as UpdateStopObjectCreated).Size.ToVector2(),
-            //        (update as UpdateStopObjectCreated).sourceRectangle,
-            //        (update as UpdateStopObjectCreated).tileSetName
-            //        ));
-            //}
-            else if (update is UpdateGameObjectCreated)
-            {
-                GameObject created_gameObject;
-                if ((update as UpdateGameObjectCreated).GameObjectType == "EntittyForAnimationTests")
-                    gameObjects.Add(new EntittyForAnimationTests((update as UpdateGameObjectCreated).position.GetVector2()));
-                if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
+                if (update is UpdateTileCreated)
                 {
-                    created_gameObject = new Player((update as UpdateGameObjectCreated).position.GetVector2());
-                    players.Add(created_gameObject as Player);
-                    gameObjects.Add(created_gameObject);
+                    mapObjects.Add(
+                    new MapObject(
+                        (update as UpdateTileCreated).Position.GetVector2(),
+                        (update as UpdateTileCreated).Size.GetPoint().ToVector2(),
+                        (update as UpdateTileCreated).sourceRectangle.GetRectangle(),
+                        (update as UpdateTileCreated).tileSetName
+                        ));
                 }
-                if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
-                    gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position.GetVector2()));
-                if ((update as UpdateGameObjectCreated).GameObjectType == "Zombie")
-                    gameObjects.Add(new Zombie((update as UpdateGameObjectCreated).position.GetVector2()));
+                //else if (update is UpdateStopObjectCreated)
+                //{
+                //    stopObjects.Add(
+                //    new StopObject(
+                //        (update as UpdateStopObjectCreated).Position,
+                //        (update as UpdateStopObjectCreated).Size.ToVector2(),
+                //        (update as UpdateStopObjectCreated).sourceRectangle,
+                //        (update as UpdateStopObjectCreated).tileSetName
+                //        ));
+                //}
+                else if (update is UpdateGameObjectCreated)
+                {
+                    GameObject created_gameObject;
+                    if ((update as UpdateGameObjectCreated).GameObjectType == "EntittyForAnimationTests")
+                        gameObjects.Add(new EntittyForAnimationTests((update as UpdateGameObjectCreated).position.GetVector2()));
+                    if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
+                    {
+                        created_gameObject = new Player((update as UpdateGameObjectCreated).position.GetVector2());
+                        players.Add(created_gameObject as Player);
+                        gameObjects.Add(created_gameObject);
+                    }
+                    if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
+                        gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position.GetVector2()));
+                    if ((update as UpdateGameObjectCreated).GameObjectType == "Zombie")
+                        gameObjects.Add(new Zombie((update as UpdateGameObjectCreated).position.GetVector2()));
 
 
-                (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
-                //var a = Assembly.GetAssembly(typeof(GameObject));
-                //gameObjects.Add( TODO reflection
-                //Activator.CreateInstance(Type.GetType("ZoFo.GameCore.GameObjects.Entities.EntittyForAnimationTests")
-                ///*(update as UpdateGameObjectCreated).GameObjectType*/, new []{ new Vector2(100, 100) })
-                //as GameObject
-                //);
+                    (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
+                    //var a = Assembly.GetAssembly(typeof(GameObject));
+                    //gameObjects.Add( TODO reflection
+                    //Activator.CreateInstance(Type.GetType("ZoFo.GameCore.GameObjects.Entities.EntittyForAnimationTests")
+                    ///*(update as UpdateGameObjectCreated).GameObjectType*/, new []{ new Vector2(100, 100) })
+                    //as GameObject
+                    //);
+                }
+                //else if (update is UpdatePosition)
+                //{
+                //    var ent = FindEntityById(update.IdEntity);
+
+                //    ent.position = (update as UpdatePosition).NewPosition.GetVector2();
+                //    DebugHUD.Instance.Log("newPosition " + ent.position);
+                //}
             }
-            else if (update is UpdatePosition)
-            {
-                var ent = FindEntityById(update.IdEntity);
-
-                ent.position = (update as UpdatePosition).NewPosition.GetVector2();
-                DebugHUD.Instance.Log("newPosition " + ent.position);
-            }
+            
         }
 
 
