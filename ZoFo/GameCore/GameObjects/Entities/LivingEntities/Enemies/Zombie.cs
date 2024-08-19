@@ -8,7 +8,7 @@ using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.AssetsManager;
 using ZoFo.GameCore.Graphics;
 
-namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
+namespace ZoFo.GameCore.GameObjects
 {
     class Zombie : Enemy
     {

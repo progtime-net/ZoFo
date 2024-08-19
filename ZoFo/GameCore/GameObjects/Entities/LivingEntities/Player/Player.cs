@@ -10,7 +10,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.Graphics;
 
-namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
+namespace ZoFo.GameCore.GameObjects;
 
 public class Player : LivingEntity
 {
@@ -29,7 +29,7 @@ public class Player : LivingEntity
     {
         graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 30, 30);
         collisionComponent.stopRectangle = new Rectangle(0, 20, 30, 10); 
-        speed = 10;
+        speed = 5;
         //isTryingToInteract = false;
         //IsTryingToShoot = false; 
 
@@ -44,7 +44,7 @@ public class Player : LivingEntity
     }
     public void MovementLogic() 
     {
-        velocity = InputPlayerRotation * speed; 
+        velocity += InputPlayerRotation * speed; 
     }
     public void HandleNewInput(UpdateInput updateInput)
     {

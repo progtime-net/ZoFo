@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZoFo.GameCore.Graphics;
 
-namespace ZoFo.GameCore.GameObjects.Entities
+namespace ZoFo.GameCore.GameObjects
 {
     internal class EntittyForAnimationTests : Entity
     {
