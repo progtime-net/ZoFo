@@ -20,12 +20,15 @@ public class Player : LivingEntity
     /// </summary>
     //public bool IsTryingToShoot { get; set; }
     private float speed;
-    private int health;
+    public int health = 100;
+    public int rad = 0;
     public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_look_down" }, "player_look_down");
-    private LootData lootData;
+    public LootData lootData;
     //public bool isTryingToInteract { get; set; }
     public Player(Vector2 position) : base(position)
     {
+        lootData = new LootData();
+        lootData.loots = new Dictionary<string, int>();
         graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 30, 30);
         collisionComponent.stopRectangle = new Rectangle(0, 20, 30, 10); 
         speed = 10;

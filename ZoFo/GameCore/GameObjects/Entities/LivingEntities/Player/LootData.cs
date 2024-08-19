@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player
 {
-    class LootData
+    public class LootData
     {
         public Dictionary<string, int> loots;
 
