@@ -161,9 +161,9 @@ namespace ZoFo.GameCore
         {
             if (ticks == 3) //ОБРАБАТЫВАЕТСЯ 20 РАЗ В СЕКУНДУ
             {
-                foreach (var go in gameObjects)
+                for (int i = 0; i < gameObjects.Count; i++)
                 {
-                    go.UpdateLogic();
+                    gameObjects[i].UpdateLogic();
                 }
                 collisionManager.ResolvePhysics();
                 ticks = 0;
