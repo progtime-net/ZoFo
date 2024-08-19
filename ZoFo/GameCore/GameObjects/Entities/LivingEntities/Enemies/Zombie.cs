@@ -18,6 +18,7 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
             speed = 2;
             graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 30, 30);
             collisionComponent.stopRectangle = new Rectangle(10, 20, 10, 10);
+            StartAnimation("zombie_walk");
         }
 
         public override void Update()
@@ -29,12 +30,12 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies
             if (Random.Shared.NextDouble() > 0.9)
             {
 
-                StartAnimation("zombie_damaged");
+                StartAnimation("zombie_walk");
             }
             if (Random.Shared.NextDouble() > 0.9)
             {
 
-                StartAnimation("zombie_idle");
+                //StartAnimation("zombie_idle");
             }
 
         }
