@@ -99,6 +99,10 @@ namespace ZoFo.GameCore
                 gameObjects[i].UpdateAnimations();
             }
         }
+        public void SendData()
+        {
+            networkManager.SendData();
+        }
         internal void Draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < mapObjects.Count; i++)

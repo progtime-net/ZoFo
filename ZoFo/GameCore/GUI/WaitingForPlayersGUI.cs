@@ -72,6 +72,7 @@ public class WaitingForPlayersGUI : AbstractGUI
             waitButton.LeftButtonPressed += () =>
             {
                 // start
+                AppManager.Instance.client.SendData();
                 AppManager.Instance.ChangeState(GameState.ClientPlaying);
                 // ваш код здесь 
             };
