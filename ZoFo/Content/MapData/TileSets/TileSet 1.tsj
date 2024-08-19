@@ -470,6 +470,23 @@
          "type":"Tile"
         }, 
         {
+         "animation":[
+                {
+                 "duration":100,
+                 "tileid":111
+                }, 
+                {
+                 "duration":100,
+                 "tileid":112
+                }, 
+                {
+                 "duration":100,
+                 "tileid":113
+                }, 
+                {
+                 "duration":100,
+                 "tileid":114
+                }],
          "id":111,
          "probability":0.100000001490116,
          "type":"Tile"
