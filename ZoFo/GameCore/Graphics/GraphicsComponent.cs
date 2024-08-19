@@ -6,7 +6,7 @@ namespace ZoFo.GameCore.Graphics;
 public abstract class GraphicsComponent
 {
     public Rectangle ObjectDrawRectangle;
-    public static int scaling = 1;
+    public static int scaling = 3;
     public string mainTextureName;//TODO костыль - пофиксить
 
     public SpriteEffects Flip = SpriteEffects.None;

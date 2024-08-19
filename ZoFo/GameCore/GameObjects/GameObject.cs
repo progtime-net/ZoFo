@@ -83,8 +83,6 @@ public abstract class GameObject
     {
         graphicsComponent.Draw(graphicsComponent.ObjectDrawRectangle, spriteBatch);
         //debug
-        DrawDebugRectangle(spriteBatch, graphicsComponent.ObjectDrawRectangle);
-
         if (AppManager.Instance.InputManager.CollisionsCheat)
             DrawDebugRectangle(spriteBatch, graphicsComponent.ObjectDrawRectangle);
 

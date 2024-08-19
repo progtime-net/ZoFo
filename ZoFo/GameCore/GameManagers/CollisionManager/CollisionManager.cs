@@ -12,7 +12,7 @@ using ZoFo.GameCore.GameObjects.Entities;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.Graphics;
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player; 
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
@@ -26,107 +26,123 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
 
         //чекаем коллизии в листе
+        
+        /// <summary>
+        /// минимальный накоп изменения перед перевдижением
+        /// </summary>
+        const float minimalValueToChange = 4;
         public void CheckComponentCollision(CollisionComponent componentOfEntity)
         {
             var entity = componentOfEntity.gameObject as LivingEntity;
             //for (int i = 0; i < ObjectsWithCollisions.Count; i++)
             //{
             var currentRect = entity.collisionComponent.stopRectangle;//задаём РЕК
-            currentRect.X+=(int)entity.position.X;
-            currentRect.Y+=(int)entity.position.Y;
+            currentRect.X += (int)entity.position.X;
+            currentRect.Y += (int)entity.position.Y;
 
             var newRect = currentRect; // задаём значение старого РЕК новому РЕК 
 
 
-            var collidedX = false; // соприкосновение
-            var tryingRectX = currentRect;//переменная для попытки перемещения по X
-
-            tryingRectX.Offset((int)(entity.velocity.X), 0);//задаём значения для tryingRectX по X и по Y 
-
-            foreach (var item in ObjectsWithCollisions)//фильтрация 
+            if (Math.Abs((int)entity.velocity.X) > minimalValueToChange ) //TODO
             {
-                if (item == componentOfEntity) continue;
-                
-                Rectangle rectChecking = item.stopRectangle.SetOrigin(item.gameObject.position);
-                if (Math.Abs(item.gameObject.position.X - componentOfEntity.gameObject.position.X) < 550
-                    && Math.Abs(item.gameObject.position.Y - componentOfEntity.gameObject.position.Y) < 550
-                    && tryingRectX.Intersects(rectChecking))
+                var collidedX = false; // соприкосновение
+                var tryingRectX = currentRect;//переменная для попытки перемещения по X
 
+                tryingRectX.Offset((int)(entity.velocity.X), 0);//задаём значения для tryingRectX по X и по Y 
+
+                foreach (var item in ObjectsWithCollisions)//фильтрация 
                 {
-                    collidedX = true;// меняем значение соприкосновения на true
-                    //entity.OnCollision(item);//подписываем entity на ивент коллизии
-                    item.OnCollisionWithObject(entity);
-                    entity.collisionComponent.OnCollisionWithObject(item.gameObject);
-                    break;// выход
+                    if (item == componentOfEntity) continue;
+
+                    Rectangle rectChecking = item.stopRectangle.SetOrigin(item.gameObject.position);
+                    if (Math.Abs(item.gameObject.position.X - componentOfEntity.gameObject.position.X) < 550
+                        && Math.Abs(item.gameObject.position.Y - componentOfEntity.gameObject.position.Y) < 550
+                        && tryingRectX.Intersects(rectChecking))
+
+                    {
+                        collidedX = true;// меняем значение соприкосновения на true
+                                         //entity.OnCollision(item);//подписываем entity на ивент коллизии
+                        item.OnCollisionWithObject(entity);
+                        entity.collisionComponent.OnCollisionWithObject(item.gameObject);
+                        break;// выход
+                    }
                 }
-            }
 
-            if (collidedX)// срабатывает, если перемещение блокируется
-            {
-                entity.velocity.X = 0;// задаём значение смещения entity на 0
-            }
-            else
-            {
-                entity.position.X += entity.velocity.X; //update player position
-                newRect.X = tryingRectX.X;//значение по X для нового РЕК приравниваем к значению испытуемого РЕК
-            }
+                if (collidedX)// срабатывает, если перемещение блокируется
+                {
+                    entity.velocity.X = 0;// задаём значение смещения entity на 0
+                }
+                else
+                {
+                    entity.position.X += entity.velocity.X; //update player position
+                    newRect.X = tryingRectX.X;//значение по X для нового РЕК приравниваем к значению испытуемого РЕК
+                }
 
+                entity.velocity.X = 0;
+            }
             //==ПОВТОРЯЕМ ТОЖЕ САМОЕ ДЛЯ Y==
 
             var collidedY = false; // соприкосновение
             var tryingRectY = currentRect;//переменная для попытки перемещения по X
 
-            tryingRectY.Offset(new Point(0, (int)entity.velocity.Y));//задаём значения для tryingRectX по X и по Y 
-
-            foreach (var item in ObjectsWithCollisions)//фильтрация 
+            if (Math.Abs((int)entity.velocity.Y)> minimalValueToChange) //TODO
             {
-                if (item == componentOfEntity) continue;
-                Rectangle rectChecking = item.stopRectangle.SetOrigin(item.gameObject.position);
-                if (Math.Abs(item.gameObject.position.X - componentOfEntity.gameObject.position.X) < 550
-                    && Math.Abs(item.gameObject.position.Y - componentOfEntity.gameObject.position.Y) < 550
-                    && tryingRectY.Intersects(rectChecking))
 
+                tryingRectY.Offset(new Point(0, (int)entity.velocity.Y));//задаём значения для tryingRectX по X и по Y 
+
+                foreach (var item in ObjectsWithCollisions)//фильтрация 
                 {
-                    collidedY = true;// меняем значение соприкосновения на true
-                    entity.OnCollision(item);//подписываем entity на ивент коллизии
+                    if (item == componentOfEntity) continue;
+                    Rectangle rectChecking = item.stopRectangle.SetOrigin(item.gameObject.position);
+                    if (Math.Abs(item.gameObject.position.X - componentOfEntity.gameObject.position.X) < 550
+                        && Math.Abs(item.gameObject.position.Y - componentOfEntity.gameObject.position.Y) < 550
+                        && tryingRectY.Intersects(rectChecking))
 
-                    break;// выход
+                    {
+                        collidedY = true;// меняем значение соприкосновения на true
+                        entity.OnCollision(item);//подписываем entity на ивент коллизии
+
+                        break;// выход
+                    }
                 }
+
+                if (collidedY)// срабатывает, если перемещение блокируется
+                {
+                    entity.velocity.Y = 0;// задаём значение смещения entity на 0
+                }
+                else
+                {
+                    entity.position.Y += entity.velocity.Y;
+                    newRect.Y = tryingRectY.Y;//значение по X для нового РЕК приравниваем к значению испытуемого РЕК
+                }
+                entity.velocity.Y = 0;
             }
 
-            if (collidedY)// срабатывает, если перемещение блокируется
-            {
-                entity.velocity.Y = 0;// задаём значение смещения entity на 0
-            }
-            else
-            {
-                entity.position.Y += entity.velocity.Y;
-                newRect.Y = tryingRectY.Y;//значение по X для нового РЕК приравниваем к значению испытуемого РЕК
-            }
-             
+
             entity.graphicsComponent.ObjectDrawRectangle.X = (int)entity.position.X;
             entity.graphicsComponent.ObjectDrawRectangle.Y = (int)entity.position.Y;
             AppManager.Instance.server.AddData(new UpdatePosition() { NewPosition = entity.position, IdEntity = entity.Id });
             AppManager.Instance.debugHud.Set("testPos", entity.position.ToString()); //TODO remove
-            entity.velocity = Vector2.Zero;
         }
 
         public void UpdateTriggerZones(Player player)
         {
 
-            var entity = player as LivingEntity; 
+            var entity = player as LivingEntity;
             var currentRect = entity.collisionComponent.stopRectangle;//задаём РЕК
             currentRect.X += (int)entity.position.X;
             currentRect.Y += (int)entity.position.Y;
-             
-             
 
-            foreach (var item in ObjectsWithTriggers)//фильтрация 
+
+            for (int i = 0; i < ObjectsWithTriggers.Count; i++)
             {
-                if (item.triggerRectangle.SetOrigin(item.gameObject.position).Intersects(currentRect))
+                int c = ObjectsWithTriggers.Count;
+
+                if (ObjectsWithTriggers[i].triggerRectangle.SetOrigin(ObjectsWithTriggers[i].gameObject.position).Intersects(currentRect))
                 {
-                    item.PlayerInZone(player);
+                    ObjectsWithTriggers[i].PlayerInZone(player);
                 }
+                i -= c - ObjectsWithTriggers.Count;
             }
         }
 
@@ -146,7 +162,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
 
         public CollisionManager()
-        { 
+        {
             EntitiesWithMovements = new List<CollisionComponent>();
             ObjectsWithCollisions = new List<CollisionComponent>();
             ObjectsWithTriggers = new List<CollisionComponent>();
@@ -161,6 +177,18 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             if (component.gameObject is LivingEntity)
             {
                 EntitiesWithMovements.Add(component);
+            }
+        }
+        public void Deregister(CollisionComponent component)
+        {
+            if (ObjectsWithCollisions.Contains(component))
+                ObjectsWithCollisions.Remove(component);
+            if (ObjectsWithTriggers.Contains(component))
+                ObjectsWithTriggers.Remove(component);
+            if (component.gameObject is LivingEntity)
+            {
+                if (EntitiesWithMovements.Contains(component))
+                    EntitiesWithMovements.Remove(component);
             }
         }
 
@@ -183,8 +211,8 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
     {
         public static Rectangle SetOrigin(this Rectangle rectangle, Vector2 origin)
         {
-            rectangle.X = (int)origin.X;
-            rectangle.Y = (int)origin.Y;
+            rectangle.X += (int)origin.X;
+            rectangle.Y += (int)origin.Y;
             return rectangle;
         }
     }
