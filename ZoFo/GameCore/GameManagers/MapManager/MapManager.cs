@@ -75,7 +75,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                         (i / chunk.Height) * tileMap.TileHeight + chunk.Y * tileMap.TileHeight);
 
                                     Tile tile = tileSet.Tiles[number]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
-                                    string textureName = Path.Combine(AppContext.BaseDirectory, "Content", "Textures", "TileSetImages",
+                                    string textureName = Path.Combine("Content", "Textures", "TileSetImages",
                                         Path.GetFileName(tileSet.Image).Replace(".png", ""));
                                     switch (tile.Type)
                                     {
