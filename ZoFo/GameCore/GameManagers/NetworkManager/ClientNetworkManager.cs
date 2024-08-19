@@ -34,6 +34,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
         public void Init() //create endPoint, socket
         {
+            GetDataSent += AnalyzeData;
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             endPoint = new IPEndPoint(GetIp(), 8081);
             socket.Bind(endPoint);

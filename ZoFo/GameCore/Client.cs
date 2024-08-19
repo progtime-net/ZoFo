@@ -40,7 +40,6 @@ namespace ZoFo.GameCore
         public Client()
         {
             networkManager = new ClientNetworkManager();
-            networkManager.GetDataSent += OnDataSend;
 
             // Подписка на действия инпутменеджера.
             // Отправляются данные апдейтса с обновлением инпута
