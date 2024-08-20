@@ -20,7 +20,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
     public class ClientNetworkManager
     {
-        private int PlayerId;
+        public int PlayerId;
         private IPEndPoint endPoint;
         private IPEndPoint sendingEP;
         private Socket socket;
