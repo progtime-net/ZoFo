@@ -62,7 +62,7 @@ namespace ZoFo.GameCore.GameObjects
                 duration = Vector2.Normalize(
                 AppManager.Instance.server.players[j].position - position 
                 );
-                if (new Random().Next(0, 1000) == 0)
+                if (Random.Shared.NextDouble() > 0.999)
                 {
                     AppManager.Instance.SoundManager.StartSound("zombie sound", position, AppManager.Instance.server.players[0].position, pitch: new Random().Next(-1, 2) * (float)new Random().NextDouble());
                 }

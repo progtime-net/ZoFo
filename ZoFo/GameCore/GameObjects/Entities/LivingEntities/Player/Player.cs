@@ -41,6 +41,8 @@ public class Player : LivingEntity
     /// Факт того, что плеер в этом апдейте пытается стрелять
     /// </summary>
     public bool IsTryingToShoot { get; set; }
+
+    ScopeState prevScopeState;
     public Player(Vector2 position) : base(position)
     {
         lootData = new LootData();
@@ -92,11 +94,59 @@ public class Player : LivingEntity
                 if (idName != "player_run_right_down")
                     StartAnimation("player_run_right_down");
                 break;
-            case ScopeState.Idle:
-                if (idName != "player_look_down")
-                    StartAnimation("player_look_down");
+            case ScopeState.Idle: 
                 break;
         }
+        if (AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation) != ScopeState.Idle)
+        {
+            prevScopeState = AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation);
+        }
+        else if (AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation) == ScopeState.Idle)
+        {
+
+
+
+
+            switch (prevScopeState)
+            {
+                case ScopeState.Top:
+                    if (idName != "player_look_up_weapon")
+                        StartAnimation("player_look_up_weapon");
+                    break;
+                case ScopeState.Down:
+                    if (idName != "player_look_down_weapon")
+                        StartAnimation("player_look_down_weapon");
+                    break;
+                case ScopeState.Right:
+                case ScopeState.Left:
+                    if (idName != "player_look_right")
+                        StartAnimation("player_look_right");
+                    break;
+                case ScopeState.TopRight:
+                case ScopeState.TopLeft:
+                    if (idName != "player_look_right_up_weapon")
+                        StartAnimation("player_look_right_up_weapon");
+                    break;
+                case ScopeState.DownRight:
+                case ScopeState.DownLeft:
+                    if (idName != "player_look_right_down_weapon")
+                        StartAnimation("player_look_right_down_weapon");
+                    break;
+                case ScopeState.Idle:
+                    if (idName != "player_look_down")
+                        StartAnimation("player_look_down");
+                    break;
+            }
+
+
+
+
+
+        }
+
+
+
+
         #endregion
 
         #region анимация поворота оружия
@@ -200,7 +250,7 @@ public class Player : LivingEntity
         reloading = 5;
         IsTryingToShoot = true;
 
-        Entity[] entities = AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputPlayerRotation), this);
+        Entity[] entities = AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputManager.ConvertStateToVector2(prevScopeState)), this);
         if (entities != null)
         {
             foreach (Entity entity in entities)
