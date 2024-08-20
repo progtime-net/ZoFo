@@ -166,12 +166,13 @@ namespace ZoFo.GameCore
                     created_gameObject = new Player((update as UpdateGameObjectCreated).position);
                     players.Add(created_gameObject as Player);
                     myPlayer = players[0];
-                    gameObjects.Add(created_gameObject);
+                    gameObjects.Add(created_gameObject); 
+                        (created_gameObject as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
                 }
-                else if((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
+                else if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
                     gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position));
-                else if((update as UpdateGameObjectCreated).GameObjectType == "Zombie")
-                    gameObjects.Add(new Zombie((update as UpdateGameObjectCreated).position));
+                else if ((update as UpdateGameObjectCreated).GameObjectType == "BottleOfWater")
+                    gameObjects.Add(new BottleOfWater((update as UpdateGameObjectCreated).position));
                 else
                 {
                     Type t = Type.GetType("ZoFo.GameCore.GameObjects." + (update as UpdateGameObjectCreated).GameObjectType);
@@ -180,7 +181,7 @@ namespace ZoFo.GameCore
                         (gameObject as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
                     gameObjects.Add(gameObject);
                 }
-                (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity); 
+                 
 
             }
             else if (update is UpdatePosition)

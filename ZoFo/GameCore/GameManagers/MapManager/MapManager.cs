@@ -20,8 +20,8 @@ namespace ZoFo.GameCore.GameManagers.MapManager
         private static readonly string _templatePath = "Content/MapData/TileMaps/{0}.tmj";
         private static readonly JsonSerializerOptions _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true }; // Задача настроек для JsonSerialize
         private static readonly Dictionary<string, string> _classPath = new Dictionary<string, string>() { 
-            { "Collectables", "ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables." }, 
-            { "Enemies", "ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies." } 
+            { "Collectables", "ZoFo.GameCore.GameObjects." }, 
+            { "Enemies", "ZoFo.GameCore.GameObjects." } 
         };
 
         //private static readonly float _scale = 1.0f;
