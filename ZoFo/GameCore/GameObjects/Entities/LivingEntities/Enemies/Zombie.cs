@@ -93,7 +93,7 @@ namespace ZoFo.GameCore.GameObjects
         }
         public void EndAttack(string a)
         { 
-            if (AppManager.Instance.gamestate != GameState.HostPlaying) return;  
+            if (AppManager.Instance.server is null) return;  
             var damagedPlayers=AppManager.Instance.server.collisionManager.GetPlayersInZone(collisionComponent.triggerRectangle.SetOrigin(position));
             //TODO ДАМАЖИТЬ ИГРОКОВ В ЗОНЕ
             if (damagedPlayers.Length>0) { DebugHUD.DebugLog("End of" + a);

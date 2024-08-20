@@ -119,8 +119,8 @@ public class Player : LivingEntity
                     break;
                 case ScopeState.Right:
                 case ScopeState.Left:
-                    if (idName != "player_look_right")
-                        StartAnimation("player_look_right");
+                    if (idName != "player_look_right_down_weapon")
+                        StartAnimation("player_look_right_down_weapon");
                     break;
                 case ScopeState.TopRight:
                 case ScopeState.TopLeft:
