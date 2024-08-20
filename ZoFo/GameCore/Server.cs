@@ -29,12 +29,11 @@ namespace ZoFo.GameCore
     public class Server
     {
         private ServerNetworkManager networkManager;
-        private int ticks = 0;
-        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } }
+        private int ticks = 0; 
+        public IPEndPoint MyIp { get { return networkManager.endPoint; } }  
         public Server()
         {
             networkManager = new ServerNetworkManager();
-            networkManager.GetDataSend += OnDataSend;
             collisionManager = new CollisionManager();
 
         }
@@ -96,10 +95,6 @@ namespace ZoFo.GameCore
             }
         }
 
-        public void CloseConnection()
-        {
-            networkManager.CloseConnection();
-        }
 
         /// <summary>
         /// Для красоты)   Отдел Серверов 
@@ -115,9 +110,10 @@ namespace ZoFo.GameCore
         /// Создает комнату и запускает ожидание подключений
         /// </summary>
         /// <param name="players"></param>
-        public void CreateRoom(int players)
+        public void CreateRoom(bool isMultiplayer)
         {
-            networkManager.Start(players);
+            networkManager.SetIsMultiplayer(isMultiplayer);
+            networkManager.Start();
         }
 
         #endregion
@@ -136,6 +132,7 @@ namespace ZoFo.GameCore
             gameObjects = new List<GameObject>();
             entities = new List<Entity>();
             players = new List<Player>();
+            networkManager.StartGame();
             new MapManager().LoadMap();
 
             //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));
@@ -155,10 +152,9 @@ namespace ZoFo.GameCore
         {
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
-            networkManager.CloseConnection();
         }
 
-        public List<GameObject> gameObjects;
+        public List<GameObject> gameObjects = new List<GameObject>();
         public List<Entity> entities;  //entity
         public List<Player> players;
         public void Update(GameTime gameTime)
@@ -208,7 +204,7 @@ namespace ZoFo.GameCore
             {
                 AddData(new UpdateTileCreated()
                 {
-                    Position = (gameObject as MapObject).position,
+                    Position = new SerializableVector2((gameObject as MapObject).position),
                     sourceRectangle = new SerializableRectangle((gameObject as MapObject).sourceRectangle),
                     Size = new SerializablePoint((gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size),
                     tileSetName = ((gameObject as MapObject).graphicsComponent as StaticGraphicsComponent)._textureName
@@ -228,21 +224,21 @@ namespace ZoFo.GameCore
             }
 
             if (gameObject is Entity entity)
-            {
+            { 
                 AddData(new UpdateGameObjectCreated()
                 {
                     GameObjectType = gameObject.GetType().Name,
                     IdEntity = entity.Id,
                     position = gameObject.position
-                });
+                }); 
                 collisionManager.Register(entity.collisionComponent);
                 entities.Add(entity);
             }
-            else
+            else 
                 AddData(new UpdateGameObjectCreated()
                 {
                     GameObjectType = gameObject.GetType().Name,
-                    position = gameObject.position
+                    position = gameObject.position 
                 });
 
 

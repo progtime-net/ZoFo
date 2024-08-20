@@ -11,8 +11,9 @@ using ZoFo.GameCore.GameManagers.MapManager.MapElements;
 using ZoFo.GameCore.GameObjects.Entities;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
-using ZoFo.GameCore.Graphics;
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
+using ZoFo.GameCore.Graphics; 
+using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO; 
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player; 
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
@@ -124,7 +125,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
             entity.graphicsComponent.ObjectDrawRectangle.X = (int)entity.position.X;
             entity.graphicsComponent.ObjectDrawRectangle.Y = (int)entity.position.Y;
-            AppManager.Instance.server.AddData(new UpdatePosition() { NewPosition = entity.position, IdEntity = entity.Id });
+            AppManager.Instance.server.AddData(new UpdatePosition() { NewPosition = new SerializableVector2(entity.position), IdEntity = entity.Id });
             AppManager.Instance.debugHud.Set("testPos", entity.position.ToString()); //TODO remove
         }
 

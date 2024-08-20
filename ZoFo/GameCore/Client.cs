@@ -22,8 +22,10 @@ using System.Linq;
 using System.Web;
 using ZoFo.GameCore.GUI;
 using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
-using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
-using ZoFo.GameCore.Graphics;
+using ZoFo.GameCore.GameObjects.MapObjects.StopObjects; 
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
+using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO; 
+using ZoFo.GameCore.Graphics; 
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using ZoFo.GameCore.GameManagers.CollisionManager;
@@ -41,7 +43,6 @@ namespace ZoFo.GameCore
         public Client()
         {
             networkManager = new ClientNetworkManager();
-            networkManager.GetDataSent += OnDataSend;
 
             // Подписка на действия инпутменеджера.
             // Отправляются данные апдейтса с обновлением инпута
@@ -139,6 +140,10 @@ namespace ZoFo.GameCore
                     ) )
                 .ToPoint();
         }
+        public void SendData()
+        {
+            networkManager.SendData();
+        }
         internal void Draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < mapObjects.Count; i++)
@@ -160,8 +165,9 @@ namespace ZoFo.GameCore
 
         }
 
-        internal void GotData(UpdateData update)
+        internal void GotData(List<UpdateData> updates)
         {
+
             if (update is UpdateTileCreated)
             {
                 mapObjects.Add(
@@ -274,8 +280,9 @@ namespace ZoFo.GameCore
             if (ent != null)
             {
                 (ent as Player).health = (update as UpdatePlayerParametrs).health;
-                (ent as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
+                (ent as Player).rad = (update as UpdatePlayerParametrs).radiatoin; 
             }
+            
         }
 
 

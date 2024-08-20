@@ -13,10 +13,10 @@ using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.GameObjects
 {
-    class Ammo : Collectable
-    {
+  class Ammo : Collectable 
+  {
         public override StaticGraphicsComponent graphicsComponent { get; } = new(_path + "Ammo");
         public Ammo(Vector2 position) : base(position) { }
-        
+         
     }
 }

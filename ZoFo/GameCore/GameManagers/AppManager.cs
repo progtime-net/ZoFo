@@ -103,8 +103,8 @@ namespace ZoFo.GameCore.GameManagers
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape)) { server?.CloseConnection(); Exit(); }
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || 
+                Keyboard.GetState().IsKeyDown(Keys.Escape)) { Exit(); } 
 
 
          //   debugHud.Set("key", "value");

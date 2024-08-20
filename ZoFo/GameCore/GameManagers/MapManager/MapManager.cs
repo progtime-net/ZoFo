@@ -94,6 +94,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
 
                             switch (tile.Type)
                             {
+
                                 case "Tile":
                                     AppManager.Instance.server.RegisterGameObject(new MapObject(position,
                                         new Vector2(tileSet.TileWidth, tileSet.TileHeight),
@@ -111,7 +112,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                         collisionRectangles.ToArray()));
                                     break;
 
-                                default:
+                                default: 
                                     break;
                             }
                             break;
