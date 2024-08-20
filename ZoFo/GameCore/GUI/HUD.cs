@@ -39,9 +39,9 @@ public class HUD : AbstractGUI
         };
         Button invButton = new Button(Manager)
         {
-            fontName = "Fonts\\Font3", scale = 0.4f, text = "inv", fontColor = Color.Black, 
+            fontName = "Fonts\\Font3", scale = 0.4f, fontColor = Color.Black, 
             mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 15 + width / 40, width / 40, width / 40),
-            textureName = "Textures/GUI/Button2"
+            textureName = "Textures/GUI/ButtonI"
         };
         Elements.Add(invButton);
         invButton.LeftButtonPressed += () =>
