@@ -259,10 +259,12 @@ namespace ZoFo.GameCore
             }
             else if (update is UpdateCreatePlayer)
             {
-                Vector2 pos = (update as UpdateCreatePlayer).position.GetVector2();
-                Player player = new Player(pos);
-                myPlayer = player;
-                players.Add(player);
+                UpdateCreatePlayer ucp = (UpdateCreatePlayer)update;
+                if (networkManager.PlayerId == ucp.PlayerId)
+                {
+                    myPlayer = (Player)FindEntityById(ucp.IdEntity);
+                    players.Add(myPlayer);
+                }
             }
 
         }
