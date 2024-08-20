@@ -49,8 +49,8 @@ namespace ZoFo.GameCore
             {
                 networkManager.AddData(new UpdateInput()
                 {
-                    InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
-                    InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
+                    InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection.Serialize(),
+                    InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection.Serialize()
                 });
 
             };

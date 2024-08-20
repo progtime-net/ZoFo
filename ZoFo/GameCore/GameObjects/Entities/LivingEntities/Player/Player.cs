@@ -90,12 +90,13 @@ public class Player : LivingEntity
     }
     public void MovementLogic() 
     {
-        velocity += InputPlayerRotation * speed; 
+        velocity += InputPlayerRotation * speed;
+        DebugHUD.DebugSet("player pos server", position.ToString());
     }
     public void HandleNewInput(UpdateInput updateInput)
     {
-        InputPlayerRotation = updateInput.InputMovementDirection;
-        InputWeaponRotation = updateInput.InputAttackDirection;
+        InputPlayerRotation = updateInput.InputMovementDirection.GetVector2();
+        InputWeaponRotation = updateInput.InputAttackDirection.GetVector2();
 
     }
     public void HandleInteract(UpdateInputInteraction updateInputInteraction)

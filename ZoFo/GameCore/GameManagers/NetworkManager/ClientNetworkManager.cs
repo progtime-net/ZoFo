@@ -55,6 +55,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 Datagramm.updateDatas = updates;
                 byte[] bytes = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(Datagramm));  //нужно сериализовать
                 socket.SendTo(bytes, sendingEP);
+                updates.Clear();
             }
 
         }
@@ -84,6 +85,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                         AppManager.Instance.ChangeState(GameState.ClientPlaying);
                         AppManager.Instance.SetGUI(new HUD());
                     }
+                    SendAcknowledgement(Dgramm.DatagrammId);
                 }
                 if (Dgramm.isImportant)
                 {

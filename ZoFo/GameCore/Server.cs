@@ -50,6 +50,13 @@ namespace ZoFo.GameCore
                 ProcessIUpdateData(updateDatas[i]);
             }
         }
+        internal void UpdatesList(List<UpdateData> updates)
+        {
+            foreach (var item in updates)
+            {
+                ProcessIUpdateData(item);
+            }
+        }
         /// <summary>
         /// Обработка апдейтсов, которые нам прислал клиент
         /// </summary>
@@ -60,24 +67,6 @@ namespace ZoFo.GameCore
             //ТУТ Switch case будет честное слово
             switch (updateData.UpdateType)
             {
-                case "UpdateAnimation":
-                    break;
-                case "UpdateEntityHealth":
-                    break;
-                case "UpdateGameEnded":
-                    break;
-                case "UpdateGameObjectCreated":
-                    break;
-                case "UpdateGameObjectDeleted":
-                    break;
-                case "UpdateInteraction":
-                    break;
-                case "UpdateInteractionReady":
-                    break;
-                case "UpdateLoot":
-                    break;
-                case "UpdatePlayerParametrs":
-                    break;
                 case "UpdateInput":
                     if (players.Count > 0)
                         players[0].HandleNewInput(updateData as UpdateInput);//TODO id instead of 0
@@ -137,9 +126,9 @@ namespace ZoFo.GameCore
 
             //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));
             AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(740, 140)));
-            for (int i = 0; i < 20; i++)
-                for (int j = 0; j < 20; j++)
-                    AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300 + i*70, 1000+j*70)));
+            //for (int i = 0; i < 20; i++)
+            //    for (int j = 0; j < 20; j++)
+            //        AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300 + i*70, 1000+j*70)));
 
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(140, 440)));
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(240, 440)));

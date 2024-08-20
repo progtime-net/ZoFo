@@ -15,6 +15,10 @@ using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
 using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
 using ZoFo.GameCore.GUI;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
@@ -111,30 +115,38 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 arrivingDataId.Clear();
             }
             List<UpdateData> dataToSend;
-            if (importantUpdates.Count != 0 || sendedData.Count != 0) 
-            { 
-                dataToSend = new List<UpdateData>();
-                for (int i = 0; i < datapackSize && i < importantUpdates.Count; i++)
-                    dataToSend.Add(importantUpdates[i]);
-
+            if (importantUpdates.Count > 0)
+            {
                 for (int i = 0; i < clientsEP.Count; i++)
                 {
+                    dataToSend = new List<UpdateData>();
+                    for (int j = 0; j < datapackSize && j < importantUpdates.Count; j++)
+                        dataToSend.Add(importantUpdates[j]);
                     Datagramm impDgramm = new Datagramm();
                     impDgramm.DatagrammId = currentDatagrammId;
                     impDgramm.updateDatas = dataToSend;
                     impDgramm.isImportant = true;
                     impDgramm.PlayerId = i + 1;
                     sendedData.Add(impDgramm);
+                    for (int j = 0; j < datapackSize && j < dataToSend.Count; j++)
+                        importantUpdates.RemoveAt(0);
+                }
+                currentDatagrammId++;
+            }
+            
+            if (sendedData.Count != 0) 
+            { 
+                
+
+                for (int i = 0; i < clientsEP.Count; i++)
+                {
                     foreach (Datagramm Dgramm in sendedData.Where(x => x.PlayerId == i+1))
                     {
-                        string impData = JsonSerializer.Serialize(Dgramm);
+                        string impData = System.Text.Json.JsonSerializer.Serialize(Dgramm);
                         byte[] impBuffer = Encoding.UTF8.GetBytes(impData);
                         socket.SendTo(impBuffer, clientsEP[i]);
                     }
                 }
-                currentDatagrammId++;
-                for (int i = 0; i < datapackSize && i < dataToSend.Count; i++)
-                    importantUpdates.RemoveAt(0); 
             }
             Datagramm unImpDgramm = new Datagramm();
 
@@ -143,7 +155,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 dataToSend.Add(commonUpdates[i]);
 
             unImpDgramm.updateDatas = dataToSend;
-            string data = JsonSerializer.Serialize(unImpDgramm);
+            string data = System.Text.Json.JsonSerializer.Serialize(unImpDgramm);
             byte[] buffer = Encoding.UTF8.GetBytes(data);
             foreach (EndPoint sendingEP in clientsEP)
             {
@@ -187,7 +199,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 initDgramm.DatagrammId = currentDatagrammId;
                 initDgramm.PlayerId = i + 1;
                 sendedData.Add(initDgramm);
-                string data = JsonSerializer.Serialize(initDgramm);
+                string data = System.Text.Json.JsonSerializer.Serialize(initDgramm);
                 byte[] buffer = Encoding.UTF8.GetBytes(data);
                 socket.SendTo(buffer, clientsEP[i]);
             }
@@ -227,17 +239,48 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         }
         public void AnalyzeData(string data) 
         {
-            Datagramm Dgramm = JsonSerializer.Deserialize<Datagramm>(data);
-            if (Dgramm.updateDatas == null)
+            JObject jObj = JsonConvert.DeserializeObject(data) as JObject;
+            JToken token = JToken.FromObject(jObj);
+            JToken updateDatas = token["updateDatas"];
+            Datagramm Dgramm = new Datagramm();
+            Dgramm.PlayerId = token["PlayerId"].ToObject<int>();
+            if (!updateDatas.HasValues)
             {
                 //Обработка acknowledgement
+                Dgramm.DatagrammId = token["DatagrammId"].ToObject<int>();
                 arrivingDataId.Add(Dgramm);
             }
             else
-            { 
-                //Настроить десериализацию и применять неважные апдейты 
+            {
+                List<UpdateData> updates = GetSentUpdates(updateDatas);
+                AppManager.Instance.server.UpdatesList(updates);
             }
-
         }
+        public List<UpdateData> GetSentUpdates(JToken updatesToken)
+        {
+            List<UpdateData> data = new List<UpdateData>();
+            JArray updateDatas = updatesToken as JArray;
+            UpdateData update = new UpdateData();
+            foreach (JObject token in updateDatas.Children())
+            {
+                switch (token["UpdateType"].ToObject<string>())
+                {
+                    case "UpdateInput":
+                        update = token.ToObject<UpdateInput>();
+                        data.Add(update);
+                        break;
+                    case "UpdateInputInteraction":
+                        update = token.ToObject<UpdateInputInteraction>();
+                        data.Add(update);
+                        break;
+                    case "UpdateInputShoot":
+                        update = token.ToObject<UpdateInputShoot>();
+                        data.Add(update);
+                        break;
+                }
+            }
+            return data;    
+        }
+
     }
 }
