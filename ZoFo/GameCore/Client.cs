@@ -197,6 +197,7 @@ namespace ZoFo.GameCore
             }
             else if (update is UpdateGameObjectCreated)
             {
+                //TODO
                 Entity created_gameObject;
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
                 {

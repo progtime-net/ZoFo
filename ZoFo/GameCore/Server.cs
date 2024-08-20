@@ -123,6 +123,7 @@ namespace ZoFo.GameCore
             networkManager.StartGame();
             new MapManager().LoadMap();
 
+            //TODO
             //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));
             AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(760, 140)));
             //for (int i = 0; i < 20; i++)
