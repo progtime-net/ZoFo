@@ -43,7 +43,10 @@ public abstract class GameObject
 
     public void Instantiate(GameObject gameObject)
     {
-        AppManager.Instance.server.RegisterGameObject(gameObject);
+        if (AppManager.Instance.gamestate == GameState.HostPlaying)
+        {
+            AppManager.Instance.server.RegisterGameObject(gameObject);
+        }
     }
     #endregion
 
