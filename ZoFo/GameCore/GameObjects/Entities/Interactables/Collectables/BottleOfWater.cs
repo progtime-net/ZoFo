@@ -10,14 +10,15 @@ using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameManagers;
 
-namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
+namespace ZoFo.GameCore.GameObjects
 {
     public class BottleOfWater : Collectable
     {
         public override StaticGraphicsComponent graphicsComponent { get; } = new(_path + "BottleOfWater");
         public BottleOfWater(Vector2 position) : base(position)
         {
-
+            graphicsComponent.ObjectDrawRectangle.Width = 20;
+            graphicsComponent.ObjectDrawRectangle.Height = 20;
         }
         public override void OnInteraction(GameObject sender)
         {

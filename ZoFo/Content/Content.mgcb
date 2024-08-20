@@ -44,6 +44,9 @@
 #begin MapData/TileMaps/main.tmj
 /copy:MapData/TileMaps/main.tmj
 
+#begin MapData/TileSets/bonfire.tsj
+/copy:MapData/TileSets/bonfire.tsj
+
 #begin MapData/TileSets/IconSet.tsj
 /copy:MapData/TileSets/IconSet.tsj
 
@@ -1483,6 +1486,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Test/wood.jpg
+
+#begin Textures/TileSetImages/Campfire.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/TileSetImages/Campfire.png
 
 #begin Textures/TileSetImages/Pipes.png
 /importer:TextureImporter

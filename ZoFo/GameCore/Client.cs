@@ -93,7 +93,7 @@ namespace ZoFo.GameCore
 
         #endregion
 
-        Player myPlayer;
+        public Player myPlayer;
         List<MapObject> mapObjects = new List<MapObject>();
         List<GameObject> gameObjects = new List<GameObject>();
         List<Player> players = new List<Player>();
@@ -190,9 +190,9 @@ namespace ZoFo.GameCore
                 {
                     created_gameObject = new Player((update as UpdateGameObjectCreated).position);
                     players.Add(created_gameObject as Player);
-                    myPlayer = players[0];
+                    myPlayer = players[0]; 
                     gameObjects.Add(created_gameObject);
-                } 
+                }  
                 else
                 {
                     Type t = Type.GetType("ZoFo.GameCore.GameObjects." + (update as UpdateGameObjectCreated).GameObjectType);
@@ -200,7 +200,7 @@ namespace ZoFo.GameCore
                     if (gameObject is Entity)
                         (gameObject as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
                     gameObjects.Add(gameObject);
-                }
+                } 
                 (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
 
             }

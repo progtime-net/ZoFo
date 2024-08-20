@@ -15,7 +15,7 @@ using ZoFo.GameCore.GameManagers.ItemManager;
 
 namespace ZoFo.GameCore.GUI;
 
-public class GameEndedGUI : AbstractGUI
+public class ExitGameGUI : AbstractGUI
 {
     private DrawableUIElement menuBackground;
     protected override void CreateUI()
@@ -23,16 +23,16 @@ public class GameEndedGUI : AbstractGUI
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
         
-        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures/GUI/background/endGame" };
+        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures/GUI/background/waiting" };
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content);
         
-        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 5, (int)(width / 4), (int)(height / 20)), text = "The End", fontColor = Color.Black, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts/Font"});
+        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 5, (int)(width / 4), (int)(height / 20)), text = "Ты вышел из игры и потерял весь лут(((", fontColor = Color.Black, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts/Font4"});
 
         Button endButton = new Button(Manager)
         {
             rectangle = new Rectangle(width / 2 - (width / 15) / 2, height / 2 + height / 4, (int)(width / 15), (int)(height / 20)),
-            text = "End",
+            text = "Exit",
             scale = 0.3f,
             fontColor = Color.White,
             mainColor = Color.Gray,

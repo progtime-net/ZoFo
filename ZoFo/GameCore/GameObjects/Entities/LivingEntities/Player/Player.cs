@@ -18,20 +18,26 @@ public class Player : LivingEntity
 {
     public Vector2 InputWeaponRotation { get; set; }
     public Vector2 InputPlayerRotation { get; set; }
+    
+    private float speed; 
+    public int reloading; 
+    public int health = 100;
+    public int rad = 0;
+    public LootData lootData;
+    
+ 
+    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(AppManager.Instance.AssetManager.Player);
+
+    public bool IsTryingToInteract { get; set; }
+
     /// <summary>
     /// Факт того, что плеер в этом апдейте пытается стрелять
     /// </summary>
-    //public bool IsTryingToShoot { get; set; }
-    private float speed;
-    private int health;
-    public int reloading;
-    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(AppManager.Instance.AssetManager.Player);
-
-    private LootData lootData;
-    public bool IsTryingToInteract { get; set; }
     public bool IsTryingToShoot { get; set; }
     public Player(Vector2 position) : base(position)
     {
+        lootData = new LootData();
+        lootData.loots = new Dictionary<string, int>();
         graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 30, 30);
         collisionComponent.stopRectangle = new Rectangle(0, 20, 30, 10); 
         speed = 5; 
