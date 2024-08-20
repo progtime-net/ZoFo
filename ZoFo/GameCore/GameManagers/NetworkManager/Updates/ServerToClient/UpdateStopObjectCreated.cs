@@ -11,9 +11,9 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
     internal class UpdateStopObjectCreated : UpdateData
     {
-        public UpdateStopObjectCreated() { UpdateType = "UpdateStopObjectCreated"; }
+        public UpdateStopObjectCreated() { UpdateType = "UpdateStopObjectCreated"; isImportant = true; }
         public Texture2D TextureTile { get; set; }
-        public Vector2 Position { get; set; }
+        public SerializableVector2 Position { get; set; }
         public SerializablePoint Size { get; set; }
         public SerializableRectangle sourceRectangle { get; set; }
         public string tileSetName { get; set; }
