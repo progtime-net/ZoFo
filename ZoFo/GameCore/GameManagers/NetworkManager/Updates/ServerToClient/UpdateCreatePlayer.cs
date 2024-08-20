@@ -10,7 +10,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
     public class UpdateCreatePlayer : UpdateData
     {
         public int PlayerId {  get; set; }
-        public SerializableVector2 position { get; set; }
         public UpdateCreatePlayer()
         {
             isImportant = true;

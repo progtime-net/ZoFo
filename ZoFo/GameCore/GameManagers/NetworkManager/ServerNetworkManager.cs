@@ -136,8 +136,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             
             if (sendedData.Count != 0) 
             { 
-                
-
                 for (int i = 0; i < clientsEP.Count; i++)
                 {
                     foreach (Datagramm Dgramm in sendedData.Where(x => x.PlayerId == i+1))
