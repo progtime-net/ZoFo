@@ -54,14 +54,16 @@ public class BaseGUI : AbstractGUI
             rectangle = new Rectangle(width / 2 - (height / 16 + (int)(width / 2.5)) / 2,
                 height / 2 - (int)(height / 1.5) / 2,
                 height / 40 + width / 5, (int)(height / 1.5)),
-            mainColor = Color.LightGray
+            mainColor = Color.LightGray,
+            textureName = "Textures/GUI/Back"
         };
         Elements.Add(baseItemBack);
         DrawableUIElement baseCraftBack = new DrawableUIElement(Manager)
         {
             rectangle = new Rectangle(width / 2 + height / 160, height / 2 - (int)(height / 1.5) / 2,
                 height / 40 + width / 5, (int)(height / 1.5)),
-            mainColor = Color.LightGray
+            mainColor = Color.LightGray,
+            textureName = "Textures/GUI/Back"
         };
         Elements.Add(baseCraftBack);
 
@@ -85,7 +87,8 @@ public class BaseGUI : AbstractGUI
                     mainColor = Color.Gray,
                     fontName1 = "Fonts\\Font4",
                     discriptions1 = itemInfo.description,
-                    resourcesNeededToCraft1 = itemInfo.resourcesNeededToCraft
+                    resourcesNeededToCraft1 = itemInfo.resourcesNeededToCraft,
+                    textureName = "Textures/GUI/Button"
                 };
                 Elements.Add(temp);
                 temp.Initialize();
@@ -134,7 +137,8 @@ public class BaseGUI : AbstractGUI
                             mainColor = Color.Gray,
                             fontName1 = "Fonts\\Font4",
                             discriptions1 = itemInfo.description,
-                            resourcesNeededToCraft1 = itemInfo.resourcesNeededToCraft
+                            resourcesNeededToCraft1 = itemInfo.resourcesNeededToCraft,
+                            textureName = "Textures/GUI/Button"
                         };
                         Elements.Add(temp);
                         temp.Initialize();
@@ -160,7 +164,7 @@ public class BaseGUI : AbstractGUI
         {
             fontName = "Fonts\\Font3", scale = 0.4f, text = "<-", fontColor = Color.Black,
             mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40),
-            textureName = "Textures\\GUI\\checkboxs_off"
+            textureName = "Textures/GUI/Button2"
         };
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () => { AppManager.Instance.SetGUI(new MainMenuGUI()); };

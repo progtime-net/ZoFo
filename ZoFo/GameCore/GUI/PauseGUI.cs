@@ -27,7 +27,8 @@ public class PauseGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts\\Font"
+            fontName = "Fonts\\Font",
+            textureName = "Textures/GUI/Button"
         };
         continueButton.LeftButtonPressed += () =>
         {
@@ -41,7 +42,8 @@ public class PauseGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts\\Font"
+            fontName = "Fonts\\Font",
+            textureName = "Textures/GUI/Button"
         };
         exitButton.LeftButtonPressed += () =>
         {

@@ -102,7 +102,8 @@ public class ItemDisplayButton : Button
                     fontColor2 = fontColor1,
                     fontName2 = fontName1,
                     scale2 = scale1,
-                    itemTextureName1 = itemTextureName
+                    itemTextureName1 = itemTextureName,
+                    textureName = "Textures/GUI/Back"
                 };
                 hoverWindow.Initialize(content);
                 hoverWindow.LoadTexture(content);
