@@ -70,13 +70,19 @@ namespace ZoFo.GameCore.GameObjects
         }
         public void EndAttack(string a)
         {
-            var damagedPlayers=AppManager.Instance.server.collisionManager.GetPlayersInZone(collisionComponent.triggerRectangle.SetOrigin(position));
-            //TODO ДАМАЖИТЬ ИГРОКОВ В ЗОНЕ
-            if (damagedPlayers.Length>0) { DebugHUD.DebugLog("End of" + a);
-                foreach (var item in damagedPlayers)
-                    item.TakeDamage(5);
+            if (AppManager.Instance.gamestate == GameState.HostPlaying)
+            {
+                var damagedPlayers = AppManager.Instance.server.collisionManager.GetPlayersInZone(collisionComponent.triggerRectangle.SetOrigin(position));
+                //TODO ДАМАЖИТЬ ИГРОКОВ В ЗОНЕ
+                if (damagedPlayers.Length > 0)
+                {
+                    DebugHUD.DebugLog("End of" + a);
+                    foreach (var item in damagedPlayers)
+                        item.TakeDamage(5);
+                }
+                isAttacking = false;
             }
-            isAttacking = false;
+            
         }
 
         public override void Die()

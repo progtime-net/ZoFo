@@ -83,7 +83,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                     if (AppManager.Instance.gamestate != GameState.HostPlaying)
                     {
                         AppManager.Instance.ChangeState(GameState.ClientPlaying);
-                        AppManager.Instance.SetGUI(new HUD());
                     }
                     SendAcknowledgement(Dgramm.DatagrammId);
                 }

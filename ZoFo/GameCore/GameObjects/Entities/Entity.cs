@@ -40,12 +40,15 @@ namespace ZoFo.GameCore.GameObjects
 
         public void StartAnimation(string animationId)
         {
-            (graphicsComponent as Graphics.AnimatedGraphicsComponent).StartAnimation(animationId);
-            AppManager.Instance.server.AddData(new GameManagers.NetworkManager.Updates.ServerToClient.UpdateAnimation()
+            if (AppManager.Instance.gamestate == GameState.HostPlaying)
             {
-                animationId = animationId,
-                IdEntity = Id
-            });
+                (graphicsComponent as Graphics.AnimatedGraphicsComponent).StartAnimation(animationId);
+                AppManager.Instance.server.AddData(new GameManagers.NetworkManager.Updates.ServerToClient.UpdateAnimation()
+                {
+                    animationId = animationId,
+                    IdEntity = Id
+                });
+            }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
