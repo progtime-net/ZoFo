@@ -168,7 +168,7 @@ namespace ZoFo.GameCore.GameManagers
                 #endregion
 
                 #region Обработка взаимодействия с collectable(например лутом). Вызывает событие OnInteract
-                if (keyBoardState.IsKeyDown(Keys.E) && !isInteract)
+                if ((keyBoardState.IsKeyDown(Keys.E) || mouseState.LeftButton == ButtonState.Pressed) && !isInteract)
                 {
                     OnInteract?.Invoke();
                     Debug.WriteLine("взаимодействие с Collectable");

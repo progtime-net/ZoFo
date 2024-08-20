@@ -14,7 +14,7 @@ namespace ZoFo.GameCore.GameObjects
 {
     public class Peeble:Collectable
     {
-        public override StaticGraphicsComponent graphicsComponent { get; } = new(_path + "Peeble");
+        public override StaticGraphicsComponent graphicsComponent { get; } = new(_path + "Pebble");
 
         public Peeble(Vector2 position) : base(position) { }
     }
