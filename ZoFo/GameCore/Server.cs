@@ -208,7 +208,6 @@ namespace ZoFo.GameCore
                 });
                 return;
             }
-
             if (gameObject is Entity entity)
             { 
                 AddData(new UpdateGameObjectCreated()

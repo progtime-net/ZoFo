@@ -138,6 +138,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                         update = token.ToObject<UpdateGameObjectCreated>();
                         data.Add(update);
                         break;
+                    case "UpdateGameObjectWithoutIdCreated":
+                        update = token.ToObject<UpdateGameObjectWithoutIdCreated>();
+                        data.Add(update);
+                        break;
                     case "UpdateGameObjectDeleted":
                         update = token.ToObject<UpdateGameObjectDeleted>();
                         data.Add(update);

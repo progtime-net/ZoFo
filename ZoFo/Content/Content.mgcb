@@ -83,6 +83,12 @@
 /processorParam:Quality=Best
 /build:sounds/Craft sound.wav
 
+#begin sounds/gun-gunshot-01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/gun-gunshot-01.wav
+
 #begin sounds/Loot.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -394,20 +400,8 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/AnimationTextures/Zombie/zombie_spritesheet_v2.png
- 
-#begin Textures/GUI/back.png 
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color 
-/build:Textures/GUI/back.png 
 
-#begin Textures/Effects/explosion.png
+#begin Textures/Effects/explosion.png 
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -418,6 +412,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Effects/explosion.png 
+
+#begin Textures/GUI/back.png 
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/back.png 
 
 #begin Textures/GUI/background/base.png
 /importer:TextureImporter

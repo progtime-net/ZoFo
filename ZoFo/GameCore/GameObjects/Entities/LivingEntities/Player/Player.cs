@@ -262,8 +262,8 @@ public class Player : LivingEntity
                     for (int i = 0; i < 3; i++)
                     {
                         Instantiate(new Particle(
-                     (collisionComponent.stopRectangle.Location.ToVector2() * i / 3f) +
-                     (collisionComponent.stopRectangle.Location.ToVector2() * (3 - i) / 3f) 
+                     ((position - graphicsComponent.ObjectDrawRectangle.Location.ToVector2()) * i / 3f) +
+                     ((entity.position) * (3 - i) / 3f)
                      ));
 
                     }
@@ -276,9 +276,11 @@ public class Player : LivingEntity
     {
 
         DrawDebugRectangle(spriteBatch, GetDamageArea(AppManager.Instance.InputManager.InputAttackDirection), Color.Green);
+        DrawDebugRectangle(spriteBatch, GetDamageArea(AppManager.Instance.InputManager.InputAttackDirection, 2), Color.Green);
+        DrawDebugRectangle(spriteBatch, GetDamageArea(AppManager.Instance.InputManager.InputAttackDirection, 3), Color.Green);
         base.Draw(spriteBatch);
     }
-    public Rectangle GetDamageArea(Vector2 direction)
+    public Rectangle GetDamageArea(Vector2 direction, float mult = 1)
     {
         direction.Normalize();
         var rect = collisionComponent.stopRectangle.SetOrigin(position);
@@ -287,7 +289,7 @@ public class Player : LivingEntity
         rect.Y -= size;
         rect.Width += 2 * size;
         rect.Height += 2 * size;
-        rect = rect.SetOrigin(direction * 40);
+        rect = rect.SetOrigin(direction * 40 * mult);
         return rect;
     }
 }

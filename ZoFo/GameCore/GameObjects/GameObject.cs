@@ -24,6 +24,7 @@ public abstract class GameObject
         graphicsComponent.ObjectDrawRectangle.X = (int)position.X;
         graphicsComponent.ObjectDrawRectangle.Y = (int)position.Y;
 
+        positionDraw = position;
     }
     public virtual void UpdateLogic()
     { 
