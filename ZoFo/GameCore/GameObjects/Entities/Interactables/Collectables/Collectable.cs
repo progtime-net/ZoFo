@@ -9,7 +9,7 @@ using ZoFo.GameCore.GUI;
 namespace ZoFo.GameCore.GameObjects;
 public class Collectable : Interactable
 {
-    protected static readonly string _path = "Textures/icons/Collectables/";
+    protected static readonly string _path = "Content/Textures/icons/Collectables/";
     public Collectable(Vector2 position) : base(position) {
 
         graphicsComponent.ObjectDrawRectangle.Width = 20;

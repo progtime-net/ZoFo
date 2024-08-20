@@ -194,7 +194,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         }
         void ExecuteDatagramm(Datagramm Dgramm)
         {
-            AppManager.Instance.client.GotData(Dgramm.updateDatas);
+
+            AppManager.Instance.client.UpdatesList(Dgramm.updateDatas);
             //Достаёт Update и передает в ивент
         }
 

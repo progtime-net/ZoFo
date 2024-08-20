@@ -34,7 +34,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
         Thread serverThread;
-
+        int datapackSize = 150;
         public ServerNetworkManager() { Init(); }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             if (importantUpdates.Count != 0 || sendedData.Count != 0) 
             { 
                 dataToSend = new List<UpdateData>();
-                for (int i = 0; i < 200 && i < importantUpdates.Count; i++)
+                for (int i = 0; i < datapackSize && i < importantUpdates.Count; i++)
                     dataToSend.Add(importantUpdates[i]);
 
                 for (int i = 0; i < clientsEP.Count; i++)
@@ -133,7 +133,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                     }
                 }
                 currentDatagrammId++;
-                for (int i = 0; i < 200 && i < dataToSend.Count; i++)
+                for (int i = 0; i < datapackSize && i < dataToSend.Count; i++)
                     importantUpdates.RemoveAt(0); 
             }
             Datagramm unImpDgramm = new Datagramm();

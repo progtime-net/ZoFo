@@ -187,7 +187,7 @@ namespace ZoFo.GameCore
             {
                 AddData(new UpdateStopObjectCreated()
                 {
-                    Position = (gameObject as StopObject).position,
+                    Position = (gameObject as StopObject).position.Serialize(),
                     sourceRectangle = new SerializableRectangle((gameObject as StopObject).sourceRectangle),
                     Size = new SerializablePoint((gameObject as StopObject).graphicsComponent.ObjectDrawRectangle.Size),
                     tileSetName = ((gameObject as StopObject).graphicsComponent as StaticGraphicsComponent)._textureName,
@@ -218,7 +218,7 @@ namespace ZoFo.GameCore
                 AddData(new UpdateGameOBjectWithoutIdCreated()
                 {
                     GameObjectClassName = gameObject.GetType().Name,
-                    position = gameObject.position
+                    position = gameObject.position.Serialize()
                 });
                 return;
             }
@@ -229,7 +229,7 @@ namespace ZoFo.GameCore
                 {
                     GameObjectType = gameObject.GetType().Name,
                     IdEntity = entity.Id,
-                    position = gameObject.position
+                    position = gameObject.position.Serialize()
                 }); 
                 collisionManager.Register(entity.collisionComponent);
                 entities.Add(entity);
@@ -238,7 +238,7 @@ namespace ZoFo.GameCore
                 AddData(new UpdateGameObjectCreated()
                 {
                     GameObjectType = gameObject.GetType().Name,
-                    position = gameObject.position 
+                    position = gameObject.position.Serialize()
                 });
 
 

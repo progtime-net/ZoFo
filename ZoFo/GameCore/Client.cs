@@ -23,7 +23,6 @@ using System.Web;
 using ZoFo.GameCore.GUI;
 using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects; 
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
 using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO; 
 using ZoFo.GameCore.Graphics; 
 using Newtonsoft.Json.Linq;
@@ -165,14 +164,21 @@ namespace ZoFo.GameCore
 
         }
 
-        internal void GotData(List<UpdateData> updates)
+        internal void UpdatesList(List<UpdateData> updates)
+        {
+            foreach (var item in updates)
+            {
+                GotData(item);
+            }
+        }
+        internal void GotData(UpdateData update)
         {
 
             if (update is UpdateTileCreated)
             {
                 mapObjects.Add(
                 new MapObject(
-                    (update as UpdateTileCreated).Position,
+                    (update as UpdateTileCreated).Position.GetVector2(),
                     (update as UpdateTileCreated).Size.GetPoint().ToVector2(),
                     (update as UpdateTileCreated).sourceRectangle.GetRectangle(),
                     (update as UpdateTileCreated).tileSetName
@@ -182,7 +188,7 @@ namespace ZoFo.GameCore
             {
                 stopObjects.Add(
                 new StopObject(
-                    (update as UpdateStopObjectCreated).Position,
+                    (update as UpdateStopObjectCreated).Position.GetVector2(),
                     (update as UpdateStopObjectCreated).Size.GetPoint().ToVector2(),
                     (update as UpdateStopObjectCreated).sourceRectangle.GetRectangle(),
                     (update as UpdateStopObjectCreated).tileSetName,
@@ -194,7 +200,7 @@ namespace ZoFo.GameCore
                 Entity created_gameObject;
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
                 {
-                    created_gameObject = new Player((update as UpdateGameObjectCreated).position);
+                    created_gameObject = new Player((update as UpdateGameObjectCreated).position.GetVector2());
                     players.Add(created_gameObject as Player);
                     myPlayer = players[0]; 
                     gameObjects.Add(created_gameObject);
@@ -202,7 +208,7 @@ namespace ZoFo.GameCore
                 else
                 {
                     Type t = Type.GetType("ZoFo.GameCore.GameObjects." + (update as UpdateGameObjectCreated).GameObjectType);
-                    GameObject gameObject = Activator.CreateInstance(t, (update as UpdateGameObjectCreated).position) as GameObject;
+                    GameObject gameObject = Activator.CreateInstance(t, (update as UpdateGameObjectCreated).position.GetVector2()) as GameObject;
                     if (gameObject is Entity)
                         (gameObject as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
                     gameObjects.Add(gameObject);
@@ -213,7 +219,7 @@ namespace ZoFo.GameCore
             else if (update is UpdateGameOBjectWithoutIdCreated)
             {
                 Type t = Type.GetType("ZoFo.GameCore.GameObjects." + (update as UpdateGameOBjectWithoutIdCreated).GameObjectClassName);
-                GameObject gameObject = Activator.CreateInstance(t, (update as UpdateGameOBjectWithoutIdCreated).position) as GameObject;
+                GameObject gameObject = Activator.CreateInstance(t, (update as UpdateGameOBjectWithoutIdCreated).position.GetVector2()) as GameObject;
                 if (gameObject is Particle)
                     particles.Add(gameObject as Particle);
             } 
@@ -222,7 +228,7 @@ namespace ZoFo.GameCore
                 var ent = FindEntityById(update.IdEntity);
 
                 if (ent != null)
-                    ent.position = (update as UpdatePosition).NewPosition;
+                    ent.position = (update as UpdatePosition).NewPosition.GetVector2();
             }
             else if (update is UpdateAnimation)
             {

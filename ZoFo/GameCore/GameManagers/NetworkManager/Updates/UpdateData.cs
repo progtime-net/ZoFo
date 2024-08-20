@@ -15,14 +15,16 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates
     [JsonDerivedType(typeof(UpdateGameEnded))]
     [JsonDerivedType(typeof(UpdateGameObjectCreated))]
     [JsonDerivedType(typeof(UpdateGameObjectDeleted))]
+    [JsonDerivedType(typeof(UpdateInteraction))]
+    [JsonDerivedType(typeof(UpdateInteractionReady))]
     [JsonDerivedType(typeof(UpdateLoot))]
+    [JsonDerivedType(typeof(UpdateGameOBjectWithoutIdCreated))]
     [JsonDerivedType(typeof(UpdatePlayerParametrs))]
     [JsonDerivedType(typeof(UpdatePosition))]
+    [JsonDerivedType(typeof(UpdateStopObjectCreated))]
     [JsonDerivedType(typeof(UpdateTileCreated))]
     [JsonDerivedType(typeof(UpdateInput))]
     [JsonDerivedType(typeof(UpdatePlayerExit))]
-    [JsonDerivedType(typeof(UpdateInteractionReady))]
-    [JsonDerivedType(typeof(UpdateInteraction))]
 
     public class UpdateData
     {

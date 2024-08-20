@@ -11,6 +11,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
     {
         public UpdateGameOBjectWithoutIdCreated() { UpdateType = "UpdateGameOBjectWithoutIdCreated"; }
         public string GameObjectClassName { get; set; }
-        public Vector2 position { get; set; }
+        public SerializableVector2 position { get; set; }
     }
 }

@@ -23,4 +23,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO
             return new Vector2(X, Y);
         }
     }
+
+    
 }
