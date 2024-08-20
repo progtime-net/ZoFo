@@ -46,8 +46,8 @@ public class Player : LivingEntity
         switch(AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation))
         {
             case ScopeState.Top:
-            //if  ((graphicsComponent as AnimatedGraphicsComponent).CurrentAnimation.TextureName!="player_run_up")
-                //(graphicsComponent as AnimatedGraphicsComponent).Star ("player_run_up");
+                if  ((graphicsComponent as AnimatedGraphicsComponent).CurrentAnimation.TextureName!="player_run_up")
+                    (graphicsComponent as AnimatedGraphicsComponent).StartCyclingAnimation("player_run_up");
                 break;
             case ScopeState.Down:
                 StartAnimation("player_run_down");

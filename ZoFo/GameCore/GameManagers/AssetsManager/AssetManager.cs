@@ -12,7 +12,7 @@ public class AssetManager
 
     public AssetContainer Player = new()
     {
-        Animations = [ "player_look_down" ],
+        Animations = [ "player_look_down", "player_run_up"],
         IdleAnimation = "player_look_down"
     };
 }

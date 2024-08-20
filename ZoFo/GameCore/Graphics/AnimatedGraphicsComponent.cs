@@ -138,6 +138,17 @@ namespace ZoFo.GameCore.Graphics
             SetInterval();
 
         }
+        
+        public void StartCyclingAnimation(string startedanimationId)
+        {
+            currentFrame = 0;
+            currentAnimation = animations.Find(x => x.Id == startedanimationId);
+            currentAnimation.IsCycle = true;
+
+            buildSourceRectangle();
+            SetInterval();
+
+        }
          
         public void StopAnimation()
         {
