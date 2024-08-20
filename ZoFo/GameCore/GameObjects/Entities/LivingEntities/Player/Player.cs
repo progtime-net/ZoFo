@@ -43,32 +43,42 @@ public class Player : LivingEntity
     public  override void Update()
     {
         #region анимация управления, стрельбы 
+        var textureName = (graphicsComponent as AnimatedGraphicsComponent).CurrentAnimation.TextureName;
+        var animatedGraphicsComponent = graphicsComponent as AnimatedGraphicsComponent;
         switch(AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation))
         {
             case ScopeState.Top:
-                if  ((graphicsComponent as AnimatedGraphicsComponent).CurrentAnimation.TextureName!="player_run_up")
-                    (graphicsComponent as AnimatedGraphicsComponent).StartCyclingAnimation("player_run_up");
+
+                    if  ((graphicsComponent as AnimatedGraphicsComponent).CurrentAnimation.TextureName!="player_run_right")
+                    (graphicsComponent as AnimatedGraphicsComponent).StartCyclingAnimation("player_run_right");
                 break;
             case ScopeState.Down:
-                StartAnimation("player_run_down");
+                if  (textureName!="player_run_down")
+                    animatedGraphicsComponent.StartCyclingAnimation("player_run_down");
             break;
             case ScopeState.Right:
-                StartAnimation("player_run_right");
+                   if  (textureName!="player_run_up")
+                        animatedGraphicsComponent.StartCyclingAnimation("player_run_up");
             break;
             case ScopeState.Left:
-                StartAnimation("left");
+                if  (textureName!="player_run_left")
+                    animatedGraphicsComponent.StartCyclingAnimation("player_run_left");
             break;
             case ScopeState.TopRight:
-                StartAnimation("player_run_right_up");
+                if  (textureName!="player_run_right_up")
+                    animatedGraphicsComponent.StartCyclingAnimation("player_run_right_up");
             break;
             case ScopeState.TopLeft:
-                StartAnimation("player_run_left_up");
+                if  (textureName!="player_run_left_up")
+                    animatedGraphicsComponent.StartCyclingAnimation("player_run_left_up");
             break;
             case ScopeState.DownRight:
-                StartAnimation("player_run_right_down");
+                if  (textureName!="player_run_right_down")
+                    animatedGraphicsComponent.StartCyclingAnimation("player_run_right_down");
             break;
             case ScopeState.DownLeft:
-                StartAnimation("player_run_left_down");
+                if  (textureName!="player_run_left_down")
+                    animatedGraphicsComponent.StartCyclingAnimation("player_run_left_down");
             break;
         }
         #endregion
