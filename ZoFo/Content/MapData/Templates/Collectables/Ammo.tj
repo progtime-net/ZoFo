@@ -1,18 +1,17 @@
 { "object":
     {
-     "gid":4,
+     "gid":1,
      "height":16,
-     "id":12,
-     "name":"Wood",
+     "id":13,
+     "name":"Ammo",
      "rotation":0,
      "type":"",
      "visible":true,
      "width":16
     },
- "tileset":
-    {
-     "firstgid":1,
-     "source":"..\/TileSets\/IconSet.tsj"
-    },
+  "tileset": {
+    "firstgid": 1,
+    "source": "..\/..\/TileSets\/IconSet.tsj"
+  },
  "type":"template"
 }

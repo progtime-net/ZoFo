@@ -72,6 +72,13 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                         if (tileSet.FirstGid <= chunk.Data[i])
                         {
                             int number = chunk.Data[i] - tileSet.FirstGid;
+                            Tile tile = tileSet.Tiles[number]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
+
+                            
+                            if (tile.Animation is not null)
+                            {
+
+                            }
 
                             int relativeColumn = number % tileSet.Columns;
                             int relativeRow = number / tileSet.Columns; // относительно левого угла чанка
@@ -84,7 +91,6 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                 (i % chunk.Width) * _tileMap.TileWidth + chunk.X * _tileMap.TileWidth,
                                 (i / chunk.Height) * _tileMap.TileHeight + chunk.Y * _tileMap.TileHeight);
 
-                            Tile tile = tileSet.Tiles[number]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
 
                             switch (tile.Type)
                             {
