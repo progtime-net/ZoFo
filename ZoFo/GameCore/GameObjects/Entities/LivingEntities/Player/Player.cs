@@ -32,7 +32,7 @@ public class Player : LivingEntity
     public float rad = 0;
     public float MaxRad = 100;
     public LootData lootData;
-
+    Vector2 prevPosition;
 
 
     public bool IsTryingToInteract { get; set; }
@@ -94,14 +94,16 @@ public class Player : LivingEntity
                 if (idName != "player_run_right_down")
                     StartAnimation("player_run_right_down");
                 break;
-            case ScopeState.Idle: 
+            case ScopeState.Idle:
+                if (idName != "player_look_down")
+                    StartAnimation("player_look_down");
                 break;
         }
         if (AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation) != ScopeState.Idle)
         {
             prevScopeState = AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation);
         }
-        else if (AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation) == ScopeState.Idle)
+        else if (AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation) == ScopeState.Idle && false)
         {
 
 
@@ -219,7 +221,7 @@ public class Player : LivingEntity
     {
         InputPlayerRotation = updateInput.InputMovementDirection.GetVector2();
         InputWeaponRotation = updateInput.InputAttackDirection.GetVector2();
-
+        DebugHUD.DebugSet("dir", InputWeaponRotation.ToString());
     }
     public void HandleInteract(UpdateInputInteraction updateInputInteraction)
     {
@@ -250,13 +252,21 @@ public class Player : LivingEntity
         reloading = 5;
         IsTryingToShoot = true;
 
-        Entity[] entities = AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputManager.ConvertStateToVector2(prevScopeState)), this);
+        Entity[] entities = AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation), this);
         if (entities != null)
         {
             foreach (Entity entity in entities)
             {
                 if (entity is Enemy)
                 {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Instantiate(new Particle(
+                     (collisionComponent.stopRectangle.Location.ToVector2() * i / 3f) +
+                     (collisionComponent.stopRectangle.Location.ToVector2() * (3 - i) / 3f) 
+                     ));
+
+                    }
                     (entity as Enemy).TakeDamage(1);
                 }
             }
@@ -264,8 +274,8 @@ public class Player : LivingEntity
     }
     public override void Draw(SpriteBatch spriteBatch)
     {
-        
-        DrawDebugRectangle(spriteBatch, GetDamageArea((position - prevPosition_forClient)), Color.Green);
+
+        DrawDebugRectangle(spriteBatch, GetDamageArea(AppManager.Instance.InputManager.InputAttackDirection), Color.Green);
         base.Draw(spriteBatch);
     }
     public Rectangle GetDamageArea(Vector2 direction)
@@ -277,7 +287,7 @@ public class Player : LivingEntity
         rect.Y -= size;
         rect.Width += 2 * size;
         rect.Height += 2 * size;
-        rect = rect.SetOrigin(direction*15); 
+        rect = rect.SetOrigin(direction * 40);
         return rect;
     }
 }

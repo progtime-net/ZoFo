@@ -151,7 +151,7 @@ namespace ZoFo.GameCore
             }
             for (int i = 0; i < stopObjects.Count; i++)
             {
-                stopObjects[i].Draw(spriteBatch);
+                    stopObjects[i].Draw(spriteBatch);
             }
             for (int i = 0; i < gameObjects.Count; i++)
             {
