@@ -22,7 +22,7 @@ namespace ZoFo.GameCore.GameObjects
         public Zombie(Vector2 position) : base(position)
         {
             health = 5;
-            speed = 0.5f;
+            speed = 7.5f;
             graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 30, 30);
             collisionComponent.stopRectangle = new Rectangle(10, 20, 10, 10);
             isAttacking = false;
@@ -98,7 +98,7 @@ namespace ZoFo.GameCore.GameObjects
             //TODO ДАМАЖИТЬ ИГРОКОВ В ЗОНЕ
             if (damagedPlayers.Length>0) { DebugHUD.DebugLog("End of" + a);
                 foreach (var item in damagedPlayers)
-                    item.TakeDamage(1);  
+                    item.TakeDamage(20);  
             }
             
         }
