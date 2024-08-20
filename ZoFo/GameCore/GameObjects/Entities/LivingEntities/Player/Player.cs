@@ -46,8 +46,8 @@ public class Player : LivingEntity
         lootData = new LootData();
         lootData.loots = new Dictionary<string, int>();
         graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 30, 30);
-        collisionComponent.stopRectangle = new Rectangle(0, 15, 30, 15); 
-        speed = 2.5f; 
+        collisionComponent.stopRectangle = new Rectangle(10, 15, 10, 15); 
+        speed = 5; 
 
         StartAnimation("player_look_down"); 
     }
