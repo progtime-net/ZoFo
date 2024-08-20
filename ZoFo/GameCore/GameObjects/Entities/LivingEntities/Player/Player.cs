@@ -12,6 +12,7 @@ using ZoFo.GameCore.Graphics;
 using System.Diagnostics;
 using ZoFo.GameCore.GUI;
 using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace ZoFo.GameCore.GameObjects;
 
@@ -221,7 +222,12 @@ public class Player : LivingEntity
     {
         InputPlayerRotation = updateInput.InputMovementDirection.GetVector2();
         InputWeaponRotation = updateInput.InputAttackDirection.GetVector2();
-        DebugHUD.DebugSet("dir", InputWeaponRotation.ToString());
+        if (InputPlayerRotation.X != 0f || InputPlayerRotation.Y != 0f)
+        {
+            InputPlayerRotation /= (InputPlayerRotation.Length());
+        }
+        DebugHUD.DebugSet("dir", InputPlayerRotation.ToString());
+        DebugHUD.DebugSet("dir2", InputWeaponRotation.ToString());
     }
     public void HandleInteract(UpdateInputInteraction updateInputInteraction)
     {
@@ -252,18 +258,21 @@ public class Player : LivingEntity
         reloading = 5;
         IsTryingToShoot = true;
 
-        Entity[] entities = AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation), this);
+        List<Entity> entities = AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation), this).ToList();
+        entities.AddRange(AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation, 2), this).ToList());
+        entities.AddRange(AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation, 3), this).ToList());
+
         if (entities != null)
         {
             foreach (Entity entity in entities)
             {
                 if (entity is Enemy)
                 {
-                    for (int i = 1; i <= 3; i++)
+                    for (int i = 3; i <= 3; i++)
                     {
                         Instantiate(new Particle(
-                     ((position) * i / 3f) +
-                     ((entity.position) * (3 - i) / 3f)
+                     ((position - graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2) * (3 - i) / 3f) +
+                     ((entity.position - graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2) * i / 3f) + ExtentionClass.RandomVector() * 3
                      ));
 
                     }
