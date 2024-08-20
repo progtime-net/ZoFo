@@ -20,7 +20,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
     public class ServerNetworkManager
     {
         private Socket socket;
-        private IPAddress ip = IPAddress.Parse("127.0.0.1");
+        private IPAddress ip;
         private bool isMultiplayer;
         //Player Id to Player endPoint
         private List<IPEndPoint> clientsEP;
@@ -28,9 +28,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private List<UpdateData> commonUpdates;
         private List<UpdateData> importantUpdates;
         private List<Datagramm> sendedData;
-        private List<int> arrivingDataId = new List<int>();
+        private List<Datagramm> arrivingDataId;
         private int currentDatagrammId = 1;
-        private int nextPlayerId = 0;
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
         Thread serverThread;
@@ -48,6 +47,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             commonUpdates = new List<UpdateData>();
             importantUpdates = new List<UpdateData>();
             sendedData = new List<Datagramm>();
+            arrivingDataId = new List<Datagramm>();
 
             GetDataSend += AnalyzeData;
 
@@ -101,37 +101,37 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             #endregion  
             if (arrivingDataId.Count != 0)
             {
-                List<int> actualArrivingId = arrivingDataId;
+                List<Datagramm> actualArrivingId = arrivingDataId;
                 for (int i = 0; i < actualArrivingId.Count; i++)
                 {
-                    sendedData.Remove(sendedData.Find(x => x.DatagrammId == actualArrivingId[i]));
+                    sendedData.Remove(sendedData.Find(x => x.DatagrammId == actualArrivingId[i].DatagrammId
+                    && x.PlayerId == actualArrivingId[i].PlayerId));
                 }
                 arrivingDataId.Clear();
             }
             List<UpdateData> dataToSend;
-            if (importantUpdates.Count != 0) 
+            if (importantUpdates.Count != 0 || sendedData.Count != 0) 
             {
-                Datagramm impDgramm = new Datagramm();
-                impDgramm.DatagrammId = currentDatagrammId;
-                currentDatagrammId++;
-
                 dataToSend = new List<UpdateData>();
                 for (int i = 0; i < 200 && i < importantUpdates.Count; i++)
                     dataToSend.Add(importantUpdates[i]);
 
-                impDgramm.updateDatas = dataToSend;
-                impDgramm.isImportant = true;
-                sendedData.Add(impDgramm);
-                foreach (Datagramm Dgramm in sendedData)
+                for (int i = 0; i < clientsEP.Count; i++)
                 {
-
-                    string impData = JsonSerializer.Serialize(Dgramm);
-                    byte[] impBuffer = Encoding.UTF8.GetBytes(impData);
-                    foreach (EndPoint sendingEP in clientsEP)
+                    Datagramm impDgramm = new Datagramm();
+                    impDgramm.DatagrammId = currentDatagrammId;
+                    impDgramm.updateDatas = dataToSend;
+                    impDgramm.isImportant = true;
+                    impDgramm.PlayerId = i + 1;
+                    sendedData.Add(impDgramm);
+                    foreach (Datagramm Dgramm in sendedData.Where(x => x.PlayerId == i+1))
                     {
-                        socket.SendTo(impBuffer, sendingEP);
+                        string impData = JsonSerializer.Serialize(Dgramm);
+                        byte[] impBuffer = Encoding.UTF8.GetBytes(impData);
+                        socket.SendTo(impBuffer, clientsEP[i]);
                     }
                 }
+                currentDatagrammId++;
                 for (int i = 0; i < 200 && i < dataToSend.Count; i++)
                     importantUpdates.RemoveAt(0);
             }
@@ -213,7 +213,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             if (Dgramm.updateDatas == null)
             {
                 //Обработка acknowledgement
-                arrivingDataId.Add(Dgramm.DatagrammId);
+                arrivingDataId.Add(Dgramm);
             }
             else
             {

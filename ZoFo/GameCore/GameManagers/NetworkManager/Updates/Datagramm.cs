@@ -11,5 +11,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates
         public int DatagrammId { get; set; }
         public bool isImportant { get; set; }
         public List<UpdateData> updateDatas { get; set; }
+        public int PlayerId { get; set; }  
     }
 }

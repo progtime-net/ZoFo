@@ -19,7 +19,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
     public class ClientNetworkManager
     {
-        private int port = 0;
+        private int PlayerId;
         private IPEndPoint endPoint;
         private IPEndPoint sendingEP;
         private Socket socket;
@@ -71,29 +71,32 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             JToken token = JToken.FromObject(jObj);
             JToken updateDatas = token["updateDatas"];
             Datagramm Dgramm = new Datagramm();
+            if (PlayerId == 0)
+            {
+                PlayerId = token["PlayerId"].ToObject<int>();
+            }
             Dgramm.isImportant = token["isImportant"].ToObject<bool>();
             Dgramm.DatagrammId = token["DatagrammId"].ToObject<int>();
-            Dgramm.updateDatas = GetSentUpdates(token["updateDatas"]);
             if (Dgramm.isImportant)
             {
                 if (Dgramm.DatagrammId == currentServerDatagrammId + 1)
                 {
-                    ExecuteDatagramm(Dgramm);
                     currentServerDatagrammId++;
+                    Dgramm.updateDatas = GetSentUpdates(token["updateDatas"]);
+                    ExecuteDatagramm(Dgramm);
                     CheckDatagramm();
                 }
-                else if (Dgramm.DatagrammId > currentServerDatagrammId + 1)
+                else if (Dgramm.DatagrammId > currentServerDatagrammId + 1 &&
+                    waitingDatagramm.Find(x => x.DatagrammId == Dgramm.DatagrammId) == null)
                 {
+                    Dgramm.updateDatas = GetSentUpdates(token["updateDatas"]);
                     waitingDatagramm.Add(Dgramm);
-                }
-                else
-                {
-                    Console.WriteLine("Апдейты " + Dgramm.DatagrammId + ", уже приходили, пропускаем");
                 }
                 SendAcknowledgement(Dgramm.DatagrammId);
             }
             else
             {
+                Dgramm.updateDatas = GetSentUpdates(token["updateDatas"]);
                 ExecuteDatagramm(Dgramm);
             }
 
@@ -162,7 +165,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public void SendAcknowledgement(int DatagrammId)
         {
            
-            Datagramm Dgramm = new Datagramm() { DatagrammId = DatagrammId };
+            Datagramm Dgramm = new Datagramm() { DatagrammId = DatagrammId, PlayerId = PlayerId };
             string data = System.Text.Json.JsonSerializer.Serialize(Dgramm);
             byte[] buffer = Encoding.UTF8.GetBytes(data);
             socket.SendTo(buffer, sendingEP);
@@ -173,8 +176,9 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             Datagramm orderedDgramm = waitingDatagramm.Find(x => x.DatagrammId == currentServerDatagrammId + 1);
             while (orderedDgramm != null)
             {
-                ExecuteDatagramm(orderedDgramm);
                 currentServerDatagrammId++;
+                ExecuteDatagramm(orderedDgramm);
+                waitingDatagramm.Remove(orderedDgramm);
                 orderedDgramm = waitingDatagramm.Find(x => x.DatagrammId == currentServerDatagrammId + 1);
             }
         }
