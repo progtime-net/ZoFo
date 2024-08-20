@@ -1,15 +1,22 @@
 {
+    "activeFile": "TileMaps/main.tmj",
+    "expandedProjectPaths": [
+        "TileMaps",
+        ".",
+        "Templates"
+    ],
     "fileStates": {
         "TileMaps/main.tmj": {
-            "scale": 0.33,
-            "selectedLayer": 0,
+            "scale": 0.5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": -463.63636363636374,
-                "y": 300
+                "x": 1629,
+                "y": 1025
             }
         },
         "TileSets/IconSet.tsj": {
-            "dynamicWrapping": true
+            "dynamicWrapping": true,
+            "scaleInDock": 1
         },
         "TileSets/TileSet 1.tsj": {
             "dynamicWrapping": false,
@@ -18,9 +25,20 @@
         "TileSets/TilesetNature.tsj": {
             "scaleInDock": 1.5
         },
+        "TileSets/bonfire.tsj": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
         "TileSets/tileset 1 collision.tsj": {
             "dynamicWrapping": false,
             "scaleInDock": 1
         }
-    }
+    },
+    "openFiles": [
+        "TileMaps/main.tmj"
+    ],
+    "project": "MapSession.tiled-project",
+    "recentFiles": [
+        "TileMaps/main.tmj"
+    ]
 }
