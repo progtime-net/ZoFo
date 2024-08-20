@@ -36,7 +36,8 @@ public class MainMenuGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         playButton.LeftButtonPressed += () =>
         {
@@ -51,7 +52,8 @@ public class MainMenuGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts\\Font"
+            fontName = "Fonts\\Font",
+            textureName = "Textures/GUI/Button"
         };
         baseButton.LeftButtonPressed += () =>
         {
@@ -66,7 +68,8 @@ public class MainMenuGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         optionButton.LeftButtonPressed += () =>
         {
@@ -81,7 +84,8 @@ public class MainMenuGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         exitButton.LeftButtonPressed += () =>
         {

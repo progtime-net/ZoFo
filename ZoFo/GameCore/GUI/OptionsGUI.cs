@@ -120,7 +120,11 @@ public class OptionsGUI : AbstractGUI
             //--------------------------------------
             
             Button bTExit = new Button(Manager)
-            { fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off"};
+            {
+                fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent,
+                rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40),
+                textureName = "Textures/GUI/Button2"
+            };
             Elements.Add(bTExit);
             bTExit.LeftButtonPressed += () =>
             {

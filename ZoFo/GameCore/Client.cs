@@ -202,6 +202,7 @@ namespace ZoFo.GameCore
 
             else if (update is UpdateGameObjectCreated)
             {
+                //TODO
                 Entity created_gameObject;
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
                 {
@@ -246,9 +247,13 @@ namespace ZoFo.GameCore
 
                 if (ent != null)
                     DeleteObject(ent);
-
-            }
-            else if (update is UpdatePlayerParametrs && update.IdEntity == myPlayer.Id) //aaa
+ 
+            } 
+            else if (update is UpdateGameEnded)
+            {
+                GameEnd();
+            } 
+            else if (update is UpdatePlayerParametrs && update.IdEntity == myPlayer.Id) //aaa 
             {
                 UpdatePlayerHealth(update as UpdatePlayerParametrs);
             }
@@ -309,10 +314,13 @@ namespace ZoFo.GameCore
             {
                 (ent as Player).health = (update as UpdatePlayerParametrs).health;
                 (ent as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
-            }
-
+            } 
         }
 
+        public void GameEnd()
+        {
+            AppManager.Instance.SetGUI(new FinishingGUI());
+        }
 
         public Entity FindEntityById(int id)
         {

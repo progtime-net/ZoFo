@@ -12,6 +12,7 @@ using ZoFo.GameCore.Graphics;
 using System.Diagnostics;
 using ZoFo.GameCore.GUI;
 using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace ZoFo.GameCore.GameObjects;
 
@@ -221,7 +222,12 @@ public class Player : LivingEntity
     {
         InputPlayerRotation = updateInput.InputMovementDirection.GetVector2();
         InputWeaponRotation = updateInput.InputAttackDirection.GetVector2();
-        DebugHUD.DebugSet("dir", InputWeaponRotation.ToString());
+        if (InputPlayerRotation.X != 0f || InputPlayerRotation.Y != 0f)
+        {
+            InputPlayerRotation /= (InputPlayerRotation.Length());
+        }
+        DebugHUD.DebugSet("dir", InputPlayerRotation.ToString());
+        DebugHUD.DebugSet("dir2", InputWeaponRotation.ToString());
     }
     public void HandleInteract(UpdateInputInteraction updateInputInteraction)
     {
@@ -252,18 +258,21 @@ public class Player : LivingEntity
         reloading = 5;
         IsTryingToShoot = true;
 
-        Entity[] entities = AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation), this);
+        List<Entity> entities = AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation), this).ToList();
+        entities.AddRange(AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation, 2), this).ToList());
+        entities.AddRange(AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation, 3), this).ToList());
+
         if (entities != null)
         {
             foreach (Entity entity in entities)
             {
                 if (entity is Enemy)
                 {
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 3; i <= 3; i++)
                     {
                         Instantiate(new Particle(
-                     (collisionComponent.stopRectangle.Location.ToVector2() * i / 3f) +
-                     (collisionComponent.stopRectangle.Location.ToVector2() * (3 - i) / 3f) 
+                     ((position - graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2) * (3 - i) / 3f) +
+                     ((entity.position - graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2) * i / 3f) + ExtentionClass.RandomVector() * 3
                      ));
 
                     }
@@ -276,9 +285,11 @@ public class Player : LivingEntity
     {
 
         DrawDebugRectangle(spriteBatch, GetDamageArea(AppManager.Instance.InputManager.InputAttackDirection), Color.Green);
+        DrawDebugRectangle(spriteBatch, GetDamageArea(AppManager.Instance.InputManager.InputAttackDirection, 2), Color.Green);
+        DrawDebugRectangle(spriteBatch, GetDamageArea(AppManager.Instance.InputManager.InputAttackDirection, 3), Color.Green);
         base.Draw(spriteBatch);
     }
-    public Rectangle GetDamageArea(Vector2 direction)
+    public Rectangle GetDamageArea(Vector2 direction, float mult = 1)
     {
         direction.Normalize();
         var rect = collisionComponent.stopRectangle.SetOrigin(position);
@@ -287,7 +298,7 @@ public class Player : LivingEntity
         rect.Y -= size;
         rect.Width += 2 * size;
         rect.Height += 2 * size;
-        rect = rect.SetOrigin(direction * 40);
+        rect = rect.SetOrigin(direction * 40 * mult);
         return rect;
     }
 }
