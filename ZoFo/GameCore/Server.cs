@@ -186,6 +186,7 @@ namespace ZoFo.GameCore
         {
 
             gameObjects.Add(gameObject);
+            
             if (gameObject is StopObject)
             {
                 AddData(new UpdateStopObjectCreated()
@@ -202,6 +203,7 @@ namespace ZoFo.GameCore
                 }
                 return;
             }
+
             if (gameObject is MapObject)
             {
                 AddData(new UpdateTileCreated()
@@ -213,6 +215,18 @@ namespace ZoFo.GameCore
                 });
                 return;
             }
+            
+            if (gameObject is Particle)
+            { 
+
+                AddData(new UpdateGameOBjectWithoutIdCreated()
+                {
+                    GameObjectClassName = gameObject.GetType().Name,
+                    position = gameObject.position
+                });
+                return;
+            }
+
             if (gameObject is Entity entity)
             {
                 AddData(new UpdateGameObjectCreated()

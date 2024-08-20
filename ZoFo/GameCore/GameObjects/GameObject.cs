@@ -41,6 +41,10 @@ public abstract class GameObject
         graphicsComponent.Update();
     }
 
+    public void Instantiate(GameObject gameObject)
+    {
+        AppManager.Instance.server.RegisterGameObject(gameObject);
+    }
     #endregion
 
 

@@ -51,6 +51,17 @@ public class LivingEntity : Entity
         prevPosition_forClient = position;
     }
 
+    public virtual void Die()
+    {
+        //deathSound + animationStart
+    }
+    public virtual void DeathEnd()
+    {
+        //deathSound + animationStart
+        Delete();
+    }
+
+
 }
 
 

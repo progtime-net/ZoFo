@@ -233,6 +233,11 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             rectangle.Y += (int)origin.Y;
             return rectangle;
         }
+        public static Vector2 RandomVector()
+        {  
+            return new Vector2((float)Random.Shared.NextDouble() - 0.5f, (float)Random.Shared.NextDouble() - 0.5f);
+        }
+        
     }
 
 }

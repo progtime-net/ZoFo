@@ -1,0 +1,1 @@
+{"id":"explosion_1","textureName":"Textures/Effects/explosion","startSpriteRectangle":{"X":0,"Y":0,"Width":100,"Height":100},"frameSecond":[{"Item1":0,"Item2":1}],"textureFrameInterval":0,"framesCount":33,"isCycle":false,"offset":"0, 0"}
