@@ -251,7 +251,10 @@ namespace ZoFo.GameCore
             }
             else if (update is UpdateLoot)
             {
-                
+                if ((update as UpdateLoot).quantity == 0)
+                {
+                    return;
+                }
                 var ent = FindEntityById(update.IdEntity);
                 if (ent != null)
                     (ent as Player).lootData.AddLoot_Client((update as UpdateLoot).lootName, (update as UpdateLoot).quantity);
