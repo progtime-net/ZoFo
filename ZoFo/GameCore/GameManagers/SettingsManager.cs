@@ -28,13 +28,14 @@ namespace ZoFo.GameCore.GameManagers
         public void SetMainVolume(float volume)
         {
             settingsContainer.MainVolume = volume;
-            AppManager.Instance.SoundManager.Update();
+           // AppManager.Instance.SoundManager.Update();
             SaveSettings();
         }
         public void SetMusicVolume(float volume)
         {
             settingsContainer.MusicVolume = volume;
             //AppManager.Instance.SoundManager.Update();
+
             SaveSettings();
 
         }
@@ -70,6 +71,7 @@ namespace ZoFo.GameCore.GameManagers
         }
         public void SaveSettings()
         {
+            AppManager.Instance.SoundManager.Update();
             using (StreamWriter streamWriter = new StreamWriter("GameSettings.txt"))
             {
                 string _str = JsonConvert.SerializeObject(settingsContainer);

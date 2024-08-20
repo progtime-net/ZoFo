@@ -36,14 +36,35 @@ namespace ZoFo.GameCore.GameObjects
 
         public override void Update()
         {
-            Vector2 duration = Vector2.Normalize(
-                AppManager.Instance.server.players[0].position - position
+            float m = 10000000;
+            int j = -1;
+            for (int i = 0; i < AppManager.Instance.server.players.Count; i++)
+            {
+                var player = AppManager.Instance.server.players[i];
+                if (m > (player.position.X - position.X) * (player.position.X - position.X) + (player.position.Y - position.Y) * (player.position.Y - position.Y))
+                {
+                    m = (player.position.X - position.X) * (player.position.X - position.X) + (player.position.Y - position.Y) * (player.position.Y - position.Y);
+                    j = i;
+                }
+            }
+            Vector2 duration = Vector2.Zero;
+            if (m<= 130000)
+            {
+                duration = Vector2.Normalize(
+                AppManager.Instance.server.players[j].position - position
                 );
+                if (new Random().Next(0, 1000) == 0)
+                {
+                    AppManager.Instance.SoundManager.StartSound("zombie sound", position, AppManager.Instance.server.players[0].position, pitch: new Random().Next(-1, 2) * (float)new Random().NextDouble());
+                }
+            }
             
-            
-           
-            
+
             if (!isAttacking) { velocity += new Vector2(duration.X * speed, duration.Y * speed); }
+
+
+
+
 
         }
         public void OnPlayerClose(GameObject sender)
@@ -52,6 +73,8 @@ namespace ZoFo.GameCore.GameObjects
            
             if(!isAttacking)
             {
+
+                AppManager.Instance.SoundManager.StartSound("Zombi napal", position, AppManager.Instance.server.players[0].position,pitch:new Random().Next(-1,2)*(float)new Random().NextDouble());
                 StartAnimation("zombie_attack");
                 isAttacking = true;
             }

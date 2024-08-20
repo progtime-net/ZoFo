@@ -122,6 +122,18 @@
 /processorParam:Quality=Best
 /build:sounds/Zombi stoit.wav
 
+#begin sounds/zombie sound 2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/zombie sound 2.wav
+
+#begin sounds/zombie sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/zombie sound.wav
+
 #begin Textures/Animations/player_down_idle.animation
 /copy:Textures/Animations/player_down_idle.animation
 
