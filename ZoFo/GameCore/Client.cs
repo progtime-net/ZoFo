@@ -252,12 +252,12 @@ namespace ZoFo.GameCore
             else if (update is UpdateGameEnded)
             {
                 GameEnd();
-            } 
-            else if (update is UpdatePlayerParametrs && update.IdEntity == myPlayer.Id) //aaa 
+            }
+            else if (update is UpdatePlayerParametrs && myPlayer !=null && update.IdEntity == myPlayer.Id) //aaa 
             {
                 UpdatePlayerHealth(update as UpdatePlayerParametrs);
             }
-            else if (update is UpdateLoot && update.IdEntity == myPlayer.Id)//aaa
+            else if (update is UpdateLoot && myPlayer != null && update.IdEntity == myPlayer.Id)//aaa
             {
                 if ((update as UpdateLoot).quantity == 0)
                 {

@@ -71,7 +71,10 @@ namespace ZoFo.GameCore
                     if (players.Count > 0)
                     {
                         UpdateInput data = updateData as UpdateInput;
-                        players[data.PlayerId - 1].HandleNewInput(data);
+                        if (data.PlayerId > 0)
+                        {
+                            players[data.PlayerId - 1].HandleNewInput(data);
+                        }
                     }
                     //TODO id instead of 0
                     else
