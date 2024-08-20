@@ -35,7 +35,7 @@ namespace ZoFo.GameCore
         {
             networkManager = new ServerNetworkManager();
             collisionManager = new CollisionManager();
-
+            players = new List<Player>();
         }
         #region server logic as App
 
@@ -120,7 +120,6 @@ namespace ZoFo.GameCore
             collisionManager = new CollisionManager();
             gameObjects = new List<GameObject>();
             entities = new List<Entity>();
-            players = new List<Player>();
             networkManager.StartGame();
             new MapManager().LoadMap();
 

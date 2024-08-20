@@ -24,8 +24,9 @@ public class HUD : AbstractGUI
         int height = AppManager.Instance.CurentScreenResolution.Y;
         
         Button pauseButton = new Button(Manager)
-            { fontName = "Fonts\\Font3", scale = 0.4f, text = "| |", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 30, width / 40, width / 40), textureName = "Textures\\GUI\\checkboxs_off"};
+            { fontName = "Fonts\\Font3", scale = 0.4f, text = "| |", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off"};
         Elements.Add(pauseButton);
+        pauseButton.LoadTexture(AppManager.Instance.Content);
         pauseButton.LeftButtonPressed += () =>
         { 
             AppManager.Instance.SoundManager.StartAmbientSound("Button click");
@@ -36,8 +37,9 @@ public class HUD : AbstractGUI
             overlayGUI.LoadContent(); 
         };
         Button invButton = new Button(Manager)
-            { fontName = "Fonts\\Font3", scale = 0.4f, text = "inv", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 15 + width / 40, width / 40, width / 40), textureName = "Textures\\GUI\\checkboxs_off"};
+            { fontName = "Fonts\\Font3", scale = 0.4f, text = "inv", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 15 + width / 40, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off"};
         Elements.Add(invButton);
+        invButton.LoadTexture(AppManager.Instance.Content);
         invButton.LeftButtonPressed += () =>
         {
             overlayGUI = new InventoryGUI();

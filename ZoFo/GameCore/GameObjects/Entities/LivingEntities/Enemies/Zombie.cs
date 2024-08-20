@@ -92,14 +92,15 @@ namespace ZoFo.GameCore.GameObjects
             
         }
         public void EndAttack(string a)
-        {
+        { 
+            if (AppManager.Instance.gamestate != GameState.HostPlaying) return;  
             var damagedPlayers=AppManager.Instance.server.collisionManager.GetPlayersInZone(collisionComponent.triggerRectangle.SetOrigin(position));
             //TODO ДАМАЖИТЬ ИГРОКОВ В ЗОНЕ
             if (damagedPlayers.Length>0) { DebugHUD.DebugLog("End of" + a);
                 foreach (var item in damagedPlayers)
-                    item.TakeDamage(1);
+                    item.TakeDamage(1);  
             }
-            isAttacking = false;
+            
         }
 
         public override void Die()

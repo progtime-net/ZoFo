@@ -141,6 +141,8 @@ namespace ZoFo.GameCore.GameManagers
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
+                    client.Draw(_spriteBatch);
+                    break;
                 case GameState.HostPlaying:
                     client.Draw(_spriteBatch);
                     break;

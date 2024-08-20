@@ -72,6 +72,7 @@ public class WaitingForPlayersGUI : AbstractGUI
             waitButton.LeftButtonPressed += () =>
             {
                 // start
+                AppManager.Instance.SetGUI(new HUD());
                 // ваш код здесь 
             };
             Elements.Add(waitButton);
