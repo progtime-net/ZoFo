@@ -5,7 +5,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using ZoFo.GameCore.Graphics;
 
-namespace ZoFo.GameCore.GameObjects.Entities.Interactables;
+namespace ZoFo.GameCore.GameObjects;
 
 public class Interactable : Entity
 {
@@ -13,17 +13,19 @@ public class Interactable : Entity
 
     public Interactable(Vector2 position) : base(position)
     {
-        collisionComponent.OnTriggerEnter += (sender, e) => ChangeInteraction(sender, e, true);
-        collisionComponent.OnTriggerExit += (sender, e) => ChangeInteraction(sender, e, false);
+        collisionComponent.isTrigger = true;
+        collisionComponent.hasCollision = false;
+        collisionComponent.OnTriggerEnter += (sender) => ChangeInteraction(sender, true);
+        collisionComponent.OnTriggerExit += (sender) => ChangeInteraction(sender, false);
         collisionComponent.OnTriggerZone += OnInteraction;
     }
 
-    private void ChangeInteraction(object sender, CollisionComponent e, bool isReady)
+    private void ChangeInteraction(GameObject sender, bool isReady)
     {
         AppManager.Instance.server.AddData(new UpdateInteractionReady((sender as Player).Id, isReady));
     }
 
-    public virtual void OnInteraction(object sender, CollisionComponent e)
+    public virtual void OnInteraction(GameObject sender)
     {
         
     }

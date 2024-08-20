@@ -6,7 +6,7 @@ using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.Graphics;
 
-namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities;
+namespace ZoFo.GameCore.GameObjects;
 public class LivingEntity : Entity
 {
     /// <summary>
@@ -19,6 +19,7 @@ public class LivingEntity : Entity
     public LivingEntity(Vector2 position) : base(position)
     {
         inputManager = new InputManager();
+        collisionComponent.hasCollision = true;
     }
 
     public override GraphicsComponent graphicsComponent { get; } = null;
@@ -32,9 +33,23 @@ public class LivingEntity : Entity
 
     public void OnCollision(CollisionComponent component)
     {
-        
+
     }
-    
+
+    public override void UpdateAnimations()
+    {
+        base.UpdateAnimations();
+    }
+    Vector2 prevPosition_forClient;
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        if ((position - prevPosition_forClient).X < 0)
+            graphicsComponent.Flip = SpriteEffects.FlipHorizontally;
+        else if ((position - prevPosition_forClient).X > 0)
+            graphicsComponent.Flip = SpriteEffects.None;
+        base.Draw(spriteBatch);
+        prevPosition_forClient = position;
+    }
 
 }
 

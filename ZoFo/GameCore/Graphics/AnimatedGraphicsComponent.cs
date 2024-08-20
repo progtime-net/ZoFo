@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GameManagers.AssetsManager;
 using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.Graphics
@@ -60,7 +61,17 @@ namespace ZoFo.GameCore.Graphics
         private int interval;
         private int lastInterval;
         private Rectangle sourceRectangle;
+        public AnimatedGraphicsComponent(AssetContainer asset)
+        {
+            Build(asset.Animations, asset.IdleAnimation);
+        }
+
         public AnimatedGraphicsComponent(List<string> animationsId, string neitralAnimationId)
+        {
+            Build(animationsId, neitralAnimationId);
+        }
+
+        private void Build(List<string> animationsId, string neitralAnimationId)
         {
             //this._spriteBatch = _spriteBatch;
             currentFrame = 0;
@@ -125,8 +136,9 @@ namespace ZoFo.GameCore.Graphics
 
             buildSourceRectangle();
             SetInterval();
-        }
 
+        }
+         
         public void StopAnimation()
         {
             currentFrame = 0;
@@ -190,7 +202,7 @@ namespace ZoFo.GameCore.Graphics
             destinationRectangle = Scaling(destinationRectangle);
 
             _spriteBatch.Draw(texture, destinationRectangle, sourceRectangle, Color.White, Rotation,
-                Vector2.Zero, Flip, 0);
+                Vector2.Zero, Flip, (destinationRectangle.Y + destinationRectangle.Height) / 2000f);
         }
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch, Rectangle sourceRectangle)
         {
@@ -216,7 +228,7 @@ namespace ZoFo.GameCore.Graphics
             destinationRectangle = Scaling(destinationRectangle);
             _spriteBatch.Draw(texture,
                 destinationRectangle, sourceRectangle, Color.White, 0,
-                Vector2.Zero, Flip, 0);
+                Vector2.Zero, Flip, (destinationRectangle.Y + destinationRectangle.Height) / 2000f);
         } 
         private void buildSourceRectangle()
         {

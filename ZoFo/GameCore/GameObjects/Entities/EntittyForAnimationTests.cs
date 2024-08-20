@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZoFo.GameCore.Graphics;
 
-namespace ZoFo.GameCore.GameObjects.Entities
+namespace ZoFo.GameCore.GameObjects
 {
     internal class EntittyForAnimationTests : Entity
     {
@@ -14,11 +14,11 @@ namespace ZoFo.GameCore.GameObjects.Entities
         //public override GraphicsComponent graphicsComponent { get; } = new GraphicsComponent(new List<string> { "тут пишите название анимации" }, "сдублируйте " +
 
  
-        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_idle_rotate_weapon" }, "player_idle_rotate_weapon");
+        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "zombie_idle" }, "zombie_idle");
  
         public EntittyForAnimationTests(Vector2 position) : base(position)
         {
-            graphicsComponent.ObjectDrawRectangle = new Rectangle(0,0,16*12, 16 * 16);
+            graphicsComponent.ObjectDrawRectangle = new Rectangle(0,0,16*20, 16 * 20);
             position = new Vector2(10, 10);
             
         }

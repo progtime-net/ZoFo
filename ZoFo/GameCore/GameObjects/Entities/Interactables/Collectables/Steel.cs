@@ -9,16 +9,18 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.Graphics;
 
-namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
+namespace ZoFo.GameCore.GameObjects
 {
     class Steel:Collectable
     {
-        public override StaticGraphicsComponent graphicsComponent { get; } = new("Steel");
+        public override StaticGraphicsComponent graphicsComponent { get; } = new(_path + "Steel");
 
         public Steel(Vector2 position) : base(position)
         {
+            graphicsComponent.ObjectDrawRectangle.Width = 20;
+            graphicsComponent.ObjectDrawRectangle.Height = 20;
         }
-        public override void OnInteraction(object sender, CollisionComponent e)
+        public override void OnInteraction(GameObject sender)
         {
             AppManager.Instance.server.AddData(new UpdateLoot("Steel"));
             AppManager.Instance.server.DeleteObject(this);

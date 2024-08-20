@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player
+namespace ZoFo.GameCore.GameObjects
 {
-    class LootData
+    public class LootData
     {
         public Dictionary<string, int> loots;
 

@@ -4,54 +4,112 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using ZoFo.GameCore.GameManagers;
+using ZoFo.GameCore.GameManagers.AssetsManager;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.Graphics;
+using System.Diagnostics;
+using ZoFo.GameCore.GUI;
 
-namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
+namespace ZoFo.GameCore.GameObjects;
 
 public class Player : LivingEntity
 {
     public Vector2 InputWeaponRotation { get; set; }
     public Vector2 InputPlayerRotation { get; set; }
+    
+    private float speed;
+    public int health = 100;
+    public int rad = 0;
+    public LootData lootData;
+    
+
+    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(AppManager.Instance.AssetManager.Player);
+
+    public bool IsTryingToInteract { get; set; }
+
     /// <summary>
     /// Факт того, что плеер в этом апдейте пытается стрелять
     /// </summary>
     public bool IsTryingToShoot { get; set; }
-    private float speed;
-    private int health;
-    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "player_look_down" }, "player_look_down");
-    private LootData lootData;
     public Player(Vector2 position) : base(position)
     {
-        //InputWeaponRotation = new Vector2(0, 0);
-        //InputPlayerRotation = new Vector2(0, 0);
-        graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 100, 100);
-        collisionComponent.stopRectangle = new Rectangle(0, 0, 100, 100);
+        lootData = new LootData();
+        lootData.loots = new Dictionary<string, int>();
+        graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 30, 30);
+        collisionComponent.stopRectangle = new Rectangle(0, 20, 30, 10); 
+        speed = 5; 
+
+        StartAnimation("player_look_down"); 
     }
 
 
     public  override void Update()
     {
+        #region анимация управления, стрельбы 
+        switch(AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation))
+        {
+            case ScopeState.Top:
+                
+                break;
+            case ScopeState.Down:
 
+            break;
+            case ScopeState.Right:
+                //StartAnimation("player_running_top_rotate");
+            break;
+            case ScopeState.Left:
+                
+            break;
+            case ScopeState.TopRight:
+                
+            break;
+            case ScopeState.TopLeft:
+                
+            break;
+            case ScopeState.DownRight:
+                
+            break;
+            case ScopeState.DownLeft:
+                
+            break;
+        }
+        #endregion
         MovementLogic();
     }
-    float t;
-    public void MovementLogic()
+    public void MovementLogic() 
     {
-        //velocity.X = 3+(float)Math.Sin(t);
-        t++;
-        if (InputPlayerRotation.X > 0.9)
-        {
-        }
-        if (Keyboard.GetState().IsKeyDown(Keys.D)) velocity.X = 5;
-        if (Keyboard.GetState().IsKeyDown(Keys.A)) velocity.X = -5;
-        if (Keyboard.GetState().IsKeyDown(Keys.S)) velocity.Y = 5;
-        if (Keyboard.GetState().IsKeyDown(Keys.W)) velocity.Y = -5;
+        velocity += InputPlayerRotation * speed; 
     }
     public void HandleNewInput(UpdateInput updateInput)
     {
+        InputPlayerRotation = updateInput.InputMovementDirection;
+        InputWeaponRotation = updateInput.InputAttackDirection;
 
+    }
+    public void HandleInteract(UpdateInputInteraction updateInputInteraction)
+    {
+        IsTryingToInteract = true;
+    }
+    public void HandleShoot(UpdateInputShoot updateInputShoot)
+    {
+        IsTryingToShoot = true;
+
+        var rect = collisionComponent.stopRectangle.SetOrigin(position);
+        rect.Width += 100;
+        rect.Height += 100;
+        Entity[] entities = AppManager.Instance.server.collisionManager.GetEntities(rect, this);
+        if (entities.Length>0)
+        {
+            DebugHUD.DebugSet("ent[0]", entities[0].ToString());
+            if (entities != null)
+            {
+                foreach (Entity entity in entities)
+                {
+                    AppManager.Instance.server.DeleteObject(entity);
+                }
+            }
+        }
     }
 }
