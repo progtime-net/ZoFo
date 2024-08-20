@@ -208,6 +208,21 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             }
             return players.ToArray();
         }
+        public Entity[] GetEntities(Rectangle rectangle, Entity entity)
+        {
+
+            List<Entity> entities = new List<Entity>();
+            foreach (var item in AppManager.Instance.server.entities)//фильтрация 
+            {
+                if (item.collisionComponent.stopRectangle.SetOrigin(item.position).Intersects(rectangle))
+                {
+                    entities.Add(item);
+                }
+            }
+            if (entities.Contains(entity))
+                entities.Remove(entity);
+            return entities.ToArray();
+        }
 
     }
     public static class ExtentionClass

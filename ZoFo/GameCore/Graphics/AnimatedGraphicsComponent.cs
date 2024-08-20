@@ -202,7 +202,7 @@ namespace ZoFo.GameCore.Graphics
             destinationRectangle = Scaling(destinationRectangle);
 
             _spriteBatch.Draw(texture, destinationRectangle, sourceRectangle, Color.White, Rotation,
-                Vector2.Zero, Flip, 0);
+                Vector2.Zero, Flip, (destinationRectangle.Y + destinationRectangle.Height) / 2000f);
         }
         public override void Draw(Rectangle destinationRectangle, SpriteBatch _spriteBatch, Rectangle sourceRectangle)
         {
@@ -228,7 +228,7 @@ namespace ZoFo.GameCore.Graphics
             destinationRectangle = Scaling(destinationRectangle);
             _spriteBatch.Draw(texture,
                 destinationRectangle, sourceRectangle, Color.White, 0,
-                Vector2.Zero, Flip, 0);
+                Vector2.Zero, Flip, (destinationRectangle.Y + destinationRectangle.Height) / 2000f);
         } 
         private void buildSourceRectangle()
         {

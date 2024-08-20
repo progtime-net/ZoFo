@@ -5,7 +5,7 @@ using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.Graphics;
 
-namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
+namespace ZoFo.GameCore.GameObjects;
 
 public class Wood : Collectable
 {
@@ -13,7 +13,8 @@ public class Wood : Collectable
 
     public Wood(Vector2 position) : base(position)
     {
-
+        graphicsComponent.ObjectDrawRectangle.Width = 20;
+        graphicsComponent.ObjectDrawRectangle.Height = 20;
     }
     public override void OnInteraction(GameObject sender)
     {
