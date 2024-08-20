@@ -170,6 +170,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                         update = token.ToObject<UpdateTileCreated>();
                         data.Add(update);
                         break;
+                    case "UpdateCreatePlayer":
+                        update = token.ToObject<UpdateCreatePlayer>();
+                        data.Add(update);
+                        break;
 
                 }
             }

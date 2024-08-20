@@ -47,12 +47,15 @@ namespace ZoFo.GameCore
             // Отправляются данные апдейтса с обновлением инпута
             AppManager.Instance.InputManager.ActionEvent += () =>
             {
-                networkManager.AddData(new UpdateInput()
+                if (AppManager.Instance.client.networkManager.PlayerId > 0)
                 {
-                    InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection.Serialize(),
-                    InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection.Serialize(),
-                    PlayerId = AppManager.Instance.client.networkManager.PlayerId
-                });
+                    networkManager.AddData(new UpdateInput()
+                    {
+                        InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection.Serialize(),
+                        InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection.Serialize(),
+                        PlayerId = AppManager.Instance.client.networkManager.PlayerId
+                    });
+                }
 
             };
             AppManager.Instance.InputManager.OnInteract += () =>
