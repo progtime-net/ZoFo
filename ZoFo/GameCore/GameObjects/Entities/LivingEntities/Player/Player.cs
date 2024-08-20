@@ -50,7 +50,7 @@ public class Player : LivingEntity
         lootData.loots = new Dictionary<string, int>();
         graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 30, 30);
         collisionComponent.stopRectangle = new Rectangle(10, 15, 10, 15);
-        speed = 5;
+        speed = 7;
 
         StartAnimation("player_look_down");
     }

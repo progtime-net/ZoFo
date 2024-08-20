@@ -107,7 +107,7 @@ namespace ZoFo.GameCore
         float shakeEffect = 0;
         public void AddShaking(float power)
         {
-            shakeEffect += power;
+            shakeEffect += power*3;
         }
         public void UpdateShaking()
         {

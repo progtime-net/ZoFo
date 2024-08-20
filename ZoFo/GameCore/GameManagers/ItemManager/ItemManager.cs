@@ -13,6 +13,8 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
         //методы
         public ItemInfo GetItemInfo(string tag)
         {
+            if (tag == "peeble")
+                return tagItemPairs["pebble"];
             return tagItemPairs[tag];
         }
         public void LoadItemTextures()
