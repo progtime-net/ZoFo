@@ -59,7 +59,10 @@ namespace ZoFo.GameCore.GameObjects
 
         public virtual void Delete()
         {
-            AppManager.Instance.server.DeleteObject(this);
+            if (AppManager.Instance.gamestate == GameState.HostPlaying)
+            {
+                AppManager.Instance.server.DeleteObject(this);
+            }
         }
     }
 }
