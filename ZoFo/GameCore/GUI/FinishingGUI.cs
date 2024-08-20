@@ -38,7 +38,8 @@ public class FinishingGUI : AbstractGUI
             rectangle = new Rectangle(width / 2 - height / 80 - width / 5 / 2,
                 height / 2 - (int)(height / 1.5) / 2,
                 height / 40 + width / 5, (int)(height / 1.5)),
-            mainColor = Color.LightGray
+            mainColor = Color.LightGray,
+            textureName = "Textures/GUI/Back"
         };
         Elements.Add(inventoryBack);
 
@@ -50,7 +51,8 @@ public class FinishingGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts\\Font"
+            fontName = "Fonts\\Font",
+            textureName = "Textures/GUI/Button"
         };
         ExitButton.LeftButtonPressed += () => { AppManager.Instance.SetGUI(new MainMenuGUI()); };
         Elements.Add(ExitButton);

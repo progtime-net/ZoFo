@@ -47,7 +47,8 @@ public class WaitingForPlayersGUI : AbstractGUI
                 scale = 0.3f,
                 fontColor = Color.White,
                 mainColor = Color.Gray,
-                fontName = "Fonts/Font"
+                fontName = "Fonts/Font",
+                textureName = "Textures/GUI/Button"
             };
             startButton.LeftButtonPressed += () =>
             {
@@ -67,7 +68,8 @@ public class WaitingForPlayersGUI : AbstractGUI
                 scale = 0.3f,
                 fontColor = Color.White,
                 mainColor = Color.Gray,
-                fontName = "Fonts/Font"
+                fontName = "Fonts/Font",
+                textureName = "Textures/GUI/Button"
             };
             waitButton.LeftButtonPressed += () =>
             {
@@ -79,7 +81,11 @@ public class WaitingForPlayersGUI : AbstractGUI
         }
         
         Button bTExit = new Button(Manager)
-            { fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off"};
+        {
+            fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, 
+            rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40),
+            textureName = "Textures/GUI/Button2"
+        };
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {

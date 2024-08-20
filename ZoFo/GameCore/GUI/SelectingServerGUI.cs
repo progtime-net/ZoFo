@@ -36,7 +36,8 @@ public class SelectingServerGUI : AbstractGUI
             fontColor = Color.White,
             mainColor = Color.Gray,
             textAligment = MonogameLibrary.UI.Enums.TextAligment.Left,
-            fontName = "Fonts/Font3"
+            fontName = "Fonts/Font3",
+            textureName = "Textures/GUI/Button"
         };
         ipBox.TextChanged += input =>
         {
@@ -61,7 +62,8 @@ public class SelectingServerGUI : AbstractGUI
             scale = 0.3f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         joinButton.LeftButtonPressed += () =>
         {
@@ -96,7 +98,8 @@ public class SelectingServerGUI : AbstractGUI
             scale = 0.3f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         hostButton.LeftButtonPressed += () =>
         {
@@ -116,7 +119,11 @@ public class SelectingServerGUI : AbstractGUI
         Elements.Add(hostButton);
 
         Button bTExit = new Button(Manager)
-        { fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off" };
+        {
+            fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent,
+            rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40),
+            textureName = "Textures/GUI/Button2"
+        };
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {
