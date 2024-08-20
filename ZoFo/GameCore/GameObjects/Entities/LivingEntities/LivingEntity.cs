@@ -13,12 +13,10 @@ public class LivingEntity : Entity
     /// Переменная для заявки на передвижения, т.е. то, на сколько вы хотите, чтобы в этом кадре переместился объект
     /// </summary>
     public Vector2 velocity;
-
-    private InputManager inputManager;
+     
 
     public LivingEntity(Vector2 position) : base(position)
-    {
-        inputManager = new InputManager();
+    { 
         collisionComponent.hasCollision = true;
     }
 
@@ -40,16 +38,27 @@ public class LivingEntity : Entity
     {
         base.UpdateAnimations();
     }
-    Vector2 prevPosition_forClient;
+    protected Vector2 prevPosition_forClient;
     public override void Draw(SpriteBatch spriteBatch)
     {
-        if ((position - prevPosition_forClient).X < 0)
+        if ((positionDraw - prevPosition_forClient).X < 0)
             graphicsComponent.Flip = SpriteEffects.FlipHorizontally;
-        else if ((position - prevPosition_forClient).X > 0)
+        else if ((positionDraw - prevPosition_forClient).X > 0)
             graphicsComponent.Flip = SpriteEffects.None;
         base.Draw(spriteBatch);
-        prevPosition_forClient = position;
+        prevPosition_forClient = positionDraw;
     }
+
+    public virtual void Die()
+    {
+        //deathSound + animationStart
+    }
+    public virtual void DeathEnd()
+    {
+        //deathSound + animationStart
+        Delete();
+    }
+
 
 }
 

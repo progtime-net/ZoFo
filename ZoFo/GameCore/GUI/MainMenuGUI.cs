@@ -36,11 +36,12 @@ public class MainMenuGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         playButton.LeftButtonPressed += () =>
         {
-            AppManager.Instance.SoundManager.StartAmbientSound("Loot");
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new SelectModeMenu());
         };
         Elements.Add(playButton);
@@ -51,10 +52,12 @@ public class MainMenuGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts\\Font"
+            fontName = "Fonts\\Font",
+            textureName = "Textures/GUI/Button"
         };
         baseButton.LeftButtonPressed += () =>
         {
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new BaseGUI());
         };
         Elements.Add(baseButton);
@@ -65,11 +68,12 @@ public class MainMenuGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         optionButton.LeftButtonPressed += () =>
         {
-            AppManager.Instance.SoundManager.StartAmbientSound("Loot");
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new OptionsGUI());
         };
         Elements.Add(optionButton);
@@ -80,7 +84,8 @@ public class MainMenuGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         exitButton.LeftButtonPressed += () =>
         {

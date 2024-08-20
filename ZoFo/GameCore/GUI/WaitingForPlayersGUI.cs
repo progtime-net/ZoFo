@@ -34,8 +34,8 @@ public class WaitingForPlayersGUI : AbstractGUI
         //   string pcIp = 
  
      //   string pcIp = 
-        ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts/Font3" };
-        Elements.Add(ip);  
+  //      ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts/Font3" };
+    //    Elements.Add(ip);  
         if (isHost)
         {
             ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font3" };
@@ -47,12 +47,13 @@ public class WaitingForPlayersGUI : AbstractGUI
                 scale = 0.3f,
                 fontColor = Color.White,
                 mainColor = Color.Gray,
-                fontName = "Fonts/Font"
+                fontName = "Fonts/Font",
+                textureName = "Textures/GUI/Button"
             };
             startButton.LeftButtonPressed += () =>
             {
                 // start
-                AppManager.Instance.ChangeState(GameState.HostPlaying);
+                AppManager.Instance.server.StartGame();
                 // ваш код здесь 
             };
             Elements.Add(startButton);
@@ -67,19 +68,24 @@ public class WaitingForPlayersGUI : AbstractGUI
                 scale = 0.3f,
                 fontColor = Color.White,
                 mainColor = Color.Gray,
-                fontName = "Fonts/Font"
+                fontName = "Fonts/Font",
+                textureName = "Textures/GUI/Button"
             };
             waitButton.LeftButtonPressed += () =>
             {
                 // start
-                AppManager.Instance.ChangeState(GameState.ClientPlaying);
+                AppManager.Instance.SetGUI(new HUD());
                 // ваш код здесь 
             };
             Elements.Add(waitButton);
         }
         
         Button bTExit = new Button(Manager)
-            { fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off"};
+        {
+            fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, 
+            rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40),
+            textureName = "Textures/GUI/Button2"
+        };
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {

@@ -36,7 +36,8 @@ public class ExitGameGUI : AbstractGUI
             scale = 0.3f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         endButton.LeftButtonPressed += () =>
         {

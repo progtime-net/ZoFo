@@ -31,7 +31,8 @@ public class InventoryGUI : AbstractGUI
             rectangle = new Rectangle(width / 2 - height / 80 - width / 5 / 2,
                 height / 2 - (int)(height / 1.5) / 2 - height / 10,
                 height / 40 + width / 5, (int)(height / 1.5)),
-            mainColor = Color.LightGray
+            mainColor = Color.LightGray,
+            textureName = "Textures/GUI/Back"
         };
         Elements.Add(inventoryBack);
 
@@ -43,7 +44,8 @@ public class InventoryGUI : AbstractGUI
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts\\Font"
+            fontName = "Fonts\\Font",
+            textureName = "Textures/GUI/Button"
         };
         continueButton.LeftButtonPressed += () => { AppManager.Instance.SetGUI(new HUD()); };
         Elements.Add(continueButton);
@@ -62,14 +64,15 @@ public class InventoryGUI : AbstractGUI
                         (height / 20 + height / 80) * (buttonIndex) - height / 10,
                         (int)(width / 5), (int)(height / 20)),
                     text1 = item.Key,
-                    scale1 = 0.4f,
+                    scale1 = 0.3f,
                     count = item.Value,
                     itemTextureName = itemInfo.textureName,
                     fontColor1 = Color.White,
                     mainColor = Color.Gray,
                     fontName1 = "Fonts\\Font4",
                     discriptions1 = itemInfo.description,
-                    resourcesNeededToCraft1 = itemInfo.resourcesNeededToCraft
+                    resourcesNeededToCraft1 = itemInfo.resourcesNeededToCraft,
+                    textureName = "Texturs/GUI/Button"
                 };
                 Elements.Add(temp);
                 temp.Initialize();

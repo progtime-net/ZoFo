@@ -17,25 +17,37 @@ public class HUD : AbstractGUI
 {
     private Bar hpBar;
     private Bar radBar;
-    private AbstractGUI overlayGUI;
+    public AbstractGUI overlayGUI;
     protected override void CreateUI() 
     {
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
         
-        Button pauseButton = new Button(Manager)
-            { fontName = "Fonts\\Font3", scale = 0.4f, text = "| |", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 30, width / 40, width / 40), textureName = "Textures\\GUI\\checkboxs_off"};
-        Elements.Add(pauseButton);
-        pauseButton.LeftButtonPressed += () =>
+        Button pauseButton = new Button(Manager) 
         {
-            AppManager.Instance.SetGUI(new FinishingGUI());
-            //overlayGUI = new PauseGUI();
-            //overlayGUI.Initialize();
-            //overlayGUI.LoadContent();
+            fontName = "Fonts\\Font3", scale = 0.4f, text = "| |", fontColor = Color.Black, 
+            mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 30, width / 40, width / 40),
+            textureName = "Textures/GUI/Button2"
+        }; 
+        Elements.Add(pauseButton);
+        pauseButton.LoadTexture(AppManager.Instance.Content);
+        pauseButton.LeftButtonPressed += () =>
+        { 
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
+            AppManager.Instance.SetGUI(new PauseGUI()); 
+            //AppManager.Instance.SetGUI(new FinishingGUI());
+            overlayGUI = new PauseGUI();
+            overlayGUI.Initialize();
+            overlayGUI.LoadContent(); 
         };
-        Button invButton = new Button(Manager)
-            { fontName = "Fonts\\Font3", scale = 0.4f, text = "inv", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 15 + width / 40, width / 40, width / 40), textureName = "Textures\\GUI\\checkboxs_off"};
+        Button invButton = new Button(Manager) 
+        {
+            fontName = "Fonts\\Font3", scale = 0.4f, text = "inv", fontColor = Color.Black, 
+            mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 15 + width / 40, width / 40, width / 40),
+            textureName = "Textures/GUI/Button2"
+        }; 
         Elements.Add(invButton);
+        invButton.LoadTexture(AppManager.Instance.Content);
         invButton.LeftButtonPressed += () =>
         {
             overlayGUI = new InventoryGUI();
@@ -63,12 +75,18 @@ public class HUD : AbstractGUI
         radBar.LoadTexture(AppManager.Instance.Content);
         
     }
+
     public override void Update(GameTime gameTime)
     {
         overlayGUI?.Update(gameTime);
         //hpBar.Update(gameTime, AppManager.Instance.client.myPlayer.health / 100f);
         //radBar.Update(gameTime, AppManager.Instance.client.myPlayer.rad / 100f);
-        radBar.Update(gameTime, gameTime.TotalGameTime.Seconds / 100f);
+        if (AppManager.Instance.client.myPlayer != null)
+        {
+            radBar.Update(gameTime, AppManager.Instance.client.myPlayer.rad / AppManager.Instance.client.myPlayer.MaxRad);
+            hpBar.Update(gameTime, AppManager.Instance.client.myPlayer.health / AppManager.Instance.client.myPlayer.MaxHealth);
+
+        }
         base.Update(gameTime);
     }
 

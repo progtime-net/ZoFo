@@ -36,7 +36,8 @@ public class SelectingServerGUI : AbstractGUI
             fontColor = Color.White,
             mainColor = Color.Gray,
             textAligment = MonogameLibrary.UI.Enums.TextAligment.Left,
-            fontName = "Fonts/Font3"
+            fontName = "Fonts/Font3",
+            textureName = "Textures/GUI/Button"
         };
         ipBox.TextChanged += input =>
         {
@@ -61,7 +62,8 @@ public class SelectingServerGUI : AbstractGUI
             scale = 0.3f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         joinButton.LeftButtonPressed += () =>
         {
@@ -74,6 +76,7 @@ public class SelectingServerGUI : AbstractGUI
             {
                 if (int.TryParse(endpoint[1], out port))
                 {
+
                     client.JoinRoom(endpoint[0], port);
                     AppManager.Instance.SetClient(client);
                     AppManager.Instance.SetGUI(new WaitingForPlayersGUI(false));
@@ -95,7 +98,8 @@ public class SelectingServerGUI : AbstractGUI
             scale = 0.3f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         hostButton.LeftButtonPressed += () =>
         {
@@ -103,10 +107,10 @@ public class SelectingServerGUI : AbstractGUI
             // host
             Server server = new Server();   //Server Logic MultiPlayer
             Client client = new Client();
-            server.CreateRoom(2);
-            client.JoinYourself(server.MyIp.Port);
             AppManager.Instance.SetServer(server);
             AppManager.Instance.SetClient(client);
+            server.CreateRoom(true);
+            client.JoinYourself(server.MyIp.Port);
             string key = server.MyIp.ToString();
             AppManager.Instance.debugHud.Set(key, "MultiPlayer");
             // ваш код здесь 
@@ -115,7 +119,11 @@ public class SelectingServerGUI : AbstractGUI
         Elements.Add(hostButton);
 
         Button bTExit = new Button(Manager)
-        { fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off" };
+        {
+            fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent,
+            rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40),
+            textureName = "Textures/GUI/Button2"
+        };
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {

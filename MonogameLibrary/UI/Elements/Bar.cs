@@ -18,7 +18,7 @@ public class Bar : DrawableUIElement
     public float percent = 0.5f;
     private DrawableUIElement barInside;
     public Color inColor;
-    public string inTextureName;
+    public string inTextureName = "";
     
     public Bar(UIManager manager, int layerIndex = 0, string textureName = "") : base(manager, layerIndex, textureName)
     {
@@ -30,8 +30,7 @@ public class Bar : DrawableUIElement
         {
             rectangle = new Rectangle(rectangle.X + rectangle.Height / 8, rectangle.Y + rectangle.Height / 8,
                 (int)((rectangle.Width - rectangle.Height / 4) * percent), rectangle.Height / 8 * 7),
-            mainColor = inColor,
-            textureName = inTextureName
+            mainColor = inColor
         };
     }
 
