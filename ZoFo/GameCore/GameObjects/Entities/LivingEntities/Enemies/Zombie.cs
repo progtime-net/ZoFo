@@ -43,16 +43,37 @@ namespace ZoFo.GameCore.GameObjects
         }
 
         public override void Update()
-        {
-            if (isDying) return;
-            Vector2 duration = Vector2.Normalize(
-                AppManager.Instance.server.players[0].position - position
+        { 
+            if (isDying) return; 
+            float m = 10000000;
+            int j = -1;
+            for (int i = 0; i < AppManager.Instance.server.players.Count; i++)
+            {
+                var player = AppManager.Instance.server.players[i];
+                if (m > (player.position.X - position.X) * (player.position.X - position.X) + (player.position.Y - position.Y) * (player.position.Y - position.Y))
+                {
+                    m = (player.position.X - position.X) * (player.position.X - position.X) + (player.position.Y - position.Y) * (player.position.Y - position.Y);
+                    j = i;
+                }
+            }
+            Vector2 duration = Vector2.Zero;
+            if (m<= 130000)
+            {
+                duration = Vector2.Normalize(
+                AppManager.Instance.server.players[j].position - position 
                 );
+                if (Random.Shared.NextDouble() > 0.999)
+                {
+                    AppManager.Instance.SoundManager.StartSound("zombie sound", position, AppManager.Instance.server.players[0].position, pitch: new Random().Next(-1, 2) * (float)new Random().NextDouble());
+                }
+            }
             
-            
-           
-            
+
             if (!isAttacking) { velocity += new Vector2(duration.X * speed, duration.Y * speed); }
+
+
+
+
 
         }
         public void OnPlayerClose(GameObject sender)
@@ -61,6 +82,8 @@ namespace ZoFo.GameCore.GameObjects
            
             if(!isAttacking)
             {
+
+                AppManager.Instance.SoundManager.StartSound("Zombi napal", position, AppManager.Instance.server.players[0].position,pitch:new Random().Next(-1,2)*(float)new Random().NextDouble());
                 StartAnimation("zombie_attack");
                 isAttacking = true;
             }
@@ -69,14 +92,15 @@ namespace ZoFo.GameCore.GameObjects
             
         }
         public void EndAttack(string a)
-        {
+        { 
+            if (AppManager.Instance.server is null) return;  
             var damagedPlayers=AppManager.Instance.server.collisionManager.GetPlayersInZone(collisionComponent.triggerRectangle.SetOrigin(position));
             //TODO ДАМАЖИТЬ ИГРОКОВ В ЗОНЕ
             if (damagedPlayers.Length>0) { DebugHUD.DebugLog("End of" + a);
                 foreach (var item in damagedPlayers)
-                    item.TakeDamage(5);
+                    item.TakeDamage(1);  
             }
-            isAttacking = false;
+            
         }
 
         public override void Die()

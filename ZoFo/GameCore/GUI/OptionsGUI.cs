@@ -43,6 +43,7 @@ public class OptionsGUI : AbstractGUI
             label_OverallVolume_Percent.text = Math.Round(slider_OverallVolume.GetSliderValue * 100) + "%";
             slider_OverallVolume.SliderChanged += (newVal) =>
             {
+
                 label_OverallVolume_Percent.text = Math.Round(slider_OverallVolume.GetSliderValue * 100) + "%";
                 AppManager.Instance.SettingsManager.SetMainVolume(newVal);
             };
@@ -64,6 +65,7 @@ public class OptionsGUI : AbstractGUI
             label_MusicVolume_Percent.text = Math.Round(slider_MusicVolume.GetSliderValue * 100) + "%";
             slider_MusicVolume.SliderChanged += (newVal) =>
             {
+                
                 label_MusicVolume_Percent.text = Math.Round(slider_MusicVolume.GetSliderValue * 100) + "%";
                 AppManager.Instance.SettingsManager.SetMusicVolume(newVal);
             }; 
@@ -85,6 +87,7 @@ public class OptionsGUI : AbstractGUI
             label_EffectsVolume_Percent.text = Math.Round(slider_EffectsVolume.GetSliderValue * 100) + "%";
             slider_EffectsVolume.SliderChanged += (newVal) =>
             {
+                
                 label_EffectsVolume_Percent.text = Math.Round(slider_EffectsVolume.GetSliderValue * 100) + "%";
                 AppManager.Instance.SettingsManager.SetSoundEffectsVolume(newVal);
             };
@@ -109,6 +112,7 @@ public class OptionsGUI : AbstractGUI
             button_FullScreen.SetIsChecked(AppManager.Instance.SettingsManager.IsFullScreen);
             button_FullScreen.Checked += (newCheckState) =>
             {
+                AppManager.Instance.SoundManager.StartAmbientSound("Button click");
                 AppManager.Instance.SettingsManager.SetIsFullScreen(newCheckState);
             };
             Elements.Add(button_FullScreen);
@@ -124,6 +128,7 @@ public class OptionsGUI : AbstractGUI
             Elements.Add(bTExit);
             bTExit.LeftButtonPressed += () =>
             {
+                AppManager.Instance.SoundManager.StartAmbientSound("Button click");
                 AppManager.Instance.SetGUI(new MainMenuGUI());
             };
         

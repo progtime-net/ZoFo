@@ -9,10 +9,11 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO
 {
     public class SerializablePoint
     {
-        public int X;
-        public int Y;
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public SerializablePoint(Point point) { X = point.X; Y = point.Y;}
+        public SerializablePoint() { }
         public Point GetPoint() { return new Point(X, Y);}
     }
 }

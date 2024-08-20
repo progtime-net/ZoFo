@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
@@ -12,9 +13,12 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
     /// </summary>
     public class UpdateGameObjectCreated : UpdateData     
     {
-        public UpdateGameObjectCreated() { UpdateType = "UpdateGameObjectCreated"; }
-        public string GameObjectType;
-        public string GameObjectId;
-        public Vector2 position;
+        public UpdateGameObjectCreated() { UpdateType = "UpdateGameObjectCreated"; isImportant = true; }
+
+        public string GameObjectType { get; set; }
+        
+        public string GameObjectId { get; set; }
+
+        public SerializableVector2 position { get; set; }
     }
 }

@@ -39,14 +39,17 @@ public class SelectModeMenu : AbstractGUI
         };
         singleButton.LeftButtonPressed += () => 
         {
+            AppManager.Instance.SoundManager.StopAllSounds();
+            AppManager.Instance.SoundManager.StartAmbientSound("Background music");
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             // single
             Server server = new Server();
             Client client = new Client();
-            server.CreateRoom(1);
-            client.JoinYourself(server.MyIp.Port);
             AppManager.Instance.SetServer(server);
             AppManager.Instance.SetClient(client);
-            AppManager.Instance.ChangeState(GameState.HostPlaying);
+            server.CreateRoom(false);
+            client.JoinYourself(server.MyIp.Port);
+            //AppManager.Instance.ChangeState(GameState.HostPlaying);
             AppManager.Instance.SetGUI(new HUD());
 
             //server.CreateRoom(1);
@@ -70,6 +73,7 @@ public class SelectModeMenu : AbstractGUI
         };
         optionButton.LeftButtonPressed += () => 
         {
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new SelectingServerGUI());
             // multi 
            
@@ -86,6 +90,9 @@ public class SelectModeMenu : AbstractGUI
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {
+            
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
+            
             AppManager.Instance.SetGUI(new MainMenuGUI());
         };
     }

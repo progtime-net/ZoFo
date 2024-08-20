@@ -34,8 +34,8 @@ public class WaitingForPlayersGUI : AbstractGUI
         //   string pcIp = 
  
      //   string pcIp = 
-        ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts/Font3" };
-        Elements.Add(ip);  
+  //      ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts/Font3" };
+    //    Elements.Add(ip);  
         if (isHost)
         {
             ip = new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 7, (int)(width / 4), (int)(height / 20)), text = AppManager.Instance.server.MyIp.ToString(), fontColor = Color.White, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts\\Font3" };
@@ -53,7 +53,7 @@ public class WaitingForPlayersGUI : AbstractGUI
             startButton.LeftButtonPressed += () =>
             {
                 // start
-                AppManager.Instance.ChangeState(GameState.HostPlaying);
+                AppManager.Instance.server.StartGame();
                 // ваш код здесь 
             };
             Elements.Add(startButton);
@@ -74,7 +74,7 @@ public class WaitingForPlayersGUI : AbstractGUI
             waitButton.LeftButtonPressed += () =>
             {
                 // start
-                AppManager.Instance.ChangeState(GameState.ClientPlaying);
+                AppManager.Instance.SetGUI(new HUD());
                 // ваш код здесь 
             };
             Elements.Add(waitButton);

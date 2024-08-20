@@ -10,9 +10,11 @@ using Microsoft.Xna.Framework;
 using ZoFo.GameCore.GameManagers.MapManager.MapElements;
 using ZoFo.GameCore.GameObjects.Entities;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities;
+
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
-using ZoFo.GameCore.Graphics;
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
+using ZoFo.GameCore.Graphics; 
+using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO; 
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player; 
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
@@ -23,8 +25,27 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         public List<CollisionComponent> ObjectsWithCollisions;
         public List<CollisionComponent> EntitiesWithMovements;
         public List<CollisionComponent> ObjectsWithTriggers;
+ 
+        public List<CollisionComponent> GetEntitiesToUpdate(Player player)
+        {
+            float ViewDistance = 500;
 
+            List<CollisionComponent> EntitiesInPlayerArea = new List<CollisionComponent>();
 
+            Rectangle ViewArea = new Rectangle((int)(player.position.X), (int)(player.position.Y), 
+                (int)(ViewDistance), (int)(ViewDistance));
+
+            for (int i = 0; i < ObjectsWithCollisions.Count; i++)
+            {
+                if (ViewArea.Contains((float)ObjectsWithCollisions[i].gameObject.position.X, (float)ObjectsWithCollisions[i].gameObject.position.Y));
+                {
+                    EntitiesInPlayerArea.Add(ObjectsWithCollisions[i]);
+                }
+            }
+            return EntitiesInPlayerArea;
+        }
+
+ 
         //чекаем коллизии в листе
         
         /// <summary>
@@ -124,7 +145,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
             entity.graphicsComponent.ObjectDrawRectangle.X = (int)entity.position.X;
             entity.graphicsComponent.ObjectDrawRectangle.Y = (int)entity.position.Y;
-            AppManager.Instance.server.AddData(new UpdatePosition() { NewPosition = entity.position, IdEntity = entity.Id });
+            AppManager.Instance.server.AddData(new UpdatePosition() { NewPosition = new SerializableVector2(entity.position), IdEntity = entity.Id });
             AppManager.Instance.debugHud.Set("testPos", entity.position.ToString()); //TODO remove
         }
 
@@ -233,6 +254,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             rectangle.Y += (int)origin.Y;
             return rectangle;
         }
+        public static SerializableVector2 Serialize(this Vector2 vector) => new SerializableVector2(vector);
         public static Vector2 RandomVector()
         {  
             return new Vector2((float)Random.Shared.NextDouble() - 0.5f, (float)Random.Shared.NextDouble() - 0.5f);
