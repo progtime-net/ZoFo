@@ -195,6 +195,7 @@ namespace ZoFo.GameCore
                     (update as UpdateStopObjectCreated).collisions.Select(x => x.GetRectangle()).ToArray()
                     ));
             }
+
             else if (update is UpdateGameObjectCreated)
             {
                 Entity created_gameObject;
