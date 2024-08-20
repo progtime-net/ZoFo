@@ -20,8 +20,8 @@ namespace ZoFo.GameCore.GameManagers.MapManager
         private static readonly string _templatePath = "Content/MapData/TileMaps/{0}.tmj";
         private static readonly JsonSerializerOptions _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true }; // Задача настроек для JsonSerialize
         private static readonly Dictionary<string, string> _classPath = new Dictionary<string, string>() { 
-            { "Collectables", "ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables." }, 
-            { "Enemies", "ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies." } 
+            { "Collectables", "ZoFo.GameCore.GameObjects." }, 
+            { "Enemies", "ZoFo.GameCore.GameObjects." } 
         };
 
         //private static readonly float _scale = 1.0f;
@@ -72,6 +72,13 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                         if (tileSet.FirstGid <= chunk.Data[i])
                         {
                             int number = chunk.Data[i] - tileSet.FirstGid;
+                            Tile tile = tileSet.Tiles[number]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
+
+                            
+                            if (tile.Animation is not null)
+                            {
+
+                            }
 
                             int relativeColumn = number % tileSet.Columns;
                             int relativeRow = number / tileSet.Columns; // относительно левого угла чанка
@@ -84,15 +91,15 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                 (i % chunk.Width) * _tileMap.TileWidth + chunk.X * _tileMap.TileWidth,
                                 (i / chunk.Height) * _tileMap.TileHeight + chunk.Y * _tileMap.TileHeight);
 
-                            Tile tile = tileSet.Tiles[number]; // По факту может быть StopObjectom, но на уровне Tiled это все в первую очередь Tile
 
                             switch (tile.Type)
                             {
+
                                 case "Tile":
                                     AppManager.Instance.server.RegisterGameObject(new MapObject(position,
                                         new Vector2(tileSet.TileWidth, tileSet.TileHeight),
                                         sourceRectangle,
-                                        "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", "")));
+                                        "Content/Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", "")));
                                     break;
 
                                 case "StopObject":
@@ -101,11 +108,11 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                     AppManager.Instance.server.RegisterGameObject(new StopObject(position,
                                         new Vector2(tileSet.TileWidth, tileSet.TileHeight),
                                         sourceRectangle,
-                                        "Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", ""),
+                                        "Content/Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", ""),
                                         collisionRectangles.ToArray()));
                                     break;
 
-                                default:
+                                default: 
                                     break;
                             }
                             break;

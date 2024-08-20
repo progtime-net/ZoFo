@@ -53,6 +53,11 @@ namespace ZoFo.GameCore.GameObjects
 
             base.Draw(spriteBatch);
         }
+
+        public virtual void Delete()
+        {
+            AppManager.Instance.server.DeleteObject(this);
+        }
     }
 }
 

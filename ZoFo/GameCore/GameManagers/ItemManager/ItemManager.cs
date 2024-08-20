@@ -25,10 +25,15 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
         public void Initialize()
         { 
             tagItemPairs = new Dictionary<string, ItemInfo>();
-            tagItemPairs.Add("wood", new ItemInfo("wood", "бревна кусок", "Textures\\Test\\wood",false,null));
-            tagItemPairs.Add("rock", new ItemInfo("rock", "пять галек", "Textures\\Test\\rock", false, null));
-            tagItemPairs.Add("steel", new ItemInfo("steel", "метал, метал, \nжелезо, метал", "Textures\\Test\\steel", false, null));
-            tagItemPairs.Add("pickaxe", new ItemInfo("steel", "прямой путь к \nстановлению каменьщиком", "Textures\\Test\\pickaxe", true, new Dictionary<string, int>()
+            tagItemPairs.Add("rottenflesh", new ItemInfo("rottenflesh", "БУХАТЬ", "Textures/icons/Collectables/RottenFlesh",false,null));
+            tagItemPairs.Add("purebottleofwater", new ItemInfo("purebottleofwater", "БУХАТЬ 2", "Textures/icons/Collectables/PureBottleOfWater",false,null));
+            tagItemPairs.Add("bottleofwater", new ItemInfo("bottleofwater", "БУХАТЬ", "Textures/icons/Collectables/BottleOfWater",false,null));
+            //tagItemPairs.Add("antiradin", new ItemInfo("antiradin", "радиацию опускает", "Textures/icons/Collectables/Ammo",false,null));
+            tagItemPairs.Add("ammo", new ItemInfo("ammo", "деньги в метро", "Textures/icons/Collectables/Ammo",false,null));
+            tagItemPairs.Add("wood", new ItemInfo("wood", "бревна кусок", "Textures/icons/Collectables/Wood",false,null));
+            tagItemPairs.Add("peeble", new ItemInfo("peeble", "пять галек", "Textures/icons/Collectables/Peeble", false, null));
+            tagItemPairs.Add("steel", new ItemInfo("steel", "метал, метал, \nжелезо, метал", "Textures/icons/Collectables/Steel", false, null));
+            tagItemPairs.Add("pickaxe", new ItemInfo("pickaxe", "прямой путь к \nстановлению каменьщиком", "Textures/Test/pickaxe", true, new Dictionary<string, int>()
             {
                 {"wood", 2},
                 {"steel", 3}

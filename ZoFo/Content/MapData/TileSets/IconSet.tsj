@@ -8,51 +8,57 @@
  "margin":0,
  "name":"IconSet",
  "spacing":0,
- "tilecount":7,
+ "tilecount":8,
  "tiledversion":"1.10.2",
  "tileheight":1200,
  "tiles":[
         {
          "id":0,
-         "image":"..\/..\/Textures\/icons\/Collectables\/ammunition.png",
+         "image":"..\/..\/Textures\/icons\/Collectables\/Ammo.png",
          "imageheight":512,
          "imagewidth":512
         }, 
         {
          "id":1,
-         "image":"..\/..\/Textures\/icons\/Collectables\/Blue Potion.png",
+         "image":"..\/..\/Textures\/icons\/Collectables\/PureBottleOfWater.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
          "id":2,
-         "image":"..\/..\/Textures\/icons\/Collectables\/Water Bottle.png",
+         "image":"..\/..\/Textures\/icons\/Collectables\/BottleOfWater.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
          "id":3,
-         "image":"..\/..\/Textures\/icons\/Collectables\/Wood Log.png",
+         "image":"..\/..\/Textures\/icons\/Collectables\/Wood.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
          "id":4,
-         "image":"..\/..\/Textures\/icons\/Collectables\/Silver Ingot.png",
+         "image":"..\/..\/Textures\/icons\/Collectables\/Steel.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
          "id":5,
-         "image":"..\/..\/Textures\/icons\/Collectables\/Monster Meat.png",
+         "image":"..\/..\/Textures\/icons\/Collectables\/RottenFlesh.png",
          "imageheight":32,
          "imagewidth":32
         }, 
         {
          "id":6,
-         "image":"..\/..\/Textures\/icons\/Collectables\/Stone.png",
+         "image":"..\/..\/Textures\/icons\/Collectables\/Peeble.png",
          "imageheight":1200,
          "imagewidth":1200
+        }, 
+        {
+         "id":7,
+         "image":"..\/..\/Textures\/icons\/zombie_218153.png",
+         "imageheight":512,
+         "imagewidth":512
         }],
  "tilewidth":1200,
  "type":"tileset",
