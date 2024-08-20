@@ -17,7 +17,7 @@ public class HUD : AbstractGUI
 {
     private Bar hpBar;
     private Bar radBar;
-    private AbstractGUI overlayGUI;
+    public AbstractGUI overlayGUI;
     protected override void CreateUI() 
     {
         int width = AppManager.Instance.CurentScreenResolution.X;
@@ -28,10 +28,10 @@ public class HUD : AbstractGUI
         Elements.Add(pauseButton);
         pauseButton.LeftButtonPressed += () =>
         {
-            AppManager.Instance.SetGUI(new FinishingGUI());
-            //overlayGUI = new PauseGUI();
-            //overlayGUI.Initialize();
-            //overlayGUI.LoadContent();
+            //AppManager.Instance.SetGUI(new FinishingGUI());
+            overlayGUI = new PauseGUI();
+            overlayGUI.Initialize();
+            overlayGUI.LoadContent();
         };
         Button invButton = new Button(Manager)
             { fontName = "Fonts\\Font3", scale = 0.4f, text = "inv", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 15 + width / 40, width / 40, width / 40), textureName = "Textures\\GUI\\checkboxs_off"};
@@ -63,6 +63,7 @@ public class HUD : AbstractGUI
         radBar.LoadTexture(AppManager.Instance.Content);
         
     }
+
     public override void Update(GameTime gameTime)
     {
         overlayGUI?.Update(gameTime);

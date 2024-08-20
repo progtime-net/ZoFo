@@ -237,6 +237,13 @@ namespace ZoFo.GameCore
             {
                 UpdatePlayerHealth(update as UpdatePlayerParametrs);
             }
+            else if (update is UpdateLoot)
+            {
+                
+                var ent = FindEntityById(update.IdEntity);
+                if (ent != null)
+                    (ent as Player).lootData.AddLoot_Client((update as UpdateLoot).lootName, (update as UpdateLoot).quantity);
+            }
             
         }
         public void UpdatePlayerHealth(UpdatePlayerParametrs update)

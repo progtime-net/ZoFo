@@ -29,6 +29,7 @@ public class ItemDisplayButton : Button
     private ContentManager content;
     public string discriptions1;
     public Dictionary<string, int> resourcesNeededToCraft1;
+    public TextAligment TextAligment = TextAligment.Left;
     
 
     public ItemDisplayButton(UIManager manager) : base(manager)
@@ -46,7 +47,7 @@ public class ItemDisplayButton : Button
         Label itemName = new Label(Manager)
         {
             rectangle = new Rectangle(rectangle.X + rectangle.Height / 3 / 2 + rectangle.Height / 3 * 2, rectangle.Y + rectangle.Height / 3 / 2, rectangle.Width / 3, rectangle.Height / 3 * 2),
-            fontColor = fontColor1, text = text1, scale = scale1, fontName = fontName1, mainColor = Color.Transparent
+            fontColor = fontColor1, text = text1, scale = scale1, fontName = fontName1, mainColor = Color.Transparent, textAligment = TextAligment
         };
         Label itemCount = new Label(Manager)
         {
@@ -87,6 +88,10 @@ public class ItemDisplayButton : Button
         {
             if (presentState != hoverState)
             {
+                if (resourcesNeededToCraft1 == null)
+                {
+                    resourcesNeededToCraft1 = new Dictionary<string, int>();
+                }
                 hoverWindow = new HoverWindow(Manager)
                 {
                     rectangle = new Rectangle(Mouse.GetState().Position.X, Mouse.GetState().Position.Y, rectangle.Width, rectangle.Height * 10),

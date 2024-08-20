@@ -54,7 +54,7 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
             items = new Dictionary<string, int>();
             items.Add("wood", 5);
             items.Add("steel", 110);
-            items.Add("rock", 6);
+            items.Add("peeble", 6);
         }
     }
 }
