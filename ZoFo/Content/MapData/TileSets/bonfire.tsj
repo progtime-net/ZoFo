@@ -27,16 +27,20 @@
                  "duration":250,
                  "tileid":3
                 }],
-         "id":0
+         "id":0,
+         "type":"StopObject"
         }, 
         {
-         "id":1
+         "id":1,
+         "type":"StopObject"
         }, 
         {
-         "id":2
+         "id":2,
+         "type":"StopObject"
         }, 
         {
-         "id":3
+         "id":3,
+         "type":"StopObject"
         }, 
         {
          "id":4

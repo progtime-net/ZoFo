@@ -1,0 +1,26 @@
+{
+    "fileStates": {
+        "TileMaps/main.tmj": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -463.63636363636374,
+                "y": 300
+            }
+        },
+        "TileSets/IconSet.tsj": {
+            "dynamicWrapping": true
+        },
+        "TileSets/TileSet 1.tsj": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "TileSets/TilesetNature.tsj": {
+            "scaleInDock": 1.5
+        },
+        "TileSets/tileset 1 collision.tsj": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        }
+    }
+}
