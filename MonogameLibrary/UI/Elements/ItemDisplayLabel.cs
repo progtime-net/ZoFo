@@ -30,6 +30,7 @@ public class ItemDisplayLabel : DrawableUIElement
     public Dictionary<string, int> resourcesNeededToCraft1;
     public HoverState hoverState = HoverState.None;
     private ContentManager content;
+    public TextAligment TextAligment = TextAligment.Left;
     
 
     public ItemDisplayLabel(UIManager manager) : base(manager)
@@ -47,7 +48,7 @@ public class ItemDisplayLabel : DrawableUIElement
         Label itemName = new Label(Manager)
         {
             rectangle = new Rectangle(rectangle.X + rectangle.Height / 3 / 2 + rectangle.Height / 3 * 2, rectangle.Y + rectangle.Height / 3 / 2, rectangle.Width / 3, rectangle.Height / 3 * 2),
-            fontColor = fontColor1, text = text1, scale = scale1, fontName = fontName1, mainColor = Color.Transparent
+            fontColor = fontColor1, text = text1, scale = scale1, fontName = fontName1, mainColor = Color.Transparent, textAligment = TextAligment
         };
         Label itemCount = new Label(Manager)
         {
