@@ -206,8 +206,16 @@ namespace ZoFo.GameCore
                     DeleteObject(ent);
 
             }
+            else if (update is UpdateGameEnded)
+            {
+                GameEnd();
+            }
         }
 
+        public void GameEnd()
+        {
+            AppManager.Instance.SetGUI(new FinishingGUI());
+        }
 
         public Entity FindEntityById(int id)
         {

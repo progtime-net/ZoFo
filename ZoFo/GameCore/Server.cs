@@ -146,6 +146,7 @@ namespace ZoFo.GameCore
 
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(140, 440)));
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(240, 440)));
+            AppManager.Instance.server.RegisterGameObject(new ExitZone(new Vector2(240, 440)));
         }
 
         /// <summary>
@@ -155,7 +156,7 @@ namespace ZoFo.GameCore
         {
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
-            networkManager.CloseConnection();
+         //   networkManager.CloseConnection();
         }
 
         public List<GameObject> gameObjects;
