@@ -11,14 +11,5 @@ public class Wood : Collectable
 {
     public override StaticGraphicsComponent graphicsComponent { get; } = new(_path + "Wood");
 
-    public Wood(Vector2 position) : base(position)
-    {
-        graphicsComponent.ObjectDrawRectangle.Width = 20;
-        graphicsComponent.ObjectDrawRectangle.Height = 20;
-    }
-    public override void OnInteraction(GameObject sender)
-    {
-        AppManager.Instance.server.AddData(new UpdateLoot("Wood"));
-        AppManager.Instance.server.DeleteObject(this);
-    }
+    public Wood(Vector2 position) : base(position) { }
 }

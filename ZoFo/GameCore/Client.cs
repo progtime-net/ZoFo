@@ -233,6 +233,49 @@ namespace ZoFo.GameCore
                     DeleteObject(ent);
 
             }
+            else if (update is UpdatePlayerParametrs)
+            {
+                UpdatePlayerHealth(update as UpdatePlayerParametrs);
+            }
+            
+        }
+        public void UpdatePlayerHealth(UpdatePlayerParametrs update)
+        {
+
+            //check on player hp lowered
+
+            if (myPlayer != null)
+            {
+                float hpMyPlayerHp = myPlayer.health;
+
+
+                var entity = FindEntityById(update.IdEntity);
+
+                if (entity != null)
+                {
+                    (entity as Player).health = (update as UpdatePlayerParametrs).health;
+                    (entity as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
+                }
+                if (entity.Equals(myPlayer))
+                {
+                    if (hpMyPlayerHp > myPlayer.health)
+                    {
+                        AppManager.Instance.client.AddShaking((hpMyPlayerHp - myPlayer.health));
+
+                    }
+                }
+
+                return;
+            }
+            
+
+            var ent = FindEntityById(update.IdEntity);
+
+            if (ent != null)
+            {
+                (ent as Player).health = (update as UpdatePlayerParametrs).health;
+                (ent as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
+            }
         }
 
 

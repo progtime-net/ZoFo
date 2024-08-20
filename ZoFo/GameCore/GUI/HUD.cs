@@ -68,7 +68,12 @@ public class HUD : AbstractGUI
         overlayGUI?.Update(gameTime);
         //hpBar.Update(gameTime, AppManager.Instance.client.myPlayer.health / 100f);
         //radBar.Update(gameTime, AppManager.Instance.client.myPlayer.rad / 100f);
-        radBar.Update(gameTime, gameTime.TotalGameTime.Seconds / 100f);
+        if (AppManager.Instance.client.myPlayer != null)
+        {
+            radBar.Update(gameTime, AppManager.Instance.client.myPlayer.rad / AppManager.Instance.client.myPlayer.MaxRad);
+            hpBar.Update(gameTime, AppManager.Instance.client.myPlayer.health / AppManager.Instance.client.myPlayer.MaxHealth);
+
+        }
         base.Update(gameTime);
     }
 

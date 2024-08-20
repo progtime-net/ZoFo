@@ -15,15 +15,7 @@ namespace ZoFo.GameCore.GameObjects
     {
         public override StaticGraphicsComponent graphicsComponent { get; } = new(_path + "Steel");
 
-        public Steel(Vector2 position) : base(position)
-        {
-            graphicsComponent.ObjectDrawRectangle.Width = 20;
-            graphicsComponent.ObjectDrawRectangle.Height = 20;
-        }
-        public override void OnInteraction(GameObject sender)
-        {
-            AppManager.Instance.server.AddData(new UpdateLoot("Steel"));
-            AppManager.Instance.server.DeleteObject(this);
-        }
+        public Steel(Vector2 position) : base(position) { }
+        
     }
 }

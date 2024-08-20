@@ -15,15 +15,6 @@ namespace ZoFo.GameCore.GameObjects
     {
         public override StaticGraphicsComponent graphicsComponent { get; } = new(_path + "PureBottleOfWater");
 
-        public PureBottleOfWater(Vector2 position) : base(position)
-        {
-            graphicsComponent.ObjectDrawRectangle.Width = 20;
-            graphicsComponent.ObjectDrawRectangle.Height = 20;
-        }
-        public override void OnInteraction(GameObject sender)
-        {
-            AppManager.Instance.server.AddData(new UpdateLoot("PureBottleOfWater"));
-            AppManager.Instance.server.DeleteObject(this);
-        }
+        public PureBottleOfWater(Vector2 position) : base(position) { }
     }
 }

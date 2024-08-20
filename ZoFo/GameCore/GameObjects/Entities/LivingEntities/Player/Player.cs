@@ -21,8 +21,11 @@ public class Player : LivingEntity
     
     private float speed; 
     public int reloading; 
-    public int health = 100;
-    public int rad = 0;
+    public float health= 100;
+    public float MaxHealth = 100;
+
+    public float rad = 0;
+    public float MaxRad = 100;
     public LootData lootData;
     
  
@@ -99,6 +102,24 @@ public class Player : LivingEntity
     {
         IsTryingToInteract = true;
     }
+
+    #region MyRegion
+
+    public bool isDying;
+    public virtual void TakeDamage(float damage)
+    {
+        if (isDying) return;
+        health -= damage;
+        AppManager.Instance.server.AddData(new UpdatePlayerParametrs() { health = health, radiatoin = rad, IdEntity = Id });
+        if (health < 0)
+            Die();
+    }
+    public override void Die()
+    {
+        base.Die();
+    }
+
+	#endregion    
     public void HandleShoot(UpdateInputShoot updateInputShoot)
     {
         if (reloading > 0)

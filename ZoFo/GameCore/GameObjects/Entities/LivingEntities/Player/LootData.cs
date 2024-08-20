@@ -12,7 +12,10 @@ namespace ZoFo.GameCore.GameObjects
 
         public void AddLoot(string lootName, int quantity)
         {
-            loots.Add(lootName, quantity);
+            if (loots.ContainsKey(lootName))
+                loots[lootName] +=quantity;
+            else
+                loots.Add(lootName, quantity);
         }
     }
 }

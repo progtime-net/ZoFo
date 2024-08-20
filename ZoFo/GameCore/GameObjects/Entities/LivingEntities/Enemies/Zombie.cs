@@ -29,7 +29,10 @@ namespace ZoFo.GameCore.GameObjects
             StartAnimation("zombie_walk");
             collisionComponent.isTrigger = true;
             collisionComponent.hasCollision = true;
-            (graphicsComponent as AnimatedGraphicsComponent).actionOfAnimationEnd += EndAttack;
+            (graphicsComponent as AnimatedGraphicsComponent).actionOfAnimationEnd += (animationIdEnded)=>{
+                if (animationIdEnded == "zombie_attack")
+                    EndAttack(animationIdEnded);
+            };
             collisionComponent.OnTriggerZone += OnPlayerClose;
             collisionComponent.triggerRectangle = new Rectangle(-5, -5, 40, 40);
             (graphicsComponent as AnimatedGraphicsComponent).actionOfAnimationEnd += (str) =>
@@ -70,7 +73,8 @@ namespace ZoFo.GameCore.GameObjects
             var damagedPlayers=AppManager.Instance.server.collisionManager.GetPlayersInZone(collisionComponent.triggerRectangle.SetOrigin(position));
             //TODO ДАМАЖИТЬ ИГРОКОВ В ЗОНЕ
             if (damagedPlayers.Length>0) { DebugHUD.DebugLog("End of" + a);
-                AppManager.Instance.client.AddShaking(2);
+                foreach (var item in damagedPlayers)
+                    item.TakeDamage(5);
             }
             isAttacking = false;
         }
