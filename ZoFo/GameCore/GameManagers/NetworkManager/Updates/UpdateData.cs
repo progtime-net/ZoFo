@@ -25,6 +25,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates
     [JsonDerivedType(typeof(UpdateTileCreated))]
     [JsonDerivedType(typeof(UpdateInput))]
     [JsonDerivedType(typeof(UpdatePlayerExit))]
+    [JsonDerivedType(typeof(UpdateInputInteraction))]
+    [JsonDerivedType(typeof(UpdateInputShoot))]
 
     public class UpdateData
     {
