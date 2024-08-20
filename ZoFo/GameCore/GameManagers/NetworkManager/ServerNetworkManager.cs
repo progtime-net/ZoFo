@@ -30,7 +30,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private List<UpdateData> importantUpdates;
         private List<Datagramm> sendedData;
         private List<Datagramm> arrivingDataId;
-        private int currentDatagrammId = 1;
+        private int currentDatagrammId = 0;
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
         Thread serverThread;
@@ -190,8 +190,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 string data = JsonSerializer.Serialize(initDgramm);
                 byte[] buffer = Encoding.UTF8.GetBytes(data);
                 socket.SendTo(buffer, clientsEP[i]);
-                currentDatagrammId++;
             }
+            currentDatagrammId++;
             AppManager.Instance.ChangeState(GameState.HostPlaying);
             AppManager.Instance.SetGUI(new HUD());////
         }

@@ -71,37 +71,44 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             JObject jObj = JsonConvert.DeserializeObject(data) as JObject;
             JToken token = JToken.FromObject(jObj);
             JToken updateDatas = token["updateDatas"];
-            Datagramm Dgramm = new Datagramm();
-            Dgramm.isImportant = token["isImportant"].ToObject<bool>();
-            Dgramm.DatagrammId = token["DatagrammId"].ToObject<int>();
-            if (PlayerId == 0)
+            if (updateDatas.HasValues)
             {
-                PlayerId = token["PlayerId"].ToObject<int>();
-                AppManager.Instance.ChangeState(GameState.ClientPlaying);
-                AppManager.Instance.SetGUI(new HUD());
-            }
-            if (Dgramm.isImportant)
-            {
-                if (Dgramm.DatagrammId == currentServerDatagrammId + 1)
+                Datagramm Dgramm = new Datagramm();
+                Dgramm.isImportant = token["isImportant"].ToObject<bool>();
+                Dgramm.DatagrammId = token["DatagrammId"].ToObject<int>();
+                if (PlayerId == 0)
                 {
-                    currentServerDatagrammId++;
+                    PlayerId = token["PlayerId"].ToObject<int>();
+                    if (AppManager.Instance.gamestate != GameState.HostPlaying)
+                    {
+                        AppManager.Instance.ChangeState(GameState.ClientPlaying);
+                        AppManager.Instance.SetGUI(new HUD());
+                    }
+                }
+                if (Dgramm.isImportant)
+                {
+                    if (Dgramm.DatagrammId == currentServerDatagrammId + 1)
+                    {
+                        currentServerDatagrammId++;
+                        Dgramm.updateDatas = GetSentUpdates(token["updateDatas"]);
+                        ExecuteDatagramm(Dgramm);
+                        CheckDatagramm();
+                    }
+                    else if (Dgramm.DatagrammId > currentServerDatagrammId + 1 &&
+                        waitingDatagramm.Find(x => x.DatagrammId == Dgramm.DatagrammId) == null)
+                    {
+                        Dgramm.updateDatas = GetSentUpdates(token["updateDatas"]);
+                        waitingDatagramm.Add(Dgramm);
+                    }
+                    SendAcknowledgement(Dgramm.DatagrammId);
+                }
+                else
+                {
                     Dgramm.updateDatas = GetSentUpdates(token["updateDatas"]);
                     ExecuteDatagramm(Dgramm);
-                    CheckDatagramm();
                 }
-                else if (Dgramm.DatagrammId > currentServerDatagrammId + 1 &&
-                    waitingDatagramm.Find(x => x.DatagrammId == Dgramm.DatagrammId) == null)
-                {
-                    Dgramm.updateDatas = GetSentUpdates(token["updateDatas"]);
-                    waitingDatagramm.Add(Dgramm);
-                }
-                SendAcknowledgement(Dgramm.DatagrammId);
             }
-            else
-            {
-                Dgramm.updateDatas = GetSentUpdates(token["updateDatas"]);
-                ExecuteDatagramm(Dgramm);
-            }
+            
 
         }
 
