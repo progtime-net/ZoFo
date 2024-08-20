@@ -25,6 +25,7 @@ public class HUD : AbstractGUI
         Elements.Add(pauseButton);
         pauseButton.LeftButtonPressed += () =>
         {
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new PauseGUI());
         };
     }

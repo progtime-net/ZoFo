@@ -28,18 +28,20 @@ namespace ZoFo.GameCore.GameManagers
         public void SetMainVolume(float volume)
         {
             settingsContainer.MainVolume = volume;
-            //AppManager.Instance.SoundManager.Update();
+            AppManager.Instance.SoundManager.Update();
             SaveSettings();
         }
         public void SetMusicVolume(float volume)
         {
             settingsContainer.MusicVolume = volume;
+            //AppManager.Instance.SoundManager.Update();
             SaveSettings();
 
         }
         public void SetSoundEffectsVolume(float volume)
         {
             settingsContainer.SoundEffectsVolume = volume;
+           // AppManager.Instance.SoundManager.Update();
             SaveSettings();
 
         }

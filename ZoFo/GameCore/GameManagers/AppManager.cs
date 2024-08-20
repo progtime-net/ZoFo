@@ -63,12 +63,14 @@ namespace ZoFo.GameCore.GameManagers
             ItemManager = new ItemManager.ItemManager();
             Instance = this;
             InputManager = new InputManager();
+            SoundManager = new SoundManager();
+            SoundManager.LoadSounds();
             SettingsManager = new SettingsManager();
             SettingsManager.LoadSettings();
-            SoundManager = new SoundManager();
+            
             AssetManager = new AssetManager();
-            SoundManager.LoadSounds();
-
+            
+            SoundManager.StartAmbientSound("Background menu music");
 
             currentGUI = new MainMenuGUI();
             debugHud = new DebugHUD();
