@@ -92,7 +92,7 @@ namespace ZoFo.GameCore
 
         #endregion
 
-        Player myPlayer;
+        public Player myPlayer;
         List<MapObject> mapObjects = new List<MapObject>();
         List<GameObject> gameObjects = new List<GameObject>();
         List<Player> players = new List<Player>();

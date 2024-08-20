@@ -15,38 +15,45 @@ using ZoFo.GameCore.GameManagers.ItemManager;
 
 namespace ZoFo.GameCore.GUI;
 
-public class InventoryGUI : AbstractGUI
+public class FinishingGUI : AbstractGUI
 {
-    private List<ItemDisplayButton> ItemDisplayButtonsList;
-    private int buttonIndex = 0;
+    private List<ItemDisplayLabel> ItemDisplayLabelsList;
+    private int labelIndex = 0;
+    private DrawableUIElement menuBackground;
 
     protected override void CreateUI()
     {
-        ItemDisplayButtonsList = new List<ItemDisplayButton>();
+        ItemDisplayLabelsList = new List<ItemDisplayLabel>();
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
+        
+        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures/GUI/background/endGame" };
+        Elements.Add(menuBackground);
+        menuBackground.LoadTexture(AppManager.Instance.Content);
+        
+        Elements.Add(new Label(Manager) { rectangle = new Rectangle(width / 2 - (int)(width / 8), height / 15, (int)(width / 4), (int)(height / 20)), text = "Mission completed", fontColor = Color.Black, mainColor = Color.Transparent, scale = 0.9f, fontName = "Fonts/Font"});
 
         DrawableUIElement inventoryBack = new DrawableUIElement(Manager)
         {
             rectangle = new Rectangle(width / 2 - height / 80 - width / 5 / 2,
-                height / 2 - (int)(height / 1.5) / 2 - height / 10,
+                height / 2 - (int)(height / 1.5) / 2,
                 height / 40 + width / 5, (int)(height / 1.5)),
             mainColor = Color.LightGray
         };
         Elements.Add(inventoryBack);
 
-        Button continueButton = new Button(Manager)
+        Button ExitButton = new Button(Manager)
         {
-            rectangle = new Rectangle(width / 2 - width / 5 / 2,
-                height / 2 + (int)(height / 1.5) / 2 + height / 40 - height / 10, (int)(width / 5), (int)(height / 20)),
-            text = "Continue",
+            rectangle = new Rectangle(width / 2 - width / 15 / 2,
+                height / 2 + (int)(height / 1.5) / 2 + height / 40, (int)(width / 15), (int)(height / 20)),
+            text = "Exit",
             scale = 0.2f,
             fontColor = Color.White,
             mainColor = Color.Gray,
             fontName = "Fonts\\Font"
         };
-        continueButton.LeftButtonPressed += () => { AppManager.Instance.SetGUI(new HUD()); };
-        Elements.Add(continueButton);
+        ExitButton.LeftButtonPressed += () => { AppManager.Instance.SetGUI(new MainMenuGUI()); };
+        Elements.Add(ExitButton);
 
         //player itams
         foreach (var item in AppManager.Instance.client.myPlayer.lootData.loots)
@@ -54,12 +61,12 @@ public class InventoryGUI : AbstractGUI
             if (item.Value > 0)
             {
                 ItemInfo itemInfo = AppManager.Instance.ItemManager.GetItemInfo(item.Key);
-                var temp = new ItemDisplayButton(Manager)
+                var temp = new ItemDisplayLabel(Manager)
                 {
                     rectangle = new Rectangle(
                         width / 2 - width / 5 / 2,
                         height / 2 - (int)(height / 1.5) / 2 + height / 80 +
-                        (height / 20 + height / 80) * (buttonIndex) - height / 10,
+                        (height / 20 + height / 80) * (labelIndex),
                         (int)(width / 5), (int)(height / 20)),
                     text1 = item.Key,
                     scale1 = 0.4f,
@@ -74,13 +81,9 @@ public class InventoryGUI : AbstractGUI
                 Elements.Add(temp);
                 temp.Initialize();
                 temp.LoadTexture(AppManager.Instance.Content);
-                ItemDisplayButtonsList.Add(temp);
-                temp.LeftButtonPressed += () =>
-                {
-                    
-                };
+                ItemDisplayLabelsList.Add(temp);
 
-                buttonIndex++;
+                labelIndex++;
             }
         }
     }
