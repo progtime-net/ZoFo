@@ -38,7 +38,7 @@ public class LivingEntity : Entity
     {
         base.UpdateAnimations();
     }
-    Vector2 prevPosition_forClient;
+    protected Vector2 prevPosition_forClient;
     public override void Draw(SpriteBatch spriteBatch)
     {
         if ((positionDraw - prevPosition_forClient).X < 0)

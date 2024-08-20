@@ -74,7 +74,7 @@ namespace ZoFo.GameCore.GameObjects
             //TODO ДАМАЖИТЬ ИГРОКОВ В ЗОНЕ
             if (damagedPlayers.Length>0) { DebugHUD.DebugLog("End of" + a);
                 foreach (var item in damagedPlayers)
-                    item.TakeDamage(5);
+                    item.TakeDamage(1);
             }
             isAttacking = false;
         }
