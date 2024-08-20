@@ -40,6 +40,7 @@ namespace ZoFo.GameCore.GameManagers
         private bool isInteract;
 
         private KeyboardState lastKeyboardState;
+        private KeyboardState keyBoardState;
         private GamePadState lastGamePadState;
         public ScopeState ScopeState { get => currentScopeState; }
         public string currentControlsState;
@@ -161,13 +162,13 @@ namespace ZoFo.GameCore.GameManagers
                 #endregion
 
                 #region Обработка нажатия выстрела. Вызывает событие ShootEvent
-                if (keyBoardState.IsKeyDown(Keys.P) && !isShoot)
+                if ((keyBoardState.IsKeyDown(Keys.P) || keyBoardState.IsKeyDown(Keys.F)) && !isShoot)
                 {
                     isShoot = true;
                     ShootEvent?.Invoke();
                     Debug.WriteLine("Выстрел");
                 }
-                else if (keyBoardState.IsKeyUp(Keys.P))
+                else if (keyBoardState.IsKeyUp(Keys.F))
                 {
                     isShoot = false;
                 }
@@ -245,5 +246,7 @@ namespace ZoFo.GameCore.GameManagers
                 return currentScopeState;
             }
         #endregion
+        public bool ButtonClicked(Keys key) => keyBoardState.IsKeyUp(key) && keyBoardState.IsKeyDown(key);
     }
+
 }

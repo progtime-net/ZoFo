@@ -24,7 +24,7 @@ public class Player : LivingEntity
     //public bool IsTryingToShoot { get; set; }
     private float speed;
     private int health;
-
+    public int reloading;
     public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(AppManager.Instance.AssetManager.Player);
 
     private LootData lootData;
@@ -42,6 +42,12 @@ public class Player : LivingEntity
 
     public  override void Update()
     {
+        if (reloading>0)
+        {
+            reloading--;
+
+        }
+
         #region анимация управления, стрельбы 
         switch(AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation))
         {
@@ -89,12 +95,16 @@ public class Player : LivingEntity
     }
     public void HandleShoot(UpdateInputShoot updateInputShoot)
     {
+        if (reloading > 0)
+            return;
+        reloading = 5;
         IsTryingToShoot = true;
 
         var rect = collisionComponent.stopRectangle.SetOrigin(position);
         rect.Width += 100;
         rect.Height += 100;
         Entity[] entities = AppManager.Instance.server.collisionManager.GetEntities(rect, this);
+            AppManager.Instance.server.RegisterGameObject(new Particle(rect.Location.ToVector2()));
         if (entities.Length>0)
         {
             DebugHUD.DebugSet("ent[0]", entities[0].ToString());
@@ -102,7 +112,10 @@ public class Player : LivingEntity
             {
                 foreach (Entity entity in entities)
                 {
-                    AppManager.Instance.server.DeleteObject(entity);
+                    if (entity is Enemy)
+                    {
+                        (entity as Enemy).TakeDamage(1);
+                    }
                 }
             }
         }
