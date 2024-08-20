@@ -52,6 +52,14 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
 
         public void LoadPlayerData()
         {
+            /*items.Add("wood", 100);
+            items.Add("steel", 100);
+            items.Add("bottleofwater", 100);
+            items.Add("rottenflesh", 100);
+            items.Add("pebble", 100);
+            items.Add("ammo", 100);
+            items.Add("fabric", 100);
+            items.Add("paper", 100);*/
             if (File.Exists("Items.txt"))
             {
                 string data;
