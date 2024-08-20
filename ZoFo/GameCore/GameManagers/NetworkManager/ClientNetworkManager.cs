@@ -215,7 +215,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public void JoinRoom(string ip, int port) // multyplayer
         {
             sendingEP = new IPEndPoint(IPAddress.Parse(ip), port);
-            AppManager.Instance.ChangeState(GameState.ClientPlaying);
             SendData();
             Thread listen = new Thread(StartListening);
             listen.IsBackground = true;
