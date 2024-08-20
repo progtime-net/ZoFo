@@ -9,10 +9,11 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 
 namespace MonogameLibrary.UI.Elements;
 
-public class ItemDisplayButton : DrawableUIElement
+public class ItemDisplayButton : Button
 {
     public int count;
     public string itemTextureName;
@@ -23,6 +24,11 @@ public class ItemDisplayButton : DrawableUIElement
     public string text1;
     public float scale1;
     private DrawableUIElement icon;
+    private HoverState presentState = HoverState.None;
+    private HoverWindow hoverWindow = null;
+    private ContentManager content;
+    public string discriptions1;
+    public Dictionary<string, int> resourcesNeededToCraft1;
     
 
     public ItemDisplayButton(UIManager manager) : base(manager)
@@ -51,6 +57,7 @@ public class ItemDisplayButton : DrawableUIElement
 
     public override void LoadTexture(ContentManager content)
     {
+        this.content = content;
         icon.LoadTexture(content);
         base.LoadTexture(content);
         if (itemTextureName == "")
@@ -70,6 +77,47 @@ public class ItemDisplayButton : DrawableUIElement
                 itemTexture.SetData<Color>(new Color[] { mainColor });
             }
         }
+    }
+
+
+    public bool Update(GameTime gameTime)
+    {
+        
+        if (hoverState == HoverState.Hovering)
+        {
+            if (presentState != hoverState)
+            {
+                hoverWindow = new HoverWindow(Manager)
+                {
+                    rectangle = new Rectangle(Mouse.GetState().Position.X, Mouse.GetState().Position.Y, rectangle.Width, rectangle.Height * 10),
+                    mainColor = Color.Gray,
+                    tagItem = text1,
+                    discriptions = discriptions1,
+                    resourcesNeededToCraft = resourcesNeededToCraft1,
+                    fontColor2 = fontColor1,
+                    fontName2 = fontName1,
+                    scale2 = scale1,
+                    itemTextureName1 = itemTextureName
+                };
+                hoverWindow.Initialize(content);
+                hoverWindow.LoadTexture(content);
+            }
+
+            hoverWindow.rectangle.X = Mouse.GetState().Position.X;
+            hoverWindow.rectangle.Y = Mouse.GetState().Position.Y;
+            hoverWindow.Update(gameTime);
+        }
+        else if (hoverState == HoverState.None)
+        {
+            if (presentState != hoverState)
+            {
+                return true;
+            }
+            
+        }
+
+        presentState = hoverState;
+        return false;
     }
 
     public override void Draw(SpriteBatch _spriteBatch)
