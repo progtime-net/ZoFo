@@ -1,0 +1,18 @@
+{ "object":
+    {
+     "gid":8,
+     "height":16,
+     "id":1,
+     "name":"Zombie",
+     "rotation":0,
+     "type":"",
+     "visible":true,
+     "width":16
+    },
+ "tileset":
+    {
+     "firstgid":1,
+     "source":"..\/..\/TileSets\/IconSet.tsj"
+    },
+ "type":"template"
+}

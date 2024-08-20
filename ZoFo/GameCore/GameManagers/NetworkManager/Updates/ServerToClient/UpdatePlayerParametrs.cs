@@ -12,5 +12,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
     public class UpdatePlayerParametrs : UpdateData    
     {
         public UpdatePlayerParametrs() { UpdateType = "UpdatePlayerParametrs"; }
+        public float radiatoin;
+        public float health;
     }
 }

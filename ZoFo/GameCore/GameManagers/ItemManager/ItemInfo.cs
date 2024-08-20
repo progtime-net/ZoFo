@@ -7,23 +7,25 @@ using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.ItemManager
 {
-    class ItemInfo
+    public class ItemInfo
     {
         //поля
         string tag;
-        string textureName;
+        public string textureName;
         Texture2D itemTexture;
-        bool isCraftable;
-        Dictionary<string, int> resourcesNeededToCraft;
+        public bool isCraftable;
+        public string description;
+        public Dictionary<string, int> resourcesNeededToCraft;
         public ItemInfo (string tag)
         {
             this.tag = tag;
         }
-        public ItemInfo(string tag,string textureName,bool isCraftable, Dictionary<string, int> resourcesNeededToCraft)
+        public ItemInfo(string tag, string description, string textureName, bool isCraftable, Dictionary<string, int> resourcesNeededToCraft)
         {
             this.tag = tag;
             this.textureName = textureName;
-            
+
+            this.description = description;
             this.isCraftable = isCraftable;
             this.resourcesNeededToCraft = resourcesNeededToCraft;
         }

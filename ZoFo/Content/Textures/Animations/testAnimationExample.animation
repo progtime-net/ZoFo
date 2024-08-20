@@ -1,1 +1,20 @@
-{"id":"testAnimationExample","textureName":"Textures/AnimationTextures/unicorn","startSpriteRectangle":{"X":0,"Y":0,"Width":400,"Height":400},"frameSecond":[{"Item1":0,"Item2":1}],"textureFrameInterval":1,"framesCount":1,"isCycle":true,"offset":"0, 0"}
+{
+  "id": "testAnimationExample",
+  "textureName": "Textures/AnimationTextures/unicorn",
+  "startSpriteRectangle": {
+    "X": 0,
+    "Y": 0,
+    "Width": 400,
+    "Height": 400
+  },
+  "frameSecond": [
+    {
+      "Item1": 0,
+      "Item2": 1
+    }
+  ],
+  "textureFrameInterval": 1,
+  "framesCount": 1,
+  "isCycle": true,
+  "offset": "0, 0"
+}

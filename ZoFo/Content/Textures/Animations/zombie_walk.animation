@@ -1,0 +1,1 @@
+{"id":"zombie_walk","textureName":"Textures/AnimationTextures/Zombie/zombie_spritesheet_v1","startSpriteRectangle":{"X":0,"Y":32,"Width":32,"Height":32},"frameSecond":[{"Item1":0,"Item2":30}],"textureFrameInterval":0,"framesCount":8,"isCycle":true,"offset":"0, 0"}
