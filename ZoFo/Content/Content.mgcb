@@ -56,6 +56,30 @@
 #begin MapData/TileSets/TilesetNature.tsj
 /copy:MapData/TileSets/TilesetNature.tsj
 
+#begin sounds/Background menu music.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Background menu music.wav
+
+#begin sounds/Background music.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Background music.wav
+
+#begin sounds/Button click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Button click.wav
+
+#begin sounds/Craft sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Craft sound.wav
+
 #begin sounds/Loot.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -97,6 +121,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/Zombi stoit.wav
+
+#begin sounds/zombie sound 2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/zombie sound 2.wav
+
+#begin sounds/zombie sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/zombie sound.wav
 
 #begin Textures/Animations/player_down_idle.animation
 /copy:Textures/Animations/player_down_idle.animation

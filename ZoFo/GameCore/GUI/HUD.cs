@@ -27,11 +27,13 @@ public class HUD : AbstractGUI
             { fontName = "Fonts\\Font3", scale = 0.4f, text = "| |", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 30, width / 40, width / 40), textureName = "Textures\\GUI\\checkboxs_off"};
         Elements.Add(pauseButton);
         pauseButton.LeftButtonPressed += () =>
-        {
+        { 
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
+            AppManager.Instance.SetGUI(new PauseGUI()); 
             //AppManager.Instance.SetGUI(new FinishingGUI());
             overlayGUI = new PauseGUI();
             overlayGUI.Initialize();
-            overlayGUI.LoadContent();
+            overlayGUI.LoadContent(); 
         };
         Button invButton = new Button(Manager)
             { fontName = "Fonts\\Font3", scale = 0.4f, text = "inv", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 15 + width / 40, width / 40, width / 40), textureName = "Textures\\GUI\\checkboxs_off"};
