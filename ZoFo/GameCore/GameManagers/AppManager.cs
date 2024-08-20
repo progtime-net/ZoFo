@@ -12,6 +12,7 @@ using ZoFo.GameCore.GameManagers.ItemManager;
 using ZoFo.GameCore.GUI;
 using static System.Collections.Specialized.BitVector32;
 using MonogameLibrary.UI.Base;
+using ZoFo.GameCore.GameManagers.AssetsManager;
 using ZoFo.GameCore.GameObjects;
 
 namespace ZoFo.GameCore.GameManagers
@@ -40,6 +41,7 @@ namespace ZoFo.GameCore.GameManagers
         public ItemManager.ItemManager ItemManager;
         public SettingsManager SettingsManager;
         public SoundManager SoundManager;
+        public AssetManager AssetManager;
 
         public AnimationBuilder animationBuilder { get; set; }
 
@@ -63,6 +65,7 @@ namespace ZoFo.GameCore.GameManagers
             SettingsManager = new SettingsManager();
             SettingsManager.LoadSettings();
             SoundManager = new SoundManager();
+            AssetManager = new AssetManager();
             SoundManager.LoadSounds();
 
 
@@ -100,8 +103,8 @@ namespace ZoFo.GameCore.GameManagers
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape)) { Exit(); }
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || 
+                Keyboard.GetState().IsKeyDown(Keys.Escape)) { Exit(); } 
 
 
          //   debugHud.Set("key", "value");

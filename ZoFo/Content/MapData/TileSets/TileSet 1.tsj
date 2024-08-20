@@ -8,13 +8,13 @@
      "width":24
     },
  "image":"..\/..\/Textures\/TileSetImages\/TilesetFloor.png",
- "imageheight":417,
+ "imageheight":464,
  "imagewidth":352,
  "margin":0,
  "name":"TileSet 1",
  "objectalignment":"topleft",
  "spacing":0,
- "tilecount":572,
+ "tilecount":638,
  "tiledversion":"1.10.2",
  "tileheight":16,
  "tiles":[
@@ -2314,6 +2314,270 @@
         {
          "id":571,
          "type":"Tile"
+        }, 
+        {
+         "id":572,
+         "type":"Tile"
+        }, 
+        {
+         "id":573,
+         "type":"Tile"
+        }, 
+        {
+         "id":574,
+         "type":"Tile"
+        }, 
+        {
+         "id":575,
+         "type":"Tile"
+        }, 
+        {
+         "id":576,
+         "type":"Tile"
+        }, 
+        {
+         "id":577,
+         "type":"Tile"
+        }, 
+        {
+         "id":578,
+         "type":"Tile"
+        }, 
+        {
+         "id":579,
+         "type":"Tile"
+        }, 
+        {
+         "id":580,
+         "type":"Tile"
+        }, 
+        {
+         "id":581,
+         "type":"Tile"
+        }, 
+        {
+         "id":582,
+         "type":"Tile"
+        }, 
+        {
+         "id":583,
+         "type":"Tile"
+        }, 
+        {
+         "id":584,
+         "type":"Tile"
+        }, 
+        {
+         "id":585,
+         "type":"Tile"
+        }, 
+        {
+         "id":586,
+         "type":"Tile"
+        }, 
+        {
+         "id":587,
+         "type":"Tile"
+        }, 
+        {
+         "id":588,
+         "type":"Tile"
+        }, 
+        {
+         "id":589,
+         "type":"Tile"
+        }, 
+        {
+         "id":590,
+         "type":"Tile"
+        }, 
+        {
+         "id":591,
+         "type":"Tile"
+        }, 
+        {
+         "id":592,
+         "type":"Tile"
+        }, 
+        {
+         "id":593,
+         "type":"Tile"
+        }, 
+        {
+         "id":594,
+         "type":"Tile"
+        }, 
+        {
+         "id":595,
+         "type":"Tile"
+        }, 
+        {
+         "id":596,
+         "type":"Tile"
+        }, 
+        {
+         "id":597,
+         "type":"Tile"
+        }, 
+        {
+         "id":598,
+         "type":"Tile"
+        }, 
+        {
+         "id":599,
+         "type":"Tile"
+        }, 
+        {
+         "id":600,
+         "type":"Tile"
+        }, 
+        {
+         "id":601,
+         "type":"Tile"
+        }, 
+        {
+         "id":602,
+         "type":"Tile"
+        }, 
+        {
+         "id":603,
+         "type":"Tile"
+        }, 
+        {
+         "id":604,
+         "type":"Tile"
+        }, 
+        {
+         "id":605,
+         "type":"Tile"
+        }, 
+        {
+         "id":606,
+         "type":"Tile"
+        }, 
+        {
+         "id":607,
+         "type":"Tile"
+        }, 
+        {
+         "id":608,
+         "type":"Tile"
+        }, 
+        {
+         "id":609,
+         "type":"Tile"
+        }, 
+        {
+         "id":610,
+         "type":"Tile"
+        }, 
+        {
+         "id":611,
+         "type":"Tile"
+        }, 
+        {
+         "id":612,
+         "type":"Tile"
+        }, 
+        {
+         "id":613,
+         "type":"Tile"
+        }, 
+        {
+         "id":614,
+         "type":"Tile"
+        }, 
+        {
+         "id":615,
+         "type":"Tile"
+        }, 
+        {
+         "id":616,
+         "type":"Tile"
+        }, 
+        {
+         "id":617,
+         "type":"Tile"
+        }, 
+        {
+         "id":618,
+         "type":"Tile"
+        }, 
+        {
+         "id":619,
+         "type":"Tile"
+        }, 
+        {
+         "id":620,
+         "type":"Tile"
+        }, 
+        {
+         "id":621,
+         "type":"Tile"
+        }, 
+        {
+         "id":622,
+         "type":"Tile"
+        }, 
+        {
+         "id":623,
+         "type":"Tile"
+        }, 
+        {
+         "id":624,
+         "type":"Tile"
+        }, 
+        {
+         "id":625,
+         "type":"Tile"
+        }, 
+        {
+         "id":626,
+         "type":"Tile"
+        }, 
+        {
+         "id":627,
+         "type":"Tile"
+        }, 
+        {
+         "id":628,
+         "type":"Tile"
+        }, 
+        {
+         "id":629,
+         "type":"Tile"
+        }, 
+        {
+         "id":630,
+         "type":"Tile"
+        }, 
+        {
+         "id":631,
+         "type":"Tile"
+        }, 
+        {
+         "id":632,
+         "type":"Tile"
+        }, 
+        {
+         "id":633,
+         "type":"Tile"
+        }, 
+        {
+         "id":634,
+         "type":"Tile"
+        }, 
+        {
+         "id":635,
+         "type":"Tile"
+        }, 
+        {
+         "id":636,
+         "type":"Tile"
+        }, 
+        {
+         "id":637,
+         "type":"Tile"
         }],
  "tilewidth":16,
  "type":"tileset",
@@ -2332,8 +2596,20 @@
                  "name":"SandStone",
                  "probability":0.3,
                  "tile":110
+                }, 
+                {
+                 "color":"#0000ff",
+                 "name":"LightGrass",
+                 "probability":1,
+                 "tile":265
+                }, 
+                {
+                 "color":"#ff7700",
+                 "name":"Dirt",
+                 "probability":1,
+                 "tile":177
                 }],
-         "name":"\u041f\u0435\u0441\u0447\u0430\u043d\u044b\u0439",
+         "name":"\u0411\u0438\u043e\u043c\u043d\u044b\u0439",
          "tile":-1,
          "type":"corner",
          "wangtiles":[
@@ -2424,6 +2700,228 @@
                 {
                  "tileid":114,
                  "wangid":[0, 2, 0, 2, 0, 2, 0, 2]
+                }, 
+                {
+                 "tileid":154,
+                 "wangid":[0, 3, 0, 4, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":155,
+                 "wangid":[0, 3, 0, 4, 0, 4, 0, 3]
+                }, 
+                {
+                 "tileid":156,
+                 "wangid":[0, 3, 0, 3, 0, 4, 0, 3]
+                }, 
+                {
+                 "tileid":163,
+                 "wangid":[0, 3, 0, 4, 0, 3, 0, 4]
+                }, 
+                {
+                 "tileid":176,
+                 "wangid":[0, 4, 0, 4, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":177,
+                 "wangid":[0, 4, 0, 4, 0, 4, 0, 4]
+                }, 
+                {
+                 "tileid":178,
+                 "wangid":[0, 3, 0, 3, 0, 4, 0, 4]
+                }, 
+                {
+                 "tileid":181,
+                 "wangid":[0, 4, 0, 3, 0, 4, 0, 4]
+                }, 
+                {
+                 "tileid":182,
+                 "wangid":[0, 4, 0, 4, 0, 3, 0, 4]
+                }, 
+                {
+                 "tileid":185,
+                 "wangid":[0, 4, 0, 3, 0, 4, 0, 3]
+                }, 
+                {
+                 "tileid":198,
+                 "wangid":[0, 4, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":199,
+                 "wangid":[0, 4, 0, 3, 0, 3, 0, 4]
+                }, 
+                {
+                 "tileid":200,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 4]
+                }, 
+                {
+                 "tileid":203,
+                 "wangid":[0, 3, 0, 4, 0, 4, 0, 4]
+                }, 
+                {
+                 "tileid":204,
+                 "wangid":[0, 4, 0, 4, 0, 4, 0, 3]
+                }, 
+                {
+                 "tileid":242,
+                 "wangid":[0, 4, 0, 4, 0, 4, 0, 4]
+                }, 
+                {
+                 "tileid":243,
+                 "wangid":[0, 4, 0, 4, 0, 4, 0, 4]
+                }, 
+                {
+                 "tileid":244,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":245,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":264,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":265,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":266,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":267,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":268,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":578,
+                 "wangid":[0, 3, 0, 2, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":579,
+                 "wangid":[0, 3, 0, 2, 0, 2, 0, 3]
+                }, 
+                {
+                 "tileid":580,
+                 "wangid":[0, 3, 0, 3, 0, 2, 0, 3]
+                }, 
+                {
+                 "tileid":581,
+                 "wangid":[0, 2, 0, 3, 0, 2, 0, 2]
+                }, 
+                {
+                 "tileid":582,
+                 "wangid":[0, 2, 0, 2, 0, 3, 0, 2]
+                }, 
+                {
+                 "tileid":600,
+                 "wangid":[0, 2, 0, 2, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":601,
+                 "wangid":[0, 2, 0, 2, 0, 2, 0, 2]
+                }, 
+                {
+                 "tileid":602,
+                 "wangid":[0, 3, 0, 3, 0, 2, 0, 2]
+                }, 
+                {
+                 "tileid":603,
+                 "wangid":[0, 3, 0, 2, 0, 2, 0, 2]
+                }, 
+                {
+                 "tileid":604,
+                 "wangid":[0, 2, 0, 2, 0, 2, 0, 3]
+                }, 
+                {
+                 "tileid":622,
+                 "wangid":[0, 2, 0, 3, 0, 3, 0, 3]
+                }, 
+                {
+                 "tileid":623,
+                 "wangid":[0, 2, 0, 3, 0, 3, 0, 2]
+                }, 
+                {
+                 "tileid":624,
+                 "wangid":[0, 3, 0, 3, 0, 3, 0, 2]
+                }]
+        }, 
+        {
+         "colors":[
+                {
+                 "color":"#ff0000",
+                 "name":"",
+                 "probability":1,
+                 "tile":264
+                }],
+         "name":"\u0422\u0440\u0430\u0432\u0430",
+         "tile":244,
+         "type":"corner",
+         "wangtiles":[
+                {
+                 "tileid":244,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":245,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":264,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":265,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":266,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":267,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":268,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }]
+        }, 
+        {
+         "colors":[
+                {
+                 "color":"#ff0000",
+                 "name":"",
+                 "probability":1,
+                 "tile":110
+                }],
+         "name":"\u041f\u0435\u0441\u0447\u0430\u043d\u0438\u043a",
+         "tile":111,
+         "type":"corner",
+         "wangtiles":[
+                {
+                 "tileid":110,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":111,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":112,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":113,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
+                }, 
+                {
+                 "tileid":114,
+                 "wangid":[0, 1, 0, 1, 0, 1, 0, 1]
                 }]
         }]
 }

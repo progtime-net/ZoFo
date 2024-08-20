@@ -1,0 +1,1 @@
+{"id":"zombie_idle","textureName":"Textures/AnimationTextures/Zombie/zombie_spritesheet_v1","startSpriteRectangle":{"X":0,"Y":0,"Width":32,"Height":32},"frameSecond":[{"Item1":0,"Item2":60}],"textureFrameInterval":0,"framesCount":2,"isCycle":true,"offset":"0, 0"}

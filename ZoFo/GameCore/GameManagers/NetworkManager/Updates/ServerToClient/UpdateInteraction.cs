@@ -2,6 +2,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 
 /// <summary>
 /// При попытке взаимодействия с объектом
+/// отправляет пользователю разрешение на взаимодействие
+/// TODO: Вероятно убрать(обсудить)
 /// </summary>
 public class UpdateInteraction : UpdateData 
 { 

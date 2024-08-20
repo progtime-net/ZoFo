@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 
-namespace ZoFo.GameCore.GameObjects.Entities
+namespace ZoFo.GameCore.GameObjects
 {
     public abstract class Entity : GameObject
     {
         //public override GraphicsComponent graphicsComponent => null;
         public CollisionComponent collisionComponent { get; protected set; }
         public int Id { get; set; }
-        static int totalEntitiesCreated = 0;
+        static int totalEntitiesCreated = 1;
         protected Entity(Vector2 position) : base(position)
         {
             Id = totalEntitiesCreated;
@@ -35,6 +36,27 @@ namespace ZoFo.GameCore.GameObjects.Entities
         {
             Update();
             base.UpdateLogic();
+        }
+
+        public void StartAnimation(string animationId)
+        {
+            (graphicsComponent as Graphics.AnimatedGraphicsComponent).StartAnimation(animationId);
+            AppManager.Instance.server.AddData(new GameManagers.NetworkManager.Updates.ServerToClient.UpdateAnimation()
+            {
+                animationId = animationId,
+                IdEntity = Id
+            });
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            DrawDebugRectangle(spriteBatch, collisionComponent.stopRectangle.SetOrigin(position), Color.Orange);
+
+            base.Draw(spriteBatch);
+        }
+
+        public virtual void Delete()
+        {
+            AppManager.Instance.server.DeleteObject(this);
         }
     }
 }

@@ -11,17 +11,9 @@ using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
 {
-    class Antiradine:Collectable
+    class Antiradine : Collectable
     {
         public override StaticGraphicsComponent graphicsComponent { get; } = new("Antiradine");
-        public Antiradine(Vector2 position) : base(position)
-        {
-
-        }
-        public override void OnInteraction(object sender, CollisionComponent e)
-        {
-            AppManager.Instance.server.AddData(new UpdateLoot("Antiradine"));
-            AppManager.Instance.server.DeleteObject(this);
-        }
+        public Antiradine(Vector2 position) : base(position) { } 
     }
 }

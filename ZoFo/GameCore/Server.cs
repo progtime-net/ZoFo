@@ -12,24 +12,25 @@ using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.MapManager;
 using ZoFo.GameCore.GameManagers.NetworkManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.Entities;
-using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
+using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables; 
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 using ZoFo.GameCore.Graphics;
 using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
+using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore
 {
     public class Server
     {
         private ServerNetworkManager networkManager;
-        private int ticks = 0;
-        public IPEndPoint MyIp { get { return networkManager.endPoint; } } 
+        private int ticks = 0; 
+        public IPEndPoint MyIp { get { return networkManager.endPoint; } }  
         public Server()
         {
             networkManager = new ServerNetworkManager();
@@ -77,11 +78,20 @@ namespace ZoFo.GameCore
                     break;
                 case "UpdatePlayerParametrs":
                     break;
-                case "UpdatePosition":
+                case "UpdateInput":
+                    if (players.Count > 0)
+                        players[0].HandleNewInput(updateData as UpdateInput);//TODO id instead of 0
+                    else
+                        DebugHUD.DebugLog("NO PLAYER ON MAP");
                     break;
                 case "UpdateTileCreated":
                     break;
-
+                case "UpdateInputInteraction":
+                    players[0].HandleInteract(updateData as UpdateInputInteraction);
+                    break;
+                case "UpdateInputShoot":
+                    players[0].HandleShoot(updateData as UpdateInputShoot);
+                    break;
             }
         }
 
@@ -127,7 +137,10 @@ namespace ZoFo.GameCore
 
             //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));
             AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(740, 140)));
-            AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1000, 1000)));
+            for (int i = 0; i < 20; i++)
+                for (int j = 0; j < 20; j++)
+                    AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300 + i*70, 1000+j*70)));
+
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(140, 440)));
             AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(240, 440)));
         }
@@ -143,16 +156,16 @@ namespace ZoFo.GameCore
 
         public List<GameObject> gameObjects = new List<GameObject>();
         public List<Entity> entities;  //entity
-        public List<Player> players; 
+        public List<Player> players;
         public void Update(GameTime gameTime)
         {
             if (ticks == 3) //ОБРАБАТЫВАЕТСЯ 20 РАЗ В СЕКУНДУ
             {
-                foreach (var go in gameObjects)
+                for (int i = 0; i < gameObjects.Count; i++)
                 {
-                    go.UpdateLogic();
+                    gameObjects[i].UpdateLogic();
                 }
-                collisionManager.UpdatePositions();
+                collisionManager.ResolvePhysics();
                 ticks = 0;
                 networkManager.SendData();
             }
@@ -169,6 +182,24 @@ namespace ZoFo.GameCore
         {
 
             gameObjects.Add(gameObject);
+            
+            if (gameObject is StopObject)
+            {
+                AddData(new UpdateStopObjectCreated()
+                {
+                    Position = (gameObject as StopObject).position,
+                    sourceRectangle = new SerializableRectangle((gameObject as StopObject).sourceRectangle),
+                    Size = new SerializablePoint((gameObject as StopObject).graphicsComponent.ObjectDrawRectangle.Size),
+                    tileSetName = ((gameObject as StopObject).graphicsComponent as StaticGraphicsComponent)._textureName,
+                    collisions = (gameObject as StopObject).collisionComponents.Select(x => new SerializableRectangle(x.stopRectangle)).ToArray()
+                });//TODO 
+                foreach (var col in (gameObject as StopObject).collisionComponents)
+                {
+                    collisionManager.Register(col);
+                }
+                return;
+            }
+
             if (gameObject is MapObject)
             {
                 AddData(new UpdateTileCreated()
@@ -177,25 +208,42 @@ namespace ZoFo.GameCore
                     sourceRectangle = new SerializableRectangle((gameObject as MapObject).sourceRectangle),
                     Size = new SerializablePoint((gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size),
                     tileSetName = ((gameObject as MapObject).graphicsComponent as StaticGraphicsComponent)._textureName
-                });//TODO 
+                });
                 return;
             }
-            if (gameObject is Entity entity)
-            {
-                AddData(new UpdateGameObjectCreated() { GameObjectType = gameObject.GetType().Name, IdEntity = entity.Id,
-                position = new SerializableVector2(gameObject.position)});
-                collisionManager.Register(entity.collisionComponent);
+            
+            if (gameObject is Particle)
+            { 
+
+                AddData(new UpdateGameOBjectWithoutIdCreated()
+                {
+                    GameObjectClassName = gameObject.GetType().Name,
+                    position = gameObject.position
+                });
+                return;
             }
-            else
-                AddData(new UpdateGameObjectCreated() { GameObjectType = gameObject.GetType().Name,
-                    position = new SerializableVector2(gameObject.position)
+
+            if (gameObject is Entity entity)
+            { 
+                AddData(new UpdateGameObjectCreated()
+                {
+                    GameObjectType = gameObject.GetType().Name,
+                    IdEntity = entity.Id,
+                    position = gameObject.position
+                }); 
+                collisionManager.Register(entity.collisionComponent);
+                entities.Add(entity);
+            }
+            else 
+                AddData(new UpdateGameObjectCreated()
+                {
+                    GameObjectType = gameObject.GetType().Name,
+                    position = gameObject.position 
                 });
 
 
             if (gameObject is Player)
-            {
-                players.Add(gameObject as Player); 
-            }
+                players.Add(gameObject as Player);
             ////var elems = gameObject.GetType().GetProperties(System.Reflection.BindingFlags.Public);
             ////if (elems.Count()>0) TODO
             ////{ 
@@ -203,20 +251,26 @@ namespace ZoFo.GameCore
             ////}
 
         }
-        
+
         /// <summary>
         /// Удаляет игровой объект
         /// </summary>
         /// <param name="gameObject"></param>
-        public void DeleteObject(GameObject gameObject)
+        public void DeleteObject(Entity entity)
         {
-            gameObjects.Remove(gameObject);
+            if (gameObjects.Contains(entity))
+                gameObjects.Remove(entity);
+            if (entities.Contains(entity))
+                entities.Remove(entity);
+            if (players.Contains(entity))
+                players.Remove(entity as Player);
             AddData(new UpdateGameObjectDeleted()
-                { GameObjectType = gameObject.GetType().Name}
+            { GameObjectType = entity.GetType().Name, IdEntity = entity.Id }
             );
+            collisionManager.Deregister(entity.collisionComponent);
         }
     }
-    
+
     #endregion
 
     #endregion

@@ -56,7 +56,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 byte[] bytes = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(Datagramm));  //нужно сериализовать
                 socket.SendTo(bytes, sendingEP);
             }
-            
+
         }
 
         public void AddData(UpdateData UpdateData)
@@ -228,22 +228,22 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         }
         #endregion
         public static IPAddress GetIp()
-        {
+        { 
             string hostName = Dns.GetHostName(); // Retrive the Name of HOST
             var ipList = Dns.GetHostEntry(hostName).AddressList;
-            var ipV4List = new List<IPAddress>();
+            var ipV4List = new List<IPAddress>(); 
             foreach (var ip in ipList)
             {
                 if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                 {
                     ipV4List.Add(ip);
-                }
+                } 
             }
             if (ipV4List.Count>0)
             {
                 return ipV4List[ipV4List.Count - 1];
             }
-            return IPAddress.Loopback;
+            return IPAddress.Loopback; 
         }
 
         //поток 2
@@ -252,13 +252,13 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             byte[] buffer = new byte[65535];
             string data;
             while (socket != null)
-            {
+            { 
                 EndPoint senderRemote = new IPEndPoint(IPAddress.Any, 0);
                 int size = socket.ReceiveFrom(buffer, buffer.Length, SocketFlags.None, ref senderRemote);
                 byte[] correctedBuffer = new byte[size];
                 Array.Copy(buffer, correctedBuffer, size);
                 data = Encoding.UTF8.GetString(correctedBuffer);
-                GetDataSent(data);
+                GetDataSent(data); 
             }
         }
     }

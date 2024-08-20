@@ -22,11 +22,13 @@ using System.Linq;
 using System.Web;
 using ZoFo.GameCore.GUI;
 using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
-using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
+using ZoFo.GameCore.GameObjects.MapObjects.StopObjects; 
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Enemies;
-using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
+using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO; 
+using ZoFo.GameCore.Graphics; 
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using ZoFo.GameCore.GameManagers.CollisionManager;
 namespace ZoFo.GameCore
 {
     public class Client
@@ -51,6 +53,15 @@ namespace ZoFo.GameCore
                     InputMovementDirection = AppManager.Instance.InputManager.InputMovementDirection,
                     InputAttackDirection = AppManager.Instance.InputManager.InputAttackDirection
                 });
+
+            };
+            AppManager.Instance.InputManager.OnInteract += () =>
+            {
+                networkManager.AddData(new UpdateInputInteraction() { });
+            };
+            AppManager.Instance.InputManager.ShootEvent += () =>
+            {
+                networkManager.AddData(new UpdateInputShoot() { });
             };
         }
 
@@ -83,21 +94,51 @@ namespace ZoFo.GameCore
 
         #endregion
 
+        public Player myPlayer;
         List<MapObject> mapObjects = new List<MapObject>();
-        List<GameObject> gameObjects = new List<GameObject>(); 
+        List<GameObject> gameObjects = new List<GameObject>();
         List<Player> players = new List<Player>();
         List<StopObject> stopObjects = new List<StopObject>();
+        List<Particle> particles = new List<Particle>();
+
+        float shakeEffect = 0;
+        public void AddShaking(float power)
+        {
+            shakeEffect += power;
+        }
+        public void UpdateShaking()
+        {
+            shakeEffect *= 0.99f;
+            (GraphicsComponent.CameraPosition) += new Microsoft.Xna.Framework.Point(
+                (int)((Random.Shared.NextDouble() - 0.5) * shakeEffect),
+                (int)((Random.Shared.NextDouble() - 0.5) * shakeEffect)
+                );
+        }
+
         /// <summary>
         /// Клиент должен обнговлять игру анимаций
         /// </summary>
         /// <param name="gameTime"></param>
         internal void Update(GameTime gameTime)
         {
+            UpdateShaking();
             for (int i = 0; i < gameObjects.Count; i++)
-            {
-                AppManager.Instance.debugHud.Set("GameTime", gameTime.TotalGameTime.ToString());
+            { 
                 gameObjects[i].UpdateAnimations();
             }
+            for (int i = 0; i < particles.Count; i++)
+            { 
+                particles[i].UpdateAnimations();
+            }
+
+            networkManager.SendData();//set to ticks
+            if (myPlayer != null)
+                GraphicsComponent.CameraPosition =
+                    ((GraphicsComponent.CameraPosition.ToVector2() *0.9f +
+                    (myPlayer.position + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2 - AppManager.Instance.CurentScreenResolution.ToVector2() / (2 * GraphicsComponent.scaling)
+                    ) * 0.1f
+                    ) )
+                .ToPoint();
         }
         public void SendData()
         {
@@ -117,64 +158,129 @@ namespace ZoFo.GameCore
             {
                 gameObjects[i].Draw(spriteBatch);
             }
+            for (int i = 0; i < particles.Count; i++)
+            { 
+                particles[i].Draw(spriteBatch);
+            }
+
         }
 
         internal void GotData(List<UpdateData> updates)
         {
-            foreach (UpdateData update in updates)
+
+            if (update is UpdateTileCreated)
             {
-                if (update is UpdateTileCreated)
+                mapObjects.Add(
+                new MapObject(
+                    (update as UpdateTileCreated).Position,
+                    (update as UpdateTileCreated).Size.GetPoint().ToVector2(),
+                    (update as UpdateTileCreated).sourceRectangle.GetRectangle(),
+                    (update as UpdateTileCreated).tileSetName
+                    ));
+            }
+            else if (update is UpdateStopObjectCreated)
+            {
+                stopObjects.Add(
+                new StopObject(
+                    (update as UpdateStopObjectCreated).Position,
+                    (update as UpdateStopObjectCreated).Size.GetPoint().ToVector2(),
+                    (update as UpdateStopObjectCreated).sourceRectangle.GetRectangle(),
+                    (update as UpdateStopObjectCreated).tileSetName,
+                    (update as UpdateStopObjectCreated).collisions.Select(x => x.GetRectangle()).ToArray()
+                    ));
+            }
+            else if (update is UpdateGameObjectCreated)
+            {
+                Entity created_gameObject;
+                if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
                 {
-                    mapObjects.Add(
-                    new MapObject(
-                        (update as UpdateTileCreated).Position.GetVector2(),
-                        (update as UpdateTileCreated).Size.GetPoint().ToVector2(),
-                        (update as UpdateTileCreated).sourceRectangle.GetRectangle(),
-                        (update as UpdateTileCreated).tileSetName
-                        ));
+                    created_gameObject = new Player((update as UpdateGameObjectCreated).position);
+                    players.Add(created_gameObject as Player);
+                    myPlayer = players[0]; 
+                    gameObjects.Add(created_gameObject);
+                }  
+                else
+                {
+                    Type t = Type.GetType("ZoFo.GameCore.GameObjects." + (update as UpdateGameObjectCreated).GameObjectType);
+                    GameObject gameObject = Activator.CreateInstance(t, (update as UpdateGameObjectCreated).position) as GameObject;
+                    if (gameObject is Entity)
+                        (gameObject as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
+                    gameObjects.Add(gameObject);
+                } 
+                (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
+
+            }
+            else if (update is UpdateGameOBjectWithoutIdCreated)
+            {
+                Type t = Type.GetType("ZoFo.GameCore.GameObjects." + (update as UpdateGameOBjectWithoutIdCreated).GameObjectClassName);
+                GameObject gameObject = Activator.CreateInstance(t, (update as UpdateGameOBjectWithoutIdCreated).position) as GameObject;
+                if (gameObject is Particle)
+                    particles.Add(gameObject as Particle);
+            } 
+            else if (update is UpdatePosition)
+            {
+                var ent = FindEntityById(update.IdEntity);
+
+                if (ent != null)
+                    ent.position = (update as UpdatePosition).NewPosition;
+            }
+            else if (update is UpdateAnimation)
+            {
+                var ent = FindEntityById(update.IdEntity);
+                if (ent != null)
+                    ((ent as Entity).graphicsComponent as AnimatedGraphicsComponent).StartAnimation((update as UpdateAnimation).animationId);
+                //DebugHUD.Instance.Log("new Animation " + ent.position);
+            }
+            else if (update is UpdateGameObjectDeleted)
+            {
+                var ent = FindEntityById(update.IdEntity);
+
+                if (ent != null)
+                    DeleteObject(ent);
+
+            }
+            else if (update is UpdatePlayerParametrs)
+            {
+                UpdatePlayerHealth(update as UpdatePlayerParametrs);
+            }
+            
+        }
+        public void UpdatePlayerHealth(UpdatePlayerParametrs update)
+        {
+
+            //check on player hp lowered
+
+            if (myPlayer != null)
+            {
+                float hpMyPlayerHp = myPlayer.health;
+
+
+                var entity = FindEntityById(update.IdEntity);
+
+                if (entity != null)
+                {
+                    (entity as Player).health = (update as UpdatePlayerParametrs).health;
+                    (entity as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
                 }
-                //else if (update is UpdateStopObjectCreated)
-                //{
-                //    stopObjects.Add(
-                //    new StopObject(
-                //        (update as UpdateStopObjectCreated).Position,
-                //        (update as UpdateStopObjectCreated).Size.ToVector2(),
-                //        (update as UpdateStopObjectCreated).sourceRectangle,
-                //        (update as UpdateStopObjectCreated).tileSetName
-                //        ));
-                //}
-                else if (update is UpdateGameObjectCreated)
+                if (entity.Equals(myPlayer))
                 {
-                    GameObject created_gameObject;
-                    if ((update as UpdateGameObjectCreated).GameObjectType == "EntittyForAnimationTests")
-                        gameObjects.Add(new EntittyForAnimationTests((update as UpdateGameObjectCreated).position.GetVector2()));
-                    if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
+                    if (hpMyPlayerHp > myPlayer.health)
                     {
-                        created_gameObject = new Player((update as UpdateGameObjectCreated).position.GetVector2());
-                        players.Add(created_gameObject as Player);
-                        gameObjects.Add(created_gameObject);
+                        AppManager.Instance.client.AddShaking((hpMyPlayerHp - myPlayer.health));
+
                     }
-                    if ((update as UpdateGameObjectCreated).GameObjectType == "Ammo")
-                        gameObjects.Add(new Ammo((update as UpdateGameObjectCreated).position.GetVector2()));
-                    if ((update as UpdateGameObjectCreated).GameObjectType == "Zombie")
-                        gameObjects.Add(new Zombie((update as UpdateGameObjectCreated).position.GetVector2()));
-
-
-                    (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
-                    //var a = Assembly.GetAssembly(typeof(GameObject));
-                    //gameObjects.Add( TODO reflection
-                    //Activator.CreateInstance(Type.GetType("ZoFo.GameCore.GameObjects.Entities.EntittyForAnimationTests")
-                    ///*(update as UpdateGameObjectCreated).GameObjectType*/, new []{ new Vector2(100, 100) })
-                    //as GameObject
-                    //);
                 }
-                //else if (update is UpdatePosition)
-                //{
-                //    var ent = FindEntityById(update.IdEntity);
 
-                //    ent.position = (update as UpdatePosition).NewPosition.GetVector2();
-                //    DebugHUD.Instance.Log("newPosition " + ent.position);
-                //}
+                return;
+            }
+            
+
+            var ent = FindEntityById(update.IdEntity);
+
+            if (ent != null)
+            {
+                (ent as Player).health = (update as UpdatePlayerParametrs).health;
+                (ent as Player).rad = (update as UpdatePlayerParametrs).radiatoin; 
             }
             
         }
@@ -193,6 +299,29 @@ namespace ZoFo.GameCore
                 }
             }
             return null;
+        }
+
+        public void DeleteObject(GameObject gameObject)
+        {
+            if (gameObject is Entity)
+            {
+                DeleteEntity(gameObject as Entity);
+            }
+            else if (gameObject is Particle)
+            {
+                if (particles.Contains(gameObject))
+                    particles.Remove(gameObject as Particle);
+            }
+        } 
+        public void DeleteEntity(Entity entity)
+        {
+
+            if (gameObjects.Contains(entity))
+                gameObjects.Remove(entity);
+            //if (entities.Contains(entity))
+            //    entities.Remove(entity);
+            if (players.Contains(entity))
+                players.Remove(entity as Player);
         }
 
     }

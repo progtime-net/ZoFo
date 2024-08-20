@@ -62,6 +62,10 @@ public class DebugHUD
     {
         _text[key] = value;
     }
+    public static void DebugSet(string key, string value)
+    {
+        Instance._text[key] = value;
+    }
 
     public void Log(string value)
     {
@@ -69,6 +73,14 @@ public class DebugHUD
         if (_log.Count > 30)
         {
             _log.RemoveAt(0);
+        }
+    }
+    public static void DebugLog(string value)
+    {
+        Instance._log.Add(value);
+        if (Instance._log.Count > 30)
+        {
+            Instance._log.RemoveAt(0);
         }
     }
 }

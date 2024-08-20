@@ -60,16 +60,16 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// Получает IP устройства
         /// </summary>
         /// <returns></returns>
-        public static IPAddress GetIp()
+        public static IPAddress GetIp() 
         {
             string hostName = Dns.GetHostName(); // Retrive the Name of HOST
             var ipList = Dns.GetHostEntry(hostName).AddressList;
 
-            var ipV4List = new List<IPAddress>();
+            var ipV4List = new List<IPAddress>(); 
             foreach (var ip in ipList)
             {
                 if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                {
+                {  
                     ipV4List.Add(ip);
                 }
             }
@@ -77,7 +77,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             {
                 return ipV4List[ipV4List.Count - 1];
             }
-            return IPAddress.Loopback;
+            return IPAddress.Loopback; 
         }
         public void SetIsMultiplayer(bool isMultiplayer)
         {
@@ -112,7 +112,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             }
             List<UpdateData> dataToSend;
             if (importantUpdates.Count != 0 || sendedData.Count != 0) 
-            {
+            { 
                 dataToSend = new List<UpdateData>();
                 for (int i = 0; i < 200 && i < importantUpdates.Count; i++)
                     dataToSend.Add(importantUpdates[i]);
@@ -134,7 +134,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 }
                 currentDatagrammId++;
                 for (int i = 0; i < 200 && i < dataToSend.Count; i++)
-                    importantUpdates.RemoveAt(0);
+                    importantUpdates.RemoveAt(0); 
             }
             Datagramm unImpDgramm = new Datagramm();
 
@@ -234,8 +234,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                 arrivingDataId.Add(Dgramm);
             }
             else
-            {
-                //Настроить десериализацию и применять неважные апдейты
+            { 
+                //Настроить десериализацию и применять неважные апдейты 
             }
 
         }
