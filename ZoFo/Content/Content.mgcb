@@ -44,6 +44,9 @@
 #begin MapData/TileMaps/main.tmj
 /copy:MapData/TileMaps/main.tmj
 
+#begin MapData/TileSets/bonfire.tsj
+/copy:MapData/TileSets/bonfire.tsj
+
 #begin MapData/TileSets/IconSet.tsj
 /copy:MapData/TileSets/IconSet.tsj
 
