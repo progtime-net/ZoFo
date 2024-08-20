@@ -15,7 +15,7 @@ using ZoFo.GameCore.GUI;
 namespace ZoFo.GameCore.GameObjects;
 
 public class Player : LivingEntity
-{
+{ 
     public Vector2 InputWeaponRotation { get; set; }
     public Vector2 InputPlayerRotation { get; set; }
     
@@ -36,7 +36,7 @@ public class Player : LivingEntity
     /// <summary>
     /// Факт того, что плеер в этом апдейте пытается стрелять
     /// </summary>
-    public bool IsTryingToShoot { get; set; }
+    public bool IsTryingToShoot { get; set; } 
     public Player(Vector2 position) : base(position)
     {
         lootData = new LootData();
