@@ -82,11 +82,7 @@ public class SelectingServerGUI : AbstractGUI
                     AppManager.Instance.SetGUI(new WaitingForPlayersGUI(false));
                 }
             }
-            catch (Exception)
-            {
-
-                //  throw;
-            }
+            catch (Exception) { }
 
             // ваш код здесь
         };

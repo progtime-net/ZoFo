@@ -54,7 +54,17 @@ public class FinishingGUI : AbstractGUI
             fontName = "Fonts\\Font",
             textureName = "Textures/GUI/Button"
         };
-        ExitButton.LeftButtonPressed += () => { AppManager.Instance.SetGUI(new MainMenuGUI()); };
+        ExitButton.LeftButtonPressed += () => {
+
+            foreach (var item in AppManager.Instance.client.myPlayer.lootData.loots)
+            {
+                AppManager.Instance.playerData.AddLoot(item.Key, item.Value);
+            }
+
+
+            AppManager.Instance.SetGUI(new MainMenuGUI()); 
+        
+        };
         Elements.Add(ExitButton);
 
         //player itams

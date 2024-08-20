@@ -21,7 +21,8 @@ namespace ZoFo.GameCore.GameManagers.MapManager
         private static readonly JsonSerializerOptions _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true }; // Задача настроек для JsonSerialize
         private static readonly Dictionary<string, string> _classPath = new Dictionary<string, string>() { 
             { "Collectables", "ZoFo.GameCore.GameObjects." }, 
-            { "Enemies", "ZoFo.GameCore.GameObjects." } 
+            { "Enemies", "ZoFo.GameCore.GameObjects." },
+            { "Zones", "ZoFo.GameCore.GameObjects." }
         };
 
         //private static readonly float _scale = 1.0f;

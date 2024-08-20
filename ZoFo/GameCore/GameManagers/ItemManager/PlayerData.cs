@@ -18,6 +18,15 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
             LoadPlayerData();
         }
         public Dictionary<string, int> items = new Dictionary<string, int>(); 
+        public void AddLoot(string loot, int quantity)
+        {
+            if (items.ContainsKey(loot)) 
+                items[loot] += quantity;
+            else
+                items.Add(loot, quantity);
+
+            AppManager.Instance.playerData.SavePlayerData();
+        }
         /// <summary>
         /// Принимает тэг и крафтит этот объект
         /// </summary>

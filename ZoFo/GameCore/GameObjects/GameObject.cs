@@ -24,6 +24,7 @@ public abstract class GameObject
         graphicsComponent.ObjectDrawRectangle.X = (int)position.X;
         graphicsComponent.ObjectDrawRectangle.Y = (int)position.Y;
 
+        positionDraw = position;
     }
     public virtual void UpdateLogic()
     { 
@@ -43,7 +44,10 @@ public abstract class GameObject
 
     public void Instantiate(GameObject gameObject)
     {
-        AppManager.Instance.server.RegisterGameObject(gameObject);
+        if (AppManager.Instance.gamestate == GameState.HostPlaying)
+        {
+            AppManager.Instance.server.RegisterGameObject(gameObject);
+        }
     }
     #endregion
 

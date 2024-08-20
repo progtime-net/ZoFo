@@ -20,7 +20,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
     public class ClientNetworkManager
     {
-        private int PlayerId;
+        public int PlayerId;
         private IPEndPoint endPoint;
         private IPEndPoint sendingEP;
         private Socket socket;
@@ -138,6 +138,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                         update = token.ToObject<UpdateGameObjectCreated>();
                         data.Add(update);
                         break;
+                    case "UpdateGameObjectWithoutIdCreated":
+                        update = token.ToObject<UpdateGameObjectWithoutIdCreated>();
+                        data.Add(update);
+                        break;
                     case "UpdateGameObjectDeleted":
                         update = token.ToObject<UpdateGameObjectDeleted>();
                         data.Add(update);
@@ -168,6 +172,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                         break;
                     case "UpdateTileCreated":
                         update = token.ToObject<UpdateTileCreated>();
+                        data.Add(update);
+                        break;
+                    case "UpdateCreatePlayer":
+                        update = token.ToObject<UpdateCreatePlayer>();
                         data.Add(update);
                         break;
 

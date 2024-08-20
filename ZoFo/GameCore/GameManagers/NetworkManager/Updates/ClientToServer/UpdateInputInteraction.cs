@@ -9,4 +9,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 public class UpdateInputInteraction : UpdateData
 {
     public UpdateInputInteraction() { UpdateType = "UpdateInputInteraction"; }
+    public int PlayerId { get; set; }
+
 }

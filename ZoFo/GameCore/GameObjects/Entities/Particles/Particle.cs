@@ -16,11 +16,16 @@ namespace ZoFo.GameCore.GameObjects
         
         public Particle(Vector2 position) : base(position)
         {
-            graphicsComponent.ObjectDrawRectangle = new Rectangle(-30, -30,60,60).SetOrigin(position);
-            (graphicsComponent as AnimatedGraphicsComponent).actionOfAnimationEnd += _ => { 
-                 
+            graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0,60,60).SetOrigin(position);
+            AppManager.Instance.SoundManager.StartSound("gun-gunshot-01", Vector2.Zero, Vector2.Zero, 0.5f, (float)(Random.Shared.NextDouble()*2-1));
+            (graphicsComponent as AnimatedGraphicsComponent).actionOfAnimationEnd += _ => {
+
+                if (AppManager.Instance.client!=null)
+                {
                     AppManager.Instance.client.DeleteObject(this);
-            
+
+                }
+
             };
         } 
     }
