@@ -195,14 +195,13 @@ namespace ZoFo.GameCore
                     (update as UpdateStopObjectCreated).collisions.Select(x => x.GetRectangle()).ToArray()
                     ));
             }
+
             else if (update is UpdateGameObjectCreated)
             {
                 Entity created_gameObject;
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
                 {
                     created_gameObject = new Player((update as UpdateGameObjectCreated).position.GetVector2());
-                    players.Add(created_gameObject as Player);
-                    myPlayer = players[0]; 
                     gameObjects.Add(created_gameObject);
                 }  
                 else
