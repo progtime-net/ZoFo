@@ -5,7 +5,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using ZoFo.GameCore.Graphics;
 
-namespace ZoFo.GameCore.GameObjects.Entities.Interactables;
+namespace ZoFo.GameCore.GameObjects;
 
 public class Interactable : Entity
 {

@@ -1,9 +1,9 @@
 { "object":
     {
-     "gid":3,
+     "gid":8,
      "height":16,
-     "id":11,
-     "name":"BottleOfWater",
+     "id":1,
+     "name":"Zombie",
      "rotation":0,
      "type":"",
      "visible":true,
@@ -12,7 +12,7 @@
  "tileset":
     {
      "firstgid":1,
-     "source":"..\/TileSets\/IconSet.tsj"
+     "source":"..\/..\/TileSets\/IconSet.tsj"
     },
  "type":"template"
 }

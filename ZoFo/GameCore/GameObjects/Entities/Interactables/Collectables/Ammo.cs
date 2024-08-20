@@ -11,7 +11,7 @@ using ZoFo.GameCore.Graphics;
 using Microsoft.Xna.Framework.Graphics;
 using ZoFo.GameCore.GUI;
 
-namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
+namespace ZoFo.GameCore.GameObjects
 {
     class Ammo : Collectable
     {

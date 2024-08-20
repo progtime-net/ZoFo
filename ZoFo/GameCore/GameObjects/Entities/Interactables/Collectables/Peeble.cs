@@ -10,7 +10,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameManagers;
 
 
-namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
+namespace ZoFo.GameCore.GameObjects
 {
     public class Peeble:Collectable
     {
@@ -18,7 +18,8 @@ namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables
 
         public Peeble(Vector2 position) : base(position)
         {
-
+            graphicsComponent.ObjectDrawRectangle.Width = 20;
+            graphicsComponent.ObjectDrawRectangle.Height = 20;
         }
         public override void OnInteraction(GameObject sender)
         {

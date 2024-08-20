@@ -6,14 +6,14 @@ using Microsoft.Xna.Framework.Graphics;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 
-namespace ZoFo.GameCore.GameObjects.Entities
+namespace ZoFo.GameCore.GameObjects
 {
     public abstract class Entity : GameObject
     {
         //public override GraphicsComponent graphicsComponent => null;
         public CollisionComponent collisionComponent { get; protected set; }
         public int Id { get; set; }
-        static int totalEntitiesCreated = 0;
+        static int totalEntitiesCreated = 1;
         protected Entity(Vector2 position) : base(position)
         {
             Id = totalEntitiesCreated;
@@ -46,7 +46,6 @@ namespace ZoFo.GameCore.GameObjects.Entities
                 animationId = animationId,
                 IdEntity = Id
             });
-
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

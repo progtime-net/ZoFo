@@ -1,9 +1,9 @@
 { "object":
     {
-     "gid":6,
+     "gid":2,
      "height":16,
-     "id":16,
-     "name":"RottenFlesh",
+     "id":10,
+     "name":"PureBottleOfWater",
      "rotation":0,
      "type":"",
      "visible":true,
@@ -12,7 +12,7 @@
  "tileset":
     {
      "firstgid":1,
-     "source":"..\/TileSets\/IconSet.tsj"
+     "source":"..\/..\/TileSets\/IconSet.tsj"
     },
  "type":"template"
 }
