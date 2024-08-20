@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
+using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.GameObjects
 {
@@ -14,6 +15,13 @@ namespace ZoFo.GameCore.GameObjects
 
         public void AddLoot(string lootName, int quantity, int id)
         {
+            if (lootName == null)
+            {
+                DebugHUD.DebugLog("PROBLEM, loot is null");
+                DebugHUD.DebugLog("PROBLEM, loot is null");
+                DebugHUD.DebugLog("PROBLEM, loot is null");
+                return;
+            }
             AppManager.Instance.server.AddData(new UpdateLoot(lootName, quantity, id));
 
             if (loots.ContainsKey(lootName))

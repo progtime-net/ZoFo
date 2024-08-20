@@ -41,7 +41,7 @@ public class MainMenuGUI : AbstractGUI
         };
         playButton.LeftButtonPressed += () =>
         {
-            AppManager.Instance.SoundManager.StartAmbientSound("Loot");
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new SelectModeMenu());
         };
         Elements.Add(playButton);
@@ -57,6 +57,7 @@ public class MainMenuGUI : AbstractGUI
         };
         baseButton.LeftButtonPressed += () =>
         {
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new BaseGUI());
         };
         Elements.Add(baseButton);
@@ -72,7 +73,7 @@ public class MainMenuGUI : AbstractGUI
         };
         optionButton.LeftButtonPressed += () =>
         {
-            AppManager.Instance.SoundManager.StartAmbientSound("Loot");
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new OptionsGUI());
         };
         Elements.Add(optionButton);

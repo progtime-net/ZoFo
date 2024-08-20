@@ -18,6 +18,7 @@ namespace MonogameLibrary.UI.Base
         public string textureName = "";
         public Rectangle rectangle = new Rectangle(0, 0, 10, 10);
         public Color mainColor = Color.White;
+        public bool sus = true;
 
         public DrawableUIElement(UIManager manager, int layerIndex = 0, string textureName = "")
         {
@@ -29,6 +30,7 @@ namespace MonogameLibrary.UI.Base
         {
             if (textureName == "")
             {
+                sus = false;
                 texture = new Texture2D(Manager.GraphicsDevice, 1, 1);
                 texture.SetData<Color>(new Color[] { mainColor });
             }

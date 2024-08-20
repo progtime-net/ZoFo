@@ -29,14 +29,13 @@ namespace ZoFo.GameCore
     public class Server
     {
         private ServerNetworkManager networkManager;
-        private int ticks = 0;
-        public IPEndPoint MyIp { get { return networkManager.InfoConnect; } }
+        private int ticks = 0; 
+        public IPEndPoint MyIp { get { return networkManager.endPoint; } }  
         public Server()
         {
             networkManager = new ServerNetworkManager();
-            networkManager.GetDataSend += OnDataSend;
             collisionManager = new CollisionManager();
-
+            players = new List<Player>();
         }
         #region server logic as App
 
@@ -51,6 +50,13 @@ namespace ZoFo.GameCore
                 ProcessIUpdateData(updateDatas[i]);
             }
         }
+        internal void UpdatesList(List<UpdateData> updates)
+        {
+            foreach (var item in updates)
+            {
+                ProcessIUpdateData(item);
+            }
+        }
         /// <summary>
         /// Обработка апдейтсов, которые нам прислал клиент
         /// </summary>
@@ -61,24 +67,6 @@ namespace ZoFo.GameCore
             //ТУТ Switch case будет честное слово
             switch (updateData.UpdateType)
             {
-                case "UpdateAnimation":
-                    break;
-                case "UpdateEntityHealth":
-                    break;
-                case "UpdateGameEnded":
-                    break;
-                case "UpdateGameObjectCreated":
-                    break;
-                case "UpdateGameObjectDeleted":
-                    break;
-                case "UpdateInteraction":
-                    break;
-                case "UpdateInteractionReady":
-                    break;
-                case "UpdateLoot":
-                    break;
-                case "UpdatePlayerParametrs":
-                    break;
                 case "UpdateInput":
                     if (players.Count > 0)
                         players[0].HandleNewInput(updateData as UpdateInput);//TODO id instead of 0
@@ -96,10 +84,6 @@ namespace ZoFo.GameCore
             }
         }
 
-        public void CloseConnection()
-        {
-            networkManager.CloseConnection();
-        }
 
         /// <summary>
         /// Для красоты)   Отдел Серверов 
@@ -115,9 +99,10 @@ namespace ZoFo.GameCore
         /// Создает комнату и запускает ожидание подключений
         /// </summary>
         /// <param name="players"></param>
-        public void CreateRoom(int players)
+        public void CreateRoom(bool isMultiplayer)
         {
-            networkManager.Start(players);
+            networkManager.SetIsMultiplayer(isMultiplayer);
+            networkManager.Start();
         }
 
         #endregion
@@ -135,17 +120,15 @@ namespace ZoFo.GameCore
             collisionManager = new CollisionManager();
             gameObjects = new List<GameObject>();
             entities = new List<Entity>();
-            players = new List<Player>();
+            networkManager.StartGame();
             new MapManager().LoadMap();
 
             //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));
-            AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(740, 140)));
-            for (int i = 0; i < 20; i++)
-                for (int j = 0; j < 20; j++)
-                    AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300 + i*70, 1000+j*70)));
-
-            AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(140, 440)));
-            AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(240, 440)));
+            AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(760, 140)));
+            //for (int i = 0; i < 20; i++)
+            //    for (int j = 0; j < 20; j++)
+            //        AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300 + i*70, 1000+j*70)));
+             
         }
 
         /// <summary>
@@ -155,10 +138,9 @@ namespace ZoFo.GameCore
         {
             UpdateGameEnded gameEnded = new UpdateGameEnded();
             networkManager.AddData(gameEnded);
-            networkManager.CloseConnection();
         }
 
-        public List<GameObject> gameObjects;
+        public List<GameObject> gameObjects = new List<GameObject>();
         public List<Entity> entities;  //entity
         public List<Player> players;
         public void Update(GameTime gameTime)
@@ -191,7 +173,7 @@ namespace ZoFo.GameCore
             {
                 AddData(new UpdateStopObjectCreated()
                 {
-                    Position = (gameObject as StopObject).position,
+                    Position = (gameObject as StopObject).position.Serialize(),
                     sourceRectangle = new SerializableRectangle((gameObject as StopObject).sourceRectangle),
                     Size = new SerializablePoint((gameObject as StopObject).graphicsComponent.ObjectDrawRectangle.Size),
                     tileSetName = ((gameObject as StopObject).graphicsComponent as StaticGraphicsComponent)._textureName,
@@ -208,7 +190,7 @@ namespace ZoFo.GameCore
             {
                 AddData(new UpdateTileCreated()
                 {
-                    Position = (gameObject as MapObject).position,
+                    Position = new SerializableVector2((gameObject as MapObject).position),
                     sourceRectangle = new SerializableRectangle((gameObject as MapObject).sourceRectangle),
                     Size = new SerializablePoint((gameObject as MapObject).graphicsComponent.ObjectDrawRectangle.Size),
                     tileSetName = ((gameObject as MapObject).graphicsComponent as StaticGraphicsComponent)._textureName
@@ -219,30 +201,30 @@ namespace ZoFo.GameCore
             if (gameObject is Particle)
             { 
 
-                AddData(new UpdateGameOBjectWithoutIdCreated()
+                AddData(new UpdateGameObjectWithoutIdCreated()
                 {
                     GameObjectClassName = gameObject.GetType().Name,
-                    position = gameObject.position
+                    position = gameObject.position.Serialize()
                 });
                 return;
             }
 
             if (gameObject is Entity entity)
-            {
+            { 
                 AddData(new UpdateGameObjectCreated()
                 {
                     GameObjectType = gameObject.GetType().Name,
                     IdEntity = entity.Id,
-                    position = gameObject.position
-                });
+                    position = gameObject.position.Serialize()
+                }); 
                 collisionManager.Register(entity.collisionComponent);
                 entities.Add(entity);
             }
-            else
+            else 
                 AddData(new UpdateGameObjectCreated()
                 {
                     GameObjectType = gameObject.GetType().Name,
-                    position = gameObject.position
+                    position = gameObject.position.Serialize()
                 });
 
 

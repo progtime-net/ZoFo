@@ -38,15 +38,15 @@ public class LivingEntity : Entity
     {
         base.UpdateAnimations();
     }
-    Vector2 prevPosition_forClient;
+    protected Vector2 prevPosition_forClient;
     public override void Draw(SpriteBatch spriteBatch)
     {
-        if ((position - prevPosition_forClient).X < 0)
+        if ((positionDraw - prevPosition_forClient).X < 0)
             graphicsComponent.Flip = SpriteEffects.FlipHorizontally;
-        else if ((position - prevPosition_forClient).X > 0)
+        else if ((positionDraw - prevPosition_forClient).X > 0)
             graphicsComponent.Flip = SpriteEffects.None;
         base.Draw(spriteBatch);
-        prevPosition_forClient = position;
+        prevPosition_forClient = positionDraw;
     }
 
     public virtual void Die()

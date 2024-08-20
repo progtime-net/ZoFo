@@ -62,12 +62,14 @@ namespace ZoFo.GameCore.GameManagers
             ItemManager = new ItemManager.ItemManager();
             Instance = this;
             InputManager = new InputManager();
+            SoundManager = new SoundManager();
+            SoundManager.LoadSounds();
             SettingsManager = new SettingsManager();
             SettingsManager.LoadSettings();
-            SoundManager = new SoundManager();
+            
             AssetManager = new AssetManager();
-            SoundManager.LoadSounds();
-
+            
+            SoundManager.StartAmbientSound("Background menu music");
 
             currentGUI = new MainMenuGUI();
             debugHud = new DebugHUD();
@@ -103,8 +105,8 @@ namespace ZoFo.GameCore.GameManagers
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape)) { server?.CloseConnection(); Exit(); }
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || 
+                Keyboard.GetState().IsKeyDown(Keys.Escape)) { Exit(); } 
 
 
          //   debugHud.Set("key", "value");
@@ -139,6 +141,8 @@ namespace ZoFo.GameCore.GameManagers
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
+                    client.Draw(_spriteBatch);
+                    break;
                 case GameState.HostPlaying:
                     client.Draw(_spriteBatch);
                     break;

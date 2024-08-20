@@ -44,6 +44,9 @@
 #begin MapData/TileMaps/main.tmj
 /copy:MapData/TileMaps/main.tmj
 
+#begin MapData/TileSets/bonfire.tsj
+/copy:MapData/TileSets/bonfire.tsj
+
 #begin MapData/TileSets/IconSet.tsj
 /copy:MapData/TileSets/IconSet.tsj
 
@@ -55,6 +58,30 @@
 
 #begin MapData/TileSets/TilesetNature.tsj
 /copy:MapData/TileSets/TilesetNature.tsj
+
+#begin sounds/Background menu music.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Background menu music.wav
+
+#begin sounds/Background music.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Background music.wav
+
+#begin sounds/Button click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Button click.wav
+
+#begin sounds/Craft sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Craft sound.wav
 
 #begin sounds/Loot.wav
 /importer:WavImporter
@@ -97,6 +124,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/Zombi stoit.wav
+
+#begin sounds/zombie sound 2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/zombie sound 2.wav
+
+#begin sounds/zombie sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/zombie sound.wav
 
 #begin Textures/Animations/player_down_idle.animation
 /copy:Textures/Animations/player_down_idle.animation
@@ -184,6 +223,33 @@
 
 #begin Textures/Animations/player_right_idle.animation
 /copy:Textures/Animations/player_right_idle.animation
+
+#begin Textures/Animations/player_run_down.animation
+/copy:Textures/Animations/player_run_down.animation
+
+#begin Textures/Animations/player_run_left_down.animation
+/copy:Textures/Animations/player_run_left_down.animation
+
+#begin Textures/Animations/player_run_left_up.animation
+/copy:Textures/Animations/player_run_left_up.animation
+
+#begin Textures/Animations/player_run_left.animation
+/copy:Textures/Animations/player_run_left.animation
+
+#begin Textures/Animations/player_run_right_down.animation
+/copy:Textures/Animations/player_run_right_down.animation
+
+#begin Textures/Animations/player_run_right_up.animation
+/copy:Textures/Animations/player_run_right_up.animation
+
+#begin Textures/Animations/player_run_right.animation
+/copy:Textures/Animations/player_run_right.animation
+
+#begin Textures/Animations/player_run_right.zip
+/copy:Textures/Animations/player_run_right.zip
+
+#begin Textures/Animations/player_run_up.animation
+/copy:Textures/Animations/player_run_up.animation
 
 #begin Textures/Animations/player_running_top_rotate.animation
 /copy:Textures/Animations/player_running_top_rotate.animation
@@ -328,8 +394,20 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/AnimationTextures/Zombie/zombie_spritesheet_v2.png
+ 
+#begin Textures/GUI/back.png 
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color 
+/build:Textures/GUI/back.png 
 
-#begin Textures/GUI/back.png
+#begin Textures/Effects/explosion.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -339,7 +417,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/GUI/back.png
+/build:Textures/Effects/explosion.png 
 
 #begin Textures/GUI/background/base.png
 /importer:TextureImporter
@@ -677,18 +755,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/icons/Collectables/Ammo.png
 
-#begin Textures/icons/Collectables/Ammo.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/icons/Collectables/Ammo.png
-
 #begin Textures/icons/Collectables/BottleOfWater.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -700,30 +766,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/icons/Collectables/BottleOfWater.png
-
-#begin Textures/icons/Collectables/BottleOfWater.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/icons/Collectables/BottleOfWater.png
-
-#begin Textures/icons/Collectables/Peeble.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/icons/Collectables/Peeble.png
 
 #begin Textures/icons/Collectables/Peeble.png
 /importer:TextureImporter
@@ -749,30 +791,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/icons/Collectables/PureBottleOfWater.png
 
-#begin Textures/icons/Collectables/PureBottleOfWater.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/icons/Collectables/PureBottleOfWater.png
-
-#begin Textures/icons/Collectables/RottenFlesh.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/icons/Collectables/RottenFlesh.png
-
 #begin Textures/icons/Collectables/RottenFlesh.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -796,30 +814,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/icons/Collectables/Steel.png
-
-#begin Textures/icons/Collectables/Steel.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/icons/Collectables/Steel.png
-
-#begin Textures/icons/Collectables/Wood.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/icons/Collectables/Wood.png
 
 #begin Textures/icons/Collectables/Wood.png
 /importer:TextureImporter
