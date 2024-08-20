@@ -70,8 +70,8 @@ namespace ZoFo.GameCore
                 case "UpdateInput":
                     if (players.Count > 0)
                     {
-                        UpdateInput data = updateData as UpdateInput;   
-                        players[data.PlayerId-1].HandleNewInput(data);
+                        UpdateInput data = updateData as UpdateInput;
+                        players[data.PlayerId - 1].HandleNewInput(data);
                     }
                     //TODO id instead of 0
                     else
@@ -80,13 +80,21 @@ namespace ZoFo.GameCore
                 case "UpdateTileCreated":
                     break;
                 case "UpdateInputInteraction":
-                    players[0].HandleInteract(updateData as UpdateInputInteraction);
+                    if (players.Count > 0)
+                    {
+                        UpdateInputInteraction data = updateData as UpdateInputInteraction;
+                        players[data.PlayerId - 1].HandleInteract(data);
+                    }
                     break;
                 case "UpdateInputShoot":
-                    players[0].HandleShoot(updateData as UpdateInputShoot);
+                    if (players.Count > 0)
+                    {
+                        UpdateInputShoot data = updateData as UpdateInputShoot;
+                        players[data.PlayerId - 1].HandleShoot(data);
+                    }
                     break;
             }
-        }
+        }//Поспать
 
 
         /// <summary>
