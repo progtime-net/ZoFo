@@ -1,0 +1,12 @@
+{ "object":
+    {
+     "height":124,
+     "id":218,
+     "name":"Exit",
+     "rotation":0,
+     "type":"",
+     "visible":true,
+     "width":74
+    },
+ "type":"template"
+}

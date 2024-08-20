@@ -16,7 +16,7 @@ namespace ZoFo.GameCore.GameObjects
     {
 
 
-        public override GraphicsComponent graphicsComponent { get; } = new StaticGraphicsComponent("Textures/icons/ExitZone");
+        public override GraphicsComponent graphicsComponent { get; } = new StaticGraphicsComponent("Content/Textures/icons/ExitZone");
         public ExitZone(Vector2 position) : base(position)
         {
             collisionComponent.OnTriggerZone += Exit;

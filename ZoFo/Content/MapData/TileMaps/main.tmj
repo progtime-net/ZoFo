@@ -2828,7 +2828,7 @@
                  "y":96
                 }],
          "class":"Tile",
-         "height":176,
+         "height":128,
          "id":1,
          "name":"Tiles",
          "opacity":1,
@@ -2837,6 +2837,23 @@
          "type":"tilelayer",
          "visible":true,
          "width":256,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":7,
+         "name":"Zones",
+         "objects":[
+                {
+                 "id":218,
+                 "template":"..\/Templates\/Zones\/ExitZone.tj",
+                 "x":-1053.33333333333,
+                 "y":688
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -7254,8 +7271,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":7,
- "nextobjectid":218,
+ "nextlayerid":8,
+ "nextobjectid":220,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.0",
