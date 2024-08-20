@@ -124,13 +124,11 @@ namespace ZoFo.GameCore
             new MapManager().LoadMap();
 
             //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));
-            AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(740, 140)));
+            AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(760, 140)));
             //for (int i = 0; i < 20; i++)
             //    for (int j = 0; j < 20; j++)
             //        AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300 + i*70, 1000+j*70)));
-
-            AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(140, 440)));
-            AppManager.Instance.server.RegisterGameObject(new Ammo(new Vector2(240, 440)));
+             
         }
 
         /// <summary>

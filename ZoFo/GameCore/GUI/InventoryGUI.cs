@@ -62,7 +62,7 @@ public class InventoryGUI : AbstractGUI
                         (height / 20 + height / 80) * (buttonIndex) - height / 10,
                         (int)(width / 5), (int)(height / 20)),
                     text1 = item.Key,
-                    scale1 = 0.4f,
+                    scale1 = 0.3f,
                     count = item.Value,
                     itemTextureName = itemInfo.textureName,
                     fontColor1 = Color.White,

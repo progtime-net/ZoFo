@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using ZoFo.GameCore.GameManagers.MapManager.MapElements;
 using ZoFo.GameCore.GameObjects.Entities;
 using ZoFo.GameCore.GameObjects.Entities.LivingEntities;
+
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.Graphics; 
 using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO; 
@@ -24,8 +25,27 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         public List<CollisionComponent> ObjectsWithCollisions;
         public List<CollisionComponent> EntitiesWithMovements;
         public List<CollisionComponent> ObjectsWithTriggers;
+ 
+        public List<CollisionComponent> GetEntitiesToUpdate(Player player)
+        {
+            float ViewDistance = 500;
 
+            List<CollisionComponent> EntitiesInPlayerArea = new List<CollisionComponent>();
 
+            Rectangle ViewArea = new Rectangle((int)(player.position.X), (int)(player.position.Y), 
+                (int)(ViewDistance), (int)(ViewDistance));
+
+            for (int i = 0; i < ObjectsWithCollisions.Count; i++)
+            {
+                if (ViewArea.Contains((float)ObjectsWithCollisions[i].gameObject.position.X, (float)ObjectsWithCollisions[i].gameObject.position.Y));
+                {
+                    EntitiesInPlayerArea.Add(ObjectsWithCollisions[i]);
+                }
+            }
+            return EntitiesInPlayerArea;
+        }
+
+ 
         //чекаем коллизии в листе
         
         /// <summary>
