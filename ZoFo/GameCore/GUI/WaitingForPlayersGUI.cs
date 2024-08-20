@@ -52,8 +52,6 @@ public class WaitingForPlayersGUI : AbstractGUI
             startButton.LeftButtonPressed += () =>
             {
                 // start
-                AppManager.Instance.ChangeState(GameState.HostPlaying);
-                AppManager.Instance.SetGUI(new HUD());////
                 AppManager.Instance.server.StartGame();
                 // ваш код здесь 
             };
@@ -74,9 +72,6 @@ public class WaitingForPlayersGUI : AbstractGUI
             waitButton.LeftButtonPressed += () =>
             {
                 // start
-                AppManager.Instance.client.SendData();
-                AppManager.Instance.ChangeState(GameState.ClientPlaying);
-                AppManager.Instance.SetGUI(new HUD());
                 // ваш код здесь 
             };
             Elements.Add(waitButton);

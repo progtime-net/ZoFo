@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
+using ZoFo.GameCore.GUI;
 
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager
@@ -71,12 +72,14 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             JToken token = JToken.FromObject(jObj);
             JToken updateDatas = token["updateDatas"];
             Datagramm Dgramm = new Datagramm();
+            Dgramm.isImportant = token["isImportant"].ToObject<bool>();
+            Dgramm.DatagrammId = token["DatagrammId"].ToObject<int>();
             if (PlayerId == 0)
             {
                 PlayerId = token["PlayerId"].ToObject<int>();
+                AppManager.Instance.ChangeState(GameState.ClientPlaying);
+                AppManager.Instance.SetGUI(new HUD());
             }
-            Dgramm.isImportant = token["isImportant"].ToObject<bool>();
-            Dgramm.DatagrammId = token["DatagrammId"].ToObject<int>();
             if (Dgramm.isImportant)
             {
                 if (Dgramm.DatagrammId == currentServerDatagrammId + 1)

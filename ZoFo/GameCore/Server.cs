@@ -122,6 +122,7 @@ namespace ZoFo.GameCore
             gameObjects = new List<GameObject>();
             entities = new List<Entity>();
             players = new List<Player>();
+            networkManager.StartGame();
             new MapManager().LoadMap();
 
             //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));

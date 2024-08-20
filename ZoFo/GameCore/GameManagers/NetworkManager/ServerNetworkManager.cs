@@ -14,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
 using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
+using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
@@ -176,6 +177,23 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             serverThread = new Thread(StartWaitingForPlayers);
             serverThread.IsBackground = true;
             serverThread.Start();
+        }
+        public void StartGame()
+        {
+            for (int i = 0; i < clientsEP.Count; i++)
+            {
+                Datagramm initDgramm = new Datagramm();
+                initDgramm.isImportant = true;
+                initDgramm.DatagrammId = currentDatagrammId;
+                initDgramm.PlayerId = i + 1;
+                sendedData.Add(initDgramm);
+                string data = JsonSerializer.Serialize(initDgramm);
+                byte[] buffer = Encoding.UTF8.GetBytes(data);
+                socket.SendTo(buffer, clientsEP[i]);
+                currentDatagrammId++;
+            }
+            AppManager.Instance.ChangeState(GameState.HostPlaying);
+            AppManager.Instance.SetGUI(new HUD());////
         }
 
         //Потоки Клиентов
