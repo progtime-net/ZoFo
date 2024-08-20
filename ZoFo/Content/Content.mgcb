@@ -134,56 +134,83 @@
 #begin Textures/Animations/player_left_idle.animation
 /copy:Textures/Animations/player_left_idle.animation
 
-#begin Textures/Animations/player_look_down.animation
-/copy:Textures/Animations/player_look_down.animation
-
 #begin Textures/Animations/player_look_down_weapon.animation
 /copy:Textures/Animations/player_look_down_weapon.animation
 
-#begin Textures/Animations/player_look_left.animation
-/copy:Textures/Animations/player_look_left.animation
-
-#begin Textures/Animations/player_look_left_down.animation
-/copy:Textures/Animations/player_look_left_down.animation
+#begin Textures/Animations/player_look_down.animation
+/copy:Textures/Animations/player_look_down.animation
 
 #begin Textures/Animations/player_look_left_down_weapon.animation
 /copy:Textures/Animations/player_look_left_down_weapon.animation
 
-#begin Textures/Animations/player_look_left_up.animation
-/copy:Textures/Animations/player_look_left_up.animation
+#begin Textures/Animations/player_look_left_down.animation
+/copy:Textures/Animations/player_look_left_down.animation
 
 #begin Textures/Animations/player_look_left_up_weapon.animation
 /copy:Textures/Animations/player_look_left_up_weapon.animation
 
+#begin Textures/Animations/player_look_left_up.animation
+/copy:Textures/Animations/player_look_left_up.animation
+
 #begin Textures/Animations/player_look_left_weapon.animation
 /copy:Textures/Animations/player_look_left_weapon.animation
 
-#begin Textures/Animations/player_look_right.animation
-/copy:Textures/Animations/player_look_right.animation
-
-#begin Textures/Animations/player_look_right_down.animation
-/copy:Textures/Animations/player_look_right_down.animation
+#begin Textures/Animations/player_look_left.animation
+/copy:Textures/Animations/player_look_left.animation
 
 #begin Textures/Animations/player_look_right_down_weapon.animation
 /copy:Textures/Animations/player_look_right_down_weapon.animation
 
-#begin Textures/Animations/player_look_right_up.animation
-/copy:Textures/Animations/player_look_right_up.animation
+#begin Textures/Animations/player_look_right_down.animation
+/copy:Textures/Animations/player_look_right_down.animation
 
 #begin Textures/Animations/player_look_right_up_weapon.animation
 /copy:Textures/Animations/player_look_right_up_weapon.animation
 
+#begin Textures/Animations/player_look_right_up.animation
+/copy:Textures/Animations/player_look_right_up.animation
+
 #begin Textures/Animations/player_look_right_weapon.animation
 /copy:Textures/Animations/player_look_right_weapon.animation
 
-#begin Textures/Animations/player_look_up.animation
-/copy:Textures/Animations/player_look_up.animation
+#begin Textures/Animations/player_look_right.animation
+/copy:Textures/Animations/player_look_right.animation
 
 #begin Textures/Animations/player_look_up_weapon.animation
 /copy:Textures/Animations/player_look_up_weapon.animation
 
+#begin Textures/Animations/player_look_up.animation
+/copy:Textures/Animations/player_look_up.animation
+
 #begin Textures/Animations/player_right_idle.animation
 /copy:Textures/Animations/player_right_idle.animation
+
+#begin Textures/Animations/player_run_down.animation
+/copy:Textures/Animations/player_run_down.animation
+
+#begin Textures/Animations/player_run_left_down.animation
+/copy:Textures/Animations/player_run_left_down.animation
+
+#begin Textures/Animations/player_run_left_up.animation
+/copy:Textures/Animations/player_run_left_up.animation
+
+#begin Textures/Animations/player_run_left.animation
+/copy:Textures/Animations/player_run_left.animation
+
+#begin Textures/Animations/player_run_right_down.animation
+/copy:Textures/Animations/player_run_right_down.animation
+
+#begin Textures/Animations/player_run_right_up.animation
+/copy:Textures/Animations/player_run_right_up.animation
+
+#begin Textures/Animations/player_run_right.animation
+/copy:Textures/Animations/player_run_right.animation
+
+#begin Textures/Animations/player_run_right.zip
+/copy:Textures/Animations/player_run_right.zip
+
+#begin Textures/Animations/player_run_up.animation
+/copy:Textures/Animations/player_run_up.animation
 
 #begin Textures/Animations/player_running_top_rotate.animation
 /copy:Textures/Animations/player_running_top_rotate.animation
@@ -221,18 +248,6 @@
 #begin Textures/Animations/zombie_walk.animation
 /copy:Textures/Animations/zombie_walk.animation
 
-#begin Textures/AnimationTextures/Character/hr-level1_idle.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/AnimationTextures/Character/hr-level1_idle.png
-
 #begin Textures/AnimationTextures/Character/hr-level1_idle_gun.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -244,6 +259,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/AnimationTextures/Character/hr-level1_idle_gun.png
+
+#begin Textures/AnimationTextures/Character/hr-level1_idle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_idle.png
 
 #begin Textures/AnimationTextures/Character/hr-level1_mining_tool-1.png
 /importer:TextureImporter
@@ -269,18 +296,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/AnimationTextures/Character/hr-level1_mining_tool-2.png
 
-#begin Textures/AnimationTextures/Character/hr-level1_running.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/AnimationTextures/Character/hr-level1_running.png
-
 #begin Textures/AnimationTextures/Character/hr-level1_running_gun.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -292,6 +307,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/AnimationTextures/Character/hr-level1_running_gun.png
+
+#begin Textures/AnimationTextures/Character/hr-level1_running.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Character/hr-level1_running.png
 
 #begin Textures/AnimationTextures/unicorn.png
 /importer:TextureImporter
@@ -413,18 +440,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/background/waiting.png
 
-#begin Textures/GUI/checkboxs_off.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/GUI/checkboxs_off.png
-
 #begin Textures/GUI/checkboxs_off-on.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -436,6 +451,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/checkboxs_off-on.png
+
+#begin Textures/GUI/checkboxs_off.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/checkboxs_off.png
 
 #begin Textures/GUI/checkboxs_on.png
 /importer:TextureImporter
@@ -473,18 +500,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/mouse.png
 
-#begin Textures/GUI/switch.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/GUI/switch.png
-
 #begin Textures/GUI/Switch_backgrownd.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -496,6 +511,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/Switch_backgrownd.png
+
+#begin Textures/GUI/switch.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/switch.png
 
 #begin Textures/icons/12.png
 /importer:TextureImporter

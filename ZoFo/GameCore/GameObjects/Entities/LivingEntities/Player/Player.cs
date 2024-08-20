@@ -33,8 +33,8 @@ public class Player : LivingEntity
     public Player(Vector2 position) : base(position)
     {
         graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 30, 30);
-        collisionComponent.stopRectangle = new Rectangle(0, 20, 30, 10); 
-        speed = 5; 
+        collisionComponent.stopRectangle = new Rectangle(0, 15, 30, 15); 
+        speed = 2.5f; 
 
         StartAnimation("player_look_down"); 
     }
@@ -46,28 +46,29 @@ public class Player : LivingEntity
         switch(AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation))
         {
             case ScopeState.Top:
-                
+            //if  ((graphicsComponent as AnimatedGraphicsComponent).CurrentAnimation.TextureName!="player_run_up")
+                //(graphicsComponent as AnimatedGraphicsComponent).Star ("player_run_up");
                 break;
             case ScopeState.Down:
-
+                StartAnimation("player_run_down");
             break;
             case ScopeState.Right:
-                //StartAnimation("player_running_top_rotate");
+                StartAnimation("player_run_right");
             break;
             case ScopeState.Left:
-                
+                StartAnimation("left");
             break;
             case ScopeState.TopRight:
-                
+                StartAnimation("player_run_right_up");
             break;
             case ScopeState.TopLeft:
-                
+                StartAnimation("player_run_left_up");
             break;
             case ScopeState.DownRight:
-                
+                StartAnimation("player_run_right_down");
             break;
             case ScopeState.DownLeft:
-                
+                StartAnimation("player_run_left_down");
             break;
         }
         #endregion
@@ -95,15 +96,11 @@ public class Player : LivingEntity
         rect.Width += 100;
         rect.Height += 100;
         Entity[] entities = AppManager.Instance.server.collisionManager.GetEntities(rect, this);
-        if (entities.Length>0)
+        if (entities != null)
         {
-            DebugHUD.DebugSet("ent[0]", entities[0].ToString());
-            if (entities != null)
+            foreach (Entity entity in entities)
             {
-                foreach (Entity entity in entities)
-                {
-                    AppManager.Instance.server.DeleteObject(entity);
-                }
+                AppManager.Instance.server.DeleteObject(entity);
             }
         }
     }
