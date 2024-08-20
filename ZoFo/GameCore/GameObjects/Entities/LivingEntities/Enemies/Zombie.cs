@@ -18,7 +18,7 @@ namespace ZoFo.GameCore.GameObjects
     class Zombie : Enemy
     { 
         public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "zombie_damaged", "zombie_walk", "zombie_idle", "zombie_attack", "zombie_death" }, "zombie_walk");
-        public bool isAttacking; 
+        
         public Zombie(Vector2 position) : base(position)
         {
             health = 5;
@@ -29,13 +29,22 @@ namespace ZoFo.GameCore.GameObjects
             StartAnimation("zombie_walk");
             collisionComponent.isTrigger = true;
             collisionComponent.hasCollision = true;
-            (graphicsComponent as AnimatedGraphicsComponent).actionOfAnimationEnd += EndAttack;
+            (graphicsComponent as AnimatedGraphicsComponent).actionOfAnimationEnd += (animationIdEnded)=>{
+                if (animationIdEnded == "zombie_attack")
+                    EndAttack(animationIdEnded);
+            };
             collisionComponent.OnTriggerZone += OnPlayerClose;
             collisionComponent.triggerRectangle = new Rectangle(-5, -5, 40, 40);
+            (graphicsComponent as AnimatedGraphicsComponent).actionOfAnimationEnd += (str) =>
+            {
+                if (str == "zombie_death")
+                    DeathEnd();
+            };
         }
 
         public override void Update()
-        {
+        { 
+            if (isDying) return; 
             float m = 10000000;
             int j = -1;
             for (int i = 0; i < AppManager.Instance.server.players.Count; i++)
@@ -51,7 +60,7 @@ namespace ZoFo.GameCore.GameObjects
             if (m<= 130000)
             {
                 duration = Vector2.Normalize(
-                AppManager.Instance.server.players[j].position - position
+                AppManager.Instance.server.players[j].position - position 
                 );
                 if (new Random().Next(0, 1000) == 0)
                 {
@@ -87,14 +96,34 @@ namespace ZoFo.GameCore.GameObjects
             var damagedPlayers=AppManager.Instance.server.collisionManager.GetPlayersInZone(collisionComponent.triggerRectangle.SetOrigin(position));
             //TODO ДАМАЖИТЬ ИГРОКОВ В ЗОНЕ
             if (damagedPlayers.Length>0) { DebugHUD.DebugLog("End of" + a);
-                AppManager.Instance.server.DeleteObject(this);
+                foreach (var item in damagedPlayers)
+                    item.TakeDamage(1);
             }
             isAttacking = false;
+        }
+
+        public override void Die()
+        {
+            StartAnimation("zombie_death");
+            base.Die();
+        }
+        public override void DeathEnd()
+        {
+
+            Instantiate(new Particle(collisionComponent.stopRectangle.Location.ToVector2() + position + ExtentionClass.RandomVector() * 20));
+            Instantiate(new Particle(collisionComponent.stopRectangle.Location.ToVector2() + position + ExtentionClass.RandomVector() * 20));
+            Instantiate(new Particle(collisionComponent.stopRectangle.Location.ToVector2() + position + ExtentionClass.RandomVector() * 20));
+
+            base.DeathEnd();
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
             DrawDebugRectangle(spriteBatch, collisionComponent.triggerRectangle.SetOrigin(position), Color.Blue);
             base.Draw(spriteBatch);
+        }
+        public override void TakeDamage(float damage)
+        {
+            base.TakeDamage(damage);
         }
     }
 }

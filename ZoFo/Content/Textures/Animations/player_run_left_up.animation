@@ -1,0 +1,1 @@
+{"id":"player_run_left_up","textureName":"Textures/AnimationTextures/Character/hr-level1_running","startSpriteRectangle":{"X":0,"Y":924,"Width":88,"Height":132},"frameSecond":[{"Item1":0,"Item2":2}],"textureFrameInterval":0,"framesCount":22,"isCycle":true,"offset":"0, 0"}

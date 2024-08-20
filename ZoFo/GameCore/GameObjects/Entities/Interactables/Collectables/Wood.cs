@@ -5,19 +5,11 @@ using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.Graphics;
 
-namespace ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
+namespace ZoFo.GameCore.GameObjects;
 
 public class Wood : Collectable
 {
     public override StaticGraphicsComponent graphicsComponent { get; } = new(_path + "Wood");
 
-    public Wood(Vector2 position) : base(position)
-    {
-
-    }
-    public override void OnInteraction(GameObject sender)
-    {
-        AppManager.Instance.server.AddData(new UpdateLoot("Wood"));
-        AppManager.Instance.server.DeleteObject(this);
-    }
+    public Wood(Vector2 position) : base(position) { }
 }
