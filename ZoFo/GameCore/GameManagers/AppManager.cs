@@ -127,7 +127,14 @@ namespace ZoFo.GameCore.GameManagers
                 default:
                     break;
             }
-
+            if (client != null)
+            {
+                if (client.changeGUI)
+                {
+                    SetGUI(new FinishingGUI());
+                    client.changeGUI = false;
+                }
+            }
             base.Update(gameTime);
         }
 
