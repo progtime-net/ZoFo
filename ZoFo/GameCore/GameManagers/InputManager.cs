@@ -5,18 +5,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Formats.Tar;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.GameManagers
 { 
     public enum ScopeState { Idle, Left, Right, Top, Down, TopLeft, TopRight, DownLeft, DownRight }
-
     public class InputManager
     {
         public event Action ShootEvent; // событие удара(когда нажат X, событие срабатывает)
@@ -176,7 +169,6 @@ namespace ZoFo.GameCore.GameManagers
                 #region Обработка взаимодействия с collectable(например лутом). Вызывает событие OnInteract
                 if (keyBoardState.IsKeyDown(Keys.E) && !isInteract)
                 {
-                  
                     OnInteract?.Invoke();
                     Debug.WriteLine("взаимодействие с Collectable");
                 }
@@ -203,18 +195,33 @@ namespace ZoFo.GameCore.GameManagers
             DebugHUD.Instance.Set("controls", currentScopeState.ToString());
         }
         #region работа с ScopeState и Vector2
+            /// <summary>
+            /// возвращает число от -14 до 16, начиная с 
+            /// </summary>
+            /// <param name="vector"></param>
+            /// <returns></returns>
+            public int ConvertAttackVector2ToState(Vector2 vector){
+                int currentSection = (int)Math.Ceiling(Math.Atan2(vector.Y,
+                vector.X) * (180 / Math.PI) / 360 * 32);
+                return currentSection;
+            }
             public ScopeState ConvertVector2ToState(Vector2 vector)
             {
-                //if()
-                    int currentSection = (int)Math.Ceiling(Math.Atan2(vector.Y,
+                int currentSection = 0;
+                if(vector.X == 0f && vector.Y == 0f){
+                    currentScopeState = ScopeState.Idle;
+                }
+                else
+                {
+                    currentSection = (int)Math.Ceiling(Math.Atan2(vector.Y,
                     vector.X) * (180 / Math.PI) / 360 * 16);
-
-                 DebugHUD.DebugSet("current section", currentSection.ToString());
-                //DebugHUD.DebugSet("y", InputMovementDirection.Y.ToString());
-                //DebugHUD.DebugSet("x", InputMovementDirection.X.ToString());
+                
 
                 switch(currentSection)
                 {
+                    case -1:
+                        currentScopeState = ScopeState.Idle;
+                        break;
                     case 0 or 1:
                     currentScopeState = ScopeState.Right;
                     break; 
@@ -241,6 +248,11 @@ namespace ZoFo.GameCore.GameManagers
                     break;
                     default:
                     break;
+                }
+                
+                DebugHUD.DebugSet("current section", currentSection.ToString());
+                DebugHUD.DebugSet("y", vector.Y.ToString());
+                DebugHUD.DebugSet("x", vector.X.ToString());
                 }
                 return currentScopeState;
             }

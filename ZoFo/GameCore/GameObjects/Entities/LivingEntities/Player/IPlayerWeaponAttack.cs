@@ -8,6 +8,6 @@ namespace ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player
 {
     internal interface IPlayerWeaponAttack
     {
-
+        
     }
 }

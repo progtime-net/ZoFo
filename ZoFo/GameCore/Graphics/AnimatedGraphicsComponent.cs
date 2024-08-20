@@ -136,7 +136,6 @@ namespace ZoFo.GameCore.Graphics
 
             buildSourceRectangle();
             SetInterval();
-
         }
         
         public void StartCyclingAnimation(string startedanimationId)
@@ -147,7 +146,6 @@ namespace ZoFo.GameCore.Graphics
 
             buildSourceRectangle();
             SetInterval();
-
         }
          
         public void StopAnimation()
