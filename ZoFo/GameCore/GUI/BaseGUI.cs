@@ -54,7 +54,6 @@ public class BaseGUI : AbstractGUI
             rectangle = new Rectangle(width / 2 - (height / 16 + (int)(width / 2.5)) / 2,
                 height / 2 - (int)(height / 1.5) / 2,
                 height / 40 + width / 5, (int)(height / 1.5)),
-            mainColor = Color.LightGray,
             textureName = "Textures/GUI/Back"
         };
         Elements.Add(baseItemBack);
@@ -62,7 +61,6 @@ public class BaseGUI : AbstractGUI
         {
             rectangle = new Rectangle(width / 2 + height / 160, height / 2 - (int)(height / 1.5) / 2,
                 height / 40 + width / 5, (int)(height / 1.5)),
-            mainColor = Color.LightGray,
             textureName = "Textures/GUI/Back"
         };
         Elements.Add(baseCraftBack);

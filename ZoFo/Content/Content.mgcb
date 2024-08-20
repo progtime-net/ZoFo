@@ -44,9 +44,6 @@
 #begin MapData/TileMaps/main.tmj
 /copy:MapData/TileMaps/main.tmj
 
-#begin MapData/TileSets/bonfire.tsj
-/copy:MapData/TileSets/bonfire.tsj
-
 #begin MapData/TileSets/IconSet.tsj
 /copy:MapData/TileSets/IconSet.tsj
 
@@ -95,11 +92,29 @@
 /processorParam:Quality=Best
 /build:sounds/Loot.wav
 
+#begin sounds/Loot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Loot.wav
+
 #begin sounds/Odevanie odezdi.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/Odevanie odezdi.wav
+
+#begin sounds/Odevanie odezdi.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Odevanie odezdi.wav
+
+#begin sounds/Pieot wodichky.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Pieot wodichky.wav
 
 #begin sounds/Pieot wodichky.wav
 /importer:WavImporter
@@ -113,6 +128,18 @@
 /processorParam:Quality=Best
 /build:sounds/Sshetchik geigera.wav
 
+#begin sounds/Sshetchik geigera.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Sshetchik geigera.wav
+
+#begin sounds/Tabletki 2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Tabletki 2.wav
+
 #begin sounds/Tabletki 2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -124,6 +151,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/Zombi napal.wav
+
+#begin sounds/Zombi napal.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Zombi napal.wav
+
+#begin sounds/Zombi stoit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Zombi stoit.wav
 
 #begin sounds/Zombi stoit.wav
 /importer:WavImporter
@@ -400,6 +439,7 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/AnimationTextures/Zombie/zombie_spritesheet_v2.png
+ 
 
 #begin Textures/Effects/explosion.png 
 /importer:TextureImporter
@@ -413,7 +453,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Effects/explosion.png 
 
-#begin Textures/GUI/back.png 
+#begin Textures/GUI/back.png  
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -422,7 +462,7 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
+/processorParam:TextureFormat=Color 
 /build:Textures/GUI/back.png 
 
 #begin Textures/GUI/background/base.png
@@ -532,8 +572,20 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/Button2.png
-
-#begin Textures/GUI/checkboxs_off.png
+ 
+#begin Textures/GUI/ButtonI.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/ButtonI.png
+ 
+#begin Textures/GUI/checkboxs_off.png 
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -761,7 +813,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/icons/Collectables/BottleOfWater.png
 
-#begin Textures/icons/Collectables/Peeble.png
+#begin Textures/icons/Collectables/Pebble.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -771,7 +823,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/icons/Collectables/Peeble.png
+/build:Textures/icons/Collectables/Pebble.png
 
 #begin Textures/icons/Collectables/PureBottleOfWater.png
 /importer:TextureImporter
