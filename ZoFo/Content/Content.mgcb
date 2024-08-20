@@ -185,6 +185,33 @@
 #begin Textures/Animations/player_right_idle.animation
 /copy:Textures/Animations/player_right_idle.animation
 
+#begin Textures/Animations/player_run_down.animation
+/copy:Textures/Animations/player_run_down.animation
+
+#begin Textures/Animations/player_run_left_down.animation
+/copy:Textures/Animations/player_run_left_down.animation
+
+#begin Textures/Animations/player_run_left_up.animation
+/copy:Textures/Animations/player_run_left_up.animation
+
+#begin Textures/Animations/player_run_left.animation
+/copy:Textures/Animations/player_run_left.animation
+
+#begin Textures/Animations/player_run_right_down.animation
+/copy:Textures/Animations/player_run_right_down.animation
+
+#begin Textures/Animations/player_run_right_up.animation
+/copy:Textures/Animations/player_run_right_up.animation
+
+#begin Textures/Animations/player_run_right.animation
+/copy:Textures/Animations/player_run_right.animation
+
+#begin Textures/Animations/player_run_right.zip
+/copy:Textures/Animations/player_run_right.zip
+
+#begin Textures/Animations/player_run_up.animation
+/copy:Textures/Animations/player_run_up.animation
+
 #begin Textures/Animations/player_running_top_rotate.animation
 /copy:Textures/Animations/player_running_top_rotate.animation
 
