@@ -6,4 +6,5 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 public class UpdateInputShoot : UpdateData
 {
     public UpdateInputShoot() { UpdateType = "UpdateInputShoot"; }
+    public int PlayerId { get; set; }
 }

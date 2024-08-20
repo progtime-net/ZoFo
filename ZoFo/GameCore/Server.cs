@@ -69,20 +69,32 @@ namespace ZoFo.GameCore
             {
                 case "UpdateInput":
                     if (players.Count > 0)
-                        players[0].HandleNewInput(updateData as UpdateInput);//TODO id instead of 0
+                    {
+                        UpdateInput data = updateData as UpdateInput;
+                        players[data.PlayerId - 1].HandleNewInput(data);
+                    }
+                    //TODO id instead of 0
                     else
                         DebugHUD.DebugLog("NO PLAYER ON MAP");
                     break;
                 case "UpdateTileCreated":
                     break;
                 case "UpdateInputInteraction":
-                    players[0].HandleInteract(updateData as UpdateInputInteraction);
+                    if (players.Count > 0)
+                    {
+                        UpdateInputInteraction data = updateData as UpdateInputInteraction;
+                        players[data.PlayerId - 1].HandleInteract(data);
+                    }
                     break;
                 case "UpdateInputShoot":
-                    players[0].HandleShoot(updateData as UpdateInputShoot);
+                    if (players.Count > 0)
+                    {
+                        UpdateInputShoot data = updateData as UpdateInputShoot;
+                        players[data.PlayerId - 1].HandleShoot(data);
+                    }
                     break;
             }
-        }
+        }//Поспать
 
 
         /// <summary>
@@ -121,9 +133,15 @@ namespace ZoFo.GameCore
             gameObjects = new List<GameObject>();
             entities = new List<Entity>();
             networkManager.StartGame();
-            new MapManager().LoadMap();
- 
-            AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(760, 140)));
+            new MapManager().LoadMap(); 
+
+            //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));
+            for (int i = 0; i < networkManager.clientsEP.Count; i++)
+            {
+                Player player = new Player(new Vector2(760 - 30 * i, 140));
+                RegisterGameObject(player);
+                networkManager.AddData(new UpdateCreatePlayer() { PlayerId = i+1, IdEntity=player.Id});
+            } 
             //for (int i = 0; i < 20; i++)
             //    for (int j = 0; j < 20; j++)
             //        AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300 + i*70, 1000+j*70)));
