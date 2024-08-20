@@ -117,20 +117,20 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             List<UpdateData> dataToSend;
             if (importantUpdates.Count > 0)
             {
+                dataToSend = new List<UpdateData>();
+                for (int j = 0; j < datapackSize && j < importantUpdates.Count; j++)
+                    dataToSend.Add(importantUpdates[j]);
                 for (int i = 0; i < clientsEP.Count; i++)
                 {
-                    dataToSend = new List<UpdateData>();
-                    for (int j = 0; j < datapackSize && j < importantUpdates.Count; j++)
-                        dataToSend.Add(importantUpdates[j]);
                     Datagramm impDgramm = new Datagramm();
                     impDgramm.DatagrammId = currentDatagrammId;
                     impDgramm.updateDatas = dataToSend;
                     impDgramm.isImportant = true;
                     impDgramm.PlayerId = i + 1;
                     sendedData.Add(impDgramm);
-                    for (int j = 0; j < datapackSize && j < dataToSend.Count; j++)
-                        importantUpdates.RemoveAt(0);
                 }
+                for (int j = 0; j < datapackSize && j < dataToSend.Count; j++)
+                    importantUpdates.RemoveAt(0);
                 currentDatagrammId++;
             }
             
