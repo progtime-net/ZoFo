@@ -11,6 +11,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.Graphics;
 using System.Diagnostics;
 using ZoFo.GameCore.GUI;
+using System.Runtime.InteropServices;
 
 namespace ZoFo.GameCore.GameObjects;
 
@@ -25,7 +26,9 @@ public class Player : LivingEntity
     private float speed;
     private int health;
 
-    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(AppManager.Instance.AssetManager.Player);
+    public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(AppManager.Instance.AssetManager.Player.Animations, AppManager.Instance.AssetManager.Player.IdleAnimation);
+
+    public AnimatedGraphicsComponent animatedGraphicsComponent => graphicsComponent as AnimatedGraphicsComponent;
 
     private LootData lootData;
     public bool IsTryingToInteract { get; set; }
@@ -42,47 +45,103 @@ public class Player : LivingEntity
 
     public  override void Update()
     {
-        #region анимация управления, стрельбы 
-        var textureName = (graphicsComponent as AnimatedGraphicsComponent).CurrentAnimation.TextureName;
-        var animatedGraphicsComponent = graphicsComponent as AnimatedGraphicsComponent;
+        #region название current текстуры
+            var idName = animatedGraphicsComponent.CurrentAnimation.Id;
+        #endregion
+        
+        #region анимация управления подбора лута
+        DebugHUD.DebugSet("texture name", idName);
         switch(AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation))
         {
             case ScopeState.Top:
-
-                    if  ((graphicsComponent as AnimatedGraphicsComponent).CurrentAnimation.TextureName!="player_run_right")
-                    (graphicsComponent as AnimatedGraphicsComponent).StartCyclingAnimation("player_run_right");
+                if  (idName!="player_run_up")
+                    StartAnimation("player_run_up");
                 break;
             case ScopeState.Down:
-                if  (textureName!="player_run_down")
-                    animatedGraphicsComponent.StartCyclingAnimation("player_run_down");
-            break;
+                if  (idName!="player_run_down")
+                    StartAnimation("player_run_down");
+                break;
             case ScopeState.Right:
-                   if  (textureName!="player_run_up")
-                        animatedGraphicsComponent.StartCyclingAnimation("player_run_up");
-            break;
             case ScopeState.Left:
-                if  (textureName!="player_run_left")
-                    animatedGraphicsComponent.StartCyclingAnimation("player_run_left");
-            break;
+                if  (idName!="player_run_right")
+                    StartAnimation("player_run_right");
+                break;
             case ScopeState.TopRight:
-                if  (textureName!="player_run_right_up")
-                    animatedGraphicsComponent.StartCyclingAnimation("player_run_right_up");
-            break;
             case ScopeState.TopLeft:
-                if  (textureName!="player_run_left_up")
-                    animatedGraphicsComponent.StartCyclingAnimation("player_run_left_up");
+                if  (idName!="player_run_right_up")
+                    StartAnimation("player_run_right_up");
             break;
             case ScopeState.DownRight:
-                if  (textureName!="player_run_right_down")
-                    animatedGraphicsComponent.StartCyclingAnimation("player_run_right_down");
-            break;
             case ScopeState.DownLeft:
-                if  (textureName!="player_run_left_down")
-                    animatedGraphicsComponent.StartCyclingAnimation("player_run_left_down");
+                if  (idName!="player_run_right_down")
+                    StartAnimation("player_run_right_down");
+            break;
+            case ScopeState.Idle:
+                if (idName!="player_look_down")
+                    StartAnimation("player_look_down");
             break;
         }
         #endregion
+        
+        #region анимация поворота оружия
+            int currentAttackSection = AppManager.Instance.InputManager.ConvertAttackVector2ToState(InputWeaponRotation);
+            switch(currentAttackSection)
+            {
+                case 0 or 1:
+                    //right
+                break;
+                case 2 or 3:
+                    //down_right_right
+                break;
+                case 4 or 5:
+                    //down_right
+                break;
+                case 6 or 7:
+                    //down_right_left
+                break;
+                case 8 or 9:
+                    //down
+                break;
+                case 10 or 11:
+                    //down_left_right
+                break;
+                case 12 or 13:
+                    //down_left
+                break;
+                case 14 or 15:
+                    //down_left_left
+                break;
+                case 16 or -14:
+                    //left
+                break;
+                case -13 or -12:
+                    //top_left_left
+                break;
+                case -11 or -10:
+                    //top_left
+                break;
+                case -9 or -8:
+                    //top_left_right
+                break;
+                case -7 or -6:
+                    //top
+                break;
+                case -5 or -4:
+                    //top_right_left
+                break;
+                case -3 or -2:
+                    //top_right
+                break;
+                case -1 or 0:
+                    //top_right_right
+                break;
+            }
+        #endregion
+
         MovementLogic();
+    }
+    public void WeaponAttack(){
+
     }
     public void MovementLogic() 
     {
@@ -113,5 +172,10 @@ public class Player : LivingEntity
                 AppManager.Instance.server.DeleteObject(entity);
             }
         }
+    }
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        //DrawDebugRectangle(spriteBatch, collisionComponent.stopRectangle.SetOrigin(position + new Vector2(10,10)), Color.Green);
+        base.Draw(spriteBatch);
     }
 }
