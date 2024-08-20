@@ -38,6 +38,7 @@ public class SelectModeMenu : AbstractGUI
         };
         singleButton.LeftButtonPressed += () => 
         {
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             // single
             Server server = new Server();
             Client client = new Client();
@@ -68,6 +69,7 @@ public class SelectModeMenu : AbstractGUI
         };
         optionButton.LeftButtonPressed += () => 
         {
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new SelectingServerGUI());
             // multi 
            
@@ -80,6 +82,7 @@ public class SelectModeMenu : AbstractGUI
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new MainMenuGUI());
         };
     }

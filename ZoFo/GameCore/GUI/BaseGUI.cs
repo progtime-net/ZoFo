@@ -142,6 +142,7 @@ public class BaseGUI : AbstractGUI
                         ItemDisplayButtonsList.Add(temp);
                         temp.LeftButtonPressed += () =>
                         {
+                            AppManager.Instance.SoundManager.StartAmbientSound("Craft sound");
                             AppManager.Instance.playerData.CraftItem(item.Key);
                             AppManager.Instance.SetGUI(new BaseGUI());
                         };
@@ -163,7 +164,9 @@ public class BaseGUI : AbstractGUI
             textureName = "Textures\\GUI\\checkboxs_off"
         };
         Elements.Add(bTExit);
-        bTExit.LeftButtonPressed += () => { AppManager.Instance.SetGUI(new MainMenuGUI()); };
+        bTExit.LeftButtonPressed += () => { AppManager.Instance.SetGUI(new MainMenuGUI());
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
+        };
     }
 
     public override void Update(GameTime gameTime)

@@ -31,6 +31,7 @@ public class PauseGUI : AbstractGUI
         };
         continueButton.LeftButtonPressed += () =>
         {
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new HUD());
         };
         Elements.Add(continueButton);
@@ -45,6 +46,7 @@ public class PauseGUI : AbstractGUI
         };
         exitButton.LeftButtonPressed += () =>
         {
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new MainMenuGUI());
         };
         Elements.Add(exitButton);
