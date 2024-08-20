@@ -216,10 +216,10 @@ namespace ZoFo.GameCore
                 (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
 
             }
-            else if (update is UpdateGameOBjectWithoutIdCreated)
+            else if (update is UpdateGameObjectWithoutIdCreated)
             {
-                Type t = Type.GetType("ZoFo.GameCore.GameObjects." + (update as UpdateGameOBjectWithoutIdCreated).GameObjectClassName);
-                GameObject gameObject = Activator.CreateInstance(t, (update as UpdateGameOBjectWithoutIdCreated).position.GetVector2()) as GameObject;
+                Type t = Type.GetType("ZoFo.GameCore.GameObjects." + (update as UpdateGameObjectWithoutIdCreated).GameObjectClassName);
+                GameObject gameObject = Activator.CreateInstance(t, (update as UpdateGameObjectWithoutIdCreated).position.GetVector2()) as GameObject;
                 if (gameObject is Particle)
                     particles.Add(gameObject as Particle);
             } 

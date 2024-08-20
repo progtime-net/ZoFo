@@ -7,9 +7,9 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
     /// <summary>
     /// Хранит новое сосотяние анимации
     /// </summary>
-    public class UpdateGameOBjectWithoutIdCreated : UpdateData
+    public class UpdateGameObjectWithoutIdCreated : UpdateData
     {
-        public UpdateGameOBjectWithoutIdCreated() { UpdateType = "UpdateGameOBjectWithoutIdCreated"; }
+        public UpdateGameObjectWithoutIdCreated() { UpdateType = "UpdateGameObjectWithoutIdCreated"; }
         public string GameObjectClassName { get; set; }
         public SerializableVector2 position { get; set; }
     }

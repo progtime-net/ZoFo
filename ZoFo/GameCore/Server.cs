@@ -215,7 +215,7 @@ namespace ZoFo.GameCore
             if (gameObject is Particle)
             { 
 
-                AddData(new UpdateGameOBjectWithoutIdCreated()
+                AddData(new UpdateGameObjectWithoutIdCreated()
                 {
                     GameObjectClassName = gameObject.GetType().Name,
                     position = gameObject.position.Serialize()

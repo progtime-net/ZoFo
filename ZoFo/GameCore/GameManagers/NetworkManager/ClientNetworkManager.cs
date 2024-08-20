@@ -145,6 +145,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                         update = token.ToObject<UpdateInteraction>();
                         data.Add(update);
                         break;
+                    case "UpdateStopObjectCreated":
+                        update = token.ToObject<UpdateStopObjectCreated>();
+                        data.Add(update);
+                        break;
                     case "UpdateInteractionReady":
                         update = token.ToObject<UpdateInteractionReady>();
                         data.Add(update);
