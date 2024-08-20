@@ -122,14 +122,12 @@ namespace ZoFo.GameCore
             entities = new List<Entity>();
             networkManager.StartGame();
             new MapManager().LoadMap();
-
-            //TODO
-            //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));
+ 
             AppManager.Instance.server.RegisterGameObject(new Player(new Vector2(760, 140)));
             //for (int i = 0; i < 20; i++)
             //    for (int j = 0; j < 20; j++)
             //        AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300 + i*70, 1000+j*70)));
-             
+              
         }
 
         /// <summary>
@@ -138,7 +136,8 @@ namespace ZoFo.GameCore
         public void EndGame()
         {
             UpdateGameEnded gameEnded = new UpdateGameEnded();
-            networkManager.AddData(gameEnded);
+            networkManager.AddData(gameEnded); 
+         //   networkManager.CloseConnection(); 
         }
 
         public List<GameObject> gameObjects = new List<GameObject>();

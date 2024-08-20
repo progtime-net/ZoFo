@@ -508,6 +508,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/background/waiting.png
+ 
+#begin Textures/GUI/checkboxs_off-on.png 
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color 
+/build:Textures/GUI/checkboxs_off-on.png 
 
 #begin Textures/GUI/Button.png
 /importer:TextureImporter
@@ -533,7 +545,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/Button2.png
 
-#begin Textures/GUI/checkboxs_off-on.png
+#begin Textures/GUI/checkboxs_off.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -543,7 +555,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/GUI/checkboxs_off-on.png
+/build:Textures/GUI/checkboxs_off.png
 
 #begin Textures/GUI/checkboxs_off.png
 /importer:TextureImporter
@@ -820,6 +832,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/icons/Collectables/Wood.png
+
+#begin Textures/icons/ExitZone.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/icons/ExitZone.png
 
 #begin Textures/icons/Material/Fabric.png
 /importer:TextureImporter

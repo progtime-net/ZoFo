@@ -245,7 +245,11 @@ namespace ZoFo.GameCore
                 if (ent != null)
                     DeleteObject(ent);
 
-            }
+            } 
+            else if (update is UpdateGameEnded)
+            {
+                GameEnd();
+            } 
             else if (update is UpdatePlayerParametrs)
             {
                 UpdatePlayerHealth(update as UpdatePlayerParametrs);
@@ -299,9 +303,13 @@ namespace ZoFo.GameCore
                 (ent as Player).health = (update as UpdatePlayerParametrs).health;
                 (ent as Player).rad = (update as UpdatePlayerParametrs).radiatoin; 
             }
-            
+             
         }
 
+        public void GameEnd()
+        {
+            AppManager.Instance.SetGUI(new FinishingGUI());
+        }
 
         public Entity FindEntityById(int id)
         {
