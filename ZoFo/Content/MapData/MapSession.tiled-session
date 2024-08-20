@@ -1,17 +1,19 @@
 {
     "activeFile": "TileMaps/main.tmj",
     "expandedProjectPaths": [
+        "Templates",
+        "Templates/Zones",
         "TileMaps",
         ".",
-        "Templates"
+        "Templates/Enemies"
     ],
     "fileStates": {
         "TileMaps/main.tmj": {
-            "scale": 0.5,
+            "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1629,
-                "y": 1025
+                "x": -682.5,
+                "y": 1140.25
             }
         },
         "TileSets/IconSet.tsj": {
@@ -34,6 +36,7 @@
             "scaleInDock": 1
         }
     },
+    "last.objectTemplatePath": "C:/Users/artem/source/repos/ZoFo/ZoFo/Content/MapData/Templates/Zones",
     "openFiles": [
         "TileMaps/main.tmj"
     ],
