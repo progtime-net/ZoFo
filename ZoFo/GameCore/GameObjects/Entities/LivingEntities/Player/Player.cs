@@ -259,10 +259,10 @@ public class Player : LivingEntity
             {
                 if (entity is Enemy)
                 {
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 1; i <= 3; i++)
                     {
                         Instantiate(new Particle(
-                     ((position - graphicsComponent.ObjectDrawRectangle.Location.ToVector2()) * i / 3f) +
+                     ((position) * i / 3f) +
                      ((entity.position) * (3 - i) / 3f)
                      ));
 
