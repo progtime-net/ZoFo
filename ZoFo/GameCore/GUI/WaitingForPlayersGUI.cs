@@ -28,7 +28,7 @@ public class WaitingForPlayersGUI : AbstractGUI
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
 
-        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures/GUI/background/Waiting" };
+        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures/GUI/background/waiting" };
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content); 
         //   string pcIp = 
@@ -47,7 +47,8 @@ public class WaitingForPlayersGUI : AbstractGUI
                 scale = 0.3f,
                 fontColor = Color.White,
                 mainColor = Color.Gray,
-                fontName = "Fonts/Font"
+                fontName = "Fonts/Font",
+                textureName = "Textures/GUI/Button"
             };
             startButton.LeftButtonPressed += () =>
             {
@@ -67,18 +68,24 @@ public class WaitingForPlayersGUI : AbstractGUI
                 scale = 0.3f,
                 fontColor = Color.White,
                 mainColor = Color.Gray,
-                fontName = "Fonts/Font"
+                fontName = "Fonts/Font",
+                textureName = "Textures/GUI/Button"
             };
             waitButton.LeftButtonPressed += () =>
             {
                 // start
+                AppManager.Instance.SetGUI(new HUD());
                 // ваш код здесь 
             };
             Elements.Add(waitButton);
         }
         
         Button bTExit = new Button(Manager)
-            { fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off"};
+        {
+            fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, 
+            rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40),
+            textureName = "Textures/GUI/Button2"
+        };
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {

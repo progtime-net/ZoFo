@@ -24,6 +24,7 @@ public abstract class GameObject
         graphicsComponent.ObjectDrawRectangle.X = (int)position.X;
         graphicsComponent.ObjectDrawRectangle.Y = (int)position.Y;
 
+        positionDraw = position;
     }
     public virtual void UpdateLogic()
     { 
@@ -43,7 +44,10 @@ public abstract class GameObject
 
     public void Instantiate(GameObject gameObject)
     {
-        AppManager.Instance.server.RegisterGameObject(gameObject);
+        if (AppManager.Instance.gamestate == GameState.HostPlaying)
+        {
+            AppManager.Instance.server.RegisterGameObject(gameObject);
+        }
     }
     #endregion
 
@@ -58,6 +62,7 @@ public abstract class GameObject
     public void PlayAnimation_OnClient()
     {
         graphicsComponent.Update();
+
     }
 
     /// <summary>
@@ -70,13 +75,18 @@ public abstract class GameObject
     }
 
     /// <summary>
+    /// for smooth client draw
+    /// </summary>
+    public Vector2 positionDraw;
+    /// <summary>
     /// Для клиента
     /// Обновление, которое вызывается у клиента, для просмотра анимаций
     /// </summary>
     public virtual void UpdateAnimations()
     {
-        graphicsComponent.ObjectDrawRectangle.X = (int)position.X; //Move To place where Updates Sets your position
-        graphicsComponent.ObjectDrawRectangle.Y = (int)position.Y;
+        positionDraw = (position * 0.15f + positionDraw*0.85f);
+        graphicsComponent.ObjectDrawRectangle.X = (int)positionDraw.X; //Move To place where Updates Sets your position
+        graphicsComponent.ObjectDrawRectangle.Y = (int)positionDraw.Y;
         PlayAnimation_OnClient();
     }
 
@@ -93,6 +103,7 @@ public abstract class GameObject
     }
     public void DrawDebugRectangle(SpriteBatch spriteBatch, Rectangle _rectangle, Nullable<Color> color = null)
     {
+        return;
         if (color is null) color = new Color(1, 0, 0, 0.1f);
         if (color.Value.A == 255) color = new Color(color.Value, 0.25f);
         spriteBatch.Draw(debugTexture,

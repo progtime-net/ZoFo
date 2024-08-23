@@ -31,6 +31,7 @@ public class DebugHUD
 
     public void Draw(SpriteBatch spriteBatch)
     {
+        //return;//TODO delete
         var keysString = Join("\n", _text.Select(el => el.Key + ": " + el.Value).ToList());
         spriteBatch.Begin();
         spriteBatch.DrawString(

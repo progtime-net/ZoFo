@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ZoFo.GameCore.GameManagers.ItemManager
@@ -15,7 +17,16 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
         {
             LoadPlayerData();
         }
-        public Dictionary<string, int> items; 
+        public Dictionary<string, int> items = new Dictionary<string, int>(); 
+        public void AddLoot(string loot, int quantity)
+        {
+            if (items.ContainsKey(loot)) 
+                items[loot] += quantity;
+            else
+                items.Add(loot, quantity);
+
+            AppManager.Instance.playerData.SavePlayerData();
+        }
         /// <summary>
         /// Принимает тэг и крафтит этот объект
         /// </summary>
@@ -50,11 +61,52 @@ namespace ZoFo.GameCore.GameManagers.ItemManager
 
         public void LoadPlayerData()
         {
-            //TODO
-            items = new Dictionary<string, int>();
-            items.Add("wood", 5);
-            items.Add("steel", 110);
-            items.Add("peeble", 6);
+            /*items.Add("wood", 100);
+            items.Add("steel", 100);
+            items.Add("bottleofwater", 100);
+            items.Add("rottenflesh", 100);
+            items.Add("pebble", 100);
+            items.Add("ammo", 100);
+            items.Add("fabric", 100);
+            items.Add("paper", 100);*/
+            if (File.Exists("Items.txt"))
+            {
+                string data;
+                using (StreamReader reader = new StreamReader("Items.txt"))
+                {
+                    data = reader.ReadToEnd();
+                }
+                
+                List<PlayerItemsData> itemsDatas = JsonSerializer.Deserialize<List<PlayerItemsData>>(data);
+                foreach (var item in itemsDatas)
+                {
+                    items.Add(item.Name, item.Count);
+                }
+            }
         }
+
+        public void SavePlayerData()
+        {
+            var options = new JsonSerializerOptions { WriteIndented = true };
+
+            List<PlayerItemsData> playerItemsDatas = new List<PlayerItemsData>();
+            foreach (var item in items)
+            {
+                playerItemsDatas.Add(new PlayerItemsData { Name = item.Key, Count = item.Value });
+            }
+
+            string data = JsonSerializer.Serialize<List<PlayerItemsData>>(playerItemsDatas);
+
+            using (StreamWriter outputFile = new StreamWriter("Items.txt", new FileStreamOptions() { Mode = FileMode.Create, Access = FileAccess.Write } ))
+            {
+                outputFile.WriteLine(data);
+            }
+        }
+    }
+
+    class PlayerItemsData
+    {
+        public string Name { get; set; }
+        public int Count { get; set; }
     }
 }

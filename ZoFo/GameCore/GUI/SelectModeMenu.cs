@@ -34,10 +34,14 @@ public class SelectModeMenu : AbstractGUI
             scale = 0.3f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         singleButton.LeftButtonPressed += () => 
         {
+            AppManager.Instance.SoundManager.StopAllSounds();
+            AppManager.Instance.SoundManager.StartAmbientSound("Background music");
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             // single
             Server server = new Server();
             Client client = new Client();
@@ -64,10 +68,12 @@ public class SelectModeMenu : AbstractGUI
             scale = 0.3f,
             fontColor = Color.White,
             mainColor = Color.Gray,
-            fontName = "Fonts/Font"
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
         };
         optionButton.LeftButtonPressed += () => 
         {
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SetGUI(new SelectingServerGUI());
             // multi 
            
@@ -76,10 +82,17 @@ public class SelectModeMenu : AbstractGUI
         Elements.Add(optionButton);
         
         Button bTExit = new Button(Manager)
-            { fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40), textureName = "Textures/GUI/checkboxs_off"};
+        {
+            fontName = "Fonts/Font3", scale = 0.4f, text = "<-", fontColor = Color.Black, mainColor = Color.Transparent, 
+            rectangle = new Rectangle(width / 30, height / 30, width / 40, width / 40),
+            textureName = "Textures/GUI/Button2"
+        };
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {
+            
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
+            
             AppManager.Instance.SetGUI(new MainMenuGUI());
         };
     }

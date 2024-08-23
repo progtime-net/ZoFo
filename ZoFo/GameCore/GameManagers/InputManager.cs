@@ -168,7 +168,7 @@ namespace ZoFo.GameCore.GameManagers
                 #endregion
 
                 #region Обработка взаимодействия с collectable(например лутом). Вызывает событие OnInteract
-                if (keyBoardState.IsKeyDown(Keys.E) && !isInteract)
+                if ((keyBoardState.IsKeyDown(Keys.E) || mouseState.LeftButton == ButtonState.Pressed) && !isInteract)
                 {
                     OnInteract?.Invoke();
                     Debug.WriteLine("взаимодействие с Collectable");
@@ -256,7 +256,35 @@ namespace ZoFo.GameCore.GameManagers
                 DebugHUD.DebugSet("x", vector.X.ToString());
                 }
                 return currentScopeState;
-            }
+        }
+        public static Vector2 ConvertStateToVector2(ScopeState scopeState)
+        {
+            switch (scopeState)
+            {
+                case ScopeState.Idle:
+                    return new Vector2(0, 0);
+                case ScopeState.Left:
+                    return new Vector2(-1, 0);
+                case ScopeState.Right:
+                    return new Vector2(1, 0);
+                case ScopeState.Top:
+                    return new Vector2(0, -1);
+                case ScopeState.Down:
+                    return new Vector2(0, 1);
+                case ScopeState.TopLeft:
+                    return new Vector2(-1, -1);
+                case ScopeState.TopRight:
+                    return new Vector2(-1, 1);
+                case ScopeState.DownLeft:
+                    return new Vector2(1, -1);
+                case ScopeState.DownRight:
+                    return new Vector2(1, 1);
+                default:
+                    return new Vector2(0, 0);
+            }  
+
+
+        }
         #endregion
         public bool ButtonClicked(Keys key) => keyBoardState.IsKeyUp(key) && keyBoardState.IsKeyDown(key);
     }

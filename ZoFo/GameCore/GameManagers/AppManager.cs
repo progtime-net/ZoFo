@@ -62,12 +62,14 @@ namespace ZoFo.GameCore.GameManagers
             ItemManager = new ItemManager.ItemManager();
             Instance = this;
             InputManager = new InputManager();
+            SoundManager = new SoundManager();
+            SoundManager.LoadSounds();
             SettingsManager = new SettingsManager();
             SettingsManager.LoadSettings();
-            SoundManager = new SoundManager();
+            
             AssetManager = new AssetManager();
-            SoundManager.LoadSounds();
-
+            
+            SoundManager.StartAmbientSound("Background menu music");
 
             currentGUI = new MainMenuGUI();
             debugHud = new DebugHUD();
@@ -125,13 +127,20 @@ namespace ZoFo.GameCore.GameManagers
                 default:
                     break;
             }
-
+            if (client != null)
+            {
+                if (client.changeGUI)
+                {
+                    SetGUI(new FinishingGUI());
+                    client.changeGUI = false;
+                }
+            }
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
  
             
             // Pointwrap
@@ -139,6 +148,8 @@ namespace ZoFo.GameCore.GameManagers
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
+                    client.Draw(_spriteBatch);
+                    break;
                 case GameState.HostPlaying:
                     client.Draw(_spriteBatch);
                     break;

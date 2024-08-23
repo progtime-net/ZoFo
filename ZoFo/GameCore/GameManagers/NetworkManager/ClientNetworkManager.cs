@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -20,7 +21,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 {
     public class ClientNetworkManager
     {
-        private int PlayerId;
+        public int PlayerId = 0;
         private IPEndPoint endPoint;
         private IPEndPoint sendingEP;
         private Socket socket;
@@ -83,7 +84,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                     if (AppManager.Instance.gamestate != GameState.HostPlaying)
                     {
                         AppManager.Instance.ChangeState(GameState.ClientPlaying);
-                        AppManager.Instance.SetGUI(new HUD());
                     }
                     SendAcknowledgement(Dgramm.DatagrammId);
                 }
@@ -139,6 +139,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                         update = token.ToObject<UpdateGameObjectCreated>();
                         data.Add(update);
                         break;
+                    case "UpdateGameObjectWithoutIdCreated":
+                        update = token.ToObject<UpdateGameObjectWithoutIdCreated>();
+                        data.Add(update);
+                        break;
                     case "UpdateGameObjectDeleted":
                         update = token.ToObject<UpdateGameObjectDeleted>();
                         data.Add(update);
@@ -169,6 +173,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                         break;
                     case "UpdateTileCreated":
                         update = token.ToObject<UpdateTileCreated>();
+                        data.Add(update);
+                        break;
+                    case "UpdateCreatePlayer":
+                        update = token.ToObject<UpdateCreatePlayer>();
                         data.Add(update);
                         break;
 
@@ -215,7 +223,6 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public void JoinRoom(string ip, int port) // multyplayer
         {
             sendingEP = new IPEndPoint(IPAddress.Parse(ip), port);
-            AppManager.Instance.ChangeState(GameState.ClientPlaying);
             SendData();
             Thread listen = new Thread(StartListening);
             listen.IsBackground = true;
@@ -235,20 +242,19 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         }
         #endregion
         public static IPAddress GetIp()
-        { 
-            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
-            var ipList = Dns.GetHostEntry(hostName).AddressList;
-            var ipV4List = new List<IPAddress>(); 
-            foreach (var ip in ipList)
+        {
+            var ips = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(x => x.OperationalStatus == OperationalStatus.Up)
+                .Where(x => x.NetworkInterfaceType is NetworkInterfaceType.Wireless80211
+                    or NetworkInterfaceType.Ethernet)
+                .SelectMany(x => x.GetIPProperties().UnicastAddresses)
+                .Where(x => x.Address.AddressFamily == AddressFamily.InterNetwork)
+                .Select(x => x.Address)
+                .ToList();
+            
+            if (ips.Count > 0)
             {
-                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                {
-                    ipV4List.Add(ip);
-                } 
-            }
-            if (ipV4List.Count>0)
-            {
-                return ipV4List[ipV4List.Count - 1];
+                return ips[^1];
             }
             return IPAddress.Loopback; 
         }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -28,7 +29,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         private IPAddress ip;
         private bool isMultiplayer;
         //Player Id to Player endPoint
-        private List<IPEndPoint> clientsEP;
+        public List<IPEndPoint> clientsEP;
         public IPEndPoint endPoint;
         private List<UpdateData> commonUpdates;
         private List<UpdateData> importantUpdates;
@@ -64,22 +65,20 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// Получает IP устройства
         /// </summary>
         /// <returns></returns>
-        public static IPAddress GetIp() 
+        public static IPAddress GetIp()
         {
-            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
-            var ipList = Dns.GetHostEntry(hostName).AddressList;
-
-            var ipV4List = new List<IPAddress>(); 
-            foreach (var ip in ipList)
+            var ips = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(x => x.OperationalStatus == OperationalStatus.Up)
+                .Where(x => x.NetworkInterfaceType is NetworkInterfaceType.Wireless80211
+                    or NetworkInterfaceType.Ethernet)
+                .SelectMany(x => x.GetIPProperties().UnicastAddresses)
+                .Where(x => x.Address.AddressFamily == AddressFamily.InterNetwork)
+                .Select(x => x.Address)
+                .ToList();
+            
+            if (ips.Count > 0)
             {
-                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                {  
-                    ipV4List.Add(ip);
-                }
-            }
-            if (ipV4List.Count > 0)
-            {
-                return ipV4List[ipV4List.Count - 1];
+                return ips[^1];
             }
             return IPAddress.Loopback; 
         }
@@ -117,27 +116,25 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             List<UpdateData> dataToSend;
             if (importantUpdates.Count > 0)
             {
+                dataToSend = new List<UpdateData>();
+                for (int j = 0; j < datapackSize && j < importantUpdates.Count; j++)
+                    dataToSend.Add(importantUpdates[j]);
                 for (int i = 0; i < clientsEP.Count; i++)
                 {
-                    dataToSend = new List<UpdateData>();
-                    for (int j = 0; j < datapackSize && j < importantUpdates.Count; j++)
-                        dataToSend.Add(importantUpdates[j]);
                     Datagramm impDgramm = new Datagramm();
                     impDgramm.DatagrammId = currentDatagrammId;
                     impDgramm.updateDatas = dataToSend;
                     impDgramm.isImportant = true;
                     impDgramm.PlayerId = i + 1;
                     sendedData.Add(impDgramm);
-                    for (int j = 0; j < datapackSize && j < dataToSend.Count; j++)
-                        importantUpdates.RemoveAt(0);
                 }
+                for (int j = 0; j < datapackSize && j < dataToSend.Count; j++)
+                    importantUpdates.RemoveAt(0);
                 currentDatagrammId++;
             }
             
             if (sendedData.Count != 0) 
             { 
-                
-
                 for (int i = 0; i < clientsEP.Count; i++)
                 {
                     foreach (Datagramm Dgramm in sendedData.Where(x => x.PlayerId == i+1))

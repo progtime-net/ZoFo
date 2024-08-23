@@ -14,6 +14,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer
     // public int IdEntity { get; set; }
     public SerializableVector2 InputMovementDirection{get;set;}
     public SerializableVector2 InputAttackDirection {get;set;}
+
+    public int PlayerId {get;set;}
     public UpdateInput()
     {
         UpdateType = "UpdateInput";
