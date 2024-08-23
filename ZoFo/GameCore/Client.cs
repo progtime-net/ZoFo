@@ -316,10 +316,11 @@ namespace ZoFo.GameCore
                 (ent as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
             } 
         }
-
+        public bool changeGUI = false;
         public void GameEnd()
         {
-            AppManager.Instance.SetGUI(new FinishingGUI());
+
+            changeGUI = true;
         }
 
         public Entity FindEntityById(int id)
