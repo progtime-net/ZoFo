@@ -60,11 +60,17 @@ namespace ZoFo.GameCore
             };
             AppManager.Instance.InputManager.OnInteract += () =>
             {
-                networkManager.AddData(new UpdateInputInteraction() {PlayerId = AppManager.Instance.client.networkManager.PlayerId });
+                if (AppManager.Instance.client.networkManager.PlayerId > 0)
+                {
+                    networkManager.AddData(new UpdateInputInteraction() { PlayerId = AppManager.Instance.client.networkManager.PlayerId });
+                }
             };
             AppManager.Instance.InputManager.ShootEvent += () =>
             {
-                networkManager.AddData(new UpdateInputShoot() { PlayerId = AppManager.Instance.client.networkManager.PlayerId });
+                if (AppManager.Instance.client.networkManager.PlayerId > 0)
+                {
+                    networkManager.AddData(new UpdateInputShoot() { PlayerId = AppManager.Instance.client.networkManager.PlayerId });
+                }
             };
         }
 
