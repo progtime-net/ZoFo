@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -64,22 +65,20 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         /// Получает IP устройства
         /// </summary>
         /// <returns></returns>
-        public static IPAddress GetIp() 
+        public static IPAddress GetIp()
         {
-            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
-            var ipList = Dns.GetHostEntry(hostName).AddressList;
-
-            var ipV4List = new List<IPAddress>(); 
-            foreach (var ip in ipList)
+            var ips = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(x => x.OperationalStatus == OperationalStatus.Up)
+                .Where(x => x.NetworkInterfaceType is NetworkInterfaceType.Wireless80211
+                    or NetworkInterfaceType.Ethernet)
+                .SelectMany(x => x.GetIPProperties().UnicastAddresses)
+                .Where(x => x.Address.AddressFamily == AddressFamily.InterNetwork)
+                .Select(x => x.Address)
+                .ToList();
+            
+            if (ips.Count > 0)
             {
-                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                {  
-                    ipV4List.Add(ip);
-                }
-            }
-            if (ipV4List.Count > 0)
-            {
-                return ipV4List[ipV4List.Count - 1];
+                return ips[^1];
             }
             return IPAddress.Loopback; 
         }

@@ -28,7 +28,7 @@ public class WaitingForPlayersGUI : AbstractGUI
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
 
-        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures/GUI/background/Waiting" };
+        menuBackground = new DrawableUIElement(Manager) { rectangle = new Rectangle(0, 0, width, height), mainColor = Color.White, textureName = "Textures/GUI/background/waiting" };
         Elements.Add(menuBackground);
         menuBackground.LoadTexture(AppManager.Instance.Content); 
         //   string pcIp = 
