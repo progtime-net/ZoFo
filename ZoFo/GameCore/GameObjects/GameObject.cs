@@ -54,6 +54,33 @@ public abstract class GameObject
 
     #region Client Side
 
+
+    /// <summary>
+    /// вызывается для создания объектов на клиенте, 
+    /// соответственно используется по большей часте для создания эффектов 
+    /// (например на конец атаки или смерти будут создаваться взирывы, а их бессмысленно передавать каждый раз)
+    /// </summary>
+    /// <param name="gameObject"></param>
+    public void Instantiate_OnClient(GameObject gameObject)
+    {
+        if (AppManager.Instance.client != null)
+            AppManager.Instance.client.RegisterClientMadeObject(gameObject);
+
+    }
+
+    /// <summary>
+    /// Используется для локального удаления объектов на клиенте, например, частицы взрыва удаляются после срабатывания, 
+    /// соответственно не надо это очевидное и предсказыемое удаление отправлять с сервераа на клиент
+    /// </summary>
+    /// <param name="gameObject"></param>
+    public void Delete_OnClient(GameObject gameObject)
+    {
+        if (AppManager.Instance.client != null)
+            AppManager.Instance.client.DeleteObject(gameObject);
+
+    }
+
+
     public static Texture2D debugTexture;
     /// <summary>
     /// Для клиента

@@ -111,11 +111,11 @@ namespace ZoFo.GameCore.GameObjects
         public override void DeathEnd()
         {
 
-            Instantiate(new Particle(position - collisionComponent.stopRectangle.Size.ToVector2() / 2 + ExtentionClass.RandomVector() * 20));
-            Instantiate(new Particle(position - collisionComponent.stopRectangle.Size.ToVector2() / 2 + ExtentionClass.RandomVector() * 20));
-            Instantiate(new Particle(position - collisionComponent.stopRectangle.Size.ToVector2() / 2 + ExtentionClass.RandomVector() * 20));
-            Instantiate(new Particle(position - collisionComponent.stopRectangle.Size.ToVector2() / 2 + ExtentionClass.RandomVector() * 20));
-            Instantiate(new Particle(position - collisionComponent.stopRectangle.Size.ToVector2() / 2 + ExtentionClass.RandomVector() * 20));
+            Instantiate_OnClient(new Explosion(position - collisionComponent.stopRectangle.Size.ToVector2() / 2 + ExtentionClass.RandomVector() * 20));
+            Instantiate_OnClient(new Explosion(position - collisionComponent.stopRectangle.Size.ToVector2() / 2 + ExtentionClass.RandomVector() * 20));
+            Instantiate_OnClient(new Explosion(position - collisionComponent.stopRectangle.Size.ToVector2() / 2 + ExtentionClass.RandomVector() * 20));
+            Instantiate_OnClient(new Explosion(position - collisionComponent.stopRectangle.Size.ToVector2() / 2 + ExtentionClass.RandomVector() * 20));
+            Instantiate_OnClient(new Explosion(position - collisionComponent.stopRectangle.Size.ToVector2() / 2 + ExtentionClass.RandomVector() * 20));
 
             base.DeathEnd();
         }

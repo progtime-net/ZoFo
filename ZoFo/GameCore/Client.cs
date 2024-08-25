@@ -367,5 +367,15 @@ namespace ZoFo.GameCore
                 players.Remove(entity as Player);
         }
 
+        public void RegisterClientMadeObject(GameObject gameObject)
+        {
+
+            if (gameObject is Particle) particles.Add(gameObject as Particle);
+            else gameObjects.Add(gameObject);
+            
+
+            
+        }
+
     }
 }

@@ -270,7 +270,7 @@ public class Player : LivingEntity
                 {
                     for (int i = 3; i <= 3; i++)
                     {
-                        Instantiate(new Particle(
+                        Instantiate(new Explosion(
                      ((position - graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2) * (3 - i) / 3f) +
                      ((entity.position - graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2) * i / 3f) + ExtentionClass.RandomVector() * 3
                      ));
