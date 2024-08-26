@@ -49,7 +49,7 @@ namespace ZoFo.GameCore.GameManagers
 
         public AppManager()
         {
-            _graphics = new GraphicsDeviceManager(this);    
+            _graphics = new GraphicsDeviceManager(this);
             CurentScreenResolution = new Point(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
             SetResolution(CurentScreenResolution.X, CurentScreenResolution.Y);
             //FulscrreenSwitch();
@@ -68,7 +68,7 @@ namespace ZoFo.GameCore.GameManagers
             SettingsManager.LoadSettings();
             
             AssetManager = new AssetManager();
-            
+
             SoundManager.StartAmbientSound("Background menu music");
 
             currentGUI = new MainMenuGUI();
@@ -80,9 +80,9 @@ namespace ZoFo.GameCore.GameManagers
         protected override void Initialize()
         {
             currentGUI.Initialize();
-            
-            debugHud.Initialize(); 
-            ItemManager.Initialize(); 
+
+            debugHud.Initialize();
+            ItemManager.Initialize();
 
 
             base.Initialize();
@@ -92,25 +92,26 @@ namespace ZoFo.GameCore.GameManagers
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             debugHud.LoadContent();
-            currentGUI.LoadContent(); 
+            currentGUI.LoadContent();
             ItemManager.LoadItemTextures();
 
 
- 
+
             animationBuilder = new AnimationBuilder();
             animationBuilder.LoadAnimations();
             GameObject.debugTexture = new Texture2D(GraphicsDevice, 1, 1);
-            GameObject.debugTexture.SetData(new Color[] { Color.White }); 
+            GameObject.debugTexture.SetData(new Color[] { Color.White });
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || 
-                Keyboard.GetState().IsKeyDown(Keys.Escape)) { Exit(); } 
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.Escape)) { Exit(); }
 
 
-         //   debugHud.Set("key", "value");
+            //   debugHud.Set("key", "value");
 
+            CheckGUI();
             InputManager.Update();
             currentGUI.Update(gameTime);
             switch (gamestate)
@@ -127,24 +128,16 @@ namespace ZoFo.GameCore.GameManagers
                 default:
                     break;
             }
-            if (client != null)
-            {
-                if (client.changeGUI)
-                {
-                    SetGUI(new FinishingGUI());
-                    client.changeGUI = false;
-                }
-            }
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
- 
-            
+
+
             // Pointwrap
-            _spriteBatch.Begin(samplerState: SamplerState.PointWrap); 
+            _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
@@ -157,8 +150,8 @@ namespace ZoFo.GameCore.GameManagers
                 default:
                     break;
             }
-            
-            _spriteBatch.End(); 
+
+            _spriteBatch.End();
             currentGUI.Draw(_spriteBatch);
             debugHud.Draw(_spriteBatch);
 
@@ -168,14 +161,33 @@ namespace ZoFo.GameCore.GameManagers
         {
             this.gamestate = gameState;
         }
+
+
+        #region SetGUI Fix
+        /// <summary>
+        /// Если гуи меняется из другого потока, то бага не будет, ибо запоминатеся новый гуи и применяется на слудующем
+        /// нормальном апдейте в исходном потоке
+        /// </summary>
+        bool ChangeGUI = false;
+        AbstractGUI temporaryGUI = null;
         public void SetGUI(AbstractGUI gui)
         {
-            currentGUI = gui;
-            currentGUI.Initialize();
-            currentGUI.LoadContent();
+            temporaryGUI = gui;
+            temporaryGUI.Initialize();
+            temporaryGUI.LoadContent();
 
+            ChangeGUI = true;
             //TODO 
         }
+        private void CheckGUI()
+        {
+            if (!ChangeGUI) return;
+
+            currentGUI = temporaryGUI;
+            ChangeGUI = false;
+
+        }
+        #endregion
 
         public void GameEnded(Dictionary<string, int> lootIGot)
         {

@@ -283,6 +283,7 @@ namespace ZoFo.GameCore
                 }
             }
 
+
         }
         public void UpdatePlayerHealth(UpdatePlayerParametrs update)
         {
@@ -321,12 +322,11 @@ namespace ZoFo.GameCore
                 (ent as Player).health = (update as UpdatePlayerParametrs).health;
                 (ent as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
             } 
-        }
-        public bool changeGUI = false;
+        } 
         public void GameEnd()
         {
 
-            changeGUI = true;
+            AppManager.Instance.SetGUI(new FinishingGUI());
         }
 
         public Entity FindEntityById(int id)
