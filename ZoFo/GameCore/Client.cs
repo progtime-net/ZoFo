@@ -133,11 +133,11 @@ namespace ZoFo.GameCore
             UpdateShaking();
             for (int i = 0; i < gameObjects.Count; i++)
             {
-                gameObjects[i].UpdateAnimations();
+                gameObjects[i].Update_OnClient();
             }
             for (int i = 0; i < particles.Count; i++)
             {
-                particles[i].UpdateAnimations();
+                particles[i].Update_OnClient();
             }
 
             networkManager.SendData();//set to ticks

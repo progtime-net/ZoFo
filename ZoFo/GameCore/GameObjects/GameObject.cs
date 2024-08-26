@@ -109,7 +109,7 @@ public abstract class GameObject
     /// Для клиента
     /// Обновление, которое вызывается у клиента, для просмотра анимаций
     /// </summary>
-    public virtual void UpdateAnimations()
+    public virtual void Update_OnClient()
     {
         positionDraw = (position * 0.15f + positionDraw*0.85f);
         graphicsComponent.ObjectDrawRectangle.X = (int)positionDraw.X; //Move To place where Updates Sets your position
