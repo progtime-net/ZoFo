@@ -229,7 +229,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             }
             return players.ToArray();
         }
-        public Entity[] GetEntities(Rectangle rectangle, Entity entity)
+        public Entity[] GetEntities(Rectangle rectangle, Entity entityToIgnore = null)
         {
 
             List<Entity> entities = new List<Entity>();
@@ -240,8 +240,11 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
                     entities.Add(item);
                 }
             }
-            if (entities.Contains(entity))
-                entities.Remove(entity);
+            if (entityToIgnore!= null)
+            {
+                if (entities.Contains(entityToIgnore))
+                    entities.Remove(entityToIgnore);
+            }
             return entities.ToArray();
         }
 
@@ -257,7 +260,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         public static SerializableVector2 Serialize(this Vector2 vector) => new SerializableVector2(vector);
         public static Vector2 RandomVector()
         {  
-            return new Vector2((float)Random.Shared.NextDouble() - 0.5f, (float)Random.Shared.NextDouble() - 0.5f);
+            return new Vector2((float)Random.Shared.NextDouble() - 0.5f, (float)Random.Shared.NextDouble() - 0.5f)*2;
         }
         
     }

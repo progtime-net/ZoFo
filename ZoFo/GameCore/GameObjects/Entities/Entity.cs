@@ -32,10 +32,10 @@ namespace ZoFo.GameCore.GameObjects
         public virtual void Update()
         {
         }
-        public override void UpdateLogic()
+        public override void UpdateLogic_OnServer()
         {
             Update();
-            base.UpdateLogic();
+            base.UpdateLogic_OnServer();
         }
 
         public void StartAnimation(string animationId)

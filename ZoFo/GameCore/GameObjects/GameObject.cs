@@ -26,7 +26,7 @@ public abstract class GameObject
 
         positionDraw = position;
     }
-    public virtual void UpdateLogic()
+    public virtual void UpdateLogic_OnServer()
     { 
         PlayAnimation_OnServer();
 
@@ -130,7 +130,7 @@ public abstract class GameObject
     }
     public void DrawDebugRectangle(SpriteBatch spriteBatch, Rectangle _rectangle, Nullable<Color> color = null)
     {
-        return;
+        //return; TODO normal disable and enable via debug modder
         if (color is null) color = new Color(1, 0, 0, 0.1f);
         if (color.Value.A == 255) color = new Color(color.Value, 0.25f);
         spriteBatch.Draw(debugTexture,
@@ -139,7 +139,6 @@ public abstract class GameObject
                              _rectangle.Width * GraphicsComponent.scaling,
                              _rectangle.Height * GraphicsComponent.scaling), color.Value);
      
-        //TODO: debugTexture
     }
     #endregion 
 }
