@@ -157,8 +157,9 @@ namespace ZoFo.GameCore
         public void EndGame()
         {
             UpdateGameEnded gameEnded = new UpdateGameEnded();
-            networkManager.AddData(gameEnded); 
-         //   networkManager.CloseConnection(); 
+            networkManager.AddData(gameEnded);
+            networkManager.SendData();
+            networkManager.CloseConnection(); 
         }
 
         public List<GameObject> gameObjects = new List<GameObject>();

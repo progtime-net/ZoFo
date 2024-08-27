@@ -36,6 +36,7 @@ namespace ZoFo.GameCore.GameObjects
                 sender.position = new Vector2(0f, 0f);
                 AppManager.Instance.server.EndGame();
                 AppManager.Instance.debugHud.Set("Exit", sender.position.ToString());
+                AppManager.Instance.ChangeState(GameState.NotPlaying);
             }
         }
     }

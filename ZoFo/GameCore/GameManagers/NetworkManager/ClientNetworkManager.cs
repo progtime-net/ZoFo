@@ -264,15 +264,27 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         {
             byte[] buffer = new byte[65535];
             string data;
-            while (socket != null)
-            { 
-                EndPoint senderRemote = new IPEndPoint(IPAddress.Any, 0);
-                int size = socket.ReceiveFrom(buffer, buffer.Length, SocketFlags.None, ref senderRemote);
-                byte[] correctedBuffer = new byte[size];
-                Array.Copy(buffer, correctedBuffer, size);
-                data = Encoding.UTF8.GetString(correctedBuffer);
-                GetDataSent(data); 
+            int size;
+            try
+            {
+                while (socket != null)
+                {
+                    EndPoint senderRemote = new IPEndPoint(IPAddress.Any, 0);
+                    size = socket.ReceiveFrom(buffer, buffer.Length, SocketFlags.None, ref senderRemote);
+                    byte[] correctedBuffer = new byte[size];
+                    Array.Copy(buffer, correctedBuffer, size);
+                    data = Encoding.UTF8.GetString(correctedBuffer);
+                    GetDataSent(data);
+                }
             }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+        public void CloseConnection()
+        {
+            socket.Close();
         }
     }
 }

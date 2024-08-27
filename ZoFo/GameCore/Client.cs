@@ -325,7 +325,8 @@ namespace ZoFo.GameCore
         } 
         public void GameEnd()
         {
-
+            networkManager.CloseConnection();
+            AppManager.Instance.ChangeState(GameState.NotPlaying);
             AppManager.Instance.SetGUI(new FinishingGUI());
         }
 

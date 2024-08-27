@@ -204,6 +204,12 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             AppManager.Instance.ChangeState(GameState.HostPlaying);
             AppManager.Instance.SetGUI(new HUD());////
         }
+        public void CloseConnection()
+        {
+            //socket.Shutdown(SocketShutdown.Both);
+            clientsEP.Clear();
+            socket.Close();
+        }
 
         //Потоки Клиентов
         /// <summary>
@@ -214,24 +220,32 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         {
             byte[] buffer = new byte[65535];
             string data;
-            while (socket != null)
+            int size;
+            try
             {
-                EndPoint senderRemote = (EndPoint)new IPEndPoint(IPAddress.Any, 0);
-                int size = socket.ReceiveFrom(buffer, buffer.Length, SocketFlags.None, ref senderRemote);
-                if (AppManager.Instance.gamestate != GameState.HostPlaying && !clientsEP.Contains(senderRemote) &&
-                    senderRemote != new IPEndPoint(IPAddress.Any, 0))
+                while (socket != null)
                 {
-                    clientsEP.Add((IPEndPoint)senderRemote);
-                    AppManager.Instance.debugHud.Log($"Connect {senderRemote.ToString()}");
-                    if (!isMultiplayer) AppManager.Instance.ChangeState(GameState.HostPlaying);
-                    // Отправлять Init апдейт с информацией об ID игрока и ID датаграмма на сервере
-                    //Можно добавить bool isInit для Датаграммов
-                }
-                byte[] correctedBuffer = new byte[size];
-                Array.Copy(buffer, correctedBuffer, size);
-                data = Encoding.UTF8.GetString(correctedBuffer);
-                GetDataSend(data);
+                    EndPoint senderRemote = (EndPoint)new IPEndPoint(IPAddress.Any, 0);
+                    size = socket.ReceiveFrom(buffer, buffer.Length, SocketFlags.None, ref senderRemote);
+                    if (AppManager.Instance.gamestate != GameState.HostPlaying && !clientsEP.Contains(senderRemote) &&
+                        senderRemote != new IPEndPoint(IPAddress.Any, 0))
+                    {
+                        clientsEP.Add((IPEndPoint)senderRemote);
+                        AppManager.Instance.debugHud.Log($"Connect {senderRemote.ToString()}");
+                        if (!isMultiplayer) AppManager.Instance.ChangeState(GameState.HostPlaying);
+                        // Отправлять Init апдейт с информацией об ID игрока и ID датаграмма на сервере
+                        //Можно добавить bool isInit для Датаграммов
+                    }
+                    byte[] correctedBuffer = new byte[size];
+                    Array.Copy(buffer, correctedBuffer, size);
+                    data = Encoding.UTF8.GetString(correctedBuffer);
+                    GetDataSend(data);
 
+                }
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
         public void AnalyzeData(string data) 
