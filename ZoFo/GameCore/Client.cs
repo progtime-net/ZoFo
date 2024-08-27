@@ -208,22 +208,7 @@ namespace ZoFo.GameCore
 
             else if (update is UpdateGameObjectCreated)
             {
-                //TODO
-                Entity created_gameObject;
-                if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
-                {
-                    created_gameObject = new Player((update as UpdateGameObjectCreated).position.GetVector2());
-                    gameObjects.Add(created_gameObject);
-                }
-                else
-                {
-                    Type t = Type.GetType("ZoFo.GameCore.GameObjects." + (update as UpdateGameObjectCreated).GameObjectType);
-                    GameObject gameObject = Activator.CreateInstance(t, (update as UpdateGameObjectCreated).position.GetVector2()) as GameObject;
-                    if (gameObject is Entity)
-                        (gameObject as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
-                    gameObjects.Add(gameObject);
-                }
-                (gameObjects.Last() as Entity).SetIdByClient((update as UpdateGameObjectCreated).IdEntity);
+                Update_GameObjectCreated(update as UpdateGameObjectCreated);
 
             }
             else if (update is UpdateGameObjectWithoutIdCreated)
@@ -284,6 +269,26 @@ namespace ZoFo.GameCore
             }
 
         }
+        #region UpdatesAnalysis
+        public void Update_GameObjectCreated(UpdateGameObjectCreated update)
+        {
+             
+            if (update.GameObjectType == "Player")
+            {
+                Player player = new Player(update.position.GetVector2());
+                player.SetIdByClient(update.IdEntity);
+                gameObjects.Add(player);
+            }
+            else
+            {
+                Type t = Type.GetType("ZoFo.GameCore.GameObjects." + update.GameObjectType);
+                GameObject gameObject = Activator.CreateInstance(t, update.position.GetVector2()) as GameObject;
+                if (gameObject is Entity)
+                    (gameObject as Entity).SetIdByClient(update.IdEntity);
+                gameObjects.Add(gameObject);
+            }
+        }
+        #endregion
         public void UpdatePlayerHealth(UpdatePlayerParametrs update)
         {
 
@@ -346,6 +351,9 @@ namespace ZoFo.GameCore
 
         public void DeleteObject(GameObject gameObject)
         {
+            if (gameObjects.Contains(gameObject))
+                gameObjects.Remove(gameObject);
+            
             if (gameObject is Entity)
             {
                 DeleteEntity(gameObject as Entity);
