@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NativeFileDialogSharp;
 using Microsoft.Xna.Framework.Graphics;
+using System.Runtime.CompilerServices;
 
 namespace AnimatorFileCreatorAdvanced.Core.GUI
 {
@@ -100,6 +101,9 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
                 fontName = "Fonts\\Font",
                 textureName = "GUI/Button"
             };
+            RunButton.LeftButtonPressed += () => {
+                BuildAnimation();
+            };
             Button Save = new Button(Manager)
             {
                 rectangle = GetRelativeRectangle_SettingSizes(0.8f, 0.1f, 0, 0.1f),
@@ -144,6 +148,45 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
 
                  */
             };
+
+
+
+
+            #region LowerPanel
+
+
+            TextBox InpurWidth = new TextBox(Manager)
+            {
+                rectangle = GetRelativeRectangle_SettingSizes(0.0f, 0.1f, 0.9f, 0.1f),
+                text = "columns",
+                scale = 0.1f,
+                fontColor = Color.Orange,
+                mainColor = Color.Gray,
+                fontName = "Fonts\\Font",
+                textureName = "GUI/Button"
+            };
+            TextBox InpurHeight = new TextBox(Manager)
+            {
+                rectangle = GetRelativeRectangle_SettingSizes(0.1f, 0.1f, 0.9f, 0.1f),
+                text = "rows",
+                scale = 0.1f,
+                fontColor = Color.Orange,
+                mainColor = Color.Gray,
+                fontName = "Fonts\\Font",
+                textureName = "GUI/Button"
+            };
+            TextBox animationRow = new TextBox(Manager)
+            {
+                rectangle = GetRelativeRectangle_SettingSizes(0.2f, 0.1f, 0.9f, 0.1f),
+                text = "animationrow",
+                scale = 0.1f,
+                fontColor = Color.Orange,
+                mainColor = Color.Gray,
+                fontName = "Fonts\\Font",
+                textureName = "GUI/Button"
+            };
+
+            #endregion
         }
 
         Texture2D BlackTexture;
@@ -152,6 +195,7 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
         Rectangle ExampleAnimation;
 
         Rectangle AnimationSampleRectangle;
+        Rectangle AnimationExampleSampleRectangle;
         public override void LoadContent()
         {
             BlackTexture = new Texture2D(AppManager.Instance.GraphicsDevice, 1, 1);
@@ -169,7 +213,8 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
 
             if (LoadedSample != null)
             {
-                spriteBatch.Draw(LoadedSample, AnimationSampleRectangle, Color.White);
+                spriteBatch.Draw(LoadedSample, AnimationSampleRectangle,Color.White);
+                spriteBatch.Draw(LoadedSample, AnimationExampleSampleRectangle, AppLogic.animationRectangle,Color.White);
 
             }
             spriteBatch.End();
@@ -180,7 +225,7 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
         float margin_top = 0.01f;
         float margin_bottom = 0.01f;
         public Rectangle GetRelativeRectangle_SettingSizes(float marginPercentFromLeft, float relativeXSize, float marginPercentFromTop, float relativeYSize, Rectangle? area = null)
-            => GetRelativeRectangle(marginPercentFromLeft, 1 - marginPercentFromLeft - relativeXSize, marginPercentFromTop, 1 - marginPercentFromTop- relativeYSize, area);
+            => GetRelativeRectangle(marginPercentFromLeft, 1 - marginPercentFromLeft - relativeXSize, marginPercentFromTop, 1 - marginPercentFromTop - relativeYSize, area);
 
         public Rectangle GetRelativeRectangle(float marginPercentFromLeft, float marginPercentFromRight, float marginPercentFromTop, float marginPercentFromBottom, Rectangle? area = null)
         {
@@ -229,22 +274,110 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
             {
 
                 //TODO
-                AnimationSampleRectangle = new Rectangle(SampleRectangle.X,
-                    SampleRectangle.Y + (SampleRectangle.Height -
-                    (int)(SampleRectangle.Width * (texture.Height / (float)texture.Width))
-                    ) / 2,
-                    SampleRectangle.Width,
-                    (int)(SampleRectangle.Width * (texture.Height / (float)texture.Width))
+                AnimationSampleRectangle = new Rectangle(SampleRectangle.X
+                    + (SampleRectangle.Width -
+                    (int)(SampleRectangle.Height * (texture.Width / (float)texture.Height))
+                    ) / 2
+                    ,
+                    SampleRectangle.Y ,
+                    (int)(SampleRectangle.Height * (texture.Width / (float)texture.Height)),
+                    SampleRectangle.Height
                     );
             }
+        }
+        public void BuildAnimation()
+        {
+            Point point = new Point(13,1);
+            AppLogic.BuildBaseRectangle(point.X, point.Y);
+            AppLogic.SetRow(0);
+
+
+            if (AppLogic.animationRectangle.Width / (float)AppLogic.animationRectangle.Height > ExampleAnimation.Width / (float)ExampleAnimation.Height)
+            {
+                //not  full height
+                AnimationExampleSampleRectangle = new Rectangle(ExampleAnimation.X,
+                    ExampleAnimation.Y + (ExampleAnimation.Height -
+                    (int)(ExampleAnimation.Width * (AppLogic.animationRectangle.Height / (float)AppLogic.animationRectangle.Width))
+                    ) / 2,
+                    ExampleAnimation.Width,
+                    (int)(ExampleAnimation.Width * (AppLogic.animationRectangle.Height / (float)AppLogic.animationRectangle.Width))
+                    );
+            }
+            else
+            {
+
+                //TODO
+                AnimationSampleRectangle = new Rectangle(ExampleAnimation.X
+                    + (ExampleAnimation.Width -
+                    (int)(ExampleAnimation.Height * (AppLogic.animationRectangle.Width / (float)AppLogic.animationRectangle.Height))
+                    ) / 2
+                    ,
+                    ExampleAnimation.Y,
+                    (int)(ExampleAnimation.Height * (AppLogic.animationRectangle.Width / (float)AppLogic.animationRectangle.Height)),
+                    ExampleAnimation.Height
+                    );
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            AppLogic.Update();
+            base.Update(gameTime);
         }
     }
     static class AppLogic
     {
         public static Texture2D fileTexture;
+        public static Rectangle textureTotalRectangle;
+        public static Rectangle animationRectangle;
+        public static Point animjationStep;
+        public static int rows;
+        public static int columns;
+        public static bool buildDone = false;
         public static void LoadFile(string filePath)
         {
             fileTexture = Texture2D.FromFile(AppManager.Instance.GraphicsDevice, filePath);
+            textureTotalRectangle = new Rectangle(0, 0, fileTexture.Width, fileTexture.Height);
+            buildDone = false;
+        }
+        public static void BuildBaseRectangle(int _columns, int _rows)
+        {
+            rows = _rows;
+            columns = _columns;
+            animationRectangle = new Rectangle(0, 0, textureTotalRectangle.Width / columns, textureTotalRectangle.Height / rows);
+            animjationStep = new Point(animationRectangle.Width, 0);
+
+            buildDone = true;
+        }
+        /// <summary>
+        /// rows from 0
+        /// </summary>
+        /// <param name="row"></param>
+        public static void SetRow(int row)
+        {
+            animationRectangle.Y = animationRectangle.Width * row;
+
+        }
+
+        public static int framesPassed = 0;
+        public static void Update()
+        {
+            if (!buildDone) return;
+            framesPassed++;
+            if (framesPassed > 5)
+            {
+                framesPassed = 0;
+                SetNextFrame();
+            }
+        }
+        private static void SetNextFrame()
+        {
+            animationRectangle.X += animjationStep.X;
+            animationRectangle.Y += animjationStep.Y;
+            if (animationRectangle.Right > textureTotalRectangle.Width) // ended row
+            {
+                animationRectangle.X = 0;
+            }
         }
     }
 }
