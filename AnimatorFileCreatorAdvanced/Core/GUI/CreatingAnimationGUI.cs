@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 using NativeFileDialogSharp;
 using Microsoft.Xna.Framework.Graphics;
 using System.Runtime.CompilerServices;
+using System.ComponentModel;
+using System.IO;
+using ZoFo.GameCore.Graphics;
+using Newtonsoft.Json;
 
 namespace AnimatorFileCreatorAdvanced.Core.GUI
 {
@@ -101,10 +105,11 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
                 fontName = "Fonts\\Font",
                 textureName = "GUI/Button"
             };
-            RunButton.LeftButtonPressed += () => {
+            RunButton.LeftButtonPressed += () =>
+            {
                 BuildAnimation();
             };
-            Button Save = new Button(Manager)
+            Button SaveBtn = new Button(Manager)
             {
                 rectangle = GetRelativeRectangle_SettingSizes(0.8f, 0.1f, 0, 0.1f),
                 text = "Save",
@@ -149,45 +154,70 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
                  */
             };
 
+            SaveBtn.LeftButtonPressed += () =>
+            {
+                Save();
+            };
 
 
 
             #region LowerPanel
 
 
-            TextBox InpurWidth = new TextBox(Manager)
-            {
-                rectangle = GetRelativeRectangle_SettingSizes(0.0f, 0.1f, 0.9f, 0.1f),
-                text = "columns",
-                scale = 0.1f,
-                fontColor = Color.Orange,
-                mainColor = Color.Gray,
-                fontName = "Fonts\\Font",
-                textureName = "GUI/Button"
-            };
-            TextBox InpurHeight = new TextBox(Manager)
-            {
-                rectangle = GetRelativeRectangle_SettingSizes(0.1f, 0.1f, 0.9f, 0.1f),
-                text = "rows",
-                scale = 0.1f,
-                fontColor = Color.Orange,
-                mainColor = Color.Gray,
-                fontName = "Fonts\\Font",
-                textureName = "GUI/Button"
-            };
-            TextBox animationRow = new TextBox(Manager)
-            {
-                rectangle = GetRelativeRectangle_SettingSizes(0.2f, 0.1f, 0.9f, 0.1f),
-                text = "animationrow",
-                scale = 0.1f,
-                fontColor = Color.Orange,
-                mainColor = Color.Gray,
-                fontName = "Fonts\\Font",
-                textureName = "GUI/Button"
-            };
+            InputIdName = CreateInputAndTextPair(GetRelativeRectangle_SettingSizes(0.0f, 0.3f, 0.5f, 0.1f), 0.2f, "ID:", "run");
+            InputWidth = CreateInputAndTextPair(GetRelativeRectangle_SettingSizes(0.0f, 0.3f, 0.6f, 0.1f), 0.2f, "Колонн:", "1");
+            InputHeight = CreateInputAndTextPair(GetRelativeRectangle_SettingSizes(0.0f, 0.3f, 0.7f, 0.1f), 0.2f, "Рядов:", "1");
+            InputFramesCount = CreateInputAndTextPair(GetRelativeRectangle_SettingSizes(0.0f, 0.3f, 0.8f, 0.1f), 0.2f, "Кадров:", "1");
+            animationRow = CreateInputAndTextPair(GetRelativeRectangle_SettingSizes(0.0f, 0.3f, 0.9f, 0.1f), 0.2f, "Ряд анимации:", "1");
 
             #endregion
         }
+        TextBox InputWidth;
+        TextBox InputHeight;
+        TextBox InputFramesCount;
+        TextBox animationRow;
+        TextBox InputIdName;
+        CheckBox InputIsCycle;
+
+        /// <summary>
+        /// ratio = inputWidth/totalWidth
+        /// </summary>
+        /// <param name="area"></param>
+        /// <param name="ratio"></param>
+        /// <param name="textString"></param>
+        /// <param name="textBoxString"></param>
+        /// <returns></returns>
+        public TextBox CreateInputAndTextPair(Rectangle area, float ratio, string textString, string textBoxString)
+        {
+            int arWidth = area.Width;
+            area.Width = arWidth - (int)(arWidth * ratio) + (int)(arWidth * (ratio / 2));
+            Label lb = new Label(Manager)
+            {
+                rectangle = area,
+                text = textString,
+                scale = 0.2f,
+                fontColor = Color.Black,
+                mainColor = Color.Black,
+                fontName = "Fonts\\Font4",
+                textureName = "GUI/Button",
+                textAligment = MonogameLibrary.UI.Enums.TextAligment.Left
+            };
+            area.X += (int)(arWidth * (1 - ratio));
+            area.Width = arWidth - (int)(arWidth * (1 - ratio));
+            TextBox tb = new TextBox(Manager)
+            {
+                rectangle = area,
+                text = textBoxString,
+                scale = 0.4f,
+                fontColor = Color.Black,
+                mainColor = Color.Gray,
+                fontName = "Fonts\\Font4",
+                textureName = "GUI/Button",
+                textAligment = MonogameLibrary.UI.Enums.TextAligment.Center
+            };
+            return tb;
+        }
+
 
         Texture2D BlackTexture;
         Texture2D LoadedSample;
@@ -200,21 +230,21 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
         {
             BlackTexture = new Texture2D(AppManager.Instance.GraphicsDevice, 1, 1);
             BlackTexture.SetData(new Color[] { Color.Black });
-            SampleRectangle = GetRelativeRectangle(0.01f, 0.31f, 0.1f, 0.01f);
-            ExampleAnimation = GetRelativeRectangle(0.7f, 0.01f, 0.1f, 0.01f);
+            SampleRectangle = GetRelativeRectangle_SettingSizes(0.3f, 0.4f, 0.1f, 0.9f);
+            ExampleAnimation = GetRelativeRectangle_SettingSizes(0.7f, 0.3f, 0.1f, 0.9f);
 
             base.LoadContent();
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(BlackTexture, SampleRectangle, Color.White);
             spriteBatch.Draw(BlackTexture, ExampleAnimation, Color.White);
 
             if (LoadedSample != null)
             {
-                spriteBatch.Draw(LoadedSample, AnimationSampleRectangle,Color.White);
-                spriteBatch.Draw(LoadedSample, AnimationExampleSampleRectangle, AppLogic.animationRectangle,Color.White);
+                spriteBatch.Draw(LoadedSample, AnimationSampleRectangle, Color.White);
+                spriteBatch.Draw(LoadedSample, AnimationExampleSampleRectangle, AppLogic.animationRectangle, Color.White);
 
             }
             spriteBatch.End();
@@ -279,7 +309,7 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
                     (int)(SampleRectangle.Height * (texture.Width / (float)texture.Height))
                     ) / 2
                     ,
-                    SampleRectangle.Y ,
+                    SampleRectangle.Y,
                     (int)(SampleRectangle.Height * (texture.Width / (float)texture.Height)),
                     SampleRectangle.Height
                     );
@@ -287,10 +317,22 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
         }
         public void BuildAnimation()
         {
-            Point point = new Point(13,1);
-            AppLogic.BuildBaseRectangle(point.X, point.Y);
-            AppLogic.SetRow(0);
 
+            Point point = new Point(13, 1);
+            if (!int.TryParse(InputWidth.text, out point.X))
+                point.X = 1;
+            if (point.X < 1)
+                point.X = 1;
+            if (!int.TryParse(InputHeight.text, out point.Y))
+                point.Y = 1;
+            if (point.Y < 1)
+                point.Y = 1;
+
+            AppLogic.BuildBaseRectangle(point.X, point.Y);
+
+            AppLogic.SetRow(int.Parse(animationRow.text));
+            AppLogic.SetFrmesCount(int.Parse(InputFramesCount.text));
+            AppLogic.SetAnimationId(InputIdName.text);
 
             if (AppLogic.animationRectangle.Width / (float)AppLogic.animationRectangle.Height > ExampleAnimation.Width / (float)ExampleAnimation.Height)
             {
@@ -307,7 +349,7 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
             {
 
                 //TODO
-                AnimationSampleRectangle = new Rectangle(ExampleAnimation.X
+                AnimationExampleSampleRectangle = new Rectangle(ExampleAnimation.X
                     + (ExampleAnimation.Width -
                     (int)(ExampleAnimation.Height * (AppLogic.animationRectangle.Width / (float)AppLogic.animationRectangle.Height))
                     ) / 2
@@ -324,6 +366,12 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
             AppLogic.Update();
             base.Update(gameTime);
         }
+
+        public void Save()
+        {
+            AppLogic.SaveCurrentAnimation("");
+        }
+
     }
     static class AppLogic
     {
@@ -334,11 +382,19 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
         public static int rows;
         public static int columns;
         public static bool buildDone = false;
+        public static string textureFilePath;
+        public static string textureEndName;
         public static void LoadFile(string filePath)
         {
             fileTexture = Texture2D.FromFile(AppManager.Instance.GraphicsDevice, filePath);
             textureTotalRectangle = new Rectangle(0, 0, fileTexture.Width, fileTexture.Height);
             buildDone = false;
+            textureFilePath = filePath;
+
+
+            var temp = filePath.Split('\\');
+            textureEndName = /*temp[temp.Length - 2] + "/" +*/ temp[temp.Length - 1];
+            textureEndName = textureEndName.Split('.')[0];
         }
         public static void BuildBaseRectangle(int _columns, int _rows)
         {
@@ -355,7 +411,7 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
         /// <param name="row"></param>
         public static void SetRow(int row)
         {
-            animationRectangle.Y = animationRectangle.Width * row;
+            animationRectangle.Y = animationRectangle.Height * row;
 
         }
 
@@ -370,14 +426,71 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
                 SetNextFrame();
             }
         }
+        static int curframe = 0;
         private static void SetNextFrame()
         {
-            animationRectangle.X += animjationStep.X;
-            animationRectangle.Y += animjationStep.Y;
-            if (animationRectangle.Right > textureTotalRectangle.Width) // ended row
+            curframe++;
+            if (curframe >= frameCount)
             {
-                animationRectangle.X = 0;
+                curframe = 0;
             }
+            //animationRectangle.Y += animjationStep.Y;
+            //if (animationRectangle.Right > textureTotalRectangle.Width) // ended row
+            //{
+            //    animationRectangle.X = 0;
+            //}
+            //animationRectangle.Y = curframe * animjationStep.Y;
+            animationRectangle.X = curframe * animjationStep.X;
+
+        }
+
+        public static void SetFrmesCount(int _frameCount) => frameCount = _frameCount;
+        public static int frameCount;
+
+        public static void SetIsCycle(bool _isCycle) => isCycle = _isCycle;
+        public static bool isCycle;
+
+        public static void SetAnimationId(string _id) => id = _id;
+        public static string id;
+
+        public static List<Tuple<int, int>> frameTimes = new List<Tuple<int, int>>() { new Tuple<int, int>(0, 5) };
+        public static void SaveCurrentAnimation(string saveString)
+        {
+            DialogResult result = Dialog.FolderPicker();
+            if (result.Path is null)
+            {
+                return;
+            }
+            var temp = result.Path.Split("Animations")[1].Remove(0,2);
+            //string textureName = temp[temp.Length - 2] + "/" + temp[temp.Length - 1];
+            //textureName = textureName.Split('.')[0];
+            //choose save folder (it  will save for further animations)
+
+            
+            AnimationContainer container = new AnimationContainer();
+
+
+            if (!File.Exists("../../../../ZoFo/Content/Textures/AnimationTextures/" + textureEndName + ".png"))
+                File.Copy(textureFilePath, "../../../../ZoFo/Content/Textures/AnimationTextures/" + textureEndName + ".png");
+
+            container.Offset = new Vector2(0, animationRectangle.Y);
+            container.FramesCount = frameCount;
+            container.FrameTime = frameTimes;
+            animationRectangle.X = 0;
+            container.StartSpriteRectangle = animationRectangle;
+            container.TextureFrameInterval = 0;
+            container.IsCycle = isCycle;
+            container.Id = id;
+            container.TextureName = "Textures/AnimationTextures/" + textureEndName;
+            string json = JsonConvert.SerializeObject(container);
+
+            StreamWriter writer = new StreamWriter(result.Path + "/" + id + ".animation");//"../../../../ZoFo/Content/Textures/Animations/" + id + ".animation");
+            writer.WriteLine(json);
+            writer.Close();
+        }
+        public static string selectOnlyPathFromContent(string path)
+        {
+            return path.Split("Content")[1];
         }
     }
 }
