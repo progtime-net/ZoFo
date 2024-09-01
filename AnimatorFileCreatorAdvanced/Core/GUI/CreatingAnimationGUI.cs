@@ -73,6 +73,8 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
             openFileButton.LeftButtonPressed += () =>
             {
                 DialogResult result = Dialog.FileOpen();
+                if (result.Path is null) return;
+
                 var temp = result.Path.Split('\\');
                 string textureName = temp[temp.Length - 2] + "/" + temp[temp.Length - 1];
                 textureName = textureName.Split('.')[0];
@@ -164,7 +166,9 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
             #region LowerPanel
 
 
-            InputIdName = CreateInputAndTextPair(GetRelativeRectangle_SettingSizes(0.0f, 0.3f, 0.5f, 0.1f), 0.2f, "ID:", "run");
+            InputIsCycle = CreateInputAndCheckBoxPair(GetRelativeRectangle_SettingSizes(0.0f, 0.3f, 0.3f, 0.1f), 0.2f, "Зациклено?:", "");
+            TicksPerFrame = CreateInputAndTextPair(GetRelativeRectangle_SettingSizes(0.0f, 0.3f, 0.4f, 0.1f), 0.2f, "Тиков на кадр:", "5");
+            InputIdName = CreateInputAndTextPair(GetRelativeRectangle_SettingSizes(0.0f, 0.3f, 0.5f, 0.1f), 0.8f, "ID:", "run");
             InputWidth = CreateInputAndTextPair(GetRelativeRectangle_SettingSizes(0.0f, 0.3f, 0.6f, 0.1f), 0.2f, "Колонн:", "1");
             InputHeight = CreateInputAndTextPair(GetRelativeRectangle_SettingSizes(0.0f, 0.3f, 0.7f, 0.1f), 0.2f, "Рядов:", "1");
             InputFramesCount = CreateInputAndTextPair(GetRelativeRectangle_SettingSizes(0.0f, 0.3f, 0.8f, 0.1f), 0.2f, "Кадров:", "1");
@@ -177,6 +181,7 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
         TextBox InputFramesCount;
         TextBox animationRow;
         TextBox InputIdName;
+        TextBox TicksPerFrame;
         CheckBox InputIsCycle;
 
         /// <summary>
@@ -217,6 +222,38 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
             };
             return tb;
         }
+
+        public CheckBox CreateInputAndCheckBoxPair(Rectangle area, float ratio, string textString, string textBoxString)
+        {
+            int arWidth = area.Width;
+            area.Width = arWidth - (int)(arWidth * ratio) + (int)(arWidth * (ratio / 2));
+            Label lb = new Label(Manager)
+            {
+                rectangle = area,
+                text = textString,
+                scale = 0.2f,
+                fontColor = Color.Black,
+                mainColor = Color.Black,
+                fontName = "Fonts\\Font4",
+                textureName = "GUI/Button",
+                textAligment = MonogameLibrary.UI.Enums.TextAligment.Left
+            };
+            area.X += (int)(arWidth * (1 - ratio));
+            area.Width = arWidth - (int)(arWidth * (1 - ratio));
+            CheckBox tb = new CheckBox(Manager)
+            {
+                rectangle = area,
+                text = textBoxString,
+                scale = 0.4f,
+                fontColor = Color.Black,
+                mainColor = Color.Gray,
+                fontName = "Fonts\\Font4",
+                textureName = "GUI/Button",
+                textAligment = MonogameLibrary.UI.Enums.TextAligment.Center
+            };
+            return tb;
+        }
+
 
 
         Texture2D BlackTexture;
@@ -333,6 +370,8 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
             AppLogic.SetRow(int.Parse(animationRow.text));
             AppLogic.SetFrmesCount(int.Parse(InputFramesCount.text));
             AppLogic.SetAnimationId(InputIdName.text);
+            AppLogic.SetIsCycle(InputIsCycle.GetChecked);
+            AppLogic.SetTicksPerAllFrames(int.Parse(TicksPerFrame.text));
 
             if (AppLogic.animationRectangle.Width / (float)AppLogic.animationRectangle.Height > ExampleAnimation.Width / (float)ExampleAnimation.Height)
             {
@@ -415,20 +454,25 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
 
         }
 
-        public static int framesPassed = 0;
+        public static int ticksPassed = 0;
         public static void Update()
         {
             if (!buildDone) return;
-            framesPassed++;
-            if (framesPassed > 5)
+            ticksPassed++;
+            if (ticksPassed > 3)
             {
-                framesPassed = 0;
+                ticksPassed = 0;
                 SetNextFrame();
             }
         }
         static int curframe = 0;
+        static int curtick = 0;
         private static void SetNextFrame()
         {
+            curtick++;
+            if (curtick < frameTimes.First().Item2) return;
+            curtick = 0;
+
             curframe++;
             if (curframe >= frameCount)
             {
@@ -454,6 +498,10 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
         public static string id;
 
         public static List<Tuple<int, int>> frameTimes = new List<Tuple<int, int>>() { new Tuple<int, int>(0, 5) };
+
+
+        public static void SetTicksPerAllFrames(int ticks) => frameTimes = new List<Tuple<int, int>>() { new Tuple<int, int>(0, ticks) };
+
         public static void SaveCurrentAnimation(string saveString)
         {
             DialogResult result = Dialog.FolderPicker();
@@ -461,17 +509,18 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
             {
                 return;
             }
-            var temp = result.Path.Split("Animations")[1].Remove(0,2);
+            var temp = result.Path.Split("Animations")[1].Remove(0, 1);
             //string textureName = temp[temp.Length - 2] + "/" + temp[temp.Length - 1];
             //textureName = textureName.Split('.')[0];
             //choose save folder (it  will save for further animations)
 
-            
+            id = id.ToLower();
             AnimationContainer container = new AnimationContainer();
 
-
-            if (!File.Exists("../../../../ZoFo/Content/Textures/AnimationTextures/" + textureEndName + ".png"))
-                File.Copy(textureFilePath, "../../../../ZoFo/Content/Textures/AnimationTextures/" + textureEndName + ".png");
+            if (!Directory.Exists("../../../../ZoFo/Content/Textures/AnimationTextures/" + temp))
+                Directory.CreateDirectory("../../../../ZoFo/Content/Textures/AnimationTextures/" + temp);
+            if (!File.Exists("../../../../ZoFo/Content/Textures/AnimationTextures/" + temp + "/" + textureEndName + ".png"))
+                File.Copy(textureFilePath, "../../../../ZoFo/Content/Textures/AnimationTextures/" + temp + "/" + textureEndName + ".png");
 
             container.Offset = new Vector2(0, animationRectangle.Y);
             container.FramesCount = frameCount;
@@ -481,7 +530,7 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
             container.TextureFrameInterval = 0;
             container.IsCycle = isCycle;
             container.Id = id;
-            container.TextureName = "Textures/AnimationTextures/" + textureEndName;
+            container.TextureName = "Textures/AnimationTextures/" + temp + "/" + textureEndName;
             string json = JsonConvert.SerializeObject(container);
 
             StreamWriter writer = new StreamWriter(result.Path + "/" + id + ".animation");//"../../../../ZoFo/Content/Textures/Animations/" + id + ".animation");
