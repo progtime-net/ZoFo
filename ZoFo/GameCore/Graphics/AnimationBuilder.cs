@@ -19,7 +19,8 @@ namespace ZoFo.GameCore.Graphics
             {
                 try
                 {
-                    if (!fileName.EndsWith(".animation")) continue;
+                    if (!fileName.EndsWith(".animation")) 
+                        continue;
                     reader = new StreamReader(fileName);
                     string json = reader.ReadToEnd();
                     AnimationContainer animation = JsonConvert.DeserializeObject<AnimationContainer>(json);

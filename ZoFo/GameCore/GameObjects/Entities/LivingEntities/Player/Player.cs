@@ -48,11 +48,11 @@ public class Player : LivingEntity
     {
         lootData = new LootData();
         lootData.loots = new Dictionary<string, int>();
-        graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 30, 30);
-        collisionComponent.stopRectangle = new Rectangle(10, 15, 10, 15);
+        graphicsComponent.ObjectDrawRectangle = new Rectangle(0, 0, 60, 60);
+        collisionComponent.stopRectangle = new Rectangle(25, 45, 10, 15);
         speed = 7;
 
-        StartAnimation("player_look_down");
+        StartAnimation("player_idle");
     }
 
 
@@ -80,24 +80,18 @@ public class Player : LivingEntity
                 if (idName != "player_run_down")
                     StartAnimation("player_run_down");
                 break;
-            case ScopeState.Right:
-            case ScopeState.Left:
-                if (idName != "player_run_right")
-                    StartAnimation("player_run_right");
-                break;
-            case ScopeState.TopRight:
-            case ScopeState.TopLeft:
-                if (idName != "player_run_right_up")
-                    StartAnimation("player_run_right_up");
-                break;
             case ScopeState.DownRight:
             case ScopeState.DownLeft:
-                if (idName != "player_run_right_down")
-                    StartAnimation("player_run_right_down");
+            case ScopeState.TopRight:
+            case ScopeState.TopLeft:
+            case ScopeState.Right:
+            case ScopeState.Left:  
+                if (idName != "player_running")
+                    StartAnimation("player_running");
                 break;
             case ScopeState.Idle:
-                if (idName != "player_look_down")
-                    StartAnimation("player_look_down");
+                if (idName != "player_idle")
+                    StartAnimation("player_idle");
                 break;
         }
         if (AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation) != ScopeState.Idle)
