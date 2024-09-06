@@ -176,6 +176,7 @@ namespace ZoFo.GameCore
 
         internal void UpdatesList(List<UpdateData> updates)
         {
+            //pls, add mutex ot monitor
             foreach (var item in updates)
             {
                 GotData(item);
