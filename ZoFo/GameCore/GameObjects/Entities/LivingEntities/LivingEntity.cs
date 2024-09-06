@@ -34,9 +34,9 @@ public class LivingEntity : Entity
 
     }
 
-    public override void UpdateAnimations()
+    public override void Update_OnClient()
     {
-        base.UpdateAnimations();
+        base.Update_OnClient();
     }
     protected Vector2 prevPosition_forClient;
     public override void Draw(SpriteBatch spriteBatch)

@@ -66,8 +66,13 @@ namespace ZoFo.GameCore.GameManagers
             sound.SoundEffect.IsLooped = false;
             sound.SoundEffect.Volume = sound.baseVolume * AppManager.Instance.SettingsManager.SoundEffectsVolume * AppManager.Instance.SettingsManager.MainVolume;
             sound.SoundEffect.Pitch = pitch;
-            sound.SoundEffect.Play();
-            PlayingSounds.Add(sound);
+            //TODO add sound importance, important will be allways played, non-important - not allways
+            if (PlayingSounds.Count<50) //Exceptino when many sounds
+            {
+                sound.SoundEffect.Play();
+
+                PlayingSounds.Add(sound);
+            }
 
            /*/ if (AppManager.Instance.multiPlayerStatus == MultiPlayerStatus.Host)
             {

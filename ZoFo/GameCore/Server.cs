@@ -171,7 +171,7 @@ namespace ZoFo.GameCore
             {
                 for (int i = 0; i < gameObjects.Count; i++)
                 {
-                    gameObjects[i].UpdateLogic();
+                    gameObjects[i].UpdateLogic_OnServer();
                 }
                 collisionManager.ResolvePhysics();
                 ticks = 0;

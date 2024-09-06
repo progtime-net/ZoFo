@@ -26,7 +26,7 @@ public abstract class GameObject
 
         positionDraw = position;
     }
-    public virtual void UpdateLogic()
+    public virtual void UpdateLogic_OnServer()
     { 
         PlayAnimation_OnServer();
 
@@ -53,6 +53,33 @@ public abstract class GameObject
 
 
     #region Client Side
+
+
+    /// <summary>
+    /// вызывается для создания объектов на клиенте, 
+    /// соответственно используется по большей часте для создания эффектов 
+    /// (например на конец атаки или смерти будут создаваться взирывы, а их бессмысленно передавать каждый раз)
+    /// </summary>
+    /// <param name="gameObject"></param>
+    public void Instantiate_OnClient(GameObject gameObject)
+    {
+        if (AppManager.Instance.client != null)
+            AppManager.Instance.client.RegisterClientMadeObject(gameObject);
+
+    }
+
+    /// <summary>
+    /// Используется для локального удаления объектов на клиенте, например, частицы взрыва удаляются после срабатывания, 
+    /// соответственно не надо это очевидное и предсказыемое удаление отправлять с сервераа на клиент
+    /// </summary>
+    /// <param name="gameObject"></param>
+    public void Delete_OnClient(GameObject gameObject)
+    {
+        if (AppManager.Instance.client != null)
+            AppManager.Instance.client.DeleteObject(gameObject);
+
+    }
+
 
     public static Texture2D debugTexture;
     /// <summary>
@@ -82,7 +109,7 @@ public abstract class GameObject
     /// Для клиента
     /// Обновление, которое вызывается у клиента, для просмотра анимаций
     /// </summary>
-    public virtual void UpdateAnimations()
+    public virtual void Update_OnClient()
     {
         positionDraw = (position * 0.15f + positionDraw*0.85f);
         graphicsComponent.ObjectDrawRectangle.X = (int)positionDraw.X; //Move To place where Updates Sets your position
@@ -103,7 +130,7 @@ public abstract class GameObject
     }
     public void DrawDebugRectangle(SpriteBatch spriteBatch, Rectangle _rectangle, Nullable<Color> color = null)
     {
-        return;
+        //return; TODO normal disable and enable via debug modder
         if (color is null) color = new Color(1, 0, 0, 0.1f);
         if (color.Value.A == 255) color = new Color(color.Value, 0.25f);
         spriteBatch.Draw(debugTexture,
@@ -112,7 +139,6 @@ public abstract class GameObject
                              _rectangle.Width * GraphicsComponent.scaling,
                              _rectangle.Height * GraphicsComponent.scaling), color.Value);
      
-        //TODO: debugTexture
     }
     #endregion 
 }
