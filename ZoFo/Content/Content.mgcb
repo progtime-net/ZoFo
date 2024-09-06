@@ -251,11 +251,20 @@
 #begin Textures/Animations/player_top_mining.animation
 /copy:Textures/Animations/player_top_mining.animation
 
+#begin Textures/Animations/Player/player_granade.animation
+/copy:Textures/Animations/Player/player_granade.animation
+
 #begin Textures/Animations/Player/player_idle.animation
 /copy:Textures/Animations/Player/player_idle.animation
 
 #begin Textures/Animations/Player/player_running.animation
 /copy:Textures/Animations/Player/player_running.animation
+
+#begin Textures/Animations/Player/player_shoot_1.animation
+/copy:Textures/Animations/Player/player_shoot_1.animation
+
+#begin Textures/Animations/Player/player_shoot_2.animation
+/copy:Textures/Animations/Player/player_shoot_2.animation
 
 #begin Textures/Animations/running_top.animation
 /copy:Textures/Animations/running_top.animation
@@ -374,6 +383,18 @@
 /processorParam:TextureFormat=Color
 /build:Textures/AnimationTextures/Character/hr-level1_running.png
 
+#begin Textures/AnimationTextures/Player/Grenade.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Player/Grenade.png
+
 #begin Textures/AnimationTextures/Player/Idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -409,6 +430,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/AnimationTextures/Player/Run.png
+
+#begin Textures/AnimationTextures/Player/Shot_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Player/Shot_1.png
+
+#begin Textures/AnimationTextures/Player/Shot_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/Player/Shot_2.png
 
 #begin Textures/AnimationTextures/unicorn.png
 /importer:TextureImporter

@@ -56,6 +56,7 @@ public class Player : LivingEntity
     }
 
 
+    bool isLookingRight;
     public override void Update()
     {
         #region название current текстуры
@@ -73,13 +74,8 @@ public class Player : LivingEntity
         switch (AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation))
         {
             case ScopeState.Top:
-                if (idName != "player_run_up")
-                    StartAnimation("player_run_up");
-                break;
-            case ScopeState.Down:
-                if (idName != "player_run_down")
-                    StartAnimation("player_run_down");
-                break;
+            case ScopeState.Down://i hope in draw animation will be rotated in the right way
+
             case ScopeState.DownRight:
             case ScopeState.DownLeft:
             case ScopeState.TopRight:
@@ -90,8 +86,12 @@ public class Player : LivingEntity
                     StartAnimation("player_running");
                 break;
             case ScopeState.Idle:
-                if (idName != "player_idle")
-                    StartAnimation("player_idle");
+                if (idName != "player_shoot_1" && idName != "player_shoot_2" && idName != "player_granade")//TODO rethink
+                {
+
+                    if (idName != "player_idle")
+                        StartAnimation("player_idle");
+                }
                 break;
         }
         if (AppManager.Instance.InputManager.ConvertVector2ToState(InputPlayerRotation) != ScopeState.Idle)
@@ -216,12 +216,12 @@ public class Player : LivingEntity
     {
         InputPlayerRotation = updateInput.InputMovementDirection.GetVector2();
         InputWeaponRotation = updateInput.InputAttackDirection.GetVector2();
-        if (InputPlayerRotation.X != 0f || InputPlayerRotation.Y != 0f)
-        {
-            InputPlayerRotation /= (InputPlayerRotation.Length());
-        }
+        if (InputPlayerRotation.X != 0f || InputPlayerRotation.Y != 0f) 
+            InputPlayerRotation /= (InputPlayerRotation.Length()); 
         DebugHUD.DebugSet("dir", InputPlayerRotation.ToString());
         DebugHUD.DebugSet("dir2", InputWeaponRotation.ToString());
+        if (InputPlayerRotation.X != 0)
+            isLookingRight = InputPlayerRotation.X > 0;
     }
     public void HandleInteract(UpdateInputInteraction updateInputInteraction)
     {
@@ -252,6 +252,8 @@ public class Player : LivingEntity
         reloading = 5;
         IsTryingToShoot = true;
 
+        StartAnimation("player_shoot_1");
+        
         List<Entity> entities = AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation), this).ToList();
         entities.AddRange(AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation, 2), this).ToList());
         entities.AddRange(AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation, 3), this).ToList());
