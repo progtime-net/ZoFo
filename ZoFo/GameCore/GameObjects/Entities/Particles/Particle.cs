@@ -13,6 +13,11 @@ namespace ZoFo.GameCore.GameObjects
 {
     public class Particle : GameObject
     {
+        /// <summary>
+        /// Партиклы не хранятся на сервере
+        /// </summary>
+        /// <returns></returns>
+        public override bool ShouldObjectBeStoredOnServer() => false;
         public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "explosion_1" }, "explosion_1");
 
         public Particle(Vector2 position) : base(position)
@@ -42,7 +47,7 @@ namespace ZoFo.GameCore.GameObjects
     /// <summary>
     /// TODO: change from particle to throwable, it is not a particle anymore
     /// </summary>
-    public class Granade : GameObject
+    public class Granade : Entity
     {
         public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "explosion_1" }, "explosion_1");
 

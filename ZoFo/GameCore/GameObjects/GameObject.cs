@@ -15,6 +15,9 @@ public abstract class GameObject
     public Vector2 rotation; //вектор направления объекта
     public virtual GraphicsComponent graphicsComponent { get; }
 
+    public virtual bool ShouldObjectBeStoredOnServer() => true;
+    public virtual bool ShouldObjectBeStoredOnClient() => true;
+
     #region ServerSide
     public GameObject(Vector2 position)
     {
@@ -54,7 +57,10 @@ public abstract class GameObject
 
     #region Client Side
 
+    public void Start_OnClinet()
+    {
 
+    }
     /// <summary>
     /// вызывается для создания объектов на клиенте, 
     /// соответственно используется по большей часте для создания эффектов 

@@ -189,8 +189,28 @@ namespace ZoFo.GameCore
         public void RegisterGameObject(GameObject gameObject)
         {
 
-            gameObjects.Add(gameObject);
-            
+            //Частицы живут только на клиенте, значит тут только отправить на клиент
+            if (gameObject is Particle)
+            {
+
+                AddData(new UpdateGameObjectWithoutIdCreated()
+                {
+                    GameObjectClassName = gameObject.GetType().Name,
+                    position = gameObject.position.Serialize()
+                });
+                return;
+            }
+
+            //обраюотка всех объектов, которые живут на сервере долго. На сервере их надо будет удалять.
+            if (gameObject.ShouldObjectBeStoredOnServer()) 
+                gameObjects.Add(gameObject);
+            else
+            {
+
+            }
+
+            //Карта грузится по отдельной логике, поэтому вынесено тут
+            #region Map
             if (gameObject is StopObject)
             {
                 AddData(new UpdateStopObjectCreated()
@@ -219,17 +239,10 @@ namespace ZoFo.GameCore
                 });
                 return;
             }
-            
-            if (gameObject is Particle)
-            { 
+            #endregion
 
-                AddData(new UpdateGameObjectWithoutIdCreated()
-                {
-                    GameObjectClassName = gameObject.GetType().Name,
-                    position = gameObject.position.Serialize()
-                });
-                return;
-            }
+
+            //Entity живут и на сервере и на клиенте, поэтому есть айдишник у них + у них есть коллизии
             if (gameObject is Entity entity)
             { 
                 AddData(new UpdateGameObjectCreated()
@@ -238,8 +251,10 @@ namespace ZoFo.GameCore
                     IdEntity = entity.Id,
                     position = gameObject.position.Serialize()
                 }); 
-                collisionManager.Register(entity.collisionComponent);
                 entities.Add(entity);
+
+
+                collisionManager.Register(entity.collisionComponent);
             }
             else 
                 AddData(new UpdateGameObjectCreated()
@@ -251,11 +266,6 @@ namespace ZoFo.GameCore
 
             if (gameObject is Player)
                 players.Add(gameObject as Player);
-            ////var elems = gameObject.GetType().GetProperties(System.Reflection.BindingFlags.Public);
-            ////if (elems.Count()>0) TODO
-            ////{ 
-            ////    AppManager.Instance.server.collisionManager.Register((elems.First().GetValue(gameObject) as CollisionComponent));
-            ////}
 
         }
 
@@ -265,6 +275,7 @@ namespace ZoFo.GameCore
         /// <param name="gameObject"></param>
         public void DeleteObject(Entity entity)
         {
+
             if (gameObjects.Contains(entity))
                 gameObjects.Remove(entity);
             if (entities.Contains(entity))
