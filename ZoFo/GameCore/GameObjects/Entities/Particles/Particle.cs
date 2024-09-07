@@ -119,15 +119,6 @@ namespace ZoFo.GameCore.GameObjects
 
 
                 var rect = GetDamageRectangle();
-
-                var entities = (AppManager.Instance.server.collisionManager.GetEntities(rect).ToList());
-                foreach (var item in entities)
-                {
-                    if (item is Enemy)
-                    {
-                        (item as Enemy).TakeDamage(1);
-                    }
-                }
                  
                 return;
             }
