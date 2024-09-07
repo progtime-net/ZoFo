@@ -68,6 +68,7 @@ public class FinishingGUI : AbstractGUI
         Elements.Add(ExitButton);
 
         //player itams
+        if (AppManager.Instance.client.myPlayer is null) return;
         foreach (var item in AppManager.Instance.client.myPlayer.lootData.loots)
         {
             if (item.Value > 0)

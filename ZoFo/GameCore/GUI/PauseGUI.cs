@@ -48,6 +48,14 @@ public class PauseGUI : AbstractGUI
         };
         exitButton.LeftButtonPressed += () =>
         {
+            if (AppManager.Instance.gamestate == GameState.HostPlaying)
+            {
+                AppManager.Instance.server.EndGame();
+            }
+            else
+            {
+                AppManager.Instance.client.CloseConnection();
+            }
             AppManager.Instance.SoundManager.StopAllSounds();
             AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             AppManager.Instance.SoundManager.StartAmbientSound("Background menu music");
