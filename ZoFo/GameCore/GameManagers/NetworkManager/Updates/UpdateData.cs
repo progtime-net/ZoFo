@@ -28,7 +28,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates
     [JsonDerivedType(typeof(UpdateInputInteraction))]
     [JsonDerivedType(typeof(UpdateInputShoot))]
     [JsonDerivedType(typeof(UpdateCreatePlayer))]
-
+    [JsonDerivedType(typeof(UpdateGameStarted))]
     public class UpdateData
     {
         public int IdEntity { get; set; } //Id объекта
