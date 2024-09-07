@@ -18,7 +18,7 @@ using ServerOverall.Server.Updates.ClientToServer;
 using ServerOverall.Server.Updates;
 using System.Xml.Linq;
 
-/*namespace ServerOverall.Server
+namespace ServerOverall.Server
 {
     public class ServerNetworkManager
     {
@@ -199,8 +199,8 @@ using System.Xml.Linq;
                 socket.SendTo(buffer, clientsEP[i]);
             }
             currentDatagrammId++;
-            AppManager.Instance.ChangeState(GameState.HostPlaying);
-            AppManager.Instance.SetGUI(new HUD());////
+            //AppManager.Instance.ChangeState(GameState.HostPlaying);
+            //AppManager.Instance.SetGUI(new HUD());////
         }
         public void CloseConnection()
         {
@@ -225,15 +225,15 @@ using System.Xml.Linq;
                 {
                     EndPoint senderRemote = (EndPoint)new IPEndPoint(IPAddress.Any, 0);
                     size = socket.ReceiveFrom(buffer, buffer.Length, SocketFlags.None, ref senderRemote);
-                    if (AppManager.Instance.gamestate != GameState.HostPlaying && !clientsEP.Contains(senderRemote) &&
-                        senderRemote != new IPEndPoint(IPAddress.Any, 0))
-                    {
-                        clientsEP.Add((IPEndPoint)senderRemote);
-                        AppManager.Instance.debugHud.Log($"Connect {senderRemote.ToString()}");
-                        if (!isMultiplayer) AppManager.Instance.ChangeState(GameState.HostPlaying);
-                        // Отправлять Init апдейт с информацией об ID игрока и ID датаграмма на сервере
-                        //Можно добавить bool isInit для Датаграммов
-                    }
+                    //if (AppManager.Instance.gamestate != GameState.HostPlaying && !clientsEP.Contains(senderRemote) &&
+                    //    senderRemote != new IPEndPoint(IPAddress.Any, 0))
+                    //{
+                    //    clientsEP.Add((IPEndPoint)senderRemote);
+                    //    AppManager.Instance.debugHud.Log($"Connect {senderRemote.ToString()}");
+                    //    if (!isMultiplayer) AppManager.Instance.ChangeState(GameState.HostPlaying);
+                    //    // Отправлять Init апдейт с информацией об ID игрока и ID датаграмма на сервере
+                    //    //Можно добавить bool isInit для Датаграммов
+                    //}
                     byte[] correctedBuffer = new byte[size];
                     Array.Copy(buffer, correctedBuffer, size);
                     data = Encoding.UTF8.GetString(correctedBuffer);
@@ -262,7 +262,7 @@ using System.Xml.Linq;
             else
             {
                 List<UpdateData> updates = GetSentUpdates(updateDatas);
-                AppManager.Instance.server.UpdatesList(updates);
+                //AppManager.Instance.server.UpdatesList(updates);
             }
         }
         public List<UpdateData> GetSentUpdates(JToken updatesToken)
@@ -293,4 +293,4 @@ using System.Xml.Linq;
 
     }
 }
-*/ //TODO: Перелопатить весь код и вынести на удалённый сервер
+//TODO: Перелопатить весь код и вынести на удалённый сервер
