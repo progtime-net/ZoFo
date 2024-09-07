@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonogameLibrary", "Monogame
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimationsFileCreator", "AnimationsFileCreator\AnimationsFileCreator.csproj", "{7B143D5C-5198-4ADE-9291-ECC924B78633}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimatorFileCreatorAdvanced", "AnimatorFileCreatorAdvanced\AnimatorFileCreatorAdvanced.csproj", "{AAEC2150-3BBF-4B59-A22F-47B30CA6B34B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimatorFileCreatorAdvanced", "AnimatorFileCreatorAdvanced\AnimatorFileCreatorAdvanced.csproj", "{AAEC2150-3BBF-4B59-A22F-47B30CA6B34B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerOverall", "ServerOverall\ServerOverall.csproj", "{A97BE14F-A7F7-4272-9F24-FBC105AF0115}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +35,15 @@ Global
 		{AAEC2150-3BBF-4B59-A22F-47B30CA6B34B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAEC2150-3BBF-4B59-A22F-47B30CA6B34B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAEC2150-3BBF-4B59-A22F-47B30CA6B34B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A97BE14F-A7F7-4272-9F24-FBC105AF0115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A97BE14F-A7F7-4272-9F24-FBC105AF0115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A97BE14F-A7F7-4272-9F24-FBC105AF0115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A97BE14F-A7F7-4272-9F24-FBC105AF0115}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BC970026-AE46-4703-8325-D065CFEE9756}
 	EndGlobalSection
 EndGlobal
