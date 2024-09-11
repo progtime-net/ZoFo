@@ -250,7 +250,7 @@ namespace ZoFo.GameCore
             } 
             else if (update is UpdateGameEnded)
             {
-                GameEnd();
+                EndGame();
             }
             else if (update is UpdatePlayerParametrs && myPlayer !=null && update.IdEntity == myPlayer.Id) //aaa 
             {
@@ -336,11 +336,15 @@ namespace ZoFo.GameCore
                 (ent as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
             } 
         } 
-        public void GameEnd()
+        public void EndGame()
         {
-            networkManager.CloseConnection();
+            CloseConnection();
             AppManager.Instance.ChangeState(GameState.NotPlaying);
             AppManager.Instance.SetGUI(new FinishingGUI());
+        }
+        public void CloseConnection()
+        {
+            networkManager.CloseConnection();
         }
 
         public Entity FindEntityById(int id)
