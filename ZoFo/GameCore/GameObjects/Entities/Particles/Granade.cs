@@ -14,7 +14,7 @@ namespace ZoFo.GameCore.GameObjects
     /// </summary>
     public class Granade : GameObject
     {
-        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "explosion_1" }, "explosion_1");
+        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "granade_spinning" }, "granade_spinning");
 
         /// <summary>
         /// TODO updates with directed effect
@@ -26,7 +26,7 @@ namespace ZoFo.GameCore.GameObjects
             if (AppManager.Instance.client.myPlayer != null)
                 this.positionFrom = AppManager.Instance.client.myPlayer.position;
             this.positionTo = positionTo;
-            graphicsComponent.ObjectDrawRectangle = new Rectangle(-30, -30, 60, 60).SetOrigin(position);
+            graphicsComponent.ObjectDrawRectangle = new Rectangle(-15, -15, 30, 30).SetOrigin(position);
             AppManager.Instance.SoundManager.StartSound("gun-gunshot-01", Vector2.Zero, Vector2.Zero, 0.5f, (float)(Random.Shared.NextDouble() * 2 - 1));
             (graphicsComponent as AnimatedGraphicsComponent).actionOfAnimationEnd += _ =>
             {
@@ -34,6 +34,8 @@ namespace ZoFo.GameCore.GameObjects
                 //Delete_OnClient(this);
 
             };
+            graphicsComponent.ObjectDrawRectangle.X = (int)position.X;  
+            graphicsComponent.ObjectDrawRectangle.Y = (int)position.Y;
         }
         Vector2 positionFrom;
         Vector2 positionTo;
@@ -46,7 +48,7 @@ namespace ZoFo.GameCore.GameObjects
             position.Y = (2 * positionTo.Y + 2 * positionFrom.Y - 4 * m) * dt * dt +
                 (4 * m - positionTo.Y - 3 * positionFrom.Y) * dt + positionFrom.Y;
 
-            if (dt >= 0.9)
+            if (dt >= 1)
             {
                 FlightEndedOnServer();
                 return;
@@ -72,18 +74,25 @@ namespace ZoFo.GameCore.GameObjects
         }
         public override void Update_OnClient()
         {
+            float m = Math.Min(positionFrom.Y, positionTo.Y)-40;
+            position.X = (1 - dt) * positionFrom.X + dt * positionTo.X;
+            position.Y = (2 * positionTo.Y + 2 * positionFrom.Y - 4 * m) * dt * dt +
+                (4 * m - positionTo.Y - 3 * positionFrom.Y) * dt + positionFrom.Y;
+
+            dt += 0.05f;
+
+
             if (dt >= 1)
             {
                 //Granade Finished the flight
-                Instantiate_OnClient(new Explosion(position + ExtentionClass.RandomVector()*10));
+                Instantiate_OnClient(new Explosion(position + ExtentionClass.RandomVector() * 10));
                 Delete_OnClient(this);
-                base.Update_OnClient();
 
                 for (int i = 0; i < 10; i++)
                 {
                     if (Random.Shared.NextDouble() < 0.1) continue;
                     float angl = i / 10f * (float)Math.PI * 2;
-                    Instantiate_OnClient(new Explosion(position + 
+                    Instantiate_OnClient(new Explosion(position +
                     new Vector2((float)Math.Cos(angl), (float)Math.Sin(angl)
                     ) * 30));
 
@@ -91,15 +100,10 @@ namespace ZoFo.GameCore.GameObjects
 
 
                 var rect = GetDamageRectangle();
-                 
+
                 return;
             }
-            float m = Math.Min(positionFrom.Y, positionTo.Y)-40;
-            position.X = (1 - dt) * positionFrom.X + dt * positionTo.X;
-            position.Y = (2 * positionTo.Y + 2 * positionFrom.Y - 4 * m) * dt * dt +
-                (4 * m - positionTo.Y - 3 * positionFrom.Y) * dt + positionFrom.Y;
 
-            dt += 0.05f;
 
             //position = 
             //base.Update_OnClient();
@@ -121,7 +125,7 @@ namespace ZoFo.GameCore.GameObjects
             var rect = graphicsComponent.ObjectDrawRectangle;
             rect.X = (int)position.X;
             rect.Y = (int)position.Y;
-            int size = 10;
+            int size = 20;
             rect.X -= size;
             rect.Y -= size;
             rect.Width += 2 * size;

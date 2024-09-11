@@ -290,12 +290,12 @@ public class Player : LivingEntity
     {
         direction.Normalize();
         var rect = collisionComponent.stopRectangle.SetOrigin(position);
-        int size = 10;
+        int size = 30;
         rect.X -= size;
         rect.Y -= size;
         rect.Width += 2 * size;
         rect.Height += 2 * size;
-        rect = rect.SetOrigin(direction * 40 * mult);
+        rect = rect.SetOrigin(direction * 60 * mult);
         return rect;
     }
 }

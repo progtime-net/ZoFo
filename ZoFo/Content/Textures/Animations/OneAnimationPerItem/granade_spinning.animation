@@ -1,0 +1,1 @@
+{"id":"granade_spinning","textureName":"Textures/AnimationTextures/OneAnimationPerItem/granade","startSpriteRectangle":{"X":0,"Y":0,"Width":256,"Height":256},"frameSecond":[{"Item1":0,"Item2":2}],"textureFrameInterval":0,"framesCount":6,"isCycle":true,"offset":"0, 0"}

@@ -22,6 +22,7 @@ public abstract class AbstractGUI
     private bool isStartedPrint = false;
     private bool isPressed = false;
     private Texture2D mouse;
+    private Texture2D mouse_pressed;
     private MouseState mouseState;
 
     public AbstractGUI()
@@ -40,6 +41,7 @@ public abstract class AbstractGUI
     {
         Manager.LoadContent(AppManager.Instance.Content, "Fonts/Font");
         mouse = AppManager.Instance.Content.Load<Texture2D>("Textures/GUI/mouse");
+        mouse_pressed = AppManager.Instance.Content.Load<Texture2D>("Textures/GUI/mouse_pressed");
     }
 
     public virtual void Update(GameTime gameTime)
@@ -52,7 +54,11 @@ public abstract class AbstractGUI
     {
         Manager.Draw(spriteBatch);
         spriteBatch.Begin();
-        spriteBatch.Draw(mouse, new Rectangle(mouseState.Position.X, mouseState.Position.Y, 20, 40), Color.White);
-        spriteBatch.End();
+        if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            spriteBatch.Draw(mouse_pressed, new Rectangle(mouseState.Position.X, mouseState.Position.Y, 20, 40), Color.White);
+        else
+            spriteBatch.Draw(mouse, new Rectangle(mouseState.Position.X, mouseState.Position.Y, 20, 40), Color.White);
+
+            spriteBatch.End();
+        }
     }
-}

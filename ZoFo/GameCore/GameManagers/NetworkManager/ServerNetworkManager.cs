@@ -205,7 +205,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             }
             currentDatagrammId++;
             AppManager.Instance.ChangeState(GameState.HostPlaying);
-            AppManager.Instance.SetGUI(new HUD());////
+            AppManager.Instance.SetGUI(new HUD());//// КАКОЙ В СЕРВЕРЕ ЭТО ПИСАТЬ???
         }
         public void CloseConnection()
         {

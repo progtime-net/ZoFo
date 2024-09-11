@@ -74,7 +74,7 @@ namespace ZoFo.GameCore
             };
         }
 
-        public void OnDataSend(string data)
+        public void OnDataSend(string data)//А это нужно? 0 использований метода :/
         {
             //List<UpdateTileCreated> updateDatas = JsonSerializer.Deserialize<List<UpdateTileCreated>>(data);
             JArray jToken = JsonConvert.DeserializeObject(data) as JArray;
@@ -94,7 +94,11 @@ namespace ZoFo.GameCore
 
         }
         public void GameEndedUnexpectedly() { }
-
+        /// <summary>
+        /// Подключиться к комнате
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="port"></param>
         public void JoinRoom(string ip, int port)
         {
             networkManager.JoinRoom(ip, port);
@@ -113,7 +117,11 @@ namespace ZoFo.GameCore
         float shakeEffect = 0;
         public void AddShaking(float power)
         {
-            shakeEffect += power*3;
+            shakeEffect += power;
+            if (shakeEffect>10)
+            {
+                shakeEffect = 10;
+            }
         }
         public void UpdateShaking()
         {

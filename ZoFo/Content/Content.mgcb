@@ -146,6 +146,9 @@
 #begin Textures/Animations/explosion_1.animation
 /copy:Textures/Animations/explosion_1.animation
 
+#begin Textures/Animations/OneAnimationPerItem/granade_spinning.animation
+/copy:Textures/Animations/OneAnimationPerItem/granade_spinning.animation
+
 #begin Textures/Animations/player_idle_down_mining.animation
 /copy:Textures/Animations/player_idle_down_mining.animation
 
@@ -382,6 +385,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/AnimationTextures/Character/hr-level1_running.png
+
+#begin Textures/AnimationTextures/OneAnimationPerItem/granade.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/OneAnimationPerItem/granade.png
 
 #begin Textures/AnimationTextures/Player/Grenade.png
 /importer:TextureImporter
@@ -682,6 +697,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/GUI/MenuBackground.jpg
+
+#begin Textures/GUI/mouse_pressed.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/GUI/mouse_pressed.png
 
 #begin Textures/GUI/mouse.png
 /importer:TextureImporter

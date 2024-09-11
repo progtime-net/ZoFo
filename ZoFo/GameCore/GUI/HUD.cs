@@ -20,6 +20,7 @@ public class HUD : AbstractGUI
     public AbstractGUI overlayGUI;
     protected override void CreateUI() 
     {
+        
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
         

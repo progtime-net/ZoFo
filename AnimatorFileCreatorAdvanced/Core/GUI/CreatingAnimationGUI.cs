@@ -459,7 +459,7 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
         {
             if (!buildDone) return;
             ticksPassed++;
-            if (ticksPassed > 3)
+            if (ticksPassed > 1)
             {
                 ticksPassed = 0;
                 SetNextFrame();
