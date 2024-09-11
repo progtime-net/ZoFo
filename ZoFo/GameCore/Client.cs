@@ -130,6 +130,7 @@ namespace ZoFo.GameCore
         /// <param name="gameTime"></param>
         internal void Update(GameTime gameTime)
         {
+            DebugHUD.AddGOData(particles.Count, "particles");
             UpdateShaking();
             for (int i = 0; i < gameObjects.Count; i++)
             {
@@ -153,24 +154,30 @@ namespace ZoFo.GameCore
         {
             networkManager.SendData();
         }
-        internal void Draw(SpriteBatch spriteBatch)
+        internal void Draw(SpriteBatch _spriteBatch)
         {
+            _spriteBatch.Begin(samplerState: SamplerState.PointWrap);//no layering
             for (int i = 0; i < mapObjects.Count; i++)
             {
-                mapObjects[i].Draw(spriteBatch);
+                mapObjects[i].Draw(_spriteBatch);
             }
             for (int i = 0; i < stopObjects.Count; i++)
             {
-                stopObjects[i].Draw(spriteBatch);
+                stopObjects[i].Draw(_spriteBatch);
             }
+            _spriteBatch.End();
+
+
+            _spriteBatch.Begin(sortMode: SpriteSortMode.FrontToBack, samplerState: SamplerState.PointWrap);
             for (int i = 0; i < gameObjects.Count; i++)
             {
-                gameObjects[i].Draw(spriteBatch);
+                gameObjects[i].Draw(_spriteBatch);
             }
             for (int i = 0; i < particles.Count; i++)
             {
-                particles[i].Draw(spriteBatch);
+                particles[i].Draw(_spriteBatch);
             }
+            _spriteBatch.End();
 
         }
 

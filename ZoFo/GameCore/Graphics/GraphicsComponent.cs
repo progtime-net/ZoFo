@@ -56,4 +56,13 @@ public abstract class GraphicsComponent
     */
     }
     public static Point CameraPosition = new Point(0, 0);
+
+    ///////// <summary>
+    ///////// Нужно для поиска порядка для отрисовки и нормализации
+    ///////// </summary>
+    //////public static Rectangle MapBoundries = new Rectangle(0,0,1000,1000);
+    //////public static void SetMapBoundries(Rectangle rectangle)
+    //////{
+    //////    MapBoundries = rectangle;
+    //////}
 }

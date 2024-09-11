@@ -49,6 +49,12 @@ public abstract class GameObject
             AppManager.Instance.server.RegisterGameObject(gameObject);
         }
     }
+    public void Delete_OnServer()
+    {   
+        AppManager.Instance.server.DeleteGameObject(this);
+
+    }
+
     #endregion
 
 

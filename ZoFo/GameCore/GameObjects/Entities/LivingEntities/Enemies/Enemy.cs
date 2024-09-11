@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.Graphics;
+using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.GameObjects;
 public class Enemy : LivingEntity
@@ -25,6 +26,8 @@ public class Enemy : LivingEntity
     public virtual void TakeDamage(float damage)
     {
         if (isDying) return;
+        DebugHUD.AddAdditionalDataToGraph((int)damage, "damage");
+
         health -= damage;
         if (health < 0)
             Die();

@@ -61,7 +61,7 @@ namespace ZoFo.GameCore.GameObjects
         {
             if (AppManager.Instance.gamestate == GameState.HostPlaying)
             {
-                AppManager.Instance.server.DeleteObject(this);
+                AppManager.Instance.server.DeleteEntity(this);
             }
         }
     }

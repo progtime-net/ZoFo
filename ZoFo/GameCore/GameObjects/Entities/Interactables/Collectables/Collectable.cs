@@ -32,7 +32,7 @@ public class Collectable : Interactable
         DebugHUD.DebugLog("collected");
         string lootname = this.GetType().ToString().ToLower().Split('.').Last(); 
         (sender as Player).lootData.AddLoot(lootname, 1, (sender as Player).Id);
-        AppManager.Instance.server.DeleteObject(this);
+        AppManager.Instance.server.DeleteEntity(this);
         base.OnInteraction(sender);
     }
     public override void Draw(SpriteBatch spriteBatch)

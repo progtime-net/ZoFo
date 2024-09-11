@@ -14,6 +14,8 @@ namespace ZoFo.GameCore.GameManagers
 {
     public class SettingsManager //нужно что-то менять с разрешением
     {
+        public SettingsManager() { Instance = this; }
+        public static SettingsManager Instance { get; private set; }
         private SettingsContainer settingsContainer = new SettingsContainer();
         public bool IsFullScreen { get => settingsContainer.IsFullScreen; }
         public float MainVolume { get => settingsContainer.MainVolume; }

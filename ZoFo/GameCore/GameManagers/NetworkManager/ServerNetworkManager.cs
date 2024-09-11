@@ -39,7 +39,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
         Thread serverThread;
-        int datapackSize = 150;
+        int datapackSize = 150+50;
         public ServerNetworkManager() { Init(); }
 
         /// <summary>
@@ -132,9 +132,12 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                     importantUpdates.RemoveAt(0);
                 currentDatagrammId++;
             }
-            
+                
+            DebugHUD.AddGOData(sendedData.Count, "server gameobjects");
+
             if (sendedData.Count != 0) 
             { 
+
                 for (int i = 0; i < clientsEP.Count; i++)
                 {
                     foreach (Datagramm Dgramm in sendedData.Where(x => x.PlayerId == i+1))

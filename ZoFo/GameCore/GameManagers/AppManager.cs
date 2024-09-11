@@ -99,8 +99,14 @@ namespace ZoFo.GameCore.GameManagers
 
             animationBuilder = new AnimationBuilder();
             animationBuilder.LoadAnimations();
+            
             GameObject.debugTexture = new Texture2D(GraphicsDevice, 1, 1);
             GameObject.debugTexture.SetData(new Color[] { Color.White });
+
+
+            DebugHUD.Instance.noTexture = new Texture2D(GraphicsDevice, 1, 1);
+            DebugHUD.Instance.noTexture.SetData(new Color[] { Color.White });
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -110,9 +116,9 @@ namespace ZoFo.GameCore.GameManagers
 
 
             //   debugHud.Set("key", "value");
-
             CheckGUI();
             InputManager.Update();
+            debugHud.Update(gameTime);
             currentGUI.Update(gameTime);
             switch (gamestate)
             {
@@ -137,7 +143,6 @@ namespace ZoFo.GameCore.GameManagers
 
 
             // Pointwrap
-            _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
             switch (gamestate)
             {
                 case GameState.ClientPlaying:
@@ -151,7 +156,6 @@ namespace ZoFo.GameCore.GameManagers
                     break;
             }
 
-            _spriteBatch.End();
             currentGUI.Draw(_spriteBatch);
             debugHud.Draw(_spriteBatch);
 

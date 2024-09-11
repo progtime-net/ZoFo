@@ -14,7 +14,9 @@ using ZoFo.GameCore.GameObjects.Entities.LivingEntities;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.Graphics; 
 using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO; 
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player; 
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
+using System.Diagnostics;
+using ZoFo.GameCore.GUI;
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
@@ -56,6 +58,13 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
         {
             //ADD CHECKSPEED  TODO
             var entity = componentOfEntity.gameObject as LivingEntity;
+
+            if (float.IsNaN(entity.velocity.X) || float.IsNaN(entity.velocity.Y))
+            {
+                DebugHUD.DebugLog("ENTITY HAS ODD velocity!");
+                entity.velocity = new Vector2();
+                return;
+            }
             //for (int i = 0; i < ObjectsWithCollisions.Count; i++)
             //{
             var currentRect = entity.collisionComponent.stopRectangle;//задаём РЕК

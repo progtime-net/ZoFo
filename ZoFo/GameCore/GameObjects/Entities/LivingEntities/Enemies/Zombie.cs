@@ -39,6 +39,9 @@ namespace ZoFo.GameCore.GameObjects
             {
                 if (str == "zombie_death")
                     DeathEnd();
+                if (str != "zombie_attack"){
+                
+                }
             };
         }
 

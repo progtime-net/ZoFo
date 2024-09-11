@@ -252,6 +252,8 @@ public class Player : LivingEntity
         reloading = 5;
         IsTryingToShoot = true;
 
+        DebugHUD.AddGOData(0, "damage");
+
         StartAnimation("player_shoot_1");
         
         List<Entity> entities = AppManager.Instance.server.collisionManager.GetEntities(GetDamageArea(InputWeaponRotation), this).ToList();

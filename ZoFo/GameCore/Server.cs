@@ -97,7 +97,7 @@ namespace ZoFo.GameCore
                     }
                     break;
             }
-        }//Поспать
+        }//Поспать - хорошая идея!
 
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace ZoFo.GameCore
         /// Удаляет игровой объект
         /// </summary>
         /// <param name="gameObject"></param>
-        public void DeleteObject(Entity entity)
+        public void DeleteEntity(Entity entity)
         {
             if (gameObjects.Contains(entity))
                 gameObjects.Remove(entity);
@@ -275,6 +275,28 @@ namespace ZoFo.GameCore
             { GameObjectType = entity.GetType().Name, IdEntity = entity.Id }
             );
             collisionManager.Deregister(entity.collisionComponent);
+        }
+
+
+        /// <summary>
+        /// Be careful
+        /// GameObjects are not synced, if you need deletion on Client that gameObject should be an entity!
+        /// </summary>
+        /// <param name="gameObject"></param>
+        public void DeleteGameObject(GameObject gameObject)
+        {
+            if (gameObjects.Contains(gameObject))
+                gameObjects.Remove(gameObject);
+            if (entities.Contains(gameObject))
+            {
+
+                entities.Remove(gameObject as Entity);
+                AddData(new UpdateGameObjectDeleted()
+                { GameObjectType = (gameObject as Entity).GetType().Name, IdEntity = (gameObject as Entity).Id }
+                );
+            }
+            if (players.Contains(gameObject))
+                players.Remove(gameObject as Player); 
         }
     }
 

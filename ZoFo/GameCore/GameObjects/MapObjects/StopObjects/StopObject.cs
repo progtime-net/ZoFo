@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 
@@ -14,16 +15,28 @@ public class StopObject : MapObject
 
     public StopObject(Vector2 position, Vector2 size, Rectangle sourceRectangle, string textureName, Rectangle[] collisions) : base(position, size, sourceRectangle, textureName)
     {
-        
-        collisionComponents = new CollisionComponent[collisions.Length];
-        for (int i = 0; i < collisionComponents.Length; i++)
+        var cols = collisions.ToList();
+        for (int i = 0; i < cols.Count; i++)
         {
-            collisionComponents[i] = new CollisionComponent(this, true, new Rectangle(0,0, (int)size.X, (int)size.Y)/*collisions[i]*/);
+            if (cols[i].Width<1)
+            {
+                cols.RemoveAt(i);
+                i--;
+            }
+        } 
+        collisionComponents = new CollisionComponent[cols.Count];
+        
+        for (int i = 0; i < cols.Count; i++)
+        {
+            collisionComponents[i] = new CollisionComponent(this, true, cols[i]);
         }
     }
     public override void Draw(SpriteBatch spriteBatch)
     {
         base.Draw(spriteBatch);
-        DrawDebugRectangle(spriteBatch, new Rectangle((int)position.X, (int)position.Y, collisionComponents[0].stopRectangle.Width, collisionComponents[0].stopRectangle.Height));
+        foreach (var item in collisionComponents)
+        {
+            DrawDebugRectangle(spriteBatch, new Rectangle((int)position.X, (int)position.Y, item.stopRectangle.Width, item.stopRectangle.Height));
+        }
     }
 }
