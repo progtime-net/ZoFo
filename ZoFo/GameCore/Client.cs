@@ -191,8 +191,11 @@ namespace ZoFo.GameCore
         }
         internal void GotData(UpdateData update)
         {
-
-            if (update is UpdateTileCreated)
+            if (update is UpdateGameStarted)
+            {
+                //Дописать логику
+            }
+            else if (update is UpdateTileCreated)
             {
                 mapObjects.Add(
                 new MapObject(
