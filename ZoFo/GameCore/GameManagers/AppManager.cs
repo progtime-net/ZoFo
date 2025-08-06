@@ -69,14 +69,15 @@ namespace ZoFo.GameCore.GameManagers
             
             AssetManager = new AssetManager();
 
-            SoundManager.StartAmbientSound("Background menu music");
 
-            currentGUI = new MainMenuGUI();
+            InitializationGUI();
             debugHud = new DebugHUD();
             IsMouseVisible = false;
 
+            OnAppStart_PostInit();
         }
-
+        public virtual void OnAppStart_PostInit() => SoundManager.StartAmbientSound("Background menu music");
+        public virtual void InitializationGUI() => currentGUI = new MainMenuGUI(); 
         protected override void Initialize()
         {
             currentGUI.Initialize();

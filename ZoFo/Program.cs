@@ -1,2 +1,2 @@
-﻿using var game = new ZoFo.GameCore.GameManagers.AppManager();
+﻿using var game = new ZoFo.GameFolder.AppManager_Inst();
 game.Run();
