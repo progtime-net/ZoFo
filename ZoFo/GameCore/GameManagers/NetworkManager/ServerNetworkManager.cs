@@ -187,6 +187,9 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             serverThread.IsBackground = true;
             serverThread.Start();
         }
+        /// <summary>
+        /// send game start to clients, lets them open the game interfaces and etc. 
+        /// </summary>
         public void StartGame()
         {
             for (int i = 0; i < clientsEP.Count; i++)

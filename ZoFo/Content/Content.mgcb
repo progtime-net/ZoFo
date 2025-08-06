@@ -1655,6 +1655,30 @@
 /processorParam:TextureFormat=Color
 /build:Textures/icons/Potion/Red Potion.png
 
+#begin Textures/NonAnimation/Gun_01.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/NonAnimation/Gun_01.png
+
+#begin Textures/NonAnimation/Hull_01.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/NonAnimation/Hull_01.png
+
 #begin Textures/Test/pickaxe.webp
 /importer:TextureImporter
 /processor:TextureProcessor

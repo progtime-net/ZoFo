@@ -15,7 +15,8 @@ using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 
 namespace ZoFo.GameCore.GameManagers.MapManager
 {
-    public class MapManager
+
+    public class MapManager : MapManagerProto
     {
         private static readonly string _templatePath = "Content/MapData/TileMaps/{0}.tmj";
         private static readonly JsonSerializerOptions _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true }; // Задача настроек для JsonSerialize
@@ -97,7 +98,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                             {
 
                                 case "Tile":
-                                    AppManager.Instance.server.RegisterGameObject(new MapObject(position,
+                                    RegisterGameObject(new MapObject(position,
                                         new Vector2(tileSet.TileWidth, tileSet.TileHeight),
                                         sourceRectangle,
                                         "Content/Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", "")));
@@ -106,7 +107,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
                                 case "StopObject":
                                     var collisionRectangles = LoadRectangles(tile); // Грузит коллизии обьектов
 
-                                    AppManager.Instance.server.RegisterGameObject(new StopObject(position,
+                                    RegisterGameObject(new StopObject(position,
                                         new Vector2(tileSet.TileWidth, tileSet.TileHeight),
                                         sourceRectangle,
                                         "Content/Textures/TileSetImages/" + Path.GetFileName(tileSet.Image).Replace(".png", ""),
@@ -129,7 +130,7 @@ namespace ZoFo.GameCore.GameManagers.MapManager
             {
                 string type = Path.GetFileName(item.Template).Replace(".tj", "");
                 var collectable = Activator.CreateInstance(Type.GetType(_classPath[layer.Name] + type), new Vector2(item.X, item.Y));
-                AppManager.Instance.server.RegisterGameObject(collectable as GameObject);
+                RegisterGameObject(collectable as GameObject);
             }
         }
 

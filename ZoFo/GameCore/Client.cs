@@ -32,6 +32,12 @@ namespace ZoFo.GameCore
 {
     public class Client
     {
+        public Client()
+        {
+            networkManager = new ClientNetworkManager();
+            SetBindings();
+        }
+
         #region Network part
 
         ClientNetworkManager networkManager;
@@ -39,10 +45,42 @@ namespace ZoFo.GameCore
         public bool IsConnected { get { return networkManager.IsConnected; } }
         public IPEndPoint InfoConnect => networkManager.InfoConnect;
 
-        public Client()
+        public void OnDataSend(string data)
         {
-            networkManager = new ClientNetworkManager();
+            //List<UpdateTileCreated> updateDatas = JsonSerializer.Deserialize<List<UpdateTileCreated>>(data);
+            JArray jToken = JsonConvert.DeserializeObject(data) as JArray;
 
+            //string[] brands = jToken.SelectToken("")?.ToObject<string[]>();
+            foreach (JToken update in jToken.Children())
+            {
+                string a = update.ToString();
+                UpdateTileCreated u = System.Text.Json.JsonSerializer.Deserialize<UpdateTileCreated>(a);
+            }
+            // тут будет switch
+            AppManager.Instance.debugHud.Log(data);
+            //foreach (var item in updateDatas)
+            //{
+            //    GotData(item);
+            //}
+
+        }
+        public void GameEndedUnexpectedly() { }
+
+        public void JoinRoom(string ip, int port)
+        {
+            networkManager.JoinRoom(ip, port);
+        }
+        public void JoinYourself(int port) { networkManager.JoinYourself(port); }
+
+        public void SendData()
+        {
+            networkManager.SendData();
+        }
+        #endregion
+
+
+        public void SetBindings()
+        {
             // Подписка на действия инпутменеджера.
             // Отправляются данные апдейтса с обновлением инпута
             AppManager.Instance.InputManager.ActionEvent += () =>
@@ -74,34 +112,6 @@ namespace ZoFo.GameCore
             };
         }
 
-        public void OnDataSend(string data)
-        {
-            //List<UpdateTileCreated> updateDatas = JsonSerializer.Deserialize<List<UpdateTileCreated>>(data);
-            JArray jToken = JsonConvert.DeserializeObject(data) as JArray;
-
-            //string[] brands = jToken.SelectToken("")?.ToObject<string[]>();
-            foreach (JToken update in jToken.Children())
-            {
-                string a = update.ToString();
-                UpdateTileCreated u = System.Text.Json.JsonSerializer.Deserialize<UpdateTileCreated>(a);
-            }
-            // тут будет switch
-            AppManager.Instance.debugHud.Log(data);
-            //foreach (var item in updateDatas)
-            //{
-            //    GotData(item);
-            //}
-
-        }
-        public void GameEndedUnexpectedly() { }
-
-        public void JoinRoom(string ip, int port)
-        {
-            networkManager.JoinRoom(ip, port);
-        }
-        public void JoinYourself(int port) { networkManager.JoinYourself(port); }
-
-        #endregion
 
         public Player myPlayer;
         List<MapObject> mapObjects = new List<MapObject>();
@@ -147,11 +157,7 @@ namespace ZoFo.GameCore
                     (myPlayer.position + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2 - AppManager.Instance.CurentScreenResolution.ToVector2() / (2 * GraphicsComponent.scaling)
                     ) * 0.1f
                     ))
-                .ToPoint();
-        }
-        public void SendData()
-        {
-            networkManager.SendData();
+                .ToPoint();//camera following
         }
         internal void Draw(SpriteBatch spriteBatch)
         {
