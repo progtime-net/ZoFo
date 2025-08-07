@@ -48,8 +48,8 @@ namespace ZoFo.GameCore.GameObjects
             foreach (var item in deltas)
             {
                 AppManager.Instance.debugHud.Log(item.ToString());   
-                graphicsComponent.ObjectDrawRectangle.X = (int)(position.X + item.X * 10);
-                graphicsComponent.ObjectDrawRectangle.Y = (int)(position.Y + item.Y * 10);
+                graphicsComponent.ObjectDrawRectangle.X = (int)(position.X + item.X * 100);
+                graphicsComponent.ObjectDrawRectangle.Y = (int)(position.Y + item.Y * 100);
                 base.Draw(spriteBatch);
             }
         }
