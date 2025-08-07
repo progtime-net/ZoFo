@@ -123,7 +123,7 @@ public class SelectingServerGUI : AbstractGUI
         Elements.Add(bTExit);
         bTExit.LeftButtonPressed += () =>
         {
-            AppManager.Instance.SetGUI(new SelectModeMenu());
+            (StartTransition(new LoadingGameScreenGUI(ActionMaker.SetGUIAndMoveOverlay(new SelectModeMenu()))) as LoadingGameScreenGUI).FinishLoading(instantDisable: true);
         };
     }
 

@@ -41,7 +41,8 @@ public class GameEndedGUI : AbstractGUI
         };
         endButton.LeftButtonPressed += () =>
         {
-            AppManager.Instance.SetGUI(new MainMenuGUI());
+            (StartTransition(new LoadingGameScreenGUI(ActionMaker.SetGUIAndMoveOverlay(new MainMenuGUI()))) as LoadingGameScreenGUI).FinishLoading(instantDisable: true);
+
         };
         Elements.Add(endButton);
     }

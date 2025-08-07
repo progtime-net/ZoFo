@@ -201,6 +201,14 @@ namespace ZoFo.GameCore
         {
             if (update is UpdateGameStarted)
             {
+                    DebugHUD.DebugLog("Game STARTED!");
+                if (AppManager.Instance.currentGUI is HUD)
+                {
+                    (AppManager.Instance.currentGUI as HUD).EndLoadingScreen();
+                }
+                else
+                    DebugHUD.DebugLog("WHATWHATHOW wrong gui in game!");
+                
                 //Дописать логику
             }
             else if (update is UpdateTileCreated)
@@ -351,7 +359,7 @@ namespace ZoFo.GameCore
         {
             CloseConnection();
             AppManager.Instance.ChangeState(GameState.NotPlaying);
-            AppManager.Instance.SetGUI(new FinishingGUI());
+            (AppManager.Instance.currentGUI.StartTransition(new LoadingGameScreenGUI(ActionMaker.SetGUIAndMoveOverlay(new FinishingGUI()))) as LoadingGameScreenGUI).FinishLoading(instantDisable: true);
         }
         public void CloseConnection()
         {

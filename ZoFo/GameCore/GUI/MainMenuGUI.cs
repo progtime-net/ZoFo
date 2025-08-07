@@ -41,8 +41,9 @@ public class MainMenuGUI : AbstractGUI
         };
         playButton.LeftButtonPressed += () =>
         {
-            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
-            AppManager.Instance.SetGUI(new SelectModeMenu());
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click"); 
+            (StartTransition(new LoadingGameScreenGUI(ActionMaker.SetGUIAndMoveOverlay(new SelectModeMenu()))) as LoadingGameScreenGUI).FinishLoading(instantDisable: true);
+
         };
         Elements.Add(playButton);
         Button baseButton = new Button(Manager) 
@@ -57,8 +58,8 @@ public class MainMenuGUI : AbstractGUI
         };
         baseButton.LeftButtonPressed += () =>
         {
-            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
-            AppManager.Instance.SetGUI(new BaseGUI());
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click"); 
+            (StartTransition(new LoadingGameScreenGUI(ActionMaker.SetGUIAndMoveOverlay(new BaseGUI()))) as LoadingGameScreenGUI).FinishLoading(instantDisable: true);
         };
         Elements.Add(baseButton);
         Button optionButton = new Button(Manager)
@@ -73,8 +74,8 @@ public class MainMenuGUI : AbstractGUI
         };
         optionButton.LeftButtonPressed += () =>
         {
-            AppManager.Instance.SoundManager.StartAmbientSound("Button click");
-            AppManager.Instance.SetGUI(new OptionsGUI());
+            AppManager.Instance.SoundManager.StartAmbientSound("Button click"); 
+            (StartTransition(new LoadingGameScreenGUI(ActionMaker.SetGUIAndMoveOverlay(new OptionsGUI()))) as LoadingGameScreenGUI).FinishLoading(instantDisable: true);
         };
         Elements.Add(optionButton);
         Button exitButton = new Button(Manager)

@@ -17,41 +17,45 @@ public class HUD : AbstractGUI
 {
     private Bar hpBar;
     private Bar radBar;
-    public AbstractGUI overlayGUI;
-    protected override void CreateUI() 
+    protected override void CreateUI()
     {
-        
+
         int width = AppManager.Instance.CurentScreenResolution.X;
         int height = AppManager.Instance.CurentScreenResolution.Y;
-        
-        Button pauseButton = new Button(Manager) 
+
+        Button pauseButton = new Button(Manager)
         {
-            fontName = "Fonts\\Font3", scale = 0.4f, text = "| |", fontColor = Color.Black, 
-            mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 30, width / 40, width / 40),
+            fontName = "Fonts\\Font3",
+            scale = 0.4f,
+            text = "| |",
+            fontColor = Color.Black,
+            mainColor = Color.Transparent,
+            rectangle = new Rectangle(width - width / 30 - width / 40, height / 30, width / 40, width / 40),
             textureName = "Textures/GUI/Button2"
-        }; 
+        };
         Elements.Add(pauseButton);
         pauseButton.LeftButtonPressed += () =>
-        { 
+        {
             AppManager.Instance.SoundManager.StartAmbientSound("Button click");
-            AppManager.Instance.SetGUI(new PauseGUI()); 
+            AppManager.Instance.SetGUI(new PauseGUI());
             //AppManager.Instance.SetGUI(new FinishingGUI());
             overlayGUI = new PauseGUI();
             overlayGUI.Initialize();
-            overlayGUI.LoadContent(); 
+            overlayGUI.LoadContent();
         };
-        Button invButton = new Button(Manager) 
+        Button invButton = new Button(Manager)
         {
-            fontName = "Fonts\\Font3", scale = 0.4f, fontColor = Color.Black, 
-            mainColor = Color.Transparent, rectangle = new Rectangle(width - width / 30 - width / 40, height / 15 + width / 40, width / 40, width / 40),
+            fontName = "Fonts\\Font3",
+            scale = 0.4f,
+            fontColor = Color.Black,
+            mainColor = Color.Transparent,
+            rectangle = new Rectangle(width - width / 30 - width / 40, height / 15 + width / 40, width / 40, width / 40),
             textureName = "Textures/GUI/ButtonI"
         };
         Elements.Add(invButton);
         invButton.LeftButtonPressed += () =>
         {
-            overlayGUI = new InventoryGUI();
-            overlayGUI.Initialize();
-            overlayGUI.LoadContent();
+            SetOverlay(new InventoryGUI());
         };
 
         hpBar = new Bar(Manager)
@@ -72,14 +76,12 @@ public class HUD : AbstractGUI
         };
         radBar.Initialize();
         radBar.LoadTexture(AppManager.Instance.Content);
-        
+
     }
 
     public override void Update(GameTime gameTime)
     {
-        overlayGUI?.Update(gameTime);
-        //hpBar.Update(gameTime, AppManager.Instance.client.myPlayer.health / 100f);
-        //radBar.Update(gameTime, AppManager.Instance.client.myPlayer.rad / 100f);
+
         if (AppManager.Instance.client.myPlayer != null)
         {
             radBar.Update(gameTime, AppManager.Instance.client.myPlayer.rad / AppManager.Instance.client.myPlayer.MaxRad);
@@ -88,10 +90,19 @@ public class HUD : AbstractGUI
         }
         base.Update(gameTime);
     }
+     
 
-    public override void Draw(SpriteBatch spriteBatch)
+    public void StartLoadingScreen() => SetOverlay(new LoadingGameScreenGUI());
+
+    public void EndLoadingScreen()
     {
-        overlayGUI?.Draw(spriteBatch);
-        base.Draw(spriteBatch);
+        if (overlayGUI is not LoadingGameScreenGUI)
+        {
+            RemoveOverlay();
+            return;
+        }
+        (overlayGUI as LoadingGameScreenGUI)?.FinishLoading();
     }
+    
+
 }

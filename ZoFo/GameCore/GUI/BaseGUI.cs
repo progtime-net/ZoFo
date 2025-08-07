@@ -166,8 +166,9 @@ public class BaseGUI : AbstractGUI
             textureName = "Textures/GUI/Button2"
         };
         Elements.Add(bTExit);
-        bTExit.LeftButtonPressed += () => { AppManager.Instance.SetGUI(new MainMenuGUI());
+        bTExit.LeftButtonPressed += () => {
             AppManager.Instance.SoundManager.StartAmbientSound("Button click");
+            (StartTransition(new LoadingGameScreenGUI(ActionMaker.SetGUIAndMoveOverlay(new MainMenuGUI()))) as LoadingGameScreenGUI).FinishLoading(instantDisable: true);
         };
     }
 

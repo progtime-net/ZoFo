@@ -8,7 +8,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient
 {
     public class UpdateGameStarted : UpdateData
     {
-        public UpdateGameStarted() { UpdateType = "UpdateGameStarted"; }
+        public UpdateGameStarted() { UpdateType = "UpdateGameStarted"; isImportant = true; }
 
     }
 }

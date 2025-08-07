@@ -50,8 +50,15 @@ public class SelectModeMenu : AbstractGUI
             server.CreateRoom(false);
             client.JoinYourself(server.MyIp.Port);
             //AppManager.Instance.ChangeState(GameState.HostPlaying);
-            AppManager.Instance.SetGUI(new HUD() {  });
-            
+
+            StartTransition(new LoadingGameScreenGUI(ActionMaker.SetGUIAndMoveOverlay(new HUD())));
+            //AppManager.Instance.SetGUI(new LoadingGameScreenGUI(ActionMaker.SetGUIAndMoveOverlay(new HUD())));
+
+
+            //var hud = new HUD();
+            //hud.SetOverlay_WithoutLoading();
+            //AppManager.Instance.SetGUI(hud);
+            //hud.StartLoadingScreen();
 
             //server.CreateRoom(1);
             //client.JoinYourself();
@@ -75,9 +82,10 @@ public class SelectModeMenu : AbstractGUI
         optionButton.LeftButtonPressed += () => 
         {
             AppManager.Instance.SoundManager.StartAmbientSound("Button click");
-            AppManager.Instance.SetGUI(new SelectingServerGUI());
+            (StartTransition(new LoadingGameScreenGUI(ActionMaker.SetGUIAndMoveOverlay(new SelectingServerGUI()))) as LoadingGameScreenGUI).FinishLoading(instantDisable: true);
+
             // multi 
-           
+
             // ваш код здесь 
         };
         Elements.Add(optionButton);
@@ -94,7 +102,7 @@ public class SelectModeMenu : AbstractGUI
             
             AppManager.Instance.SoundManager.StartAmbientSound("Button click");
             
-            AppManager.Instance.SetGUI(new MainMenuGUI());
+            (StartTransition(new LoadingGameScreenGUI(ActionMaker.SetGUIAndMoveOverlay(new MainMenuGUI()))) as LoadingGameScreenGUI).FinishLoading(instantDisable: true);  
         };
     }
 

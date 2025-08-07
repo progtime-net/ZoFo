@@ -24,7 +24,8 @@ namespace MonogameLibrary.UI.Base
             
             for (int i = -10; i < 11; i++)
             {
-                layerCollection.Add(i, new List<DrawableUIElement>());
+                if (!layerCollection.ContainsKey(i))
+                    layerCollection.Add(i, new List<DrawableUIElement>());
             }
         }
         public KeyboardState GetKeyboardState { get { return keyboardState; } }

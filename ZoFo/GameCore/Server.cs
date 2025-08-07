@@ -23,6 +23,7 @@ using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 using ZoFo.GameCore.Graphics;
 using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
 using ZoFo.GameCore.GUI;
+using System.Threading;
 
 namespace ZoFo.GameCore
 {
@@ -143,12 +144,20 @@ namespace ZoFo.GameCore
             {
                 Player player = new Player(new Vector2(-800 - 30 * i, 750));
                 RegisterGameObject(player);
-                networkManager.AddData(new UpdateCreatePlayer() { PlayerId = i+1, IdEntity=player.Id});
-            } 
+                AddData(new UpdateCreatePlayer() { PlayerId = i+1, IdEntity=player.Id});
+            }
             //for (int i = 0; i < 20; i++)
             //    for (int j = 0; j < 20; j++)
             //        AppManager.Instance.server.RegisterGameObject(new Zombie(new Vector2(1300 + i*70, 1000+j*70)));
-              
+            new Thread(() =>
+            {
+                while (networkManager.GetImportantUpdatesCount() > 0)
+                {
+                    Thread.Sleep(50); 
+                }
+                AddData(new UpdateGameStarted());
+
+            }).Start();
         }
 
         /// <summary>

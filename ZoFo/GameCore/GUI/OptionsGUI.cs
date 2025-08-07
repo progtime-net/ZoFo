@@ -46,6 +46,7 @@ public class OptionsGUI : AbstractGUI
 
                 label_OverallVolume_Percent.text = Math.Round(slider_OverallVolume.GetSliderValue * 100) + "%";
                 AppManager.Instance.SettingsManager.SetMainVolume(newVal);
+
             };
             Elements.Add(slider_OverallVolume);
 
@@ -129,7 +130,8 @@ public class OptionsGUI : AbstractGUI
             bTExit.LeftButtonPressed += () =>
             {
                 AppManager.Instance.SoundManager.StartAmbientSound("Button click");
-                AppManager.Instance.SetGUI(new MainMenuGUI());
+                (StartTransition(new LoadingGameScreenGUI(ActionMaker.SetGUIAndMoveOverlay(new MainMenuGUI()))) as LoadingGameScreenGUI).FinishLoading(instantDisable: true);
+
             };
         
     }

@@ -39,7 +39,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         public delegate void OnDataSend(string data);
         public event OnDataSend GetDataSend;   // event
         Thread serverThread;
-        int datapackSize = 150+50;
+        int datapackSize = 150;
         public ServerNetworkManager() { Init(); }
 
         /// <summary>
@@ -134,6 +134,8 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             }
                 
             DebugHUD.AddGOData(sendedData.Count, "server gameobjects");
+            DebugHUD.AddGOData(importantUpdates.Count, "server gameobjects");
+            DebugHUD.AddGOData(commonUpdates.Count, "server gameobjects");
 
             if (sendedData.Count != 0) 
             { 
@@ -205,7 +207,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             }
             currentDatagrammId++;
             AppManager.Instance.ChangeState(GameState.HostPlaying);
-            AppManager.Instance.SetGUI(new HUD());//// КАКОЙ В СЕРВЕРЕ ЭТО ПИСАТЬ???
+            //AppManager.Instance.SetGUI(new HUD());//// КАКОЙ В СЕРВЕРЕ ЭТО ПИСАТЬ???
         }
         public void CloseConnection()
         {
@@ -295,6 +297,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
             }
             return data;    
         }
-
+        public int GetImportantUpdatesCount() => importantUpdates.Count;
+        public int GetCommonUpdatesCount() => commonUpdates.Count;
     }
 }
