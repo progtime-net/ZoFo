@@ -57,6 +57,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
 
             GetDataSend += AnalyzeData;
 
+            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             socket.Bind(endPoint);
 
         }

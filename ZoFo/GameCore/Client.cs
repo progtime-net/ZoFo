@@ -28,6 +28,7 @@ using ZoFo.GameCore.Graphics;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using ZoFo.GameCore.GameManagers.CollisionManager;
+using ZoFo.GameCore.GameManagers.NetworkManager.ZoFo.GameCore.GameManagers.NetworkManager;
 namespace ZoFo.GameCore
 {
     public class Client
@@ -282,6 +283,11 @@ namespace ZoFo.GameCore
                     players.Add(myPlayer);
                 }
             }
+            else if (update is UpdateSnake)
+            {
+                var ent = FindEntityById(update.IdEntity) as Snake;
+                ent.SetDeltas((update as UpdateSnake).deltas.Select(x=>x.GetVector2()).ToList());
+            }
 
         }
         public void UpdatePlayerHealth(UpdatePlayerParametrs update)
@@ -325,7 +331,7 @@ namespace ZoFo.GameCore
         public bool changeGUI = false;
         public void GameEnd()
         {
-
+            AppManager.Instance.client.networkManager.Stop();
             changeGUI = true;
         }
 

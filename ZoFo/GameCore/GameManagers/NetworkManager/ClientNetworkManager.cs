@@ -41,7 +41,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
         {
             GetDataSent += AnalyzeData;
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            endPoint = new IPEndPoint(GetIp(), 8081);
+            endPoint = new IPEndPoint(GetIp(), 8081); socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             socket.Bind(endPoint);
             Thread thread = new Thread(StartListening);
             thread.IsBackground = true;
@@ -177,6 +177,10 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                         break;
                     case "UpdateCreatePlayer":
                         update = token.ToObject<UpdateCreatePlayer>();
+                        data.Add(update);
+                        break;
+                    case "UpdateSnake":
+                        update = token.ToObject<UpdateSnake>();
                         data.Add(update);
                         break;
 

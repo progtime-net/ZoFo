@@ -23,6 +23,7 @@ using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 using ZoFo.GameCore.Graphics;
 using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
 using ZoFo.GameCore.GUI;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ZoFo.GameCore
 {
@@ -136,7 +137,8 @@ namespace ZoFo.GameCore
             gameObjects = new List<GameObject>();
             entities = new List<Entity>();
             networkManager.StartGame();
-            new MapManager().LoadMap(); 
+            //new MapManager().LoadMap();
+            ManuallyAddObjects();
 
             //AppManager.Instance.server.RegisterGameObject(new EntittyForAnimationTests(new Vector2(0, 0)));
             for (int i = 0; i < networkManager.clientsEP.Count; i++)
@@ -275,9 +277,16 @@ namespace ZoFo.GameCore
             );
             collisionManager.Deregister(entity.collisionComponent);
         }
+
+        public void ManuallyAddObjects()
+        {
+            Snake snake = new Snake(new Vector2(-800, 750));
+            RegisterGameObject(snake);
+        }
     }
 
     #endregion
 
     #endregion
+
 }

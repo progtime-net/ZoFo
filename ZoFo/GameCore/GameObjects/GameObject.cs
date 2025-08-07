@@ -18,7 +18,8 @@ public abstract class GameObject
     #region ServerSide
     public GameObject(Vector2 position)
     {
-        this.position = position; 
+        this.position = position;
+
         graphicsComponent.LoadContent();
 
         graphicsComponent.ObjectDrawRectangle.X = (int)position.X;
@@ -39,7 +40,7 @@ public abstract class GameObject
     /// </summary>
     public void PlayAnimation_OnServer()
     {
-        graphicsComponent.Update();
+        graphicsComponent?.Update();
     }
 
     public void Instantiate(GameObject gameObject)
@@ -61,7 +62,7 @@ public abstract class GameObject
     /// </summary>
     public void PlayAnimation_OnClient()
     {
-        graphicsComponent.Update();
+        graphicsComponent?.Update();
 
     }
 

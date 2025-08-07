@@ -14,6 +14,7 @@ using static System.Collections.Specialized.BitVector32;
 using MonogameLibrary.UI.Base;
 using ZoFo.GameCore.GameManagers.AssetsManager;
 using ZoFo.GameCore.GameObjects;
+using System.Runtime.CompilerServices;
 
 namespace ZoFo.GameCore.GameManagers
 {
@@ -132,6 +133,7 @@ namespace ZoFo.GameCore.GameManagers
                 if (client.changeGUI)
                 {
                     SetGUI(new FinishingGUI());
+                    ChangeState(GameState.NotPlaying);
                     client.changeGUI = false;
                 }
             }
