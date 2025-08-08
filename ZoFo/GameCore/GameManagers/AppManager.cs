@@ -24,7 +24,7 @@ namespace ZoFo.GameCore.GameManagers
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-
+         
 
         public static AppManager Instance { get; private set; }
         public GameState gamestate;
