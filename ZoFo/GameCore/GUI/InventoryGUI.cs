@@ -51,41 +51,41 @@ public class InventoryGUI : AbstractGUI
         Elements.Add(continueButton);
 
         //player itams
-        foreach (var item in AppManager.Instance.client.myPlayer.lootData.loots)
-        {
-            if (item.Value > 0)
-            {
-                ItemInfo itemInfo = AppManager.Instance.ItemManager.GetItemInfo(item.Key);
-                var temp = new ItemDisplayButton(Manager)
-                {
-                    rectangle = new Rectangle(
-                        width / 2 - width / 5 / 2,
-                        height / 2 - (int)(height / 1.5) / 2 + height / 80 +
-                        (height / 20 + height / 80) * (buttonIndex) - height / 10,
-                        (int)(width / 5), (int)(height / 20)),
-                    text1 = item.Key,
-                    scale1 = 0.3f,
-                    count = item.Value,
-                    itemTextureName = itemInfo.textureName,
-                    fontColor1 = Color.White,
-                    mainColor = Color.Gray,
-                    fontName1 = "Fonts\\Font4",
-                    discriptions1 = itemInfo.description,
-                    resourcesNeededToCraft1 = itemInfo.resourcesNeededToCraft,
-                    textureName = "Texturs/GUI/Button"
-                };
-                Elements.Add(temp);
-                temp.Initialize();
-                temp.LoadTexture(AppManager.Instance.Content);
-                ItemDisplayButtonsList.Add(temp);
-                temp.LeftButtonPressed += () =>
-                {
+        //foreach (var item in AppManager.Instance.client.myPlayer.lootData.loots)
+        //{
+        //    if (item.Value > 0)
+        //    {
+        //        ItemInfo itemInfo = AppManager.Instance.ItemManager.GetItemInfo(item.Key);
+        //        var temp = new ItemDisplayButton(Manager)
+        //        {
+        //            rectangle = new Rectangle(
+        //                width / 2 - width / 5 / 2,
+        //                height / 2 - (int)(height / 1.5) / 2 + height / 80 +
+        //                (height / 20 + height / 80) * (buttonIndex) - height / 10,
+        //                (int)(width / 5), (int)(height / 20)),
+        //            text1 = item.Key,
+        //            scale1 = 0.3f,
+        //            count = item.Value,
+        //            itemTextureName = itemInfo.textureName,
+        //            fontColor1 = Color.White,
+        //            mainColor = Color.Gray,
+        //            fontName1 = "Fonts\\Font4",
+        //            discriptions1 = itemInfo.description,
+        //            resourcesNeededToCraft1 = itemInfo.resourcesNeededToCraft,
+        //            textureName = "Texturs/GUI/Button"
+        //        };
+        //        Elements.Add(temp);
+        //        temp.Initialize();
+        //        temp.LoadTexture(AppManager.Instance.Content);
+        //        ItemDisplayButtonsList.Add(temp);
+        //        temp.LeftButtonPressed += () =>
+        //        {
                     
-                };
+        //        };
 
-                buttonIndex++;
-            }
-        }
+        //        buttonIndex++;
+        //    }
+        //}
     }
 
     public override void Update(GameTime gameTime)

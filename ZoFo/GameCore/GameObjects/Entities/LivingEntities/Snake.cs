@@ -21,8 +21,8 @@ namespace ZoFo.GameCore.GameObjects
         public Snake(Vector2 position) : base(position)
         {
             
-            graphicsComponent.ObjectDrawRectangle.Width = 100;
-            graphicsComponent.ObjectDrawRectangle.Height= 100;
+            graphicsComponent.ObjectDrawRectangle.Width = 5;
+            graphicsComponent.ObjectDrawRectangle.Height= 5;
         }
         public override void Update()
         {
@@ -48,8 +48,8 @@ namespace ZoFo.GameCore.GameObjects
             foreach (var item in deltas)
             {
                 AppManager.Instance.debugHud.Log(item.ToString());   
-                graphicsComponent.ObjectDrawRectangle.X = (int)(position.X + item.X * 100);
-                graphicsComponent.ObjectDrawRectangle.Y = (int)(position.Y + item.Y * 100);
+                graphicsComponent.ObjectDrawRectangle.X = (int)(position.X + item.X * 5);
+                graphicsComponent.ObjectDrawRectangle.Y = (int)(position.Y + item.Y * 5);
                 base.Draw(spriteBatch);
             }
         }

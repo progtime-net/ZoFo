@@ -81,8 +81,8 @@ public class HUD : AbstractGUI
         //radBar.Update(gameTime, AppManager.Instance.client.myPlayer.rad / 100f);
         if (AppManager.Instance.client.myPlayer != null)
         {
-            radBar.Update(gameTime, AppManager.Instance.client.myPlayer.rad / AppManager.Instance.client.myPlayer.MaxRad);
-            hpBar.Update(gameTime, AppManager.Instance.client.myPlayer.health / AppManager.Instance.client.myPlayer.MaxHealth);
+            //radBar.Update(gameTime, AppManager.Instance.client.myPlayer.rad / AppManager.Instance.client.myPlayer.MaxRad);
+            //hpBar.Update(gameTime, AppManager.Instance.client.myPlayer.health / AppManager.Instance.client.myPlayer.MaxHealth);
 
         }
         base.Update(gameTime);

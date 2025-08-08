@@ -103,7 +103,7 @@ namespace ZoFo.GameCore
 
         #endregion
 
-        public Player myPlayer;
+        public Snake myPlayer;
         List<MapObject> mapObjects = new List<MapObject>();
         List<GameObject> gameObjects = new List<GameObject>();
         List<Player> players = new List<Player>();
@@ -278,8 +278,8 @@ namespace ZoFo.GameCore
                 UpdateCreatePlayer ucp = (UpdateCreatePlayer)update;
                 if (networkManager.PlayerId == ucp.PlayerId)
                 {
-                    myPlayer = (Player)FindEntityById(ucp.IdEntity);
-                    players.Add(myPlayer);
+                    myPlayer = (Snake)FindEntityById(ucp.IdEntity);
+                    //players.Add(myPlayer);
                 }
             }
             else if (update is UpdateSnake)
@@ -296,26 +296,26 @@ namespace ZoFo.GameCore
 
             if (myPlayer != null)
             {
-                float hpMyPlayerHp = myPlayer.health;
+                //float hpMyPlayerHp = myPlayer.health;
 
 
-                var entity = FindEntityById(update.IdEntity);
+                //var entity = FindEntityById(update.IdEntity);
 
-                if (entity != null)
-                {
-                    (entity as Player).health = (update as UpdatePlayerParametrs).health;
-                    (entity as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
-                }
-                if (entity.Equals(myPlayer))
-                {
-                    if (hpMyPlayerHp > myPlayer.health)
-                    {
-                        AppManager.Instance.client.AddShaking((hpMyPlayerHp - myPlayer.health));
+                //if (entity != null)
+                //{
+                //    (entity as Player).health = (update as UpdatePlayerParametrs).health;
+                //    (entity as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
+                //}
+                //if (entity.Equals(myPlayer))
+                //{
+                //    //if (hpMyPlayerHp > myPlayer.health)
+                //    //{
+                //    //    AppManager.Instance.client.AddShaking((hpMyPlayerHp - myPlayer.health));
 
-                    }
-                }
+                //    //}
+                //}
 
-                return;
+                //return;
             }
 
 

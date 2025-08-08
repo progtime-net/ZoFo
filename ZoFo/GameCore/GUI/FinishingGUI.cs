@@ -56,10 +56,10 @@ public class FinishingGUI : AbstractGUI
         };
         ExitButton.LeftButtonPressed += () => {
 
-            foreach (var item in AppManager.Instance.client.myPlayer.lootData.loots)
-            {
-                AppManager.Instance.playerData.AddLoot(item.Key, item.Value);
-            }
+            //foreach (var item in AppManager.Instance.client.myPlayer.lootData.loots)
+            //{
+            //    AppManager.Instance.playerData.AddLoot(item.Key, item.Value);
+            //}
 
 
             AppManager.Instance.SetGUI(new MainMenuGUI()); 
@@ -68,36 +68,36 @@ public class FinishingGUI : AbstractGUI
         Elements.Add(ExitButton);
 
         //player itams
-        foreach (var item in AppManager.Instance.client.myPlayer.lootData.loots)
-        {
-            if (item.Value > 0)
-            {
-                ItemInfo itemInfo = AppManager.Instance.ItemManager.GetItemInfo(item.Key);
-                var temp = new ItemDisplayLabel(Manager)
-                {
-                    rectangle = new Rectangle(
-                        width / 2 - width / 5 / 2,
-                        height / 2 - (int)(height / 1.5) / 2 + height / 80 +
-                        (height / 20 + height / 80) * (labelIndex),
-                        (int)(width / 5), (int)(height / 20)),
-                    text1 = item.Key,
-                    scale1 = 0.4f,
-                    count = item.Value,
-                    itemTextureName = itemInfo.textureName,
-                    fontColor1 = Color.White,
-                    mainColor = Color.Gray,
-                    fontName1 = "Fonts\\Font4",
-                    discriptions1 = itemInfo.description,
-                    resourcesNeededToCraft1 = itemInfo.resourcesNeededToCraft
-                };
-                Elements.Add(temp);
-                temp.Initialize();
-                temp.LoadTexture(AppManager.Instance.Content);
-                ItemDisplayLabelsList.Add(temp);
+        //foreach (var item in AppManager.Instance.client.myPlayer.lootData.loots)
+        //{
+        //    if (item.Value > 0)
+        //    {
+        //        ItemInfo itemInfo = AppManager.Instance.ItemManager.GetItemInfo(item.Key);
+        //        var temp = new ItemDisplayLabel(Manager)
+        //        {
+        //            rectangle = new Rectangle(
+        //                width / 2 - width / 5 / 2,
+        //                height / 2 - (int)(height / 1.5) / 2 + height / 80 +
+        //                (height / 20 + height / 80) * (labelIndex),
+        //                (int)(width / 5), (int)(height / 20)),
+        //            text1 = item.Key,
+        //            scale1 = 0.4f,
+        //            count = item.Value,
+        //            itemTextureName = itemInfo.textureName,
+        //            fontColor1 = Color.White,
+        //            mainColor = Color.Gray,
+        //            fontName1 = "Fonts\\Font4",
+        //            discriptions1 = itemInfo.description,
+        //            resourcesNeededToCraft1 = itemInfo.resourcesNeededToCraft
+        //        };
+        //        Elements.Add(temp);
+        //        temp.Initialize();
+        //        temp.LoadTexture(AppManager.Instance.Content);
+        //        ItemDisplayLabelsList.Add(temp);
 
-                labelIndex++;
-            }
-        }
+        //        labelIndex++;
+        //    }
+        //}
     }
 
     public override void Update(GameTime gameTime)
