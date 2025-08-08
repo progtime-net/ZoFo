@@ -97,8 +97,8 @@ namespace ZoFo.GameCore.GameObjects
             var damagedPlayers=AppManager.Instance.server.collisionManager.GetPlayersInZone(collisionComponent.triggerRectangle.SetOrigin(position));
             //TODO ДАМАЖИТЬ ИГРОКОВ В ЗОНЕ
             if (damagedPlayers.Length>0) { DebugHUD.DebugLog("End of" + a);
-                foreach (var item in damagedPlayers)
-                    item.TakeDamage(20);  
+                //foreach (var item in damagedPlayers)
+                //    item.TakeDamage(20);  
             }
             
         }

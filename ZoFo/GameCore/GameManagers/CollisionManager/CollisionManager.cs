@@ -178,10 +178,10 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             {
                 CheckComponentCollision(item);
             }
-            foreach (var item in AppManager.Instance.server.players)
-            {
-                UpdateTriggerZones(item);
-            }
+            //foreach (var item in AppManager.Instance.server.players)
+            //{
+            //    UpdateTriggerZones(item);
+            //}
         }
 
 
@@ -216,10 +216,10 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             }
         }
 
-        public Player[] GetPlayersInZone(Rectangle rectangle)
+        public Snake[] GetPlayersInZone(Rectangle rectangle)
         {
 
-            List<Player> players = new List<Player>();
+            List<Snake> players = new List<Snake>();
             foreach (var item in AppManager.Instance.server.players)//фильтрация 
             {
                 if (item.collisionComponent.stopRectangle.SetOrigin(item.position).Intersects(rectangle))

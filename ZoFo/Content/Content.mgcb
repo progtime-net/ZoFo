@@ -56,6 +56,9 @@
 #begin MapData/TileSets/TileSet 1.tsj
 /copy:MapData/TileSets/TileSet 1.tsj
 
+#begin MapData/TileSets/TilesetFloor.tsj
+/copy:MapData/TileSets/TilesetFloor.tsj
+
 #begin MapData/TileSets/TilesetNature.tsj
 /copy:MapData/TileSets/TilesetNature.tsj
 

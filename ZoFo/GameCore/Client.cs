@@ -143,9 +143,9 @@ namespace ZoFo.GameCore
             networkManager.SendData();//set to ticks
             if (myPlayer != null)
                 GraphicsComponent.CameraPosition =
-                    ((GraphicsComponent.CameraPosition.ToVector2() * 0.9f +
-                    (myPlayer.position + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2 - AppManager.Instance.CurentScreenResolution.ToVector2() / (2 * GraphicsComponent.scaling)
-                    ) * 0.1f
+                    ((GraphicsComponent.CameraPosition.ToVector2() * 0.96f +
+                    (myPlayer.position+myPlayer.deltas.Last()* Snake.snakePixelStepSize + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2 - AppManager.Instance.CurentScreenResolution.ToVector2() / (2 * GraphicsComponent.scaling)
+                    ) * 0.04f
                     ))
                 .ToPoint();
         }
@@ -285,7 +285,11 @@ namespace ZoFo.GameCore
             else if (update is UpdateSnake)
             {
                 var ent = FindEntityById(update.IdEntity) as Snake;
+                if (ent is not null)
+                {
+
                 ent.SetDeltas((update as UpdateSnake).deltas.Select(x=>x.GetVector2()).ToList());
+                }
             }
 
         }

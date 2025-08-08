@@ -1,0 +1,14 @@
+{ "columns":40,
+ "image":"..\/..\/Textures\/TileSetImages\/Tilelist1.png",
+ "imageheight":912,
+ "imagewidth":652,
+ "margin":0,
+ "name":"Tilelist1",
+ "spacing":0,
+ "tilecount":2280,
+ "tiledversion":"1.10.2",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}
