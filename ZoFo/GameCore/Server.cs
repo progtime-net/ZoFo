@@ -24,6 +24,7 @@ using ZoFo.GameCore.Graphics;
 using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
 using ZoFo.GameCore.GUI;
 using Microsoft.Xna.Framework.Graphics;
+using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Projectiles;
 
 namespace ZoFo.GameCore
 {
@@ -138,7 +139,7 @@ namespace ZoFo.GameCore
             entities = new List<Entity>();
             networkManager.StartGame();
             new MapManager().LoadMap("map_0");
-            //ManuallyAddObjects();
+            ManuallyAddObjects();
              
             for (int i = 0; i < networkManager.clientsEP.Count; i++)
             {
@@ -275,8 +276,12 @@ namespace ZoFo.GameCore
 
         public void ManuallyAddObjects()
         {
-            Snake snake = new Snake(new Vector2(-800, 750));
-            RegisterGameObject(snake);
+            for (int i = 0; i < 500; i++)
+            {
+
+                var ammo = new Ammo(new Vector2(-800, 400+10*i));
+                RegisterGameObject(ammo);
+            }
         }
     }
 

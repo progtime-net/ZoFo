@@ -30,9 +30,11 @@ public class Collectable : Interactable
     public override void OnInteraction(GameObject sender)
     {
         DebugHUD.DebugLog("collected");
-        string lootname = this.GetType().ToString().ToLower().Split('.').Last(); 
-        (sender as Player).lootData.AddLoot(lootname, 1, (sender as Player).Id);
+        string lootname = this.GetType().ToString().ToLower().Split('.').Last();
+        //(sender as Player).lootData.AddLoot(lootname, 1, (sender as Player).Id);
         AppManager.Instance.server.DeleteObject(this);
+        (sender as Snake).Eat(this);
+        
         base.OnInteraction(sender);
     }
     public override void Draw(SpriteBatch spriteBatch)

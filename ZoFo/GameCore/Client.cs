@@ -144,7 +144,7 @@ namespace ZoFo.GameCore
             if (myPlayer != null)
                 GraphicsComponent.CameraPosition =
                     ((GraphicsComponent.CameraPosition.ToVector2() * 0.96f +
-                    (myPlayer.position+myPlayer.deltas.Last()* Snake.snakePixelStepSize + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2 - AppManager.Instance.CurentScreenResolution.ToVector2() / (2 * GraphicsComponent.scaling)
+                    (myPlayer.position + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2 - AppManager.Instance.CurentScreenResolution.ToVector2() / (2 * GraphicsComponent.scaling)
                     ) * 0.04f
                     ))
                 .ToPoint();
