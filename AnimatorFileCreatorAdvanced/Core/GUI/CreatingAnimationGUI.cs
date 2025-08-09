@@ -408,7 +408,14 @@ namespace AnimatorFileCreatorAdvanced.Core.GUI
 
         public void Save()
         {
-            AppLogic.SaveCurrentAnimation("");
+            try
+            {
+                AppLogic.SaveCurrentAnimation("");
+            }
+            catch 
+            {
+
+            }
         }
 
     }
