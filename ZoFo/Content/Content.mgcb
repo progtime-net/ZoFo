@@ -278,6 +278,9 @@
 #begin Textures/Animations/Simple Idles/player_top-right_idle.animation
 /copy:Textures/Animations/Simple Idles/player_top-right_idle.animation
 
+#begin Textures/Animations/snake_base.animation
+/copy:Textures/Animations/snake_base.animation
+
 #begin Textures/Animations/testAnimation.animation
 /copy:Textures/Animations/testAnimation.animation
 
@@ -370,6 +373,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/AnimationTextures/Character/hr-level1_running.png
+
+#begin Textures/AnimationTextures/snake.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/AnimationTextures/snake.png
 
 #begin Textures/AnimationTextures/unicorn.png
 /importer:TextureImporter

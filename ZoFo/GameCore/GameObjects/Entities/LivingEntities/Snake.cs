@@ -16,17 +16,17 @@ namespace ZoFo.GameCore.GameObjects
 { 
     public class Snake : LivingEntity
     {
-        public override GraphicsComponent graphicsComponent { get; } = new StaticGraphicsComponent("Content/Textures/Test/Rock");
+        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "snake_base" }, "snake_base");
         public List<Vector2> deltas = new List<Vector2>() { new Vector2(0,0)};
         public Vector2 direction = new Vector2(0, 0); 
         public Snake(Vector2 position) : base(position)
         {
             
-            graphicsComponent.ObjectDrawRectangle.Width = 5;
-            graphicsComponent.ObjectDrawRectangle.Height= 5;
+            graphicsComponent.ObjectDrawRectangle.Width = 10;
+            graphicsComponent.ObjectDrawRectangle.Height= 10;
         }
         int tick = 0;
-        public static float snakePixelStepSize = 4f;
+        public static float snakePixelStepSize = 6f;
         public override void Update()
         {
             tick++;
