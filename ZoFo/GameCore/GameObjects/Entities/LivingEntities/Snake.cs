@@ -13,24 +13,26 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.Graphics;
 
 namespace ZoFo.GameCore.GameObjects
-{ 
+{
     public class Snake : LivingEntity
     {
         public override GraphicsComponent graphicsComponent { get; } = new StaticGraphicsComponent("Content/Textures/Test/Rock");
-        public List<Vector2> deltas = new List<Vector2>() { new Vector2(0,0)};
-        public Vector2 direction = new Vector2(0, 0); 
+        public List<Vector2> deltas = new List<Vector2>() { new Vector2(0, 0) };
+        public Vector2 direction = new Vector2(0, 0);
+        public Vector2 pointZero = new Vector2(0, 0);
         public Snake(Vector2 position) : base(position)
         {
-            
-            graphicsComponent.ObjectDrawRectangle.Width = 5;
-            graphicsComponent.ObjectDrawRectangle.Height= 5;
+
+            graphicsComponent.ObjectDrawRectangle.Width = 7;
+            graphicsComponent.ObjectDrawRectangle.Height = 7;
+            pointZero = position;
         }
         int tick = 0;
-        public static float snakePixelStepSize = 4f;
+        public static float snakePixelStepSize = 6f;
         public override void Update()
         {
             tick++;
-            if (tick % 50 == 0)
+            if (tick % 20 == 0)
             {
                 deltas.Add(deltas.Last() + direction);
 
@@ -40,7 +42,12 @@ namespace ZoFo.GameCore.GameObjects
                 deltas.Add(deltas.Last() + direction);
                 deltas.RemoveAt(0);
             }
-            AppManager.Instance.server.AddData(new UpdateSnake() { deltas = deltas.Select(x=>x.Serialize()).ToList(), IdEntity = Id });
+            velocity += direction * snakePixelStepSize;
+            for (int i = 0; i < deltas.Count; i++)
+            {
+                    deltas[i] -= deltas.Last();
+            }
+            AppManager.Instance.server.AddData(new UpdateSnake() { deltas = deltas.Select(x => x.Serialize()).ToList(), IdEntity = Id });
             base.Update();
         }
 
@@ -48,18 +55,23 @@ namespace ZoFo.GameCore.GameObjects
         {
             foreach (var item in deltas)
             {
-                AppManager.Instance.debugHud.Log(item.ToString());   
-                graphicsComponent.ObjectDrawRectangle.X = (int)(position.X + item.X * snakePixelStepSize);
-                graphicsComponent.ObjectDrawRectangle.Y = (int)(position.Y + item.Y * snakePixelStepSize);
+                AppManager.Instance.debugHud.Log(item.ToString());
+                var additionalShift = -0*(position - pointZero)/ snakePixelStepSize;
+                graphicsComponent.ObjectDrawRectangle.X = (int)(position.X + item.X * snakePixelStepSize - additionalShift.X);
+                graphicsComponent.ObjectDrawRectangle.Y = (int)(position.Y + item.Y * snakePixelStepSize - additionalShift.Y);
                 base.Draw(spriteBatch);
             }
+
+            graphicsComponent.ObjectDrawRectangle.X = (int)(position.X  );
+            graphicsComponent.ObjectDrawRectangle.Y = (int)(position.Y  );
+            base.Draw(spriteBatch);
         }
 
         internal void SetDeltas(List<Vector2> deltas)
         {
             this.deltas = deltas;
         }
-         
+
         internal void HandleNewInput(UpdateInput data)
         {
             if (data.InputMovementDirection.GetVector2() == Vector2.Zero)
