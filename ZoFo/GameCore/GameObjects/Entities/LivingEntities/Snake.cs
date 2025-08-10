@@ -16,7 +16,7 @@ namespace ZoFo.GameCore.GameObjects
 {
     public class Snake : LivingEntity
     {
-        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "snake_base" }, "snake_base");
+        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "snake_base", "snake_energy" }, "snake_energy");
         public List<Vector2> prevPositions = new List<Vector2>() { new Vector2(0, 0) };
         public Vector2 direction = new Vector2(0, 0);
         public Snake(Vector2 position) : base(position)

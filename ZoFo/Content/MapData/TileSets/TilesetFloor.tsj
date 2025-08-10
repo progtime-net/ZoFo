@@ -6,7 +6,7 @@
  "name":"TilesetFloor",
  "spacing":0,
  "tilecount":638,
- "tiledversion":"1.10.2",
+ "tiledversion":"1.11.2",
  "tileheight":16,
  "tiles":[
         {
@@ -1243,47 +1243,47 @@
         }, 
         {
          "id":308,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":309,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":310,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":311,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":312,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":313,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":314,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":315,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":316,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":317,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":318,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":319,
@@ -1331,47 +1331,47 @@
         }, 
         {
          "id":330,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":331,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":332,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":333,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":334,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":335,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":336,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":337,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":338,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":339,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":340,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":341,
@@ -1419,47 +1419,47 @@
         }, 
         {
          "id":352,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":353,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":354,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":355,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":356,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":357,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":358,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":359,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":360,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":361,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":362,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":363,
@@ -1507,47 +1507,47 @@
         }, 
         {
          "id":374,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":375,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":376,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":377,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":378,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":379,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":380,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":381,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":382,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":383,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":384,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":385,
@@ -1595,47 +1595,47 @@
         }, 
         {
          "id":396,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":397,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":398,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":399,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":400,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":401,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":402,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":403,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":404,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":405,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":406,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":407,
@@ -1683,47 +1683,47 @@
         }, 
         {
          "id":418,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":419,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":420,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":421,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":422,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":423,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":424,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":425,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":426,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":427,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":428,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":429,
@@ -1771,47 +1771,47 @@
         }, 
         {
          "id":440,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":441,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":442,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":443,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":444,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":445,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":446,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":447,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":448,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":449,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":450,
-         "type":"Tile"
+         "type":"StopObject"
         }, 
         {
          "id":451,

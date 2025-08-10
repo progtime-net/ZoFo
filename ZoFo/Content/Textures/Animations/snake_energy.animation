@@ -1,6 +1,6 @@
 {
-  "id": "snake_base",
-  "textureName": "Textures/AnimationTextures/snake_base",
+  "id": "snake_energy",
+  "textureName": "Textures/AnimationTextures/snake",
   "startSpriteRectangle": {
     "X": 0,
     "Y": 0,
@@ -14,7 +14,7 @@
     }
   ],
   "textureFrameInterval": 0,
-  "framesCount": 6,
+  "framesCount": 3,
   "isCycle": true,
   "offset": "0, 0"
 }
