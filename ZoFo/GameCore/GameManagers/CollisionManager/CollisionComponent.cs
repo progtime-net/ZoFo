@@ -57,7 +57,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
 
         //events DoorInteraction
-        public delegate void CollisionAction(Player player);
+        public delegate void CollisionAction(GameObject gameObject);
         public event CollisionAction? OnTriggerEnter;
         public event CollisionAction? OnTriggerZone;
         public event CollisionAction? OnTriggerExit;
@@ -67,9 +67,9 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
 
 
-        public void PlayerInZone(Player player) => OnTriggerZone?.Invoke(player);
-        public void PlayerEnter(Player player) => OnTriggerEnter?.Invoke(player);
-        public void PlayerExit(Player player) => OnTriggerExit?.Invoke(player);
+        public void PlayerInZone(GameObject gameObject) => OnTriggerZone?.Invoke(gameObject);
+        public void PlayerEnter(GameObject gameObject) => OnTriggerEnter?.Invoke(gameObject);
+        public void PlayerExit(GameObject gameObject) => OnTriggerExit?.Invoke(gameObject);
         public void OnCollisionWithObject(GameObject gameObject) => OnCollision?.Invoke(gameObject);
 
 

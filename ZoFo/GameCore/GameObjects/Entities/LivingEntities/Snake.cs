@@ -24,6 +24,9 @@ namespace ZoFo.GameCore.GameObjects
 
             graphicsComponent.ObjectDrawRectangle.Width = 10;
             graphicsComponent.ObjectDrawRectangle.Height = 10;
+
+            collisionComponent.stopRectangle = new Rectangle(0, 0, 10, 10);
+            collisionComponent.triggerRectangle = new Rectangle(-5, -5, 20, 20);
         }
         int tick = 0;
         public static float snakePixelStepSize = 4f;

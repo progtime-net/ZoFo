@@ -149,10 +149,10 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             AppManager.Instance.debugHud.Set("testPos", entity.position.ToString()); //TODO remove
         }
 
-        public void UpdateTriggerZones(Player player)
+        public void UpdateTriggerZones(GameObject gameObject)
         {
 
-            var entity = player as LivingEntity;
+            var entity = gameObject as LivingEntity;
             var currentRect = entity.collisionComponent.stopRectangle;//задаём РЕК
             currentRect.X += (int)entity.position.X;
             currentRect.Y += (int)entity.position.Y;
@@ -164,7 +164,7 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
 
                 if (ObjectsWithTriggers[i].triggerRectangle.SetOrigin(ObjectsWithTriggers[i].gameObject.position).Intersects(currentRect))
                 {
-                    ObjectsWithTriggers[i].PlayerInZone(player);
+                    ObjectsWithTriggers[i].PlayerInZone(gameObject);
                 }
                 i -= c - ObjectsWithTriggers.Count;
             }
@@ -178,10 +178,10 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             {
                 CheckComponentCollision(item);
             }
-            //foreach (var item in AppManager.Instance.server.players)
-            //{
-            //    UpdateTriggerZones(item);
-            //}
+            foreach (var item in AppManager.Instance.server.players)
+            {
+                UpdateTriggerZones(item);
+            }
         }
 
 
