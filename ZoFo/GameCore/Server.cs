@@ -164,8 +164,10 @@ namespace ZoFo.GameCore
         public List<Snake> players;
         public void Update(GameTime gameTime)
         {
+
             if (ticks == 3) //ОБРАБАТЫВАЕТСЯ 20 РАЗ В СЕКУНДУ
             {
+                SnakeInteractions.CheckSnakeInteractions(players);
                 for (int i = 0; i < gameObjects.Count; i++)
                 {
                     gameObjects[i].UpdateLogic();
@@ -278,10 +280,12 @@ namespace ZoFo.GameCore
         {
             for (int i = 0; i < 500; i++)
             {
-
-                var ammo = new Ammo(new Vector2(-800, 400+10*i));
-                RegisterGameObject(ammo);
+                Energy.Create();
             }
+
+            var energy = new Energy(new Vector2(-800, 400)); //eaxmple of manual creation
+            RegisterGameObject(energy);
+
         }
     }
 

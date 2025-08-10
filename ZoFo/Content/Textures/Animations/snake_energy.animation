@@ -15,6 +15,6 @@
   ],
   "textureFrameInterval": 0,
   "framesCount": 3,
-  "isCycle": true,
+  "isCycle": false,
   "offset": "0, 0"
 }

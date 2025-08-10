@@ -1,6 +1,6 @@
 {
   "id": "snake_base",
-  "textureName": "Textures/AnimationTextures/snake_base",
+  "textureName": "Textures/AnimationTextures/snake_static",
   "startSpriteRectangle": {
     "X": 0,
     "Y": 0,

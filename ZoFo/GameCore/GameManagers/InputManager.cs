@@ -53,6 +53,7 @@ namespace ZoFo.GameCore.GameManagers
             {
                 AppManager.Instance.debugHud.Set("cheats", _cheatsEnabled.ToString());
                 AppManager.Instance.debugHud.Set("invincible", InvincibilityCheat.ToString());
+                AppManager.Instance.debugHud.Set("CollisionsCheat", CollisionsCheat.ToString());
                 AppManager.Instance.debugHud.Set("infinite ammo", InfiniteAmmoCheat.ToString()); //TODO
             }
 

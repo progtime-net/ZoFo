@@ -20,7 +20,7 @@ public class Collectable : Interactable
         collisionComponent.triggerRectangle.Height = 20;
 
         
-        int size = 10;
+        int size = 3;
         collisionComponent.triggerRectangle.X -= size;
         collisionComponent.triggerRectangle.Y -= size;
         collisionComponent.triggerRectangle.Width += 2*size;

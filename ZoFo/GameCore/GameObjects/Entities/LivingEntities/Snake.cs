@@ -16,8 +16,11 @@ namespace ZoFo.GameCore.GameObjects
 {
     public class Snake : LivingEntity
     {
-        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "snake_base", "snake_energy" }, "snake_energy");
-        public List<Vector2> prevPositions = new List<Vector2>() { new Vector2(0, 0) };
+        public override GraphicsComponent graphicsComponent { get; } = new AnimatedGraphicsComponent(new List<string> { "snake_base", "snake_energy" }, "snake_base");
+        public List<Vector2> prevPositions = new List<Vector2>() { new Vector2(0, 0),
+        new Vector2(0, 0),
+        new Vector2(0, 0),
+        new Vector2(0, 0)};
         public Vector2 direction = new Vector2(0, 0);
         public Snake(Vector2 position) : base(position)
         {
@@ -39,8 +42,8 @@ namespace ZoFo.GameCore.GameObjects
             }
             if (tick % 2 == 0)
             {
-                prevPositions.Add(position);
                 prevPositions.Add((prevPositions.Last() + position) * 0.5f);
+                prevPositions.Add(position);
                 prevPositions.RemoveAt(0);
                 prevPositions.RemoveAt(0);
             }
@@ -90,6 +93,7 @@ namespace ZoFo.GameCore.GameObjects
         internal void Extend()
         {
             prevPositions.Add(prevPositions.Last());
+            StartAnimation("snake_energy");
         }
     }
 }
