@@ -183,9 +183,11 @@ namespace ZoFo.GameCore.GameManagers
             
             #endregion 
             #region ActionEvent
-                if(InputMovementDirection != prevInputMovementDirection  ||
-                InputAttackDirection != prevInputAttackDirection || 
-                currentScopeState != prevCurrentScopeState)
+                if(InputMovementDirection != Vector2.Zero//prevInputMovementDirection  
+                //||
+                //InputAttackDirection != prevInputAttackDirection || 
+                //currentScopeState != prevCurrentScopeState
+                )
                 {
                     ActionEvent?.Invoke();
                 }

@@ -27,7 +27,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
 using ZoFo.GameCore.Graphics;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using ZoFo.GameCore.GameManagers.CollisionManager; 
+using ZoFo.GameCore.GameManagers.CollisionManager;
 namespace ZoFo.GameCore
 {
     public class Client
@@ -113,7 +113,7 @@ namespace ZoFo.GameCore
         float shakeEffect = 0;
         public void AddShaking(float power)
         {
-            shakeEffect += power*3;
+            shakeEffect += power * 3;
         }
         public void UpdateShaking()
         {
@@ -124,12 +124,18 @@ namespace ZoFo.GameCore
                 );
         }
 
+        int tick = 0;
         /// <summary>
         /// Клиент должен обнговлять игру анимаций
         /// </summary>
         /// <param name="gameTime"></param>
         internal void Update(GameTime gameTime)
         {
+            tick++;
+            if (tick < 3)
+                return;
+            tick = 0;
+
             UpdateShaking();
             for (int i = 0; i < gameObjects.Count; i++)
             {
@@ -253,13 +259,13 @@ namespace ZoFo.GameCore
 
                 if (ent != null)
                     DeleteObject(ent);
- 
-            } 
+
+            }
             else if (update is UpdateGameEnded)
             {
                 GameEnd();
             }
-            else if (update is UpdatePlayerParametrs && myPlayer !=null && update.IdEntity == myPlayer.Id) //aaa 
+            else if (update is UpdatePlayerParametrs && myPlayer != null && update.IdEntity == myPlayer.Id) //aaa 
             {
                 UpdatePlayerHealth(update as UpdatePlayerParametrs);
             }
@@ -279,7 +285,11 @@ namespace ZoFo.GameCore
                 if (networkManager.PlayerId == ucp.PlayerId)
                 {
                     myPlayer = (Snake)FindEntityById(ucp.IdEntity);
-                    //players.Add(myPlayer);
+
+                    GraphicsComponent.CameraPosition =
+                        (myPlayer.position + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2 - AppManager.Instance.CurentScreenResolution.ToVector2() / (2 * GraphicsComponent.scaling)
+                        ).ToPoint();
+
                 }
             }
             else if (update is UpdateSnake)
@@ -288,7 +298,7 @@ namespace ZoFo.GameCore
                 if (ent is not null)
                 {
 
-                ent.SetDeltas((update as UpdateSnake).deltas.Select(x=>x.GetVector2()).ToList());
+                    ent.SetDeltas((update as UpdateSnake).deltas.Select(x => x.GetVector2()).ToList());
                 }
             }
 
@@ -329,7 +339,7 @@ namespace ZoFo.GameCore
             {
                 (ent as Player).health = (update as UpdatePlayerParametrs).health;
                 (ent as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
-            } 
+            }
         }
         public bool changeGUI = false;
         public void GameEnd()

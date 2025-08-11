@@ -138,15 +138,16 @@ namespace ZoFo.GameCore
             gameObjects = new List<GameObject>();
             entities = new List<Entity>();
             networkManager.StartGame();
-            new MapManager().LoadMap("map_0");
-            ManuallyAddObjects();
              
             for (int i = 0; i < networkManager.clientsEP.Count; i++)
             {
                 Snake player = new Snake(new Vector2(-800 - 30 * i, 750));
                 RegisterGameObject(player);
                 networkManager.AddData(new UpdateCreatePlayer() { PlayerId = i+1, IdEntity=player.Id});
-            }  
+            }
+
+            new MapManager().LoadMap("map_0");
+            ManuallyAddObjects();
         }
 
         /// <summary>

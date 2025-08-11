@@ -13,14 +13,14 @@ public class Collectable : Interactable
     protected static readonly string _path = "Content/Textures/icons/Collectables/";
     public Collectable(Vector2 position) : base(position) {
 
-        graphicsComponent.ObjectDrawRectangle.Width = 20;
-        graphicsComponent.ObjectDrawRectangle.Height = 20;
+        graphicsComponent.ObjectDrawRectangle.Width = 10;
+        graphicsComponent.ObjectDrawRectangle.Height = 10;
 
-        collisionComponent.triggerRectangle.Width = 20;
-        collisionComponent.triggerRectangle.Height = 20;
+        collisionComponent.triggerRectangle.Width = 10;
+        collisionComponent.triggerRectangle.Height = 10;
 
-        
-        int size = 3;
+
+        int size = -2;
         collisionComponent.triggerRectangle.X -= size;
         collisionComponent.triggerRectangle.Y -= size;
         collisionComponent.triggerRectangle.Width += 2*size;

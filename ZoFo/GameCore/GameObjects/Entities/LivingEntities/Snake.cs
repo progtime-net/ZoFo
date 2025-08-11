@@ -33,6 +33,8 @@ namespace ZoFo.GameCore.GameObjects
         }
         int tick = 0;
         public static float snakePixelStepSize = 4f;
+        
+
         public override void Update()
         {
             tick++;
@@ -55,7 +57,9 @@ namespace ZoFo.GameCore.GameObjects
             //}
             velocity.X = direction.X * snakePixelStepSize;
             velocity.Y = direction.Y * snakePixelStepSize;
-            AppManager.Instance.server.AddData(new UpdateSnake() { deltas = prevPositions.Select(x => x.Serialize()).ToList(), IdEntity = Id });
+            AppManager.Instance.server.AddData(new UpdateSnake() { 
+                deltas = prevPositions.Select(x => x.Serialize()
+                ).ToList(), IdEntity = Id });
             base.Update();
         }
 
@@ -82,7 +86,10 @@ namespace ZoFo.GameCore.GameObjects
         {
             if (data.InputMovementDirection.GetVector2() == Vector2.Zero)
                 return;
-            direction = data.InputMovementDirection.GetVector2();
+            var temp = data.InputMovementDirection.GetVector2();
+            temp.Normalize(); 
+
+            direction = temp * 0.1f + direction * 0.9f;
             direction.Normalize();
         }
 
