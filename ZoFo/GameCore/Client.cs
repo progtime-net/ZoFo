@@ -189,7 +189,7 @@ namespace ZoFo.GameCore
         }
         internal void GotData(UpdateData update)
         {
-
+            #region Engine Important
             if (update is UpdateTileCreated)
             {
                 mapObjects.Add(
@@ -214,7 +214,7 @@ namespace ZoFo.GameCore
 
             else if (update is UpdateGameObjectCreated)
             {
-                //TODO
+
                 Entity created_gameObject;
                 if ((update as UpdateGameObjectCreated).GameObjectType == "Player")
                 {
@@ -251,7 +251,6 @@ namespace ZoFo.GameCore
                 var ent = FindEntityById(update.IdEntity);
                 if (ent != null)
                     ((ent as Entity).graphicsComponent as AnimatedGraphicsComponent).StartAnimation((update as UpdateAnimation).animationId);
-                //DebugHUD.Instance.Log("new Animation " + ent.position);
             }
             else if (update is UpdateGameObjectDeleted)
             {
@@ -265,20 +264,11 @@ namespace ZoFo.GameCore
             {
                 GameEnd();
             }
+            #endregion
             else if (update is UpdatePlayerParametrs && myPlayer != null && update.IdEntity == myPlayer.Id) //aaa 
             {
-                UpdatePlayerHealth(update as UpdatePlayerParametrs);
-            }
-            else if (update is UpdateLoot && myPlayer != null && update.IdEntity == myPlayer.Id)//aaa
-            {
-                if ((update as UpdateLoot).quantity == 0)
-                {
-                    return;
-                }
-                var ent = FindEntityById(update.IdEntity);
-                if (ent != null)
-                    (ent as Player).lootData.AddLoot_Client((update as UpdateLoot).lootName, (update as UpdateLoot).quantity);
-            }
+                UpdatePlayerParametrs(update as UpdatePlayerParametrs);
+            } 
             else if (update is UpdateCreatePlayer)
             {
                 UpdateCreatePlayer ucp = (UpdateCreatePlayer)update;
@@ -303,43 +293,15 @@ namespace ZoFo.GameCore
             }
 
         }
-        public void UpdatePlayerHealth(UpdatePlayerParametrs update)
+        public void UpdatePlayerParametrs(UpdatePlayerParametrs update)
         {
 
             //check on player hp lowered
 
-            if (myPlayer != null)
-            {
-                //float hpMyPlayerHp = myPlayer.health;
+            if (myPlayer == null)
+                return;
+            
 
-
-                //var entity = FindEntityById(update.IdEntity);
-
-                //if (entity != null)
-                //{
-                //    (entity as Player).health = (update as UpdatePlayerParametrs).health;
-                //    (entity as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
-                //}
-                //if (entity.Equals(myPlayer))
-                //{
-                //    //if (hpMyPlayerHp > myPlayer.health)
-                //    //{
-                //    //    AppManager.Instance.client.AddShaking((hpMyPlayerHp - myPlayer.health));
-
-                //    //}
-                //}
-
-                //return;
-            }
-
-
-            var ent = FindEntityById(update.IdEntity);
-
-            if (ent != null)
-            {
-                (ent as Player).health = (update as UpdatePlayerParametrs).health;
-                (ent as Player).rad = (update as UpdatePlayerParametrs).radiatoin;
-            }
         }
         public bool changeGUI = false;
         public void GameEnd()
@@ -348,6 +310,7 @@ namespace ZoFo.GameCore
             changeGUI = true;
         }
 
+        #region Engine Important
         public Entity FindEntityById(int id)
         {
             for (int i = 0; i < gameObjects.Count; i++)
@@ -385,6 +348,6 @@ namespace ZoFo.GameCore
             if (players.Contains(entity))
                 players.Remove(entity as Player);
         }
-
+        #endregion
     }
 }
