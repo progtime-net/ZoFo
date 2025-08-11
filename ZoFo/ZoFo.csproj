@@ -12,10 +12,13 @@
     </PropertyGroup>
     <ItemGroup>
       <Compile Remove="Content\sounds\Zombie\**" />
+      <Compile Remove="Content\Textures\Animations\PlayerAFK\**" />
       <Compile Remove="GameCore\GameObjects\BaseClasses\**" />
       <EmbeddedResource Remove="Content\sounds\Zombie\**" />
+      <EmbeddedResource Remove="Content\Textures\Animations\PlayerAFK\**" />
       <EmbeddedResource Remove="GameCore\GameObjects\BaseClasses\**" />
       <None Remove="Content\sounds\Zombie\**" />
+      <None Remove="Content\Textures\Animations\PlayerAFK\**" />
       <None Remove="GameCore\GameObjects\BaseClasses\**" />
     </ItemGroup>
     <ItemGroup>
@@ -36,8 +39,8 @@
       <ProjectReference Include="..\MonogameLibrary\MonogameLibrary.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Content\sounds\Zombie\" /> 
-      <Folder Include="Content\Textures\Animations\PlayerAFK\" /> 
+      <Folder Include="Content\sounds\Zombie\" />
+      <Folder Include="Content\Textures\Animations\" /> 
       <Folder Include="Content\Textures\GUI\" />
     </ItemGroup>
     <ItemGroup>

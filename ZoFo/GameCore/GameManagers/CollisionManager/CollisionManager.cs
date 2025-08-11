@@ -8,13 +8,9 @@ using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 using Microsoft.Xna.Framework;
 using ZoFo.GameCore.GameManagers.MapManager.MapElements;
-using ZoFo.GameCore.GameObjects.Entities;
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities;
-
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.Graphics; 
 using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO; 
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player; 
 
 namespace ZoFo.GameCore.GameManagers.CollisionManager
 {
@@ -216,10 +212,10 @@ namespace ZoFo.GameCore.GameManagers.CollisionManager
             }
         }
 
-        public Snake[] GetPlayersInZone(Rectangle rectangle)
+        public Player[] GetPlayersInZone(Rectangle rectangle)
         {
 
-            List<Snake> players = new List<Snake>();
+            List<Player> players = new List<Player>();
             foreach (var item in AppManager.Instance.server.players)//фильтрация 
             {
                 if (item.collisionComponent.stopRectangle.SetOrigin(item.position).Intersects(rectangle))

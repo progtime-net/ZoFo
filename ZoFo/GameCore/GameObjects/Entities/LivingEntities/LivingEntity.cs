@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using ZoFo.GameCore.GameObjects.Entities;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.Graphics;

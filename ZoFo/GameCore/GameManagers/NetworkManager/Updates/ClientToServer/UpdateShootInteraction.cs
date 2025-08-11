@@ -3,8 +3,8 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 
-public class UpdateInputShoot : UpdateData
+public class UpdateInputActiveAction : UpdateData
 {
-    public UpdateInputShoot() { UpdateType = "UpdateInputShoot"; }
+    public UpdateInputActiveAction() { UpdateType = "UpdateInputActiveAction"; }
     public int PlayerId { get; set; }
 }

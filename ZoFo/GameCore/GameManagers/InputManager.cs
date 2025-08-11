@@ -12,7 +12,7 @@ namespace ZoFo.GameCore.GameManagers
     public enum ScopeState { Idle, Left, Right, Top, Down, TopLeft, TopRight, DownLeft, DownRight }
     public class InputManager
     {
-        public event Action ShootEvent; // событие удара(когда нажат X, событие срабатывает)
+        public event Action ActiveActionEvent; // событие удара(когда нажат X, событие срабатывает)
         
         public event Action OnInteract; // событие взаимодействия с collectable(например, лутом)
         //с помощью кнопки E.
@@ -85,7 +85,7 @@ namespace ZoFo.GameCore.GameManagers
                 if (gamePadState.Buttons.X == ButtonState.Pressed && !isShoot)
                 {
                     isShoot = true;
-                    ShootEvent?.Invoke();
+                    ActiveActionEvent?.Invoke();
                     Debug.WriteLine("Выстрел");
                 }
                 else if (gamePadState.Buttons.X == ButtonState.Released)
@@ -159,7 +159,7 @@ namespace ZoFo.GameCore.GameManagers
                 if ((keyBoardState.IsKeyDown(Keys.P) || keyBoardState.IsKeyDown(Keys.F)) && !isShoot)
                 {
                     isShoot = true;
-                    ShootEvent?.Invoke();
+                    ActiveActionEvent?.Invoke();
                     Debug.WriteLine("Выстрел");
                 }
                 else if (keyBoardState.IsKeyUp(Keys.F))

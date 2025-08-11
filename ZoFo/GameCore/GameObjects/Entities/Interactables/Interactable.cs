@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using ZoFo.GameCore.GameManagers;
 using ZoFo.GameCore.GameManagers.CollisionManager;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using ZoFo.GameCore.Graphics;
 using ZoFo.GameCore.GUI;
 

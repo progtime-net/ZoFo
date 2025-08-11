@@ -1,43 +1,26 @@
 
-using System.Collections.Generic;
-using System.Text.Json;
-using ZoFo.GameCore.GameManagers.NetworkManager;
-using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using ZoFo.GameCore.GameObjects;
-using ZoFo.GameCore.GameObjects.MapObjects;
-using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
-using System.Drawing;
-using System.Reflection;
-using ZoFo.GameCore.GameObjects.Entities;
-using System.Net.Sockets;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using ZoFo.GameCore.GameManagers;
-using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
-using System.Linq;
-using System.Web;
-using ZoFo.GameCore.GUI;
-using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables;
-using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
-using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
-using ZoFo.GameCore.Graphics;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using ZoFo.GameCore.GameManagers.CollisionManager;
+using ZoFo.GameCore.GameManagers.NetworkManager;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
+using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
+using ZoFo.GameCore.GameObjects;
+using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
+using ZoFo.GameCore.Graphics;
 namespace ZoFo.GameCore
 {
     public class Client
     {
-        #region Network part
 
-        ClientNetworkManager networkManager;
-
-        public bool IsConnected { get { return networkManager.IsConnected; } }
-        public IPEndPoint InfoConnect => networkManager.InfoConnect;
 
         public Client()
         {
@@ -61,31 +44,34 @@ namespace ZoFo.GameCore
             AppManager.Instance.InputManager.OnInteract += () =>
             {
                 if (AppManager.Instance.client.networkManager.PlayerId > 0)
-                {
                     networkManager.AddData(new UpdateInputInteraction() { PlayerId = AppManager.Instance.client.networkManager.PlayerId });
-                }
+
             };
-            AppManager.Instance.InputManager.ShootEvent += () =>
+            AppManager.Instance.InputManager.ActiveActionEvent += () =>
             {
                 if (AppManager.Instance.client.networkManager.PlayerId > 0)
-                {
-                    networkManager.AddData(new UpdateInputShoot() { PlayerId = AppManager.Instance.client.networkManager.PlayerId });
-                }
+                    networkManager.AddData(new UpdateInputActiveAction() { PlayerId = AppManager.Instance.client.networkManager.PlayerId });
+
             };
         }
 
+        #region Network part
+
+        ClientNetworkManager networkManager;
+
+        public bool IsConnected { get { return networkManager.IsConnected; } }
+        public IPEndPoint InfoConnect => networkManager.InfoConnect;
+
+
         public void OnDataSend(string data)
         {
-            //List<UpdateTileCreated> updateDatas = JsonSerializer.Deserialize<List<UpdateTileCreated>>(data);
             JArray jToken = JsonConvert.DeserializeObject(data) as JArray;
 
-            //string[] brands = jToken.SelectToken("")?.ToObject<string[]>();
             foreach (JToken update in jToken.Children())
             {
                 string a = update.ToString();
                 UpdateTileCreated u = System.Text.Json.JsonSerializer.Deserialize<UpdateTileCreated>(a);
             }
-            // тут будет switch
             AppManager.Instance.debugHud.Log(data);
             //foreach (var item in updateDatas)
             //{
@@ -103,7 +89,7 @@ namespace ZoFo.GameCore
 
         #endregion
 
-        public Snake myPlayer;
+        public Player myPlayer;
         List<MapObject> mapObjects = new List<MapObject>();
         List<GameObject> gameObjects = new List<GameObject>();
         List<Player> players = new List<Player>();
@@ -148,11 +134,24 @@ namespace ZoFo.GameCore
 
             networkManager.SendData();//set to ticks
             if (myPlayer != null)
-                GraphicsComponent.CameraPosition =
-                    ((GraphicsComponent.CameraPosition.ToVector2() * 0.96f +
-                    (myPlayer.position + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2 - AppManager.Instance.CurentScreenResolution.ToVector2() / (2 * GraphicsComponent.scaling)
-                    ) * 0.04f
-                    ))
+                SetCameraPositionToGameObject(myPlayer);
+        }
+        /// <summary>
+        /// set's camera pos relative to the gameObject
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="gameObject"></param>
+        public void SetCameraPositionToGameObject(GameObject gameObject)
+        {
+            float lerp_value = 0.04f;
+
+            GraphicsComponent.CameraPosition =
+                    (GraphicsComponent.CameraPosition.ToVector2()
+                    * (1 - lerp_value)
+                    +
+                    (gameObject.position + gameObject.graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2 - AppManager.Instance.CurentScreenResolution.ToVector2() / (2 * GraphicsComponent.scaling))
+                    * lerp_value
+                    )
                 .ToPoint();
         }
         public void SendData()
@@ -268,13 +267,13 @@ namespace ZoFo.GameCore
             else if (update is UpdatePlayerParametrs && myPlayer != null && update.IdEntity == myPlayer.Id) //aaa 
             {
                 UpdatePlayerParametrs(update as UpdatePlayerParametrs);
-            } 
+            }
             else if (update is UpdateCreatePlayer)
             {
                 UpdateCreatePlayer ucp = (UpdateCreatePlayer)update;
                 if (networkManager.PlayerId == ucp.PlayerId)
                 {
-                    myPlayer = (Snake)FindEntityById(ucp.IdEntity);
+                    myPlayer = (Player)FindEntityById(ucp.IdEntity);
 
                     GraphicsComponent.CameraPosition =
                         (myPlayer.position + myPlayer.graphicsComponent.ObjectDrawRectangle.Size.ToVector2() / 2 - AppManager.Instance.CurentScreenResolution.ToVector2() / (2 * GraphicsComponent.scaling)
@@ -282,31 +281,22 @@ namespace ZoFo.GameCore
 
                 }
             }
-            else if (update is UpdateSnake)
-            {
-                var ent = FindEntityById(update.IdEntity) as Snake;
-                if (ent is not null)
-                {
-
-                    ent.SetDeltas((update as UpdateSnake).deltas.Select(x => x.GetVector2()).ToList());
-                }
-            }
 
         }
+        /// <summary>
+        /// Тут данные о штуках типо здоровья, энергии, золота будет
+        /// </summary>
+        /// <param name="update"></param>
         public void UpdatePlayerParametrs(UpdatePlayerParametrs update)
         {
-
-            //check on player hp lowered
-
             if (myPlayer == null)
                 return;
-            
+
 
         }
         public bool changeGUI = false;
         public void GameEnd()
         {
-            //AppManager.Instance.client.networkManager.Stop();
             changeGUI = true;
         }
 

@@ -82,7 +82,7 @@ public class SelectingServerGUI : AbstractGUI
                     AppManager.Instance.SetGUI(new WaitingForPlayersGUI(false));
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex) { }
 
             // ваш код здесь
         };
@@ -113,6 +113,42 @@ public class SelectingServerGUI : AbstractGUI
             AppManager.Instance.SetGUI(new WaitingForPlayersGUI(true));
         };
         Elements.Add(hostButton);
+
+
+
+        Button fastJoinButton = new Button(Manager)
+        {
+            rectangle = new Rectangle(width / 4 + (width / 4) / 2 + (width / 15)*2, height / 4, (int)(width / 15), (int)(height / 20)),
+            text = "Fast join (192.168.X:8080)",
+            scale = 0.3f,
+            fontColor = Color.White,
+            mainColor = Color.Gray,
+            fontName = "Fonts/Font",
+            textureName = "Textures/GUI/Button"
+        };
+        fastJoinButton.LeftButtonPressed += () =>
+        {
+
+            // join
+            Client client = new Client();
+            string address = $"192.168.{ipBox.text}:8080";
+            var endpoint = address.Split(':');
+            int port;
+            try
+            {
+                if (int.TryParse(endpoint[1], out port))
+                {
+
+                    client.JoinRoom(endpoint[0], port);
+                    AppManager.Instance.SetClient(client);
+                    AppManager.Instance.SetGUI(new WaitingForPlayersGUI(false));
+                }
+            }
+            catch (Exception ex) { }
+
+
+        };
+        Elements.Add(fastJoinButton);
 
         Button bTExit = new Button(Manager)
         {

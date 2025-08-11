@@ -10,7 +10,6 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 
 namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates
 {
-    [JsonDerivedType(typeof(UpdateSnake))]
     [JsonDerivedType(typeof(UpdateAnimation))]
     [JsonDerivedType(typeof(UpdateEntityHealth))]
     [JsonDerivedType(typeof(UpdateGameEnded))]
@@ -27,7 +26,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager.Updates
     [JsonDerivedType(typeof(UpdateInput))]
     [JsonDerivedType(typeof(UpdatePlayerExit))]
     [JsonDerivedType(typeof(UpdateInputInteraction))]
-    [JsonDerivedType(typeof(UpdateInputShoot))]
+    [JsonDerivedType(typeof(UpdateInputActiveAction))]
     [JsonDerivedType(typeof(UpdateCreatePlayer))]
 
     public class UpdateData

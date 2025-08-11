@@ -15,16 +15,12 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ClientToServer;
 using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
-using ZoFo.GameCore.GameObjects.Entities;
-using ZoFo.GameCore.GameObjects.Entities.Interactables.Collectables; 
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Player;
 using ZoFo.GameCore.GameObjects.MapObjects;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 using ZoFo.GameCore.Graphics;
 using ZoFo.GameCore.GameManagers.NetworkManager.SerializableDTO;
 using ZoFo.GameCore.GUI;
 using Microsoft.Xna.Framework.Graphics;
-using ZoFo.GameCore.GameObjects.Entities.LivingEntities.Projectiles;
 
 namespace ZoFo.GameCore
 {
@@ -37,7 +33,7 @@ namespace ZoFo.GameCore
         {
             networkManager = new ServerNetworkManager();
             collisionManager = new CollisionManager();
-            players = new List<Snake>();
+            players = new List<Player>();
         }
         #region server logic as App
 
@@ -76,6 +72,9 @@ namespace ZoFo.GameCore
                         if (data.PlayerId > 0)
                         {
                             players[data.PlayerId - 1].HandleNewInput(data);
+                            //handling input for player
+                            //TODO
+
                         }
                     }
                     //TODO id instead of 0
@@ -141,7 +140,7 @@ namespace ZoFo.GameCore
              
             for (int i = 0; i < networkManager.clientsEP.Count; i++)
             {
-                Snake player = new Snake(new Vector2(-800 - 30 * i, 750));
+                Player player = new Player(new Vector2(-800 - 30 * i, 750));
                 RegisterGameObject(player);
                 networkManager.AddData(new UpdateCreatePlayer() { PlayerId = i+1, IdEntity=player.Id});
             }
@@ -162,13 +161,12 @@ namespace ZoFo.GameCore
 
         public List<GameObject> gameObjects = new List<GameObject>();
         public List<Entity> entities;  //entity
-        public List<Snake> players;
+        public List<Player> players;
         public void Update(GameTime gameTime)
         {
 
             if (ticks == 3) //ОБРАБАТЫВАЕТСЯ 20 РАЗ В СЕКУНДУ
             {
-                SnakeInteractions.CheckSnakeInteractions(players);
                 for (int i = 0; i < gameObjects.Count; i++)
                 {
                     gameObjects[i].UpdateLogic();
@@ -249,8 +247,8 @@ namespace ZoFo.GameCore
                 });
 
 
-            if (gameObject is Snake)
-                players.Add(gameObject as Snake);
+            if (gameObject is Player)
+                players.Add(gameObject as Player);
             ////var elems = gameObject.GetType().GetProperties(System.Reflection.BindingFlags.Public);
             ////if (elems.Count()>0) TODO
             ////{ 
@@ -270,7 +268,7 @@ namespace ZoFo.GameCore
             if (entities.Contains(entity))
                 entities.Remove(entity);
             if (players.Contains(entity))
-                players.Remove(entity as Snake);
+                players.Remove(entity as Player);
             AddData(new UpdateGameObjectDeleted()
             { GameObjectType = entity.GetType().Name, IdEntity = entity.Id }
             );
@@ -279,13 +277,7 @@ namespace ZoFo.GameCore
 
         public void ManuallyAddObjects()
         {
-            for (int i = 0; i < 500; i++)
-            {
-                Energy.Create();
-            }
 
-            var energy = new Energy(new Vector2(-800, 400)); //eaxmple of manual creation
-            RegisterGameObject(energy);
 
         }
     }

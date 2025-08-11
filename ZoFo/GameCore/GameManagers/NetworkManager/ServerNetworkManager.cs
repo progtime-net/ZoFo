@@ -272,7 +272,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                         data.Add(update);
                         break;
                     case "UpdateInputShoot":
-                        update = token.ToObject<UpdateInputShoot>();
+                        update = token.ToObject<UpdateInputActiveAction>();
                         data.Add(update);
                         break;
                 }

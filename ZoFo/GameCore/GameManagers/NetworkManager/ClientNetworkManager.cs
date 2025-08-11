@@ -178,11 +178,7 @@ namespace ZoFo.GameCore.GameManagers.NetworkManager
                     case "UpdateCreatePlayer":
                         update = token.ToObject<UpdateCreatePlayer>();
                         data.Add(update);
-                        break;
-                    case "UpdateSnake":
-                        update = token.ToObject<UpdateSnake>();
-                        data.Add(update);
-                        break;
+                        break; 
 
                 }
             }
