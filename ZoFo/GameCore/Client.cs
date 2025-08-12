@@ -16,6 +16,7 @@ using ZoFo.GameCore.GameManagers.NetworkManager.Updates.ServerToClient;
 using ZoFo.GameCore.GameObjects;
 using ZoFo.GameCore.GameObjects.MapObjects.StopObjects;
 using ZoFo.GameCore.Graphics;
+using ZoFo.GameCore.GUI;
 namespace ZoFo.GameCore
 {
     public class Client
