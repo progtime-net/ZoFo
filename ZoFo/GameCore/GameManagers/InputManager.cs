@@ -121,15 +121,15 @@ namespace ZoFo.GameCore.GameManagers
                         InvincibilityCheat = !InvincibilityCheat;
                     if (keyBoardState.IsKeyDown(Keys.C) && lastKeyboardState.IsKeyUp(Keys.C))
                         CollisionsCheat = !CollisionsCheat;
-                    if (keyBoardState.IsKeyDown(Keys.N) && lastKeyboardState.IsKeyUp(Keys.N))
-                        InfiniteAmmoCheat = !InfiniteAmmoCheat;
+                if (keyBoardState.IsKeyDown(Keys.N) && lastKeyboardState.IsKeyUp(Keys.N))
+                    InfiniteAmmoCheat = !InfiniteAmmoCheat;
+                if (keyBoardState.IsKeyDown(Keys.F3) && lastKeyboardState.IsKeyUp(Keys.F3))
+                    DebugHUD.IsActivated = !DebugHUD.IsActivated;
 
-                    List<Keys> lvls = new List<Keys>() { Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9 };
+                List<Keys> lvls = new List<Keys>() { Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9 };
 
                     for (int i = 0; i < lvls.Count; i++)
                     {
-                        //if (keyBoardState.IsKeyDown(lvls[i]) && lastKeyboardState.IsKeyUp(lvls[i])) //TODO
-                        //    AppManager.Instance.Restart($"lvl{i}");
                     }
                 }
                 #endregion // Cheats

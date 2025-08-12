@@ -28,7 +28,7 @@ public class DebugHUD
     {
         _spriteFont = AppManager.Instance.Content.Load<SpriteFont>("Fonts/Font2");
         noTexture = new Texture2D(AppManager.Instance.GraphicsDevice, 1, 1);
-        noTexture.SetData(new Color[1] { new Color()});
+        noTexture.SetData(new Color[1] { Color.White});
     }
 
     bool prev_KeyState;//SHould move this logic and deneralize to main input manager
