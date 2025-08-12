@@ -153,6 +153,9 @@ namespace ZoFo.GameCore
                     * lerp_value
                     )
                 .ToPoint();
+
+            DebugHUD.AddGOData(1, "ClientGotData");
+
         }
         public void SendData()
         {
@@ -188,6 +191,7 @@ namespace ZoFo.GameCore
         }
         internal void GotData(UpdateData update)
         {
+            DebugHUD.AddAdditionalDataToGraph(1, "ClientGotData");
             #region Engine Important
             if (update is UpdateTileCreated)
             {

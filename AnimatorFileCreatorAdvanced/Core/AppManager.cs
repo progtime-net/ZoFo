@@ -60,7 +60,7 @@ namespace AnimatorFileCreatorAdvanced.Core
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Gray);
+            GraphicsDevice.Clear(Color.DarkSlateBlue);
 
             // TODO: Add your drawing code here
 
